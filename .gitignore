@@ -10,8 +10,7 @@ Make.dep
 core
 .gdbinit
 cscope.out
-/mbed-crypto
-/mbedtls
+/*/
 /.context
 /.config
 /.depend
