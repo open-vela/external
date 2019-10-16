@@ -33,4 +33,4 @@
 #
 ############################################################################
 
-include $(wildcard external/*/Make.defs)
+include $(wildcard $(APPDIR)/external/*/Make.defs)
