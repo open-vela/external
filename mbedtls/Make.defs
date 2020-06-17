@@ -1,5 +1,5 @@
 ############################################################################
-# external/Make.defs
+# external/mbedtls/Make.defs
 # Adds selected external to apps/external/mbedtls build
 #
 #   Copyright (C) 2020 Xiaomi Inc. All rights reserved.

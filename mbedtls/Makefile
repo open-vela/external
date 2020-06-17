@@ -32,6 +32,6 @@
 #
 ############################################################################
 
-MENUDESC = "External"
+MENUDESC = "MbedTLS"
 
 include $(APPDIR)/Directory.mk
