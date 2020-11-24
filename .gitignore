@@ -1,4 +1,5 @@
 .depend
+.kconfig
 Make.dep
 *.o
 *.a
@@ -15,3 +16,4 @@ cscope.out
 /.config
 /.depend
 /*.lib
+/Kconfig
