@@ -1,0 +1,46 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_TAR
+	bool "Tar library"
+	default n
+	select PSEUDOFS_SOFTLINKS
+	---help---
+		Enable support for tar
+
+if LIB_TAR
+
+config UTILS_TAR
+	tristate "TAR tool"
+	default n
+	---help---
+		Enable tar utility
+
+if UTILS_TAR
+config UTILS_TAR_PROGNAME
+	string "Programe Name"
+	default "tar"
+
+config UTILS_TAR_PRIORITY
+	int "tar utility priority"
+	default 100
+
+config UTILS_TAR_STACKSIZE
+	int "tar utility statcksize"
+	default 20480
+endif
+
+endif

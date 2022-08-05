@@ -1,0 +1,66 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config UTILS_COREMARK
+	tristate "CoreMark Processor Benchmark"
+	default n
+	---help---
+		Enable the CoreMark Processor Benchmark
+
+if UTILS_COREMARK
+
+config UTILS_COREMARK_PRIORITY
+	int "CoreMark task priority"
+	default 100
+
+config UTILS_COREMARK_STACKSIZE
+	int "CoreMark stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config UTILS_COREMARK_ITERATIONS
+	int "CoreMark iterations loop counter"
+	default 0
+
+config UTILS_COREMARK_SEED_METHOD
+	int "CoreMark Seed Method"
+	default 2 if UTILS_COREMARK_RUN_METHOD
+	default 0 if !UTILS_COREMARK_RUN_METHOD
+	---help---
+		Set CoreMark Seed Method:
+		0 : SEED_ARG
+		1 : SEED_FUNC
+		2 : SEED_VOLATILE
+
+config UTILS_COREMARK_MEM_METHOD
+	int "CoreMark Memory Method"
+	default 1
+	---help---
+		Set CoreMark Memory Method:
+		0 : MEM_STATIC
+		1 : MEM_MALLOC
+		2 : MEM_STACK
+
+config UTILS_COREMARK_DEBUG
+	int "CoreMark Core Debug"
+	default 0
+	---help---
+		Enable the Core Debug:
+		0 : Disable
+		1 : Enable
+
+config UTILS_COREMARK_RUN_METHOD
+	int "CoreMark Run Method"
+	default 0
+	---help---
+		Enable the Run Method:
+		0 : VALIDATION_RUN
+		1 : PERFORMANCE_RUN
+		2 : PROFILE_RUN
+
+config UTILS_COREMARK_MULTITHREAD
+	int "CoreMark Multithread counter"
+	default 1
+
+endif

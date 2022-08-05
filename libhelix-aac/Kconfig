@@ -1,0 +1,35 @@
+#
+# Copyright (C) 2021 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "Helix Advanced Audio Codec"
+
+config LIB_HELIX_AAC
+	bool "The Helix Advanced Audio Codec Library"
+	default n
+	---help---
+		Enable support for the Helix Advanced Audio Codec library
+
+if LIB_HELIX_AAC
+
+config LIB_HELIX_AAC_SBR
+	bool "AAC-Spectral Band Replication"
+	default n
+	---help---
+		Enable support for the AAC-PlusV1-SBR.
+
+endif
+
+endmenu

@@ -1,0 +1,44 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "Tools: iperf3"
+
+config TOOLS_IPERF3
+	tristate "iperf3"
+	select DEV_URANDOM
+	select FS_RAMMAP
+	select LIBC_FLOATINGPOINT
+	default n
+	---help---
+		Enable iperf3 tool.
+
+if TOOLS_IPERF3
+
+config TOOLS_IPERF3_PRIORITY
+	int "iperf3 task priority"
+	default 100
+	---help---
+		The priority for iperf3 task.
+
+config TOOLS_IPERF3_STACKSIZE
+	int "iperf3 task stack size"
+	default 4096
+	---help---
+		The stack size allocated for the iperf3 task.
+
+endif # TOOLS_IPERF
+
+endmenu # Tools: iperf3

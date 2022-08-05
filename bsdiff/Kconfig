@@ -1,0 +1,36 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config UTILS_BSDIFF
+	bool "bsdiff library"
+	default n
+	---help---
+		Enable support for bsdiff library
+
+if UTILS_BSDIFF
+config UTILS_BSDIFF_PRIORITY
+	int "bsdiff & bspatch task priority"
+	default 100
+
+config UTILS_BSDIFF_STACKSIZE
+	int "bsdiff stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config BSPATCH_BUF_SIZE
+	int "bspatch read & write buff size"
+	default 4096
+
+endif

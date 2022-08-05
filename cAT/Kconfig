@@ -1,0 +1,73 @@
+#
+# Copyright (C) 2021 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "Plain C library for parsing AT commands"
+
+config LIB_CAT
+	tristate "Plain C library for parsing AT commands for use in host devices."
+	default n
+
+if LIB_CAT
+
+config LIB_CAT_USRDATA
+	bool "cAT usrdata"
+	default n
+	---help---
+		Enable cAT usrdata
+
+config LIB_CAT_EXAMPLES
+	bool "cAT examples"
+	default n
+	---help---
+		Enable cAT examples
+
+config LIB_CAT_TESTS
+	bool "cAT tests"
+	default n
+	---help---
+		Enable cAT tests
+
+if LIB_CAT_EXAMPLES || LIB_CAT_TESTS
+
+config LIB_CAT_PRIORITY
+	int "task priority"
+	default 100
+
+config LIB_CAT_STACKSIZE
+	int "stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif # LIB_CAT_EXAMPLES || LIB_CAT_TESTS
+
+if LIB_CAT_USRDATA
+
+config LIB_CAT_USRDATA_LEN
+	int "user data ackbuf length"
+	default 512
+
+config LIB_CAT_USRDATA_WRITE_LEN
+	int "user data write buffer length"
+	default 512
+
+config LIB_CAT_USRDATA_READ_LEN
+	int "user data read buffer length"
+	default 256
+
+endif #LIB_CAT_USRDATA
+
+endif # LIB_CAT
+
+endmenu # Plain C library for parsing AT commands

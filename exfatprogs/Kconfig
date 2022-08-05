@@ -1,0 +1,56 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_EXFATPROGS
+	tristate "Exfat userspace utilities"
+	default n
+	---help---
+		Exfatprogs is created as an official userspace utilities
+		that contain all of the standard utilities for creating and
+		fixing and debugging exfat filesystem.
+
+if LIB_EXFATPROGS
+
+config LIB_EXFATPROGS_PRIORITY
+	int "Exfatprogs utilities task priority"
+	default 100
+
+config LIB_EXFATPROGS_STACKSIZE
+	int "Exfatprogs utilities stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config LIB_EXFATPROGS_DUMP
+	bool "Dump exfat utilities"
+	default n
+	---help---
+		Show on-disk information.
+
+config LIB_EXFATPROGS_LABEL
+	bool "Get/Set volume label"
+	default n
+	---help---
+		Get or Set volume label or serial.
+
+config LIB_EXFATPROGS_TUNE
+	bool "Adjust tunable exfat parameters"
+	default n
+	---help---
+		Adjust tunable filesystem parameters on an
+		exFAT filesystem.
+
+config LIB_EXFATPROGS_MKFS
+	bool "Build a exfat filesystem"
+	default n
+	---help---
+		Build a exfat filesystem on a device or partition.
+
+config LIB_EXFATPROGS_FSCK
+	bool "Check a exfat filesystem"
+	default n
+	---help---
+		Check the consistency of exfat filesystem and
+		optionally repair a corrupted device formatted by exfat.
+
+endif

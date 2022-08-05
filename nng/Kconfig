@@ -1,0 +1,24 @@
+#
+# For a description of the syntax of this configuration file,
+# see kconfig-language at https://www.kernel.org/doc/Documentation/kbuild/kconfig-language.txt
+#
+
+config NNG
+	tristate "enable nng library"
+	default n
+
+if NNG
+
+config NNG_DEFINES
+	string "nng configuration"
+	default "NNG_PLATFORM_POSIX NNG_PROTOCOL_REQREP NNG_PROTOCOL_PUBSUB NNG_TRANSPORT_INPROC"
+
+config NNG_PTHREAD_STACKSIZE
+        int "nng pthread stack size"
+        default 6148
+
+config NNG_DEMO
+	tristate "enable nng demo"
+	default n
+
+endif #NNG

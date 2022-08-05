@@ -1,0 +1,310 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "Bluetooth Stack: Android Fluoride Bluetooth Stack"
+
+menuconfig LIB_FLUORIDE
+  bool "Android Fluoride Bluetooth stack"
+  default n
+  select CRYPTO
+  select CRYPTO_RANDOM_POOL
+  select EVENT_FD
+  select DEV_URANDOM
+  select DEV_URANDOM_RANDOM_POOL
+  select LIB_CHROMIUM
+  select LIB_TINYXML2
+  help
+    Enable support for the Fluoride Bluetooth stack
+
+if LIB_FLUORIDE
+
+config FLUORIDE_SERVICE_CLASS
+  hex "Fluoride Service Class"
+  default 0x20
+
+config FLUORIDE_MAJOR_CLASS
+  hex "Fluoride Major Class"
+  default 0x40
+
+config FLUORIDE_MINOR_CLASS
+  hex "Fluoride Minor Class"
+  default 0x08
+
+config FLUORIDE_HCI_H4
+  bool "H:4 UART"
+  default n
+  help
+    Bluetooth H:4 UART driver. Requires hardware flow control
+    lines to be available.
+
+config FLUORIDE_HCI_USB
+  bool "H:2 USB"
+  default n
+  help
+    Bluetooth H:2 USB driver.
+
+config FLUORIDE_DEVICE_NAME
+  string "Bluetooth device name"
+  default "NuttX Fluoride"
+  help
+    Bluetooth device name.
+
+config FLUORIDE_FILE_PATH
+  string "Fluoride config path"
+  default "/data/bt_config.conf"
+
+config FLUORIDE_BACKUP_PATH
+  string "Fluoride config backup path"
+  default "/data/bt_config.bak"
+
+config FLUORIDE_LEGACY_FILE_PATH
+  string "Fluoride config backup path"
+  default "/etc/init.d/bt_config.xml"
+
+config FLUORIDE_BTE_DID_CONF_FILE
+  string "Fluoride bte did config file"
+  default "/etc/init.d/bt_did.conf"
+
+config FLUORIDE_STACK_CONFIG_PATH
+  string "Fluoride stack config path"
+  default "/etc/init.d/bt_stack.conf"
+
+config FLUORIDE_HCI_RX_STACKSIZE
+  int "BT HCI RX thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth HCI RX thread stack size.
+
+config FLUORIDE_MAIN_STACKSIZE
+  int "BT main thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth main thread stack size.
+
+config FLUORIDE_JNI_STACKSIZE
+  int "BT JNI thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth JNI thread stack size.
+
+config FLUORIDE_HCI_STACKSIZE
+  int "BT HCI thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth HCI thread stack size.
+
+config FLUORIDE_MANAGER_STACKSIZE
+  int "BT manager thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth manager thread stack size.
+
+config FLUORIDE_A2DP_SINK_STACKSIZE
+  int "BT a2dp sink thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth a2dp sink thread stack size.
+
+config FLUORIDE_A2DP_SOURCE_STACKSIZE
+  int "BT a2dp source thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth a2dp source thread stack size.
+
+config FLUORIDE_ALARM_DISPATCHER_STACKSIZE
+  int "BT alarm dispatcher thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth alarm dispatcher thread stack size.
+
+config FLUORIDE_ALARM_CALLBACK_STACKSIZE
+  int "BT alarm callback thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth alarm callback thread stack size.
+
+config FLUORIDE_ALARM_DEPRECATED_STACKSIZE
+  int "BT alarm deprecated thread stack size"
+  default DEFAULT_TASK_STACKSIZE
+  help
+    Bluetooth alarm deprecated thread stack size.
+
+if FLUORIDE_HCI_H4
+
+config FLUORIDE_HCI_UART_NAME
+  string "Device Name of UART Device for Bluetooth"
+  default "/dev/ttyBT"
+  help
+    This option specifies the name of UART device to be used
+    for Bluetooth.
+
+endif
+
+config FLUORIDE_LOG_LEVEL
+  int "Fluoride Debug Log Level"
+  default 0
+  help
+    Sets log level for the Fluoride stack.
+
+config BTA_GATTC_KNOWN_SR_MAX
+  int "Max known devices GATTC can support in Bluetooth spec."
+  default 25
+  help
+    Max known devices GATTC can support in Bluetooth spec.
+
+config BTA_GATTC_CL_MAX
+  int "Max client application GATTC can support"
+  default 8
+  help
+    Max client application GATTC can support
+
+config BTA_DM_SDP_DB_SIZE
+  int "Max DM SDP Database size"
+  default 10240
+  help
+    Max DM SDP Database size
+
+config BTA_AV_SINK_INCLUDED
+  bool "Enable Fluoride A2DP Sink SDP"
+  default n
+  help
+    Enable Fluoride A2DP Sink SDP
+
+config GATT_CL_MAX_LCB
+  int "Max GATT CL LCB"
+  default 8
+  help
+    Max GATT CL LCB
+
+config HF_CLIENT_MAX_DEVICES
+  int "Maximum number of HF devices supported simultaneously"
+  default 2
+  help
+    Maximum number of HF devices supported simultaneously
+
+config SDP_MAX_CONNECTIONS
+  int "The maximum number of simultaneous client and server connections."
+  default 2
+  help
+    The maximum number of simultaneous client and server connections.
+
+config BT_RC_NUM_APP
+  int "Change this macro to use multiple RC"
+  default 2
+  help
+    Change this macro to use multiple RC.
+
+config AVDT_NUM_LINKS
+  int "Number of simultaneous links to different peer devices."
+  default 6
+  help
+    Number of simultaneous links to different peer devices.
+
+config AVDT_NUM_SEPS
+  int "Number of simultaneous stream endpoints."
+  default 2
+  help
+    Number of simultaneous stream endpoints.
+
+config MAX_ACL_CONNECTIONS
+  int "The maximum number of simultaneous links that ACL can support."
+  default 2
+  help
+    The maximum number of simultaneous links that ACL can support.
+
+config SDP_MAX_RECORDS
+  int "The maximum number of SDP records the server can support."
+  default 10
+  help
+    The maximum number of SDP records the server can support.
+
+config SDP_MAX_REC_ATTR
+  int "The maximum number of attributes in each record."
+  default 10
+  help
+    The maximum number of attributes in each record.
+
+config SDP_MAX_DISC_SERVER_RECS
+  int "The maximum number of record handles retrieved in a search."
+  default 10
+  help
+    The maximum number of record handles retrieved in a search.
+
+config BTM_MAX_SCO_LINKS
+  int "The number of SCO links."
+  default 2
+  help
+    The number of SCO links.
+
+config BTM_SEC_MAX_DEVICE_RECORDS
+  int "The number of security records for peer devices."
+  default 20
+  help
+    The number of security records for peer devices.
+
+config BTM_SEC_MAX_SERVICE_RECORDS
+  int "The number of security records for services."
+  default 8
+  help
+    The number of security records for services.
+
+config BTM_INQ_DB_SIZE
+  int "The size in bytes of the BTM inquiry database."
+  default 10
+  help
+    The size in bytes of the BTM inquiry database.
+
+config BTM_LOCAL_IO_CAPS
+  int "The IO capability of the local device (for Simple Pairing)."
+  default 3
+  help
+    The IO capability of the local device (for Simple Pairing).
+
+config SC_MODE_INCLUDED
+  bool "4.1/4.2 secure connections feature"
+  default n
+  help
+    The option of 4.1/4.2 secure connections feature
+
+config FLUORIDE_EXAMPLES
+  bool "Enable Fluoride Examples"
+  default n
+  help
+    Activate examples that provides Bluetooth commands to the
+    console.
+
+if FLUORIDE_EXAMPLES
+
+config FLUORIDE_EXAMPLES_A2DP_SINK
+  bool "Enable Fluoride A2DP Sink Example"
+  default n
+  select BTA_AV_SINK_INCLUDED
+  help
+    Enable Fluoride A2DP Sink Example
+
+endif
+
+if AUDIO
+
+config FLUORIDE_A2DP_SINK_DEVNAME
+  string "Fluoride Avrcp A2DP Sink Device Name"
+  default "/dev/audio/pcm0p"
+
+endif
+
+endif
+
+endmenu

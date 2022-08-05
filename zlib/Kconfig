@@ -1,0 +1,83 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_ZLIB
+	tristate "zlib data compression library"
+	default n
+
+if LIB_ZLIB
+
+config UTILS_GZIP
+	bool "GZIP tool"
+	default n
+	---help---
+		Enable gzip utility
+
+if UTILS_GZIP
+config UTILS_GZIP_PROGNAME
+	string "Programe Name"
+	default "gzip"
+
+config UTILS_GZIP_PRIORITY
+	int "gzip utility priority"
+	default 100
+
+config UTILS_GZIP_STACKSIZE
+	int "gzip utility statcksize"
+	default 32768
+endif
+
+config UTILS_ZIP
+	bool "ZIP tool"
+	default n
+	---help---
+		Enable zip utility
+
+if UTILS_ZIP
+config UTILS_ZIP_PROGNAME
+	string "Programe Name"
+	default "zip"
+
+config UTILS_ZIP_PRIORITY
+	int "zip utility priority"
+	default 100
+
+config UTILS_ZIP_STACKSIZE
+	int "zip utility statcksize"
+	default 32768
+endif
+
+config UTILS_UNZIP
+	bool "UNZIP tool"
+	default n
+	---help---
+		Enable unzip utility
+
+if UTILS_UNZIP
+config UTILS_UNZIP_PROGNAME
+	string "Programe Name"
+	default "unzip"
+
+config UTILS_UNZIP_PRIORITY
+	int "unzip utility priority"
+	default 100
+
+config UTILS_UNZIP_STACKSIZE
+	int "unzip utility statcksize"
+	default 32768
+endif
+
+endif

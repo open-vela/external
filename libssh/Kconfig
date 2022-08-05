@@ -1,0 +1,41 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_SSH
+	bool "Enable libssh"
+	select LIBC_EXECFUNCS
+	select PSEUDOTERM
+	select SERIAL_TERMIOS
+	depends on LIB_MBEDTLS
+	default n
+	---help---
+		a library for accessing ssh client services through C libraries calls in a simple manner.
+
+config UTILS_SSH
+	tristate "Enable ssh tool"
+	depends on LIB_SSH
+	---help---
+		Enable ssh utility
+
+if UTILS_SSH
+config UTILS_SSH_PRIORITY
+	int "ssh utility priority"
+	default 100
+
+config UTILS_SSH_STACKSIZE
+	int "ssh utility statcksize"
+	default 16384
+endif

@@ -1,0 +1,146 @@
+#
+# For a description of the syntax of this configuration file,
+# see kconfig-language at https://www.kernel.org/doc/Documentation/kbuild/kconfig-language.txt
+#
+
+menu "Crypto: mbed tls library"
+
+config LIB_MBEDTLS
+	bool "The mbed tls library support"
+	select DEV_URANDOM
+	default n
+	---help---
+		Enable support for the mbed tls library
+
+if LIB_MBEDTLS
+
+config MBEDTLS_DEBUG_C
+  bool "This module provides debugging functions."
+  default n
+  help
+    This module provides debugging functions.
+
+config MBEDTLS_SSL_MAX_CONTENT_LEN
+  int "Maximum length (in bytes) of incoming and outgoing plaintext fragments."
+  default 16384
+  help
+    Maximum length (in bytes) of incoming and outgoing plaintext fragments.
+
+config MBEDTLS_SSL_SRV_C
+  bool "This module is required for SSL/TLS server support."
+  default n
+  help
+    This module is required for SSL/TLS server support.
+
+config MBEDTLS_PLATFORM_MEMORY
+  bool "Enable the memory allocation layer."
+  default n
+  help
+
+config MBEDTLS_ENTROPY_HARDWARE_ALT
+  bool "Uncomment this macro to let mbed TLS use your own implementation of a hardware entropy collector."
+  default n
+  help
+
+config MBEDTLS_AES_ROM_TABLES
+  bool "Store the AES tables in ROM."
+  default n
+  help
+
+config MBEDTLS_REMOVE_ARC4_CIPHERSUITES
+  bool "Remove RC4 ciphersuites by default in SSL / TLS."
+  default y
+  help
+
+config MBEDTLS_NO_PLATFORM_ENTROPY
+  bool "Do not use built-in platform entropy functions."
+  default n
+  help
+
+config MBEDTLS_SELF_TEST
+  bool "Enable the checkup functions (*_self_test)."
+  default n
+  help
+
+config MBEDTLS_SSL_DTLS_CLIENT_PORT_REUSE
+  bool "Enable server-side support for clients that reconnect from the same port."
+  default y
+  help
+
+config MBEDTLS_BLOWFISH_C
+  bool "Enable the Blowfish block cipher."
+  default y
+  help
+
+config MBEDTLS_CAMELLIA_C
+  bool "Enable the Camellia block cipher."
+  default y
+  help
+
+config MBEDTLS_CERTS_C
+  bool "Enable the test certificates."
+  default y
+  help
+
+config MBEDTLS_PADLOCK_C
+  bool "Enable VIA Padlock support on x86."
+  default y
+  help
+
+config MBEDTLS_TIMING_C
+  bool "Enable the semi-portable timing interface."
+  default y
+  help
+
+config MBEDTLS_SSL_KEEP_PEER_CERTIFICATE
+  bool "Enable the availability of the API mbedtls_ssl_get_peer_cert() giving access to the peer's certificate after completion of the handshake."
+  default y
+  help
+
+config MBEDTLS_SSL_PROTO_DTLS
+  bool "Enable support for DTLS (all available versions)."
+  default y
+  help
+
+if MBEDTLS_SSL_PROTO_DTLS
+
+config MBEDTLS_SSL_DTLS_ANTI_REPLAY
+  bool "Enable support for the anti-replay mechanism in DTLS."
+  default y
+  help
+
+config MBEDTLS_SSL_DTLS_HELLO_VERIFY
+  bool "Enable support for HelloVerifyRequest on DTLS servers."
+  default y
+  help
+
+config MBEDTLS_SSL_DTLS_BADMAC_LIMIT
+  bool "Enable support for a limit of records with bad MAC."
+  default y
+  help
+
+endif
+
+config MBEDTLS_SSL_ALPN
+  bool "Enable support for RFC 7301 Application Layer Protocol Negotiation."
+  default y
+  help
+
+config MBEDTLS_AESNI_C
+  bool "Enable AES-NI support on x86-64."
+  default y
+  help
+
+config MBEDTLS_ECP_WINDOW_SIZE
+  int "Maximum window size used"
+  default 6
+  help
+
+config MBEDTLS_ECP_FIXED_POINT_OPTIM
+  bool "Enable fixed-point speed-up"
+  default y
+  help
+
+endif
+
+endmenu

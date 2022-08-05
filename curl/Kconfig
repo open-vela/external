@@ -1,0 +1,69 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_CURL
+	bool "Enable libcurl"
+	select LIBC_LOCALTIME
+	select LIBC_SCANSET
+	default n
+	---help---
+		libcurl
+
+if LIB_CURL
+
+config LIB_CURL_CA_BUNDLE
+	string "Curl Certificate Authorize Bundle PATH"
+	default "/etc/ssl/curl/cacert.pem"
+
+config LIB_CURL_PTHREAD_STACKSIZE
+	int "libcurl pthread stack size"
+	default 6144
+	---help---
+		Stack size to use libcurl thread.
+
+endif
+
+config TOOLS_CURL
+	tristate "Enable curl command line"
+	select LIB_CURL
+	default n
+	---help---
+		curl
+
+if TOOLS_CURL
+
+config TOOLS_CURL_MANUAL
+	bool "Enable the curl --manual option, which is huge."
+	default n
+	---help---
+		curl --manual option may be helpful.
+
+config TOOLS_CURL_PROGNAME
+	string "Program name"
+	default "curl"
+	---help---
+		This is the name of the program that will be used when the NSH ELF
+		program is installed.
+
+config TOOLS_CURL_PRIORITY
+	int "curl task priority"
+	default 100
+
+config TOOLS_CURL_STACKSIZE
+	int "curl stack size"
+	default 8192
+
+endif
