@@ -17,8 +17,9 @@
 include $(APPDIR)/Make.defs
 
 subdir := $(notdir $(CURDIR))
-
+ifneq ($(wildcard $(CURDIR)/$(subdir)),)
 $(MAKECMDGOALS)::
 	$(Q) $(MAKE) -C $(CURDIR)/$(subdir) -f $(CURDIR)/Submake.mk -I $(TOPDIR) $(MAKECMDGOALS)
+endif
 
 include $(APPDIR)/Application.mk
