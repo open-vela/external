@@ -1,0 +1,50 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+CC = gcc
+
+BIN      = bsdiff/bsdiff
+
+BZ2PATH = ../bzip2/bzip2
+INCLUDE += -I$(BZ2PATH)
+SRCS    += $(BZ2PATH)/blocksort.c    \
+          $(BZ2PATH)/bzlib.c        \
+          $(BZ2PATH)/compress.c     \
+          $(BZ2PATH)/crctable.c     \
+          $(BZ2PATH)/decompress.c   \
+          $(BZ2PATH)/huffman.c      \
+          $(BZ2PATH)/randtable.c
+
+LZ4PATH = ../lz4/lz4
+INCLUDE += -I$(LZ4PATH)/lib
+SRCS += $(wildcard $(LZ4PATH)/lib/*.c)
+
+ZLIBPATH   = ../zlib/zlib
+SRCS    += $(ZLIBPATH)/crc32.c
+INCLUDE += -I$(ZLIBPATH)
+
+SRCS    += bsdiff/bsdiff.c
+CFLAGS  += -DBSDIFF_EXECUTABLE
+CFLAGS  += -DFAR=
+
+all: $(BIN)
+.PHONY: clean
+
+$(BIN): $(SRCS)
+	$(CC) $(INCLUDE) $(SRCS) -o $(BIN) $(CFLAGS)
+
+clean:
+	rm -rf $(BIN)

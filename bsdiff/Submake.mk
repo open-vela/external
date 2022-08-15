@@ -31,6 +31,7 @@ ifneq ($(CONFIG_LIB_LZ4),)
 CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lz4/lz4/lib}
 endif
 
+CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 MAINSRC = bspatch.c
 endif
 
