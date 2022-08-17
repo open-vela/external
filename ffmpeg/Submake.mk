@@ -43,6 +43,10 @@ ifneq ($(CONFIG_LIB_MBEDTLS),)
   CFG_CMDS += --enable-mbedtls
 endif
 
+ifeq ($(CONFIG_ARM_NEON),)
+  CFG_CMDS += --disable-neon
+endif
+
 FFLIBS-$(CONFIG_AVCODEC)    += avcodec
 FFLIBS-$(CONFIG_AVDEVICE)   += avdevice
 FFLIBS-$(CONFIG_AVFILTER)   += avfilter
