@@ -16,6 +16,10 @@
 
 include $(APPDIR)/Make.defs
 
+ifneq ($(CONFIG_ARCH_BOARD_CUSTOM_NAME),)
+  BIN := $(TOPDIR)/$(CONFIG_ARCH_BOARD_CUSTOM_DIR)/libs/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)/libframework.a
+endif
+
 SBINDIR   := $(BINDIR)
 SINCDIR   := $(INCDIR)
 SAR       := $(AR)
@@ -151,5 +155,6 @@ distclean::
 	rm -f .version config.h ffbuild/.config ffbuild/config*
 	rm -f libavutil/avconfig.h libavutil/ffversion.h
 	find ./ -name "*_list.c" | xargs rm -f
+	rm -rf $(TOPDIR)/$(CONFIG_ARCH_BOARD_CUSTOM_DIR)/libs/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
 
 include $(APPDIR)/Application.mk
