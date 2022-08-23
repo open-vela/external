@@ -332,6 +332,7 @@ context::
 	$(Q) ln -sf ../../include/fs port/include/fs
 	$(Q) ln -sf ../../include/settings port/include/settings
 	$(Q) ln -sf ../../include/power port/include/power
+	$(Q) ln -sf ../../include/random port/include/random
 	$(Q) ln -sf shell.c port/subsys/bluetooth/shell/bredr.c
 	$(Q) ln -sf shell.c port/subsys/bluetooth/shell/bt.c
 	$(Q) ln -sf shell.c port/subsys/bluetooth/shell/gatt.c
@@ -348,6 +349,7 @@ clean::
 	$(call DELFILE, port/include/fs)
 	$(call DELFILE, port/include/settings)
 	$(call DELFILE, port/include/power)
+	$(call DELFILE, port/include/random)
 	$(call DELFILE, port/subsys/bluetooth/shell/bredr.c)
 	$(call DELFILE, port/subsys/bluetooth/shell/bt.c)
 	$(call DELFILE, port/subsys/bluetooth/shell/gatt.c)
