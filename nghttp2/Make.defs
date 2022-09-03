@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_NGHTTP2),)
 CONFIGURED_APPS += $(APPDIR)/external/nghttp2
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/nghttp2/nghttp2/lib/includes}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/nghttp2/nghttp2/lib/includes}
 endif

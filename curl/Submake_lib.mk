@@ -18,9 +18,7 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += -I.
 CFLAGS += -DHAVE_CONFIG_H
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/curl/curl/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/nghttp2/nghttp2/lib/includes}
 
 CSRCS = $(wildcard *.c)
 CSRCS += $(wildcard ./vauth/*.c)

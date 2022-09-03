@@ -25,7 +25,6 @@ CFLAGS += -Dconfig_init=curl_config_init
 CFLAGS += -Dstr2num=curl_str2num
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/curl/curl/lib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/curl/curl/include}
 
 ifeq ($(CONFIG_TOOLS_CURL_MANUAL),y)
 CFLAGS += -DUSE_MANUAL
