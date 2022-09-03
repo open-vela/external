@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_CMOCKA),)
 CONFIGURED_APPS += $(APPDIR)/external/cmocka
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/cmocka/cmocka/include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/cmocka/cmocka/include}
 endif

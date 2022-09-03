@@ -16,7 +16,6 @@
 
 include $(APPDIR)/Make.defs
 
-CSRCS  += $(wildcard cmocka/src/*.c)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/cmocka/cmocka/include}
+CSRCS += $(wildcard cmocka/src/*.c)
 
 include $(APPDIR)/Application.mk
