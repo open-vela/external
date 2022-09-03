@@ -18,6 +18,4 @@ include $(APPDIR)/Make.defs
 
 CSRCS = $(wildcard enet/*.c)
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" enet/include}
-
 include $(APPDIR)/Application.mk
