@@ -15,7 +15,7 @@
 #
 
 config UTILS_BSDIFF
-	bool "bsdiff library"
+	tristate "bsdiff library"
 	default n
 	---help---
 		Enable support for bsdiff library
