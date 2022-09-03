@@ -16,4 +16,8 @@
 
 ifneq ($(CONFIG_LIB_ARM2D),)
 CONFIGURED_APPS += $(APPDIR)/external/EndpointAI
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
+            $(APPDIR)/external/EndpointAI/EndpointAI/Kernels/Research/Arm-2D/Library/Include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
+              $(APPDIR)/external/EndpointAI/EndpointAI/Kernels/Research/Arm-2D/Library/Include}
 endif
