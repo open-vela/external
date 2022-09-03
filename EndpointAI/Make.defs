@@ -14,6 +14,6 @@
 # limitations under the License.
 #
 
-ifeq ($(CONFIG_ARM2D),y)
+ifneq ($(CONFIG_LIB_ARM2D),)
 CONFIGURED_APPS += $(APPDIR)/external/EndpointAI
 endif
