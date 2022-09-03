@@ -16,10 +16,30 @@
 
 include $(APPDIR)/Make.defs
 
-subdir := $(notdir $(CURDIR))
+CFLAGS += -DHAVE_CONFIG_H
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 
-$(MAKECMDGOALS)::
-	$(Q) $(MAKE) -C $(CURDIR)/$(subdir)/lib -f $(CURDIR)/Submake_lib.mk -I $(TOPDIR) $(MAKECMDGOALS)
-	$(Q) $(MAKE) -C $(CURDIR)/$(subdir)/src -f $(CURDIR)/Submake_src.mk -I $(TOPDIR) $(MAKECMDGOALS)
+CSRCS = $(wildcard curl/lib/*.c)
+CSRCS += $(wildcard curl/lib/vauth/*.c)
+CSRCS += $(wildcard curl/lib/vtls/*.c)
+
+ifneq ($(CONFIG_TOOLS_CURL),)
+PROGNAME  = $(CONFIG_TOOLS_CURL_PROGNAME)
+PRIORITY  = $(CONFIG_TOOLS_CURL_PRIORITY)
+STACKSIZE = $(CONFIG_TOOLS_CURL_STACKSIZE)
+MODULE    = $(CONFIG_TOOLS_CURL)
+
+ifeq ($(CONFIG_TOOLS_CURL_MANUAL),y)
+CFLAGS += -DUSE_MANUAL
+endif
+
+CFLAGS += -Dconfig_init=curl_config_init
+CFLAGS += -Dstr2num=curl_str2num
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" curl/lib}
+
+MAINSRC = curl/src/tool_main.c
+CSRCS  += $(filter-out $(MAINSRC),$(wildcard curl/src/*.c))
+endif
 
 include $(APPDIR)/Application.mk
