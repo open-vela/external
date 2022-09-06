@@ -27,7 +27,6 @@ CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CSRCS    += sysklogd/src/timer.c     \
             sysklogd/src/socket.c    \
             sysklogd/lib/pidfile.c   \
-            sysklogd/lib/strlcat.c   \
             sysklogd/lib/utimensat.c
 MAINSRC   = sysklogd/src/syslogd.c
 
