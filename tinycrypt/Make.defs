@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_TINYCRYPT),)
 CONFIGURED_APPS += $(APPDIR)/external/tinycrypt
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinycrypt/tinycrypt/lib/include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinycrypt/tinycrypt/lib/include}
 endif
