@@ -16,4 +16,8 @@
 
 ifneq ($(CONFIG_LIB_SILK),)
 CONFIGURED_APPS += $(APPDIR)/external/silk-v3-decoder
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
+    $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
+    $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
 endif
