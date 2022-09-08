@@ -32,7 +32,7 @@ CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/freetype}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/stb}
 
-ifeq ($(ARCH),arm)
+ifneq ($(CONFIG_ARM_NEON),)
 ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/pixman}
 endif
