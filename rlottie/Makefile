@@ -17,7 +17,6 @@
 include $(APPDIR)/Make.defs
 
 CXXEXT := .cpp
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/inc}
 
 CXXSRCS  += $(wildcard rlottie/src/binding/c/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/lottie/*.cpp)
