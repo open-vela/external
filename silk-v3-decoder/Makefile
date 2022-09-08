@@ -17,6 +17,5 @@
 include $(APPDIR)/Make.defs
 
 CSRCS  += $(wildcard silk-v3-decoder/silk/src/*.c)
-CFLAGS += -DNO_ASM
 
 include $(APPDIR)/Application.mk
