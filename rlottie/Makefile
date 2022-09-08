@@ -17,7 +17,6 @@
 include $(APPDIR)/Make.defs
 
 CXXEXT := .cpp
-# CXXFLAGS += -fpermissive
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/inc}
 
 CXXSRCS  += $(wildcard rlottie/src/binding/c/*.cpp)
@@ -26,15 +25,11 @@ CXXSRCS  += $(wildcard rlottie/src/vector/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/freetype/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/stb/*.cpp)
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/binding/c}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/lottie}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/freetype}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/stb}
 
 ifneq ($(CONFIG_ARM_NEON),)
 ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/pixman}
 endif
 
 include $(APPDIR)/Application.mk
