@@ -7,9 +7,6 @@
 /* Define to 1 if you have the `fork' function. */
 /* #undef HAVE_FORK */
 
-/* Define to 1 if you have the `setsid' function. */
-/* #undef HAVE_SETSID */
-
 /* Define to 1 if you have the `getprogname' function. */
 #define HAVE_GETPROGNAME 1
 
@@ -21,6 +18,9 @@
 
 /* Define to 1 if you have the `pidfile' function. */
 /* #undef HAVE_PIDFILE */
+
+/* Define to 1 if you have the `setsid' function. */
+/* #undef HAVE_SETSID */
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -52,9 +52,6 @@
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
-/* Define to 1 if you have the <fcntl.h> header file. */
-#define HAVE_FCNTL_H 1
-
 /* Define to 1 if you have the `utimensat' function. */
 /* #undef HAVE_UTIMENSAT */
 
@@ -77,7 +74,7 @@
 #define PACKAGE_NAME "sysklogd"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "sysklogd 2.3.0-beta1"
+#define PACKAGE_STRING "sysklogd 2.4.4"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "sysklogd"
@@ -86,10 +83,10 @@
 #define PACKAGE_URL "https://github.com/troglobit/sysklogd"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.3.0-beta1"
+#define PACKAGE_VERSION "2.4.4"
 
 /* Define to 1 if you have the ANSI C header files. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "2.3.0-beta1"
+#define VERSION "2.4.4"
