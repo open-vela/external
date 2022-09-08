@@ -24,6 +24,7 @@ CXXSRCS  += $(wildcard rlottie/src/vector/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/freetype/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/stb/*.cpp)
 
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/freetype}
 
