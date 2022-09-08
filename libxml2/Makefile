@@ -36,7 +36,7 @@ CSRCS  += libxml2/xmlIO.c
 CSRCS  += libxml2/xmlmemory.c
 CSRCS  += libxml2/xmlstring.c
 CSRCS  += libxml2/xpath.c
-CFLAGS += ${shell  $(INCDIR) $(INCDIROPT) "$(CC)" libxml2/include}
+
 CFLAGS += ${shell  $(INCDIR) $(INCDIROPT) "$(CC)" libxml2}
 
 include $(APPDIR)/Application.mk

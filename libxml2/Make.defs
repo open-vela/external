@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_XML2),)
 CONFIGURED_APPS += $(APPDIR)/external/libxml2
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libxml2/libxml2/include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libxml2/libxml2/include}
 endif
