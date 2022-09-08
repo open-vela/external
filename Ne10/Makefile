@@ -36,7 +36,6 @@ ASRCS += $(wildcard Ne10/modules/imgproc/*.s)
 ASRCS += $(wildcard Ne10/modules/math/*.s)
 ASRCS += $(wildcard Ne10/modules/physics/*.s)
 
-FLAGS += -INe10/inc
 FLAGS += -INe10/common
 FLAGS += -INe10/modules/math
 

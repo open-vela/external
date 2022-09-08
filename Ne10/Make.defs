@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_NE10),)
 CONFIGURED_APPS += $(APPDIR)/external/Ne10
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/Ne10/Ne10/inc}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/Ne10/Ne10/inc}
 endif
