@@ -19,13 +19,11 @@ include $(APPDIR)/Make.defs
 ifneq ($(CONFIG_ARM_NEON),)
 CSRCS += $(wildcard ./arm/*.c)
 ASRCS += $(wildcard ./arm/*.S)
-AFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libpng}
 else
 CFLAGS += -DPNG_ARM_NEON_IMPLEMENTATION=0
 endif
 
 CFLAGS += -Dcrc32=zlib_crc32
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libpng}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 CSRCS += $(filter-out pngtest.c, $(wildcard *.c))
 
