@@ -17,7 +17,7 @@
 include $(APPDIR)/Make.defs
 
 CXXEXT = .cpp
-CXXSRCS = $(wildcard aac/src/*$(CXXEXT))
+CXXSRCS = $(wildcard aac/*/src/*$(CXXEXT))
 
 CXXFLAGS += -Wno-undef
 
