@@ -1,0 +1,392 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "BARROT Bluelet Stack Configuration"
+
+menuconfig LIB_BLUELET
+  bool "BARROT Bluelet Stack"
+  default n
+  help
+    Enable support for the BARROT Bluetooth stack
+
+if LIB_BLUELET
+
+config QBUF_COUNT
+  int "Default buffer number in one Linked RingBuffer node, for optimize"
+  default 20
+  help
+    Default buffer number in one Linked RingBuffer node, for optimize
+
+config MEMORY_STATIC
+  bool "Use static memory allocation"
+  default n
+  help
+    Bluetooth H:4 UART driver. Requires hardware flow control
+    lines to be available.
+
+if MEMORY_STATIC
+
+config BLOCK_POWER
+  int "Static memory pool block size(power of 2)"
+  default 3
+  help
+    Static memory pool block size(power of 2)
+
+config BLOCK_NUMBER
+  int "Static memory pool block numbers,(32,64,..)"
+  default 3000
+  help
+    Static memory pool block numbers,(32,64,..)
+
+endif
+
+config BREDR
+  bool "BR/EDR needed"
+  default y
+  help
+    BR/EDR needed.
+
+config RFCOMM
+  bool "RFCOMM supported"
+  default n
+  help
+    RFCOMM supported
+
+config BNEP
+  bool "Bluetooth Network Encapsulation Protocol"
+  default n
+  help
+    Bluetooth Network Encapsulation Protocol
+
+config LE
+  bool "BLE supported"
+  default n
+  help
+    BLE supported
+
+if LE
+
+config LE_AUDIO
+  bool "LE Audio supported"
+  default n
+  help
+    LE Audio supported
+
+if LE_AUDIO
+
+config LE_OTP
+  bool "LE OTP/OTS supported"
+  default n
+  help
+    LE OTP/OTS supported
+
+endif
+
+endif
+
+config A2DP
+  bool "A2DP Support"
+  default n
+  help
+    A2DP Support
+
+if A2DP
+config AAC_ENABLED
+  bool "A2DP AAC codec support"
+  default n
+  help
+    A2DP AAC codec enable
+
+config BLUELET_A2DP_SBC_MAX_BIT_POOL
+  int "A2DP sbc codec max bit pool"
+  default 32
+  help
+    A2DP sbc codec max bit pool 1~53
+
+config BLUELET_AVRCP_TG_ABSVOL_SUPPORT
+  bool "Avrcp target absolute volume support"
+  default n
+  help
+    Avrcp target absolute volume support
+
+config BLUELET_AVRCP_MAX_CONNECTIONS
+  int "Avrcp max connections"
+  default 1
+  help
+    Avrcp max connections
+endif
+
+config HFP
+  bool "Hands-Free/Headset profile support"
+  default n
+  help
+    Hands-Free/Headset profile support
+
+if HFP
+choice
+  prompt "Hands-Free/Headset"
+  default HFP_HF
+  config HFP_HF
+  bool "Hands-Free/Headset profile Hands-Free"
+  config HFP_AG
+  bool "Hands-Free/Headset profile Audio-Gateway"
+endchoice
+endif
+
+config OBEX
+  bool "Generic OBEX profile"
+  default n
+  help
+    Generic OBEX profile
+
+if OBEX
+
+config BIP
+  bool "Obex basic imaging"
+  default n
+  help
+    Obex basic imaging
+
+config PBAP
+  bool "Obex Phone Book Access"
+  default n
+  help
+    Obex Phone Book Access
+
+config MAP
+  bool "Obex Message Access"
+  default n
+  help
+    Obex Message Access
+
+endif
+
+config OPP
+  bool "Object push"
+  default n
+  help
+    Object push
+
+config HID
+  bool "Human Interface Device profile"
+  default n
+  help
+    Human Interface Device profile
+
+config PAN
+  bool "Personal Area Networking Profile"
+  default n
+  select BNEP
+  help
+    Personal Area Networking Profile
+
+config TWS
+  bool "TWS Private Synchronization"
+  default n
+  help
+    TWS Private Synchronization
+
+config BLUELET_HCI_H4
+  bool "H:4 UART"
+  default n
+  help
+    Bluetooth H:4 UART driver. Requires hardware flow control
+    lines to be available.
+
+if BLUELET_HCI_H4
+
+config BLUELET_HCI_UART_NAME
+  string "Device Name of UART Device for Bluetooth"
+  default "/dev/ttyBT0"
+  help
+    This option specifies the name of UART device to be used
+    for Bluetooth.
+
+endif
+
+config BLUELET_HCI_RX_STACKSIZE
+  int "BT HCI RX thread stack size"
+  default 4096
+  help
+    Bluetooth HCI RX thread stack size.
+
+config BLUELET_DEBUG
+  bool "Bluelet debug switch"
+  default n
+
+if BLUELET_DEBUG
+
+config BLUELET_DBG_ATT
+  bool "Bluelet ATT protocol debug switch"
+  default n
+  help
+    Attribute Protocol debug switch
+
+config BLUELET_DBG_AVCTP
+  bool "Bluelet AVCTP debug switch"
+  default n
+  help
+    A/V Control Transport Protocol debug switch
+
+config BLUELET_DBG_AVDTP
+  bool "Bluelet AVDTP debug switch"
+  default n
+  help
+    A/V Distribution Transport Protocol debug switch
+
+config BLUELET_DBG_AVRCP
+  bool "Bluelet AVRCP debug switch"
+  default n
+  help
+    A/V Remote Control Profile debug switch
+
+config BLUELET_DBG_BAP
+  bool "Bluelet BAP debug switch"
+  default n
+  help
+    Basic Audio Profile debug switch
+
+config BLUELET_DBG_HCI
+  bool "Bluelet HCI layer debug switch"
+  default y
+  help
+    Host Controller Interface layer debug switch
+
+config BLUELET_DBG_HCIRAW
+  bool "Bluelet HCIRAW data debug switch"
+  default y
+  help
+    HCI Raw data debug switch
+
+config BLUELET_DBG_HFP
+  bool "Bluelet HFP debug switch"
+  default n
+  help
+    Hands-Free Profile debug switch
+
+config BLUELET_DBG_ISORAW
+  bool "Bluelet ISORAW debug switch"
+  default n
+  help
+    Isochronous Channels Raw debug switch
+
+config BLUELET_DBG_L2CAP
+  bool "Bluelet L2CAP layer debug switch"
+  default n
+  help
+    Logical Link Control and Adaptation protocol debug switch
+
+config BLUELET_DBG_OBEX
+  bool "Bluelet OBEX debug switch"
+  default n
+  help
+    Object Exchange Protocol debug switch
+
+config BLUELET_DBG_OTS
+  bool "Bluelet OTS/OTP debug switch"
+  default n
+  help
+    Object Transfer Service debug switch
+
+config BLUELET_DBG_RFCOMM
+  bool "Bluelet RFCOMM debug switch"
+  default n
+  help
+    RFCOMM debug switch
+
+config BLUELET_DBG_SDP
+  bool "Bluelet SDP debug switch"
+  default n
+  help
+    Service Discovery Protocol debug switch
+
+config BLUELET_DBG_SMP
+  bool "Bluelet SMP debug switch"
+  default n
+  help
+    Security Manage Protocol debug switch
+
+config BLUELET_DBG_TIMER
+  bool "Bluelet fsm timer debug switch"
+  default n
+config BLUELET_DBG_TIMER_ALL
+  bool "Bluelet fsm timer all debug switch"
+  default n
+
+endif #BLUELET_DEBUG
+
+if BLUELET_DBG_HCIRAW
+
+config BLUELET_HCI_SNOOP_LOG_EN
+  bool "Bluelet HCI snoop log enable"
+  default y
+
+endif #BLUELET_DBG_HCIRAW
+
+if BLUELET_HCI_SNOOP_LOG_EN
+
+config BLUELET_HCI_SNOOP_CREATE_NEW
+  bool "Bluelet HCI snoop create new file"
+  default y
+
+endif #BLUELET_HCI_SNOOP_LOG_EN
+
+config BLUELET_CHECK_STACK
+  bool "Bluelet check stack"
+  default n
+
+config BLUELET_MEMORY_LEAK_DETECT
+  bool "Bluelet memory leak detect"
+  default n
+
+config BLUELET_PTS_TEST
+  bool "Bluelet PTS test"
+  default n
+
+endif
+
+config BLUELET_HCI_SNOOP_LOG_PATH
+  string "Bluelet HCI snoop log path"
+  default "/data/misc/bt/snoop/"
+  depends on BLUETOOTH_BRIDGE_BTSNOOP || BLUELET_HCI_SNOOP_LOG_EN
+  ---help---
+    Bluetooth hci dump file path
+
+config BLUELET_EXAMPLES
+  bool "Bluelet Examples"
+  default n
+  help
+    Bluelet Examples
+
+if BLUELET_EXAMPLES
+
+config BLUELET_EXAMPLES_PRIORITY
+	int "Bluelet Examples priority"
+	default 100
+
+config BLUELET_EXAMPLES_STACKSIZE
+	int "Bluelet Examples size"
+	default DEFAULT_TASK_STACKSIZE
+
+config BLUELET_A2DP_SINK_NUTTX
+  bool "Bluelet A2DP Sink Output to NuttX Device"
+  default n
+  help
+    Bluelet A2DP Sink Output to NuttX Device
+
+endif
+
+endmenu
