@@ -38,7 +38,6 @@ config UTILS_LZ4_PRIORITY
 config UTILS_LZ4_STACKSIZE
 	int "lz4 utility statcksize"
 	default DEFAULT_TASK_STACKSIZE
-
 endif
 
 endif
