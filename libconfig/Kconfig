@@ -20,10 +20,10 @@ config LIBCONFIG
 
 if LIBCONFIG
 config LIBCONFIG_YYINITDEPTH
-    int "initial size of the parser's stacks"
-    default 10
+	int "initial size of the parser's stacks"
+	default 10
 
 config LIBCONFIG_YYMAXDEPTH
-    int "maximum size the stacks can grow to"
-    default 100
+	int "maximum size the stacks can grow to"
+	default 100
 endif
