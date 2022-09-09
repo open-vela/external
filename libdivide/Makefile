@@ -16,7 +16,6 @@
 
 include $(APPDIR)/Make.defs
 
-ifneq ($(CONFIG_UTILS_DIVIDE),)
 MODULE = $(CONFIG_UTILS_DIVIDE)
 PRIORITY = $(CONFIG_UTILS_DIVIDE_PRIORITY)
 STACKSIZE = $(CONFIG_UTILS_DIVIDE_STACKSIZE)
@@ -24,8 +23,10 @@ STACKSIZE = $(CONFIG_UTILS_DIVIDE_STACKSIZE)
 PROGNAME = divide_benchmark divide_benchmark_branchfree divide_test_c99 divide_tester
 MAINSRC = benchmark.cpp benchmark_branchfree.cpp test_c99.c tester.cpp
 
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libdivide}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libdivide}
+
 CXXEXT := .cpp
 VPATH += libdivide/test
-endif
 
 include $(APPDIR)/Application.mk
