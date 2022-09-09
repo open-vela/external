@@ -18,8 +18,151 @@ include $(APPDIR)/Make.defs
 
 subdir := $(notdir $(CURDIR))
 ifneq ($(wildcard $(CURDIR)/$(subdir)),)
-$(MAKECMDGOALS)::
-	$(Q) $(MAKE) -C $(CURDIR)/$(subdir) -f $(CURDIR)/Submake.mk -I $(TOPDIR) $(MAKECMDGOALS)
+STACKDIR 	 := $(subdir)/src/stack
+ADAPTERDIR := $(subdir)/src/samples/stack_adapter
+
+CSRCS += $(wildcard $(STACKDIR)/btcommon/*.c)
+CSRCS += $(wildcard $(STACKDIR)/bluelet/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/hci/*.c)
+CSRCS += $(wildcard $(STACKDIR)/l2cap/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/avdtp/*.c)
+CSRCS += $(wildcard $(STACKDIR)/avctp/*.c)
+CSRCS += $(wildcard $(STACKDIR)/avrcp/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/a2dp/*.c)
+CSRCS += $(wildcard $(STACKDIR)/a2dputil/*.c)
+CSRCS += $(wildcard $(STACKDIR)/sbc/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/sco/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/sdp/*.c)
+CSRCS += $(wildcard $(STACKDIR)/sdap/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/gap/*.c)
+
+CSRCS += $(wildcard $(STACKDIR)/ots/*.c)
+CSRCS += $(wildcard $(ADAPTERDIR)/src/*.c)
+
+ifeq ($(CONFIG_LE),y)
+  CSRCS += $(wildcard $(STACKDIR)/att/*.c)
+  CSRCS += $(wildcard $(STACKDIR)/smp/*.c)
+
+  ifeq ($(CONFIG_LE_AUDIO),y)
+    CSRCS += $(wildcard $(STACKDIR)/le_audio/*.c)
+  endif
 endif
 
+ifeq ($(CONFIG_HID),y)
+  CSRCS  += $(wildcard $(STACKDIR)/hid/*.c)
+  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/hid}
+endif
+
+ifeq ($(CONFIG_RFCOMM),y)
+  CSRCS  += $(wildcard $(STACKDIR)/rfcomm/*.c)
+  CSRCS  += $(wildcard $(STACKDIR)/spp/*.c)
+  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/rfcomm}
+endif
+
+ifeq ($(CONFIG_OBEX),y)
+  CSRCS += $(wildcard $(STACKDIR)/obex/*.c)
+
+  ifeq ($(CONFIG_MAP),y)
+    CSRCS += $(wildcard $(STACKDIR)/map/*.c)
+  endif
+  ifeq ($(CONFIG_BIP),y)
+    CSRCS += $(wildcard $(STACKDIR)/bip/*.c)
+  endif
+  ifeq ($(CONFIG_PBAP),y)
+    CSRCS += $(wildcard $(STACKDIR)/pbap/*.c)
+  endif
+endif
+
+ifeq ($(CONFIG_HFP),y)
+  CSRCS += $(wildcard $(STACKDIR)/hfp/*.c)
+endif
+
+ifeq ($(CONFIG_BNEP), y)
+  CSRCS += $(wildcard $(STACKDIR)/bnep/*.c)
+endif
+
+ifeq ($(CONFIG_PAN), y)
+  CSRCS += $(wildcard $(STACKDIR)/pan/*.c)
+endif
+
+CSRCS += $(wildcard $(STACKDIR)/xmlparse/*.c)
+
+ifeq ($(CONFIG_BLUELET_HCI_H4),y)
+  CSRCS += $(STACKDIR)/portings/btunix/h4tl.c
+endif
+
+ifeq ($(CONFIG_BLUELET_A2DP_SINK_NUTTX),y)
+  CSRCS += $(STACKDIR)/portings/btunix/samples/a2dp_sink_nuttx.c
+endif
+
+CSRCS += $(STACKDIR)/portings/btunix/unixdep.c
+
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/portings/btunix}
+
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/*/}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/avnet}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/alcatel}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/nsc}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/stm}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/siw}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(ADAPTERDIR)/inc}
+
+CFLAGS += -Wno-pointer-sign -Wno-format -Wno-unused-variable -Wno-return-type
+CFLAGS += -Wno-unused-value -Wno-unused-but-set-variable -Wno-strict-prototypes
+CFLAGS += -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses -Wno-unused-function
+CFLAGS += -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int
+CFLAGS += -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow
+
+TARGET_PATH = $(APPDIR)/vendor/xiaomi/vela/bluelet
+ifeq ($(CONFIG_ARCH_SIM),y)
+  BOARD_PATH = $(CONFIG_ARCH_CHIP)
+else
+  ifneq ($(CONFIG_ARCH_BOARD_CUSTOM_XIAOMI_PRODUCT_NAME),)
+    BOARD_PATH = $(CONFIG_ARCH_CHIP_CUSTOM_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_XIAOMI_PRODUCT_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
+  else
+    BOARD_PATH = $(CONFIG_ARCH_CHIP_CUSTOM_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
+  endif
+endif
+$(shell cd $(APPDIR)/vendor/xiaomi/vela/ && mkdir -p bluelet &&  \
+                         cd bluelet  && mkdir -p libs )
+$(shell cp -rf $(ADAPTERDIR)/inc  $(TARGET_PATH))
+$(shell cd $(TARGET_PATH)/libs && mkdir -p $(BOARD_PATH))
+LIB_BUILD_PATH =  $(TARGET_PATH)/libs/$(BOARD_PATH)
+
+ifeq ($(CONFIG_SIM_ASAN),y)
+  BIN   = $(LIB_BUILD_PATH)/libbluelet_asan$(LIBEXT)
+else
+  BIN   = $(LIB_BUILD_PATH)/libbluelet$(LIBEXT)
+endif
+
+ifeq ($(CONFIG_BLUELET_EXAMPLES),y)
+
+  CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
+
+  PROGNAME  += bluelet
+  PRIORITY   = $(CONFIG_BLUELET_EXAMPLES_PRIORITY)
+  STACKSIZE  = $(CONFIG_BLUELET_EXAMPLES_STACKSIZE)
+  MODULE     = $(CONFIG_LIB_BLUELET)
+  MAINSRC   += $(STACKDIR)/portings/btunix/samples/bluelet.c
+
+  PROGNAME  += bl_sink
+  MAINSRC   += $(STACKDIR)/portings/btunix/samples/a2dp_sink.c
+
+depend::
+	$(Q) touch $(MAINSRC)
+else
+  CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
+endif
+
+distclean::
+	rm -rf $(LIB_BUILD_PATH)
+
+endif
 include $(APPDIR)/Application.mk
