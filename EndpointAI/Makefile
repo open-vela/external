@@ -17,12 +17,12 @@
 include $(APPDIR)/Make.defs
 
 CSRCS += arm_2d.c
-CSRCS += arm_2d_conversion.c
-CSRCS += arm_2d_async.c
 CSRCS += arm_2d_alpha_blending.c
+CSRCS += arm_2d_async.c
+CSRCS += arm_2d_conversion.c
 CSRCS += arm_2d_draw.c
-CSRCS += arm_2d_rotation.c
 CSRCS += arm_2d_helium.c
+CSRCS += arm_2d_transform.c
 
 CFLAGS += -D__ARM_2D_HAS_ASYNC__=0
 CFLAGS += -Wno-undef -flax-vector-conversions -fms-extensions
