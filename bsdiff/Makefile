@@ -32,7 +32,6 @@ CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lz4/lz4/l
 endif
 
 CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
-CFLAGS    += -Dcrc32=zlib_crc32
 MAINSRC = bsdiff/bspatch.c
 endif
 

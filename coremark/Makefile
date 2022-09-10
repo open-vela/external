@@ -35,11 +35,6 @@ CFLAGS += -DSEED_METHOD=$(CONFIG_UTILS_COREMARK_SEED_METHOD)
 CFLAGS += -DMEM_METHOD=$(CONFIG_UTILS_COREMARK_MEM_METHOD)
 CFLAGS += -DMULTITHREAD=$(CONFIG_UTILS_COREMARK_MULTITHREAD)
 CFLAGS += -DITERATIONS=$(CONFIG_UTILS_COREMARK_ITERATIONS)
-# Rename util function to avoid redefined with system's
-CFLAGS += -Dcrcu8=coremark_crcu8
-CFLAGS += -Dcrc16=coremark_crc16
-CFLAGS += -Dcrcu16=coremark_crcu16
-CFLAGS += -Dcrcu32=coremark_crcu32
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" coremark}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" coremark/posix}
 
