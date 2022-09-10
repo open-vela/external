@@ -30,10 +30,6 @@ PRIORITY  = $(CONFIG_TOOLS_CURL_PRIORITY)
 STACKSIZE = $(CONFIG_TOOLS_CURL_STACKSIZE)
 MODULE    = $(CONFIG_TOOLS_CURL)
 
-ifeq ($(CONFIG_TOOLS_CURL_MANUAL),y)
-CFLAGS += -DUSE_MANUAL
-endif
-
 CFLAGS += -Dconfig_init=curl_config_init
 CFLAGS += -Dstr2num=curl_str2num
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" curl/lib}

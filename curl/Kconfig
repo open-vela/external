@@ -45,12 +45,6 @@ config TOOLS_CURL
 
 if TOOLS_CURL
 
-config TOOLS_CURL_MANUAL
-	bool "Enable the curl --manual option, which is huge."
-	default n
-	---help---
-		curl --manual option may be helpful.
-
 config TOOLS_CURL_PROGNAME
 	string "Program name"
 	default "curl"
