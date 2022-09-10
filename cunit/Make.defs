@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_CUNIT),)
 CONFIGURED_APPS += $(APPDIR)/external/cunit
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/cunit/cunit/CUnit}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/cunit/cunit/CUnit}
 endif

@@ -22,6 +22,4 @@ CSRCS  += $(wildcard cunit/CUnit/Sources/Framework/*.c  \
                      cunit/CUnit/Sources/CI/*.c         \
                      cunit/CUnit/Sources/Console/*.c)
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" cunit/CUnit}
-
 include $(APPDIR)/Application.mk
