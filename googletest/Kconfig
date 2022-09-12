@@ -1,0 +1,62 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_GOOGLETEST
+	tristate "Google's C++ test framework"
+	default n
+
+	---help---
+		Enable googletest and googlemock
+
+config UTILS_GTEST
+	bool "Enable gtest"
+	default n
+	---help---
+		Enable gtest utility
+
+if UTILS_GTEST
+config UTILS_GTEST_PROGNAME
+	string "Programe Name"
+	default "gtest"
+
+config UTILS_GTEST_PRIORITY
+	int "gtest utility priority"
+	default 100
+
+config UTILS_GTEST_STACKSIZE
+	int "gtest utility statcksize"
+	default DEFAULT_TASK_STACKSIZE
+endif
+
+config UTILS_GMOCK
+	bool "Enable gmock"
+	default n
+	---help---
+		Enable gmock utility
+
+if UTILS_GMOCK
+config UTILS_GMOCK_PROGNAME
+	string "Programe Name"
+	default "gmock"
+
+config UTILS_GMOCK_PRIORITY
+	int "gmock utility priority"
+	default 100
+
+config UTILS_GMOCK_STACKSIZE
+	int "gmock utility statcksize"
+	default DEFAULT_TASK_STACKSIZE
+endif
