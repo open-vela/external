@@ -16,15 +16,12 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/compat}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/listhash}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/lib}
-
-ifneq ($(CONFIG_LIB_ZLIB),)
-CFLAGS += -DHAVE_LIBZ
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
-endif
+
 CFLAGS += -DMAXPATHLEN=PATH_MAX
 
 CSRCS  = $(wildcard libtar/lib/*.c)
