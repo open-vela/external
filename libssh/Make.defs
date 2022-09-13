@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_SSH),)
 CONFIGURED_APPS += $(APPDIR)/external/libssh
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libssh/libssh/include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libssh/libssh/include}
 endif

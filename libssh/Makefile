@@ -18,7 +18,6 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/mbedtls/mbedtls/include}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libssh/libssh/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libssh/libssh}
 CFLAGS += -DTHREAD_STACKSIZE=CONFIG_UTILS_SSH_STACKSIZE
 CFLAGS += -DBLOCKSIZE=4096 -DBUF_SIZE=4096 -DCHUNKSIZE=4096
