@@ -20,7 +20,7 @@ MODULES_CFG = builds/nuttx/modules.cfg
 FTOPTION_H = builds/nuttx/ftoption.h
 CONFIG_MK = builds/nuttx/nuttx.mk
 
-include Makefile_
+include Makefile
 
 context:: copy_submodule setup
 
