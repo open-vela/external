@@ -1,8 +1,6 @@
 /* config.h.  Generated from config.h.in by configure.  */
 /* config.h.in.  Generated from configure.ac by autoheader.  */
 
-#include <nuttx/config.h>
-
 /* Define if your system has a working basename */
 #define HAVE_BASENAME 1
 
@@ -34,9 +32,7 @@
 #define HAVE_LIBGEN_H 1
 
 /* Define to 1 if you have the `z' library (-lz). */
-#ifdef CONFIG_LIB_ZLIB
 #define HAVE_LIBZ 1
-#endif
 
 /* Define to 1 if the system has the type `major_t'. */
 /* #undef HAVE_MAJOR_T */
