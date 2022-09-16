@@ -24,9 +24,9 @@ config LIB_CURL
 
 if LIB_CURL
 
-config LIB_CURL_CA_BUNDLE
-	string "Curl Certificate Authorize Bundle PATH"
-	default "/etc/ssl/curl/cacert.pem"
+config LIB_CURL_CA_PATH
+	string "Curl Certificate Authorize PATH"
+	default "/etc/ssl/curl"
 
 config LIB_CURL_PTHREAD_STACKSIZE
 	int "libcurl pthread stack size"
