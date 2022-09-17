@@ -33,5 +33,6 @@ CSRCS    += iperf3/src/cjson.c
 endif
 
 CFLAGS   += -Dlinux
+CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 
 include $(APPDIR)/Application.mk
