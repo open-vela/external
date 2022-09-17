@@ -8,13 +8,16 @@
 /* #undef HAVE_CPUSET_SETAFFINITY */
 
 /* Have CPU affinity support. */
-/* #undef HAVE_CPU_AFFINITY */
+#define HAVE_CPU_AFFINITY 1
 
 /* Define to 1 if you have the `daemon' function. */
 #define HAVE_DAEMON 1
 
 /* Define to 1 if you have the <dlfcn.h> header file. */
 #define HAVE_DLFCN_H 1
+
+/* Have IP_MTU_DISCOVER/IP_DONTFRAG/IP_DONTFRAGMENT sockopt. */
+/* #undef HAVE_DONT_FRAGMENT */
 
 /* Define to 1 if you have the <endian.h> header file. */
 #define HAVE_ENDIAN_H 1
@@ -28,8 +31,17 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
+/* Have IP_DONTFRAG sockopt. */
+/* #undef HAVE_IP_DONTFRAG */
+
+/* Have IP_DONTFRAGMENT sockopt. */
+/* #undef HAVE_IP_DONTFRAGMENT */
+
+/* Have IP_MTU_DISCOVER sockopt. */
+/* #undef HAVE_IP_MTU_DISCOVER */
+
+/* Define to 1 if you have the <linux/tcp.h> header file. */
+/* #undef HAVE_LINUX_TCP_H */
 
 /* Define to 1 if you have the <netinet/sctp.h> header file. */
 /* #undef HAVE_NETINET_SCTP_H */
@@ -38,16 +50,19 @@
 #define HAVE_POLL_H 1
 
 /* Define to 1 if you have the `sched_setaffinity' function. */
-/* #undef HAVE_SCHED_SETAFFINITY */
+#define HAVE_SCHED_SETAFFINITY 1
 
 /* Have SCTP support. */
-/* #undef HAVE_SCTP */
+/* #undef HAVE_SCTP_H */
 
 /* Define to 1 if you have the `sendfile' function. */
 #define HAVE_SENDFILE 1
 
 /* Define to 1 if you have the `SetProcessAffinityMask' function. */
 /* #undef HAVE_SETPROCESSAFFINITYMASK */
+
+/* Have SO_BINDTODEVICE sockopt. */
+#define HAVE_SO_BINDTODEVICE 1
 
 /* Have SO_MAX_PACING_RATE sockopt. */
 /* #undef HAVE_SO_MAX_PACING_RATE */
@@ -57,6 +72,9 @@
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
+
+/* Define to 1 if you have the <stdio.h> header file. */
+#define HAVE_STDIO_H 1
 
 /* Define to 1 if you have the <stdlib.h> header file. */
 #define HAVE_STDLIB_H 1
@@ -85,6 +103,12 @@
 /* Have TCP_CONGESTION sockopt. */
 /* #undef HAVE_TCP_CONGESTION */
 
+/* Have tcpi_snd_wnd field in tcp_info. */
+/* #undef HAVE_TCP_INFO_SND_WND */
+
+/* Have TCP_USER_TIMEOUT sockopt. */
+/* #undef HAVE_TCP_USER_TIMEOUT */
+
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
 
@@ -101,7 +125,7 @@
 #define PACKAGE_NAME "iperf"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "iperf 3.7+"
+#define PACKAGE_STRING "iperf 3.11"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "iperf"
@@ -110,13 +134,15 @@
 #define PACKAGE_URL "https://software.es.net/iperf/"
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "3.7+"
+#define PACKAGE_VERSION "3.11"
 
-/* Define to 1 if you have the ANSI C header files. */
+/* Define to 1 if all of the C90 standard headers exist (not just the ones
+   required in a freestanding environment). This macro is provided for
+   backward compatibility; new code need not use it. */
 #define STDC_HEADERS 1
 
 /* Version number of package */
-#define VERSION "3.7+"
+#define VERSION "3.11"
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */
