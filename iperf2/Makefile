@@ -49,7 +49,7 @@ CXXSRCS += iperf2/src/Settings.cpp
 CXXSRCS += iperf2/src/PerfSocket.cpp
 CXXSRCS += iperf2/src/isochronous.cpp
 
-IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" iperf2}
+IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" iperf2/include}
 IPERF2_FLAGS += ${shell $(DEFINE) "$(CC)" HAVE_CONFIG_H}
 IPERF2_FLAGS += -Wno-undef -Wno-shadow
