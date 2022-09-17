@@ -20,9 +20,7 @@ config TOOLS_IPERF2
 	tristate "iperf2: ultimate speed test tool for TCP, UDP and SCTP"
 	default n
 	select HAVE_CXX
-	select SCHED_EXIT_KILL_CHILDREN
 	select LIBC_FLOATINGPOINT
-	select SCHED_ATEXIT
 	---help---
 
 if TOOLS_IPERF2
