@@ -37,18 +37,25 @@ CSRCS = \
   CpuArch.c \
   Delta.c \
   LzFind.c \
+  LzFindMt.c \
+  LzFindOpt.c \
   Lzma2Dec.c \
+  Lzma2DecMt.c \
   Lzma2Enc.c \
   Lzma86Dec.c \
   Lzma86Enc.c \
   LzmaDec.c \
   LzmaEnc.c \
   LzmaLib.c \
+  MtCoder.c \
+  MtDec.c \
   Ppmd7.c \
   Ppmd7Dec.c \
   Ppmd7Enc.c \
   Sha256.c \
+  Sha256Opt.c \
   Sort.c \
+  Threads.c \
   Xz.c \
   XzCrc64.c \
   XzCrc64Opt.c \
