@@ -50,7 +50,7 @@
 #define HAVE_POLL_H 1
 
 /* Define to 1 if you have the `sched_setaffinity' function. */
-#define HAVE_SCHED_SETAFFINITY 1
+/* #undef HAVE_SCHED_SETAFFINITY */
 
 /* Have SCTP support. */
 /* #undef HAVE_SCTP_H */
