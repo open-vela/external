@@ -17,4 +17,3 @@
 config LIB_PNG
 	bool "Enable libpng"
 	default n
-	select LIB_ZLIB
