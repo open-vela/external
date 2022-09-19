@@ -8,7 +8,7 @@
 /* #undef HAVE_CPUSET_SETAFFINITY */
 
 /* Have CPU affinity support. */
-#define HAVE_CPU_AFFINITY 1
+/* #undef HAVE_CPU_AFFINITY */
 
 /* Define to 1 if you have the `daemon' function. */
 #define HAVE_DAEMON 1
