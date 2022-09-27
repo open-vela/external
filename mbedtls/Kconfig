@@ -141,6 +141,11 @@ config MBEDTLS_ECP_FIXED_POINT_OPTIM
   default y
   help
 
+config MBEDTLS_CMAC_C
+  bool "Enable the CMAC (Cipher-based Message Authentication Code) mode for block"
+  default n
+  help
+
 endif
 
 endmenu
