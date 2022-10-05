@@ -26,10 +26,6 @@ CSRCS += $(SILK_SOURCES)
 CSRCS += $(SILK_SOURCES_FIXED)
 CSRCS += $(CELT_SOURCES)
 
-ifeq ($(CONFIG_ARCH_SIM),y)
-  CSRCS += $(CELT_SOURCES_SSE)
-endif
-
 ifeq ($(CONFIG_ARCH_ARM),y)
   CSRCS += $(CELT_SOURCES_ARM)
   ASRCS += celt/arm/celt_pitch_xcorr_arm-gnu.S
@@ -59,16 +55,16 @@ ifneq ($(CONFIG_LIB_OPUS_ENCODE_TEST),)
 endif
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ..}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" celt}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed}
-CFLAGS += -DHAVE_CONFIG_H
+CFLAGS += -DHAVE_CONFIG_H -DOPUS_WILL_BE_SLOW
 
 ifeq ($(CONFIG_ARCH_ARM),y)
 CFLAGS += -DEMBEDDED_ARM=1
 else
 CFLAGS += -DEMBEDDED_ARM=0
-CFLAGS += -D__OPTIMIZE__
 endif
 
 celt/arm/celt_pitch_xcorr_arm-gnu.S:
