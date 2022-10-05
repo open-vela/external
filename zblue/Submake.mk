@@ -280,7 +280,6 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" subsys/bluetooth/host}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" subsys/bluetooth/services}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" subsys/bluetooth/mesh}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" subsys/bluetooth/common}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinycrypt/tinycrypt/lib/include}
 
 ifeq ($(CONFIG_ARCH_SIM),y)
   CFLAGS += -O2 -fno-strict-aliasing
