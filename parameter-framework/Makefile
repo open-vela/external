@@ -24,14 +24,12 @@ CXXSRCS  += $(wildcard parameter-framework/xmlserializer/*.cpp)
 CXXSRCS  += $(wildcard parameter-framework/utility/*.cpp)
 CXXSRCS  += $(wildcard parameter-framework/utility/nuttx/*.cpp)
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/parameter/include}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/parameter/log/include}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/remote-processor}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/xmlserializer}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/utility}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/asio/stub}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libxml2/libxml2/include}
 
 ifeq ($(NETWORKING),)
 CXXSRCS  := $(filter-out parameter-framework/remote-processor/BackgroundRemoteProcessorServer.cpp, $(CXXSRCS))
