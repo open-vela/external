@@ -62,7 +62,6 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" celt}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/Ne10/Ne10/inc}
 CFLAGS += -DHAVE_CONFIG_H
 
 ifeq ($(CONFIG_ARCH_ARM),y)
