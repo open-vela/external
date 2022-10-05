@@ -123,10 +123,6 @@ ifeq ($(CONFIG_LIB_ZLIB),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 endif
 
-ifeq ($(CONFIG_LIB_SILK),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
-endif
-
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/xiaomi/miwear/bes_aec}
