@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_OPUS),)
 CONFIGURED_APPS += $(APPDIR)/external/opus
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/opus/opus/include}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/opus/opus/include}
 endif

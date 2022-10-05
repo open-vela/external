@@ -115,10 +115,6 @@ ifeq ($(CONFIG_LIB_HELIX_MP3),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub}
 endif
 
-ifeq ($(CONFIG_LIB_OPUS),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/opus/opus/include}
-endif
-
 ifeq ($(CONFIG_UORB),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/uORB}
 endif

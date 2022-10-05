@@ -59,7 +59,6 @@ ifneq ($(CONFIG_LIB_OPUS_ENCODE_TEST),)
 endif
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" celt}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed}
