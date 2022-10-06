@@ -16,27 +16,26 @@
 
 include $(APPDIR)/Make.defs
 
-include silk_sources.mk
 include celt_sources.mk
 include opus_sources.mk
+include silk_sources.mk
 
+CSRCS += $(CELT_SOURCES)
 CSRCS += $(OPUS_SOURCES)
 CSRCS += $(OPUS_SOURCES_FLOAT) # FLOAT API required
 CSRCS += $(SILK_SOURCES)
 CSRCS += $(SILK_SOURCES_FIXED)
-CSRCS += $(CELT_SOURCES)
 
 ifeq ($(CONFIG_ARCH_ARM),y)
-  CSRCS += $(CELT_SOURCES_ARM)
-  ASRCS += celt/arm/celt_pitch_xcorr_arm-gnu.S
-ifeq ($(CONFIG_ARM_HAVE_NEON),y)
-  CSRCS += $(SILK_SOURCES_ARM_NEON_INTR)
-  CSRCS += $(SILK_SOURCES_FIXED_ARM_NEON_INTR)
-  CSRCS += $(CELT_SOURCES_ARM_NEON_INTR)
-endif
-ifeq ($(CONFIG_LIB_NE10),y)
-  CSRCS += $(CELT_SOURCES_ARM_NE10)
-endif
+  ASRCS += $(CELT_SOURCES_ARM_ASM:%.s=%-gnu.S)
+  ifeq ($(CONFIG_ARM_HAVE_NEON),y)
+    CSRCS += $(CELT_SOURCES_ARM_NEON_INTR)
+    CSRCS += $(SILK_SOURCES_ARM_NEON_INTR)
+    CSRCS += $(SILK_SOURCES_FIXED_ARM_NEON_INTR)
+  endif
+  ifeq ($(CONFIG_LIB_NE10),y)
+    CSRCS += $(CELT_SOURCES_ARM_NE10)
+  endif
 endif
 
 MODULE    = $(CONFIG_LIB_OPUS)
@@ -62,19 +61,15 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" silk/fixed}
 CFLAGS += -DHAVE_CONFIG_H -DOPUS_WILL_BE_SLOW
 
 ifeq ($(CONFIG_ARCH_ARM),y)
-CFLAGS += -DEMBEDDED_ARM=1
+  CFLAGS += -DEMBEDDED_ARM=1
 else
-CFLAGS += -DEMBEDDED_ARM=0
+  CFLAGS += -DEMBEDDED_ARM=0
 endif
 
-celt/arm/celt_pitch_xcorr_arm-gnu.S:
-ifeq ($(CONFIG_ARCH_ARM),y)
-	./celt/arm/arm2gnu.pl < celt/arm/celt_pitch_xcorr_arm.s > celt/arm/celt_pitch_xcorr_arm-gnu.S
-endif
-
-context:: celt/arm/celt_pitch_xcorr_arm-gnu.S
+%-gnu.S: %.s
+	./celt/arm/arm2gnu.pl $< > $@
 
 clean::
-	$(call DELFILE, celt/arm/celt_pitch_xcorr_arm-gnu.S)
+	$(call DELFILE, $(filter %-gnu.S,$(ASRCS)))
 
 include $(APPDIR)/Application.mk
