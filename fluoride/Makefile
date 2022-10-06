@@ -210,28 +210,17 @@ FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/audio_hal_interface
 
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/android}
 
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/embdrv/sbc/decoder/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/embdrv/sbc/encoder/include}
-
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome}
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome/nuttx}
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinyxml2/tinyxml2}
-
-ifneq ($(CONFIG_KVDB),)
-  FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/frameworks/kvdb}
-endif
 
 ifeq ($(CONFIG_ARCH_SIM),)
   FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/port/deprecated}
 endif
 
-ifneq ($(CONFIG_CODEC_SBC),)
-CSRCS += $(wildcard fluoride/embdrv/sbc/*/srce/*.c)
-endif
-
-  CXXSRCS += fluoride/stack/a2dp/a2dp_aac.cc
-  CXXSRCS += fluoride/stack/a2dp/a2dp_aac_decoder.cc
-  CXXSRCS += fluoride/stack/a2dp/a2dp_aac_encoder.cc
+CXXSRCS += fluoride/stack/a2dp/a2dp_aac.cc
+CXXSRCS += fluoride/stack/a2dp/a2dp_aac_decoder.cc
+CXXSRCS += fluoride/stack/a2dp/a2dp_aac_encoder.cc
 
 ifneq ($(CONFIG_CODEC_LDAC),)
   CXXSRCS += fluoride/stack/a2dp/a2dp_vendor_ldac.cc

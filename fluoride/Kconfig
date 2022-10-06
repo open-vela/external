@@ -557,17 +557,13 @@ endif
 
 if AUDIO && FLUORIDE_EXAMPLES_A2DP_SINK
 
-config CODEC_SBC
-  bool "Fluoride A2DP sink SBC codec"
-  default n
-
 choice
   prompt "Enable Fluoride A2DP Sink"
   default FLUORIDE_A2DP_SINK_NUTTX
 
 config FLUORIDE_A2DP_SINK_NUTTX
   bool "Nuttx output"
-  select CODEC_SBC
+  select LIB_FLUORIDE_SBC
   help
     Enable Fluoride A2DP Sink Example
 
