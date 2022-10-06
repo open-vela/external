@@ -20,6 +20,5 @@ CSRCS = $(wildcard nghttp2/lib/*.c)
 
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nghttp2/lib/includes}
 
 include $(APPDIR)/Application.mk
