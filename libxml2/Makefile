@@ -16,27 +16,20 @@
 
 include $(APPDIR)/Make.defs
 
-CSRCS   = libxml2/buf.c
-CSRCS  += libxml2/chvalid.c
-CSRCS  += libxml2/dict.c
-CSRCS  += libxml2/encoding.c
-CSRCS  += libxml2/entities.c
-CSRCS  += libxml2/error.c
-CSRCS  += libxml2/globals.c
-CSRCS  += libxml2/hash.c
-CSRCS  += libxml2/list.c
-CSRCS  += libxml2/parser.c
-CSRCS  += libxml2/parserInternals.c
-CSRCS  += libxml2/SAX2.c
-CSRCS  += libxml2/threads.c
-CSRCS  += libxml2/tree.c
-CSRCS  += libxml2/uri.c
-CSRCS  += libxml2/valid.c
-CSRCS  += libxml2/xmlIO.c
-CSRCS  += libxml2/xmlmemory.c
-CSRCS  += libxml2/xmlstring.c
-CSRCS  += libxml2/xpath.c
+CSRCSRM += libxml2/rngparser.c
+CSRCSRM += libxml2/trio.c
+CSRCSRM += libxml2/trionan.c
+CSRCSRM += libxml2/triostr.c
+CSRCSRM += libxml2/xmlcatalog.c
+CSRCSRM += libxml2/xmllint.c
+
+CSRCSRM += $(wildcard libxml2/run*.c)
+CSRCSRM += $(wildcard libxml2/test*.c)
+
+CSRCSALL = $(wildcard libxml2/*.c)
+CSRCS    = $(filter-out $(CSRCSRM), $(CSRCSALL))
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += -Wno-format-extra-args -Wno-undef
 
 include $(APPDIR)/Application.mk
