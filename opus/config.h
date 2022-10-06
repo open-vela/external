@@ -150,7 +150,7 @@
 /* #undef OPUS_HAVE_RTCD */
 
 /* Compiler supports X86 AVX Intrinsics */
-/* #undef OPUS_X86_MAY_HAVE_AVX 1
+/* #undef OPUS_X86_MAY_HAVE_AVX 1 */
 
 /* Compiler supports X86 SSE Intrinsics */
 /* #undef OPUS_X86_MAY_HAVE_SSE */
