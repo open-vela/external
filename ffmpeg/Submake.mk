@@ -94,13 +94,6 @@ endif
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 
-ifeq ($(CONFIG_LIB_FLUORIDE_SBC_DECODER),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include}
-endif
-ifeq ($(CONFIG_LIB_FLUORIDE_SBC_ENCODER),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include}
-endif
-
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-aac/libhelix-aac}
 endif
