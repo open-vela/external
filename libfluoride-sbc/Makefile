@@ -16,14 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
-ifneq ($(CONFIG_LIB_FLUORIDE_SBC_DECODER),)
-  CSRCS += $(wildcard libfluoride-sbc/decoder/srce/*.c)
-  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libfluoride-sbc/decoder/include}
-endif
-
-ifneq ($(CONFIG_LIB_FLUORIDE_SBC_ENCODER),)
-  CSRCS += $(wildcard libfluoride-sbc/encoder/srce/*.c)
-  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libfluoride-sbc/encoder/include}
-endif
+CSRCS += $(wildcard libfluoride-sbc/decoder/srce/*.c)
+CSRCS += $(wildcard libfluoride-sbc/encoder/srce/*.c)
 
 include $(APPDIR)/Application.mk

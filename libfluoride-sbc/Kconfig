@@ -17,21 +17,7 @@
 comment "libfluoride-sbc"
 
 config LIB_FLUORIDE_SBC
-	tristate "Enable libfluoride sbc codec"
+	bool "Enable libfluoride sbc codec"
 	default n
-
-if LIB_FLUORIDE_SBC
-
-config LIB_FLUORIDE_SBC_DECODER
-	bool "fluoride sbc decoder"
-	default y
-	---help---
-		libfluoride sbc decoder spport
-
-config LIB_FLUORIDE_SBC_ENCODER
-	bool "fluoride sbc encoder"
-	default y
-	---help---
-		libfluoride sbc encoder spport
 
 endif # LIB_FLUORIDE_SBC
