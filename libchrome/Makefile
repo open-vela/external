@@ -183,6 +183,5 @@ CXXFLAGS += -DOS_POSIX -D_POSIX_MONOTONIC_CLOCK=1
 CXXFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-variable
 CXXFLAGS += -Wno-unused-value -Wno-sign-compare -D_GNU_SOURCE -fpermissive -fno-exceptions
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libchrome/nuttx}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/modp_b64/modp_b64}
 
 include $(APPDIR)/Application.mk

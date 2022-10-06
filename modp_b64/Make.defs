@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_MODPB64),)
 CONFIGURED_APPS += $(APPDIR)/external/modp_b64
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/modp_b64/modp_b64}
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/modp_b64/modp_b64}
 endif

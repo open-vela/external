@@ -216,7 +216,6 @@ FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/embdrv/sbc/encoder/
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome}
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome/nuttx}
 FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinyxml2/tinyxml2}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/modp_b64/modp_b64}
 
 ifneq ($(CONFIG_KVDB),)
   FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/frameworks/kvdb}
