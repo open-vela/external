@@ -19,5 +19,3 @@ comment "libfluoride-sbc"
 config LIB_FLUORIDE_SBC
 	bool "Enable libfluoride sbc codec"
 	default n
-
-endif # LIB_FLUORIDE_SBC
