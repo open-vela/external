@@ -1,10 +1,12 @@
-#include <nuttx/config.h>
-
 /* Name of package */
 #define PACKAGE "libssh"
 
 /* Version number of package */
-#define VERSION "0.9.5"
+#define VERSION "0.10.90"
+
+#define SYSCONFDIR "etc"
+#define BINARYDIR "/data/libssh"
+#define SOURCEDIR "/data/libssh"
 
 /* Global bind configuration file path */
 #define GLOBAL_BIND_CONFIG "/etc/ssh/libssh_server_config"
@@ -80,61 +82,34 @@
 /* Define to 1 if you have the <pthread.h> header file. */
 #define HAVE_PTHREAD_H 1
 
-/* Define to 1 if you have eliptic curve cryptography in openssl */
+/* Define to 1 if you have elliptic curve cryptography in openssl */
 /* #undef HAVE_OPENSSL_ECC */
 
-/* Define to 1 if you have eliptic curve cryptography in gcrypt */
+/* Define to 1 if you have elliptic curve cryptography in gcrypt */
 /* #undef HAVE_GCRYPT_ECC */
 
-/* Define to 1 if you have eliptic curve cryptography */
+/* Define to 1 if you have elliptic curve cryptography */
 #define HAVE_ECC 1
 
 /* Define to 1 if you have DSA */
-/* #undef HAVE_DSA */
+#define HAVE_DSA 1
 
 /* Define to 1 if you have gl_flags as a glob_t sturct member */
 /* #undef HAVE_GLOB_GL_FLAGS_MEMBER */
 
-/* Define to 1 if you have OpenSSL with Ed25519 support */
-/* #undef HAVE_OPENSSL_ED25519 */
-
-/* Define to 1 if you have OpenSSL with X25519 support */
-/* #undef HAVE_OPENSSL_X25519 */
+/* Define to 1 if you have gcrypt with ChaCha20/Poly1305 support */
+/* #undef HAVE_GCRYPT_CHACHA_POLY */
 
 /*************************** FUNCTIONS ***************************/
 
-/* Define to 1 if you have the `EVP_aes128_ctr' function. */
-/* #undef HAVE_OPENSSL_EVP_AES_CTR */
+/* Define to 1 if you have the `EVP_chacha20' function. */
+/* #undef HAVE_OPENSSL_EVP_CHACHA20 */
 
-/* Define to 1 if you have the `EVP_aes128_cbc' function. */
-/* #undef HAVE_OPENSSL_EVP_AES_CBC */
-
-/* Define to 1 if you have the `EVP_aes128_gcm' function. */
-/* #undef HAVE_OPENSSL_EVP_AES_GCM */
-
-/* Define to 1 if you have the `CRYPTO_THREADID_set_callback' function. */
-/* #undef HAVE_OPENSSL_CRYPTO_THREADID_SET_CALLBACK */
-
-/* Define to 1 if you have the `CRYPTO_ctr128_encrypt' function. */
-/* #undef HAVE_OPENSSL_CRYPTO_CTR128_ENCRYPT */
-
-/* Define to 1 if you have the `EVP_CIPHER_CTX_new' function. */
-/* #undef HAVE_OPENSSL_EVP_CIPHER_CTX_NEW */
-
-/* Define to 1 if you have the `EVP_KDF_CTX_new_id' function. */
-/* #undef HAVE_OPENSSL_EVP_KDF_CTX_NEW_ID */
+/* Define to 1 if you have the `EVP_KDF_CTX_new_id' or `EVP_KDF_CTX_new` function. */
+/* #undef HAVE_OPENSSL_EVP_KDF_CTX */
 
 /* Define to 1 if you have the `FIPS_mode' function. */
 /* #undef HAVE_OPENSSL_FIPS_MODE */
-
-/* Define to 1 if you have the `EVP_DigestSign' function. */
-/* #undef HAVE_OPENSSL_EVP_DIGESTSIGN */
-
-/* Define to 1 if you have the `EVP_DigestVerify' function. */
-/* #undef HAVE_OPENSSL_EVP_DIGESTVERIFY */
-
-/* Define to 1 if you have the `OPENSSL_ia32cap_loc' function. */
-/* #undef HAVE_OPENSSL_IA32CAP_LOC */
 
 /* Define to 1 if you have the `snprintf' function. */
 #define HAVE_SNPRINTF 1
@@ -232,6 +207,7 @@
 
 #define HAVE_FALLTHROUGH_ATTRIBUTE 1
 #define HAVE_UNUSED_ATTRIBUTE 1
+#define HAVE_WEAK_ATTRIBUTE 1
 
 #define HAVE_CONSTRUCTOR_ATTRIBUTE 1
 #define HAVE_DESTRUCTOR_ATTRIBUTE 1
@@ -247,9 +223,7 @@
 /* #undef WITH_GSSAPI */
 
 /* Define to 1 if you want to enable ZLIB */
-#ifdef CONFIG_LIB_ZLIB
 #define WITH_ZLIB 1
-#endif
 
 /* Define to 1 if you want to enable SFTP */
 #define WITH_SFTP 1
@@ -260,8 +234,11 @@
 /* Define to 1 if you want to enable DH group exchange algorithms */
 #define WITH_GEX 1
 
+/* Define to 1 if you want to enable none cipher and MAC */
+/* #undef WITH_INSECURE_NONE */
+
 /* Define to 1 if you want to enable blowfish cipher support */
-#define WITH_BLOWFISH_CIPHER 1
+/* #undef WITH_BLOWFISH_CIPHER */
 
 /* Define to 1 if you want to enable debug output for crypto functions */
 /* #undef DEBUG_CRYPTO */
@@ -277,6 +254,9 @@
 
 /* Define to 1 if you want to enable NaCl support */
 /* #undef WITH_NACL */
+
+/* Define to 1 if you want to enable PKCS #11 URI support */
+/* #undef WITH_PKCS11_URI */
 
 /*************************** ENDIAN *****************************/
 

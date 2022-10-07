@@ -16,19 +16,21 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/mbedtls/mbedtls/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 
 CFLAGS += -DTHREAD_STACKSIZE=CONFIG_UTILS_SSH_STACKSIZE
 CFLAGS += -DBLOCKSIZE=4096 -DBUF_SIZE=4096 -DCHUNKSIZE=4096
 CFLAGS += -DERROR_BUFFERLEN=512 -DLOG_SIZE=256 -DMAX_LINE_SIZE=512
 CFLAGS += -Dmd5_init=sshmd5_init -Dmd5_update=sshmd5_update -Dmd5_final=sshmd5_final
+CFLAGS += -Wno-deprecated-declarations
 
-SKIP  = libssh/src/dh_crypto.c libssh/src/ecdh_crypto.c libssh/src/ecdh_gcrypt.c libssh/src/gcrypt_missing.c
-SKIP += libssh/src/gssapi.c libssh/src/libcrypto.c libssh/src/libcrypto-compat.c libssh/src/libgcrypt.c
-SKIP += libssh/src/pki_crypto.c libssh/src/pki_gcrypt.c libssh/src/threads/libcrypto.c
-SKIP += libssh/src/threads/libgcrypt.c libssh/src/threads/winlocks.c
+SKIP  = libssh/src/dh_crypto.c libssh/src/ecdh_crypto.c libssh/src/ecdh_gcrypt.c
+SKIP += libssh/src/gcrypt_missing.c libssh/src/getrandom_crypto.c
+SKIP += libssh/src/getrandom_gcrypt.c libssh/src/gssapi.c libssh/src/libcrypto.c
+SKIP += libssh/src/libcrypto-compat.c libssh/src/libgcrypt.c libssh/src/md_crypto.c
+SKIP += libssh/src/md_gcrypt.c libssh/src/pki_crypto.c libssh/src/pki_gcrypt.c
+SKIP += libssh/src/threads/libcrypto.c libssh/src/threads/libgcrypt.c libssh/src/threads/winlocks.c
 CSRCS = $(filter-out $(SKIP), $(wildcard libssh/src/*.c libssh/src/external/*.c libssh/src/threads/*.c))
 
 ifneq ($(CONFIG_UTILS_SSH),)
