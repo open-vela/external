@@ -1,0 +1,53 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_OFONO
+	tristate "Open Source Telephony"
+	default n
+	---help---
+		Ofono is a telephony host stack specifically targeted at
+		mobile embedded and desktop systems.
+
+if LIB_OFONO
+
+config LIB_OFONO_PRIORITY
+	int "Pfono daemon task priority"
+	default 100
+
+config LIB_OFONO_STACKSIZE
+	int "Ofono daemon stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config LIB_OFONO_RILMODEM
+	bool "Support RIL modem"
+	default n
+	---help---
+		Enable RIL modem.
+
+config LIB_OFONO_ATMODEM
+	bool "Support AT modem"
+	default n
+	---help---
+		Enable AT modem driver and support vendor AT modem.
+
+config LIB_OFONO_UNITTEST
+	bool "Support unit test"
+	default n
+	depends on LIB_OFONO_RILMODEM
+	---help---
+		Enable unit test for ofono.
+
+config LIB_OFONO_SYSCONF_DIR
+	string "The direcory for system configuration files"
+	default "/etc/ofono"
+	---help---
+		Directory for the system configuration files.
+
+config LIB_OFONO_PLUGIN_DIR
+	string "The direcory for loading plugins"
+	---help---
+		Directory for the loading plugins.
+
+endif
