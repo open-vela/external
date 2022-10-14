@@ -19,7 +19,7 @@ config LIB_CURL
 	select LIBC_LOCALTIME
 	select LIBC_SCANSET
 	depends on LIB_ZLIB
-	depends on LIB_MBEDTLS
+	depends on CRYPTO_MBEDTLS
 	default n
 	---help---
 		libcurl

@@ -39,7 +39,7 @@ ifneq ($(CONFIG_ARCH),sim)
   CFG_CMDS += --cc=$(CC)
 endif
 
-ifneq ($(CONFIG_LIB_MBEDTLS),)
+ifneq ($(CONFIG_CRYPTO_MBEDTLS),)
   CFG_CMDS += --enable-mbedtls
 endif
 

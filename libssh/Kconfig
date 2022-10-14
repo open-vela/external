@@ -19,7 +19,7 @@ config LIB_SSH
 	select LIBC_EXECFUNCS
 	select PSEUDOTERM
 	select SERIAL_TERMIOS
-	depends on LIB_MBEDTLS
+	depends on CRYPTO_MBEDTLS
 	default n
 	---help---
 		a library for accessing ssh client services through C libraries calls in a simple manner.
