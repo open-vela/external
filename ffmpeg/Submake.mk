@@ -16,7 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
-BIN := libframework.a
+BIN := $(APPDIR)/staging/libexternal.a
 
 SBINDIR   := $(BINDIR)
 SINCDIR   := $(INCDIR)
