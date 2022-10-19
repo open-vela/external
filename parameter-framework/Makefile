@@ -30,6 +30,7 @@ CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/remote-pr
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/xmlserializer}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/utility}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/asio/stub}
+CXXFLAGS += --std=c++11
 
 ifeq ($(NETWORKING),)
 CXXSRCS  := $(filter-out parameter-framework/remote-processor/BackgroundRemoteProcessorServer.cpp, $(CXXSRCS))
