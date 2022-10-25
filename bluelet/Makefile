@@ -120,27 +120,7 @@ CFLAGS += -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses -Wno-unused-fun
 CFLAGS += -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int
 CFLAGS += -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow
 
-TARGET_PATH = $(APPDIR)/vendor/xiaomi/vela/bluelet
-ifeq ($(CONFIG_ARCH_SIM),y)
-  BOARD_PATH = $(CONFIG_ARCH_CHIP)
-else
-  ifneq ($(CONFIG_ARCH_BOARD_CUSTOM_XIAOMI_PRODUCT_NAME),)
-    BOARD_PATH = $(CONFIG_ARCH_CHIP_CUSTOM_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_XIAOMI_PRODUCT_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
-  else
-    BOARD_PATH = $(CONFIG_ARCH_CHIP_CUSTOM_NAME)/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
-  endif
-endif
-$(shell cd $(APPDIR)/vendor/xiaomi/vela/ && mkdir -p bluelet &&  \
-                         cd bluelet  && mkdir -p libs )
-$(shell cp -rf $(ADAPTERDIR)/inc  $(TARGET_PATH))
-$(shell cd $(TARGET_PATH)/libs && mkdir -p $(BOARD_PATH))
-LIB_BUILD_PATH =  $(TARGET_PATH)/libs/$(BOARD_PATH)
-
-ifeq ($(CONFIG_SIM_ASAN),y)
-  BIN   = $(LIB_BUILD_PATH)/libbluelet_asan$(LIBEXT)
-else
-  BIN   = $(LIB_BUILD_PATH)/libbluelet$(LIBEXT)
-endif
+BIN := $(APPDIR)/staging/libframework.a
 
 ifeq ($(CONFIG_BLUELET_EXAMPLES),y)
 
@@ -160,9 +140,6 @@ depend::
 else
   CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
 endif
-
-distclean::
-	rm -rf $(LIB_BUILD_PATH)
 
 endif
 include $(APPDIR)/Application.mk
