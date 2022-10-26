@@ -22,6 +22,8 @@ CXXEXT = .cc
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" googletest/googletest}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" googletest/googlemock}
 
+CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
+
 CXXSRCS += googletest/googletest/src/gtest-all.cc
 CXXSRCS += googletest/googlemock/src/gmock-all.cc
 
