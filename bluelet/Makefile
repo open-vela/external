@@ -124,14 +124,15 @@ ifeq ($(CONFIG_BLUELET_EXAMPLES),y)
 
   CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
 
-  PROGNAME  += bluelet
   PRIORITY   = $(CONFIG_BLUELET_EXAMPLES_PRIORITY)
   STACKSIZE  = $(CONFIG_BLUELET_EXAMPLES_STACKSIZE)
   MODULE     = $(CONFIG_LIB_BLUELET)
-  MAINSRC   += $(STACKDIR)/portings/btunix/samples/bluelet.c
 
-  PROGNAME  += bl_sink
-  MAINSRC   += $(STACKDIR)/portings/btunix/samples/a2dp_sink.c
+  PROGNAME  += leaudio_broadcast_src
+  MAINSRC   += $(STACKDIR)/portings/btunix/samples/leaudio_broadcast_src.c
+
+  PROGNAME  += leaudio_broadcast_snk
+  MAINSRC   += $(STACKDIR)/portings/btunix/samples/leaudio_broadcast_snk.c
 
 depend::
 	$(Q) touch $(MAINSRC)
