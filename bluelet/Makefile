@@ -91,8 +91,6 @@ ifeq ($(CONFIG_PAN), y)
   CSRCS += $(wildcard $(STACKDIR)/pan/*.c)
 endif
 
-CSRCS += $(wildcard $(STACKDIR)/xmlparse/*.c)
-
 ifeq ($(CONFIG_BLUELET_HCI_H4),y)
   CSRCS += $(STACKDIR)/portings/btunix/h4tl.c
 endif
