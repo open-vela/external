@@ -118,7 +118,7 @@ CFLAGS += -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses -Wno-unused-fun
 CFLAGS += -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int
 CFLAGS += -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow
 
-BIN := $(APPDIR)/staging/libframework.a
+BIN := $(APPDIR)/staging/libbluelet.a
 
 ifeq ($(CONFIG_BLUELET_EXAMPLES),y)
 
