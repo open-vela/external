@@ -1,0 +1,66 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_DBUS
+	tristate "D-bus library"
+	default n
+	---help---
+		D-Bus is a simple system for interprocess communication and
+		coordination.
+
+if LIB_DBUS
+
+config DBUS_DAEMON
+	bool "Enable dbus daemon"
+	default n
+	depends on LIB_EXPAT
+	---help---
+		Message bus daemon.
+
+config LIB_DBUS_PRIORITY
+	int "Libdbus task priority"
+	default 100
+
+config LIB_DBUS_STACKSIZE
+	int "Libdbus stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config DBUS_SEND
+	bool "Enable dbus_send tool"
+	default n
+	---help---
+		Send a message to a message bus by dbus_send.
+
+config DBUS_MONITOR
+	bool "Enable dbus_monitor tool"
+	default n
+	---help---
+		Debug probe to print message bus messages by dbus_monitor.
+
+config DBUS_TEST_TOOL
+	bool "Enable dbus_test_tool"
+	default n
+	---help---
+		A multi-purpose tool for debugging and profiling D-Bus by dbus_test_tool.
+
+config DBUS_UPDATE_ACTIVATION_ENVIRONMENT
+	bool "Enable dbus_update_activation_environment tool"
+	default n
+	---help---
+		Update environment used for D-Bus session services by
+		dbus_update_activation_environment.
+
+endif
