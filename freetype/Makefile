@@ -30,7 +30,7 @@ register::
 depend::
 	$(Q) touch .depend
 
-distclean:
+distclean::
 	$(call DELFILE, .depend)
 
 install::
