@@ -21,14 +21,14 @@ BIN := $(APPDIR)/staging/libexternal.a
 SBINDIR   := $(BINDIR)
 SINCDIR   := $(INCDIR)
 SAR       := $(AR)
--include ffbuild/config.mak
+-include ffmpeg/ffbuild/config.mak
 BINDIR    := $(SBINDIR)
 INCDIR    := $(SINCDIR)
 AR        := $(SAR)
 
 CSRCS     :=
 ASRCS     :=
-SRC_PATH  := .
+SRC_PATH  := ffmpeg
 
 CFG_ARCH  := $(CONFIG_ARCH)
 ifeq ($(CONFIG_ARCH),avr)
@@ -68,10 +68,10 @@ SUBDIR_VARS := CLEANFILES FFLIBS HOSTPROGS TESTPROGS TOOLS               \
 
 define DOSUBDIR
   $(foreach V,$(SUBDIR_VARS), $(V) := $(V)-yes :=)
-  include $(1)/Makefile
-  -include $(1)/$$(ARCH)/Makefile
-  include ffbuild/arch.mak
-  SOBJS := $$(sort $$(addprefix $(1)/, $$(OBJS) $$(OBJS-yes)))
+  include $(SRC_PATH)/$(1)/Makefile
+  -include $(SRC_PATH)/$(1)/$$(ARCH)/Makefile
+  include $(SRC_PATH)/ffbuild/arch.mak
+  SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(OBJS) $$(OBJS-yes)))
   CSRCS += $$(wildcard $$(patsubst %.o,%.c, $$(SOBJS)))
   ASRCS += $$(wildcard $$(patsubst %.o,%.S, $$(SOBJS)))
 endef
@@ -81,20 +81,22 @@ $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
 PRIORITY  = $(CONFIG_LIB_FFMPEG_TOOLS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_FFMPEG_TOOLS_STACKSIZE)
 MODULE    = $(CONFIG_LIB_FFMPEG)
-CSRCS    += fftools/cmdutils.c
+CSRCS    += $(SRC_PATH)/fftools/cmdutils.c
 
 ifeq ($(CONFIG_FFMPEG),yes)
   PROGNAME += ffmpeg
-  MAINSRC  += fftools/ffmpeg.c
-  CSRCS    += fftools/ffmpeg_opt.c fftools/ffmpeg_filter.c fftools/ffmpeg_hw.c
+  MAINSRC  += $(SRC_PATH)/fftools/ffmpeg.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_opt.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_filter.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_hw.c
 endif
 
 ifeq ($(CONFIG_FFPROBE),yes)
   PROGNAME += ffprobe
-  MAINSRC  += fftools/ffprobe.c
+  MAINSRC  += $(SRC_PATH)/fftools/ffprobe.c
 endif
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(SRC_PATH)}
 
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-aac/libhelix-aac}
@@ -120,12 +122,12 @@ CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
 EXTRA := $(CFLAGS)
 
-libavutil/ffversion.h .version:
-	$(Q)ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
+$(SRC_PATH)/libavutil/ffversion.h $(SRC_PATH)/.version:
+	$(Q)$(SRC_PATH)/ffbuild/version.sh ./ffmpeg $(SRC_PATH)/libavutil/ffversion.h $(EXTRA_VERSION)
 
-config.h:
+$(SRC_PATH)/config.h:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
-	$(Q)./configure             --disable-all                   \
+	$(Q)cd $(SRC_PATH) && ./configure --disable-all             \
 		--disable-everything    --disable-autodetect            \
 		--disable-amf           --disable-audiotoolbox          \
 		--disable-cuda-llvm     --disable-cuvid                 \
@@ -143,15 +145,16 @@ config.h:
 		--disable-videotoolbox  --disable-x86asm                \
 		--disable-xop           --disable-threads               \
 		--enable-version3       --enable-small                  \
-		--extra-cflags="$(EXTRA)" --extra-ldflags="$(EXTRA)"   \
+		--extra-cflags="$(EXTRA)" --extra-ldflags="$(EXTRA)"    \
 		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS) \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
-context:: config.h libavutil/ffversion.h
+context:: $(SRC_PATH)/config.h $(SRC_PATH)/libavutil/ffversion.h
 
 distclean::
-	rm -f .version config.h ffbuild/.config ffbuild/config*
-	rm -f libavutil/avconfig.h libavutil/ffversion.h
+	rm -f $(SRC_PATH)/config.h $(SRC_PATH)/.version
+	rm -f $(SRC_PATH)/ffbuild/.config $(SRC_PATH)/ffbuild/config*
+	rm -f $(SRC_PATH)/libavutil/avconfig.h  $(SRC_PATH)/libavutil/ffversion.h
 	find ./ -name "*_list.c" | xargs rm -f
 
 include $(APPDIR)/Application.mk
