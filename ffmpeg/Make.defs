@@ -15,7 +15,7 @@
 #
 
 ifneq ($(CONFIG_LIB_FFMPEG),)
-    ifeq ($(wildcard $(APPDIR)/external/ffmpeg/ffmpeg/libs),)
+    ifneq ($(wildcard $(APPDIR)/external/ffmpeg/ffmpeg/.git),)
         CONFIGURED_APPS += $(APPDIR)/external/ffmpeg
     endif
 endif
