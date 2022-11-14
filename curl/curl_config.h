@@ -401,7 +401,7 @@
 #define HAVE_PIPE 1
 
 /* If you have a fine poll */
-#define HAVE_POLL_FINE 1
+/* #undef HAVE_POLL_FINE */
 
 /* Define to 1 if you have the <poll.h> header file. */
 #define HAVE_POLL_H 1
