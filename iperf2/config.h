@@ -130,7 +130,7 @@
 #define HAVE_ISOCHRONOUS 1
 
 /* Define if Kalman tuning is desired and available */
-#define HAVE_KALMAN 1
+/* #undef HAVE_KALMAN */
 
 /* Define to 1 if you have the <libintl.h> header file. */
 /* #undef HAVE_LIBINTL_H */
