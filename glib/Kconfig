@@ -1,0 +1,15 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_GLIB
+	bool "GLib library"
+	default n
+	---help---
+		GLib is the low-level core library that forms the basis
+		for projects such as GTK and GNOME.
+
+if LIB_GLIB
+
+endif
