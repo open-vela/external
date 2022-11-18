@@ -49,29 +49,27 @@ ifeq ($(CONFIG_ARM_NEON),)
   CFG_CMDS += --disable-neon
 endif
 
+FFLIBS-yes                  += avutil
 FFLIBS-$(CONFIG_AVCODEC)    += avcodec
 FFLIBS-$(CONFIG_AVDEVICE)   += avdevice
 FFLIBS-$(CONFIG_AVFILTER)   += avfilter
 FFLIBS-$(CONFIG_AVFORMAT)   += avformat
 FFLIBS-$(CONFIG_AVRESAMPLE) += avresample
-FFLIBS-yes                  += avutil
 FFLIBS-$(CONFIG_POSTPROC)   += postproc
 FFLIBS-$(CONFIG_SWRESAMPLE) += swresample
 FFLIBS-$(CONFIG_SWSCALE)    += swscale
 
-SUBDIR_VARS := CLEANFILES FFLIBS HOSTPROGS TESTPROGS TOOLS               \
-               HEADERS ARCH_HEADERS BUILT_HEADERS SKIPHEADERS            \
-               ARMV5TE-OBJS ARMV6-OBJS ARMV8-OBJS VFP-OBJS NEON-OBJS     \
-               ALTIVEC-OBJS VSX-OBJS MMX-OBJS X86ASM-OBJS                \
-               MIPSFPU-OBJS MIPSDSPR2-OBJS MIPSDSP-OBJS MSA-OBJS         \
-               MMI-OBJS OBJS SLIBOBJS HOSTOBJS TESTOBJS
+# ignore share objects in gathering phase to avoid link error
+SHLIBOBJS := ac3_channel_layout_tab.o to_upper4.o
 
 define DOSUBDIR
-  $(foreach V,$(SUBDIR_VARS), $(V) := $(V)-yes :=)
+  OBJS     :=
+  OBJS-yes :=
   include $(SRC_PATH)/$(1)/Makefile
   -include $(SRC_PATH)/$(1)/$$(ARCH)/Makefile
   include $(SRC_PATH)/ffbuild/arch.mak
-  SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(OBJS) $$(OBJS-yes)))
+  SOBJS := $$(filter-out $$(SHLIBOBJS), $$(OBJS) $$(OBJS-yes))
+  SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(SOBJS)))
   CSRCS += $$(wildcard $$(patsubst %.o,%.c, $$(SOBJS)))
   ASRCS += $$(wildcard $$(patsubst %.o,%.S, $$(SOBJS)))
 endef
@@ -82,6 +80,9 @@ PRIORITY  = $(CONFIG_LIB_FFMPEG_TOOLS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_FFMPEG_TOOLS_STACKSIZE)
 MODULE    = $(CONFIG_LIB_FFMPEG)
 CSRCS    += $(SRC_PATH)/fftools/cmdutils.c
+CSRCS    += $(SRC_PATH)/fftools/opt_common.c
+CSRCS    += $(SRC_PATH)/libavformat/ac3_channel_layout_tab.c
+CSRCS    += $(SRC_PATH)/libavformat/to_upper4.c
 
 ifeq ($(CONFIG_FFMPEG),yes)
   PROGNAME += ffmpeg
@@ -89,6 +90,7 @@ ifeq ($(CONFIG_FFMPEG),yes)
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_opt.c
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_filter.c
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_hw.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_mux.c
 endif
 
 ifeq ($(CONFIG_FFPROBE),yes)
@@ -136,10 +138,10 @@ CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
 EXTRA := $(CFLAGS)
 
-$(SRC_PATH)/libavutil/ffversion.h $(SRC_PATH)/.version:
+$(SRC_PATH)/libavutil/ffversion.h:
 	$(Q)cd $(SRC_PATH) && ./ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
 
-$(SRC_PATH)/config.h:
+$(SRC_PATH)/ffbuild/config.mak:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
 	$(Q)cd $(SRC_PATH) && ./configure --disable-all             \
 		--disable-everything    --disable-autodetect            \
@@ -150,23 +152,23 @@ $(SRC_PATH)/config.h:
 		--disable-dxva2         --disable-error-resilience      \
 		--disable-faan          --disable-ffnvcodec             \
 		--disable-htmlpages     --disable-iconv                 \
-		--disable-lsp           --disable-lzo                   \
+		--disable-lsp           --disable-threads               \
 		--disable-manpages      --disable-pic                   \
 		--disable-pixelutils    --disable-podpages              \
 		--disable-nvdec         --disable-nvenc                 \
 		--disable-txtpages      --disable-v4l2-m2m              \
 		--disable-vaapi         --disable-vdpau                 \
 		--disable-videotoolbox  --disable-x86asm                \
-		--disable-xop           --disable-threads               \
+		--disable-xop                                           \
 		--enable-version3       --enable-small                  \
 		--extra-cflags="$(EXTRA)" --extra-ldflags="$(EXTRA)"    \
 		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS) \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
-context:: $(SRC_PATH)/config.h $(SRC_PATH)/libavutil/ffversion.h
+context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
 
 distclean::
-	rm -f $(SRC_PATH)/config.h $(SRC_PATH)/.version
+	rm -f $(SRC_PATH)/config.h $(SRC_PATH)/config_components.h $(SRC_PATH)/.version
 	rm -f $(SRC_PATH)/ffbuild/.config $(SRC_PATH)/ffbuild/config*
 	rm -f $(SRC_PATH)/libavutil/avconfig.h  $(SRC_PATH)/libavutil/ffversion.h
 	find ./ -name "*_list.c" | xargs rm -f
