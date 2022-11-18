@@ -123,7 +123,7 @@ CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 EXTRA := $(CFLAGS)
 
 $(SRC_PATH)/libavutil/ffversion.h $(SRC_PATH)/.version:
-	$(Q)$(SRC_PATH)/ffbuild/version.sh ./ffmpeg $(SRC_PATH)/libavutil/ffversion.h $(EXTRA_VERSION)
+	$(Q)cd $(SRC_PATH) && ./ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
 
 $(SRC_PATH)/config.h:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
