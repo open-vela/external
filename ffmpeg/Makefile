@@ -118,6 +118,7 @@ CFLAGS += -Wno-error
 endif
 
 CFLAGS += -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shadow
+CFLAGS += -Wno-missing-braces
 CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
 EXTRA := $(CFLAGS)
