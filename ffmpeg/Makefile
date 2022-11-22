@@ -98,11 +98,24 @@ endif
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(SRC_PATH)}
 
+ifeq ($(CONFIG_CODEC_FDKAAC), y)
+CFLAGS += -DAACENCODER_LIB_VL0=4 -DAACENCODER_LIB_VL1=0
+endif
+
+ifeq ($(CONFIG_LIB_FLUORIDE_SBC), y)
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include}
+endif
+
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-aac/libhelix-aac}
 endif
 ifeq ($(CONFIG_LIB_HELIX_MP3),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub}
+endif
+
+ifeq ($(CONFIG_LIB_SILK),y)
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
 endif
 
 ifeq ($(CONFIG_LIB_ZLIB),y)
