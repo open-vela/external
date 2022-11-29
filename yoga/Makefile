@@ -16,6 +16,8 @@
 
 include $(APPDIR)/Make.defs
 
+BIN := $(APPDIR)/staging/libexternal.a
+
 CXXEXT  := .cpp
 
 CXXSRCS += $(wildcard yoga/yoga/*.cpp)
