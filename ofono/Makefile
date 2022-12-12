@@ -42,8 +42,14 @@ BUILTIN_PLUGIN += rilmodem ril rildev
 endif
 
 ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
-CSRCS += $(wildcard ofono/drivers/atmodem/*.c)
+CSRCS += $(wildcard ofono/drivers/atmodem/*.c ofono/gatchat/*.c)
 BUILTIN_PLUGIN += atmodem
+ifneq ($(CONFIG_LIB_OFONO_HUAWEIMODEM),)
+CSRCS += $(wildcard ofono/drivers/huaweimodem/*.c)
+BUILTIN_PLUGIN += huaweimodem
+CSRCS += ofono/plugins/huawei.c
+BUILTIN_PLUGIN += huawei
+endif
 endif
 
 PRIORITY  = $(CONFIG_LIB_OFONO_PRIORITY)

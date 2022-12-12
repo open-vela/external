@@ -32,6 +32,13 @@ config LIB_OFONO_ATMODEM
 	---help---
 		Enable AT modem driver and support vendor AT modem.
 
+config LIB_OFONO_HUAWEIMODEM
+	bool "Support huawemi at modem"
+	default n
+	depends on LIB_OFONO_ATMODEM
+	---help---
+		Enable huawei AT modem driver.
+
 config LIB_OFONO_UNITTEST
 	bool "Support unit test"
 	default n
