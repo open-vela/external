@@ -1,0 +1,53 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config RTOS_BENCHMARK
+	tristate "RTOS benchmark"
+	default n
+
+if RTOS_BENCHMARK
+
+config RTOS_BENCHMARK_PROGNAME
+	string "Program Name"
+	default "rtosbenchmark"
+
+config RTOS_BENCHMARK_STACKSIZE
+	int "rtos_benchmark stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config RTOS_BENCHMARK_PRIORITY
+	int "Task PRIORITY"
+	default 100
+	---help---
+		The higher the priority value, the lower the priority.
+
+config RTOS_BENCHMARK_ITERATIONS
+	int "ITERATIONS"
+	default 1000
+
+config RTOS_BENCHMARK_MAXTHREADS
+	int "Max Threads"
+	default 10
+
+config RTOS_BENCHMARK_MAXSEMAPHORES
+	int "Max Semaphores"
+	default 5
+
+config RTOS_BENCHMARK_MAXMUTEXES
+	int "Max Mutexes"
+	default 5
+
+endif
