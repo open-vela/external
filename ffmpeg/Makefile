@@ -98,6 +98,11 @@ ifeq ($(CONFIG_FFPROBE),yes)
   MAINSRC  += $(SRC_PATH)/fftools/ffprobe.c
 endif
 
+ifneq ($(CONFIG_FFMPEG_TOOLS_GRAPH2DOT),)
+  PROGNAME += graph2dot
+  MAINSRC  += $(SRC_PATH)/tools/graph2dot.c
+endif
+
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(SRC_PATH)}
 
 ifeq ($(CONFIG_CODEC_FDKAAC), y)

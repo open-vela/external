@@ -36,4 +36,10 @@ config LIB_FFMPEG_TOOLS_STACKSIZE
 	int "stack size"
 	default 51200
 
+menu "FFmpeg tools"
+config FFMPEG_TOOLS_GRAPH2DOT
+	bool "graph2dot"
+	default n
+endmenu
+
 endif # LIB_FFMPEG
