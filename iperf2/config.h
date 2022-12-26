@@ -11,6 +11,10 @@
 /* Define if debugging info is desired */
 /* #undef DBG_MJZ */
 
+/* Define if default UDP payload length is based on device MTU and socket
+   buffer size */
+/* #undef DEFAULT_PAYLOAD_LEN_PER_MTU_DISCOVERY */
+
 #ifdef CONFIG_NET_PKT
 /* AF_PACKET support is available */
 #define HAVE_AF_PACKET 1
@@ -19,7 +23,7 @@
 /* Define to 1 if you have the <arpa/inet.h> header file. */
 #define HAVE_ARPA_INET_H 1
 
-#ifdef CONFIG_SCHED_ATEXIT
+#if CONFIG_LIBC_MAX_EXITFUNS > 0
 /* Define to 1 if you have the `atexit' function. */
 #define HAVE_ATEXIT 1
 #endif
@@ -52,34 +56,100 @@
    don't. */
 #define HAVE_DECL_EWOULDBLOCK 1
 
+#ifdef CONFIG_NET_TUN
+/* Define to 1 if you have the declaration of `IFF_TAP', and to 0 if you
+   don't. */
+#define HAVE_DECL_IFF_TAP 1
+
+/* Define to 1 if you have the declaration of `IFF_TUN', and to 0 if you
+   don't. */
+#define HAVE_DECL_IFF_TUN 1
+#endif
+
 /* Define to 1 if you have the declaration of `IPV6_ADD_MEMBERSHIP', and to 0
    if you don't. */
 /* #undef HAVE_DECL_IPV6_ADD_MEMBERSHIP */
 
+/* Define to 1 if you have the declaration of `IPV6_JOIN_GROUP', and to 0 if
+   you don't. */
+#define HAVE_DECL_IPV6_JOIN_GROUP 1
+
 /* Define to 1 if you have the declaration of `IPV6_MULTICAST_HOPS', and to 0
    if you don't. */
-/* #undef HAVE_DECL_IPV6_MULTICAST_HOPS */
+#define HAVE_DECL_IPV6_MULTICAST_HOPS 1
 
 /* Define to 1 if you have the declaration of `IPV6_TCLASS', and to 0 if you
    don't. */
 #define HAVE_DECL_IPV6_TCLASS 1
 
+/* Define to 1 if you have the declaration of `IPV6_V6ONLY', and to 0 if you
+   don't. */
+#define HAVE_DECL_IPV6_V6ONLY 1
+
 /* Define to 1 if you have the declaration of `IP_ADD_MEMBERSHIP', and to 0 if
    you don't. */
-/* #undef HAVE_DECL_IP_ADD_MEMBERSHIP */
+#define HAVE_DECL_IP_ADD_MEMBERSHIP 1
+
+/* Define to 1 if you have the declaration of `IP_ADD_SOURCE_MEMBERSHIP', and
+   to 0 if you don't. */
+#define HAVE_DECL_IP_ADD_SOURCE_MEMBERSHIP 1
+
+/* Define to 1 if you have the declaration of `IP_MULTICAST_ALL', and to 0 if
+   you don't. */
+#define HAVE_DECL_IP_MULTICAST_ALL 1
+
+/* Define to 1 if you have the declaration of `IP_TOS', and to 0 if you don't.
+   */
+#define HAVE_DECL_IP_TOS 1
+
+/* Define to 1 if you have the declaration of `MCAST_JOIN_GROUP', and to 0 if
+   you don't. */
+/* #undef HAVE_DECL_MCAST_JOIN_GROUP */
 
 /* Define to 1 if you have the declaration of `MCAST_JOIN_SOURCE_GROUP', and
    to 0 if you don't. */
 /* #undef HAVE_DECL_MCAST_JOIN_SOURCE_GROUP */
+
+/* Define to 1 if you have the declaration of `MSG_DONTWAIT', and to 0 if you
+   don't. */
+#define HAVE_DECL_MSG_DONTWAIT 1
+
+/* Define to 1 if you have the declaration of `MSG_PEEK', and to 0 if you
+   don't. */
+#define HAVE_DECL_MSG_PEEK 1
+
+/* Define to 1 if you have the declaration of `MSG_WAITALL', and to 0 if you
+   don't. */
+#define HAVE_DECL_MSG_WAITALL 1
+
+/* Define to 1 if you have the declaration of `pthread_cancel', and to 0 if
+   you don't. */
+#define HAVE_DECL_PTHREAD_CANCEL 1
 
 /* Define to 1 if you have the declaration of `SIGALRM', and to 0 if you
    don't. */
 #define HAVE_DECL_SIGALRM 1
 
 #ifdef CONFIG_NET_SOCKOPTS
+/* Define to 1 if you have the declaration of `SIOCGIFMTU', and to 0 if you
+   don't. */
+#define HAVE_DECL_SIOCGIFMTU 1
+
+/* Define to 1 if you have the declaration of `SO_BINDTODEVICE', and to 0 if
+   you don't. */
+#define HAVE_DECL_SO_BINDTODEVICE 1
+
+/* Define to 1 if you have the declaration of `SO_DONTROUTE', and to 0 if you
+   don't. */
+#define HAVE_DECL_SO_DONTROUTE 1
+
 /* Define to 1 if you have the declaration of `SO_MAX_PACING_RATE', and to 0
    if you don't. */
 /* #undef HAVE_DECL_SO_MAX_PACING_RATE */
+
+/* Define to 1 if you have the declaration of `SO_REUSEPORT', and to 0 if you
+   don't. */
+/* #undef HAVE_DECL_SO_REUSEPORT */
 
 /* Define to 1 if you have the declaration of `SO_SNDTIMEO', and to 0 if you
    don't. */
@@ -91,8 +161,40 @@
 
 /* Define to 1 if you have the declaration of `SO_REUSEADDR', and to 0 if you
    don't. */
-/* #undef HAVE_DECL_SO_REUSEADDR */
+#define HAVE_DECL_SO_REUSEADDR 1
 #endif
+
+/* Define to 1 if you have the declaration of `TCP_CONNECTION_INFO', and to 0
+   if you don't. */
+/* #undef HAVE_DECL_TCP_CONNECTION_INFO */
+
+/* Define to 1 if you have the declaration of `TCP_INFO', and to 0 if you
+   don't. */
+/* #undef HAVE_DECL_TCP_INFO 1 */
+
+/* Define to 1 if you have the declaration of `TCP_MAXSEG', and to 0 if you
+   don't. */
+#define HAVE_DECL_TCP_MAXSEG 1
+
+/* Define to 1 if you have the declaration of `TCP_NODELAY', and to 0 if you
+   don't. */
+#define HAVE_DECL_TCP_NODELAY 1
+
+/* Define to 1 if you have the declaration of `TCP_NOTSENT_LOWAT', and to 0 if
+   you don't. */
+/* #undef HAVE_DECL_TCP_NOTSENT_LOWAT */
+
+/* Define to 1 if you have the declaration of `TCP_QUICKACK', and to 0 if you
+   don't. */
+/* #undef HAVE_DECL_TCP_QUICKACK */
+
+/* Define to 1 if you have the declaration of `TCP_WINDOW_CLAMP', and to 0 if
+   you don't. */
+/* #undef HAVE_DECL_TCP_WINDOW_CLAMP */
+
+/* Define if limiting test traffic to the local-only network (via socket
+   SO_DONTROUTE) should be the default */
+/* #undef HAVE_DEFAULT_DONTROUTE_ON */
 
 /* Define to 1 if you don't have `vprintf' but do have `_doprnt.' */
 /* #undef HAVE_DOPRNT */
@@ -100,8 +202,11 @@
 /* Define if fast sampling for report intervals is desired */
 /* #undef HAVE_FASTSAMPLING */
 
-/* Define to 1 if you have the `fork' function. */
-/* #undef HAVE_FORK */
+/* Define to 1 if you have the `freopen' function. */
+#define HAVE_FREOPEN 1
+
+/* Define if syscall(SYS_gettid) available. */
+/* #undef HAVE_GETTID_SYSCALL */
 
 /* Define to 1 if you have the `gettimeofday' function. */
 #define HAVE_GETTIMEOFDAY 1
@@ -114,6 +219,9 @@
 
 /* Define to 1 if you have the `inet_pton' function. */
 #define HAVE_INET_PTON 1
+
+/* Define to 1 if the system has the type `int64_t'. */
+#define HAVE_INT64_T 1
 
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
@@ -130,16 +238,13 @@
 #define HAVE_ISOCHRONOUS 1
 
 /* Define if Kalman tuning is desired and available */
-/* #undef HAVE_KALMAN */
+#define HAVE_KALMAN 1
 
 /* Define to 1 if you have the <libintl.h> header file. */
-/* #undef HAVE_LIBINTL_H */
+#define HAVE_LIBINTL_H 1
 
 /* Define to 1 if you have the `rt' library (-lrt). */
 /* #undef HAVE_LIBRT */
-
-/* Define if libws2_32 exists. */
-/* #undef HAVE_LIBWS2_32 */
 
 /* Define to 1 if you have the <linux/filter.h> header file. */
 /* #undef HAVE_LINUX_FILTER_H */
@@ -147,8 +252,14 @@
 /* Define to 1 if you have the <linux/if_packet.h> header file. */
 /* #undef HAVE_LINUX_IF_PACKET_H */
 
+/* Define to 1 if you have the <linux/if_tun.h> header file. */
+/* #undef HAVE_LINUX_IF_TUN_H */
+
 /* Define to 1 if you have the <linux/ip.h> header file. */
 /* #undef HAVE_LINUX_IP_H */
+
+/* Define to 1 if you have the <linux/sockios.h> header file. */
+/* #undef HAVE_LINUX_SOCKIOS_H */
 
 /* Define to 1 if you have the <linux/udp.h> header file. */
 /* #undef HAVE_LINUX_UDP_H */
@@ -160,7 +271,7 @@
 #define HAVE_MEMSET 1
 
 /* Define to 1 if you have the `mlockall' function. */
-/* #undef HAVE_MLOCKALL */
+#define HAVE_MLOCKALL 1
 
 /* Define to enable multicast support */
 /* #undef HAVE_MULTICAST */
@@ -178,21 +289,24 @@
 /* Define to 1 if you have the <netinet/in.h> header file. */
 #define HAVE_NETINET_IN_H 1
 
+/* Define to 1 if you have the <netinet/tcp.h> header file. */
+#define HAVE_NETINET_TCP_H 1
+
 /* Define to 1 if you have the <net/ethernet.h> header file. */
 #define HAVE_NET_ETHERNET_H 1
+
+/* Define to 1 if you have the <net/if.h> header file. */
+#define HAVE_NET_IF_H 1
+
+/* Define if packet level debugging is desired */
+/* #undef HAVE_PACKET_DEBUG */
 
 /* */
 #define HAVE_POSIX_THREAD 1
 
-/* */
-/* #undef HAVE_PRINTF_QD */
-
 #ifndef CONFIG_DISABLE_PTHREAD
 /* Define if you have POSIX threads libraries and header files. */
 #define HAVE_PTHREAD 1
-
-/* Define to 1 if you have the `pthread_cancel' function. */
-#define HAVE_PTHREAD_CANCEL 1
 #endif
 
 #ifdef CONFIG_PTHREAD_CLEANUP
@@ -200,11 +314,17 @@
 #define HAVE_PTHREAD_CLEANUP_PUSH 1
 #endif
 
-/* */
-#define HAVE_QUAD_SUPPORT 1
+/* Have PTHREAD_PRIO_INHERIT. */
+#define HAVE_PTHREAD_PRIO_INHERIT 1
+
+/* Define if role reversal ids are desired */
+/* #undef HAVE_ROLE_REVERSAL_ID */
 
 /* Define to 1 if you have the `sched_setscheduler' function. */
 #define HAVE_SCHED_SETSCHEDULER 1
+
+/* Define to 1 if you have the `sched_yield' function. */
+#define HAVE_SCHED_YIELD 1
 
 #ifndef CONFIG_DISABLE_POLL
 /* Define to 1 if you have the `select' function. */
@@ -215,7 +335,7 @@
 #define HAVE_SEQNO64b 1
 
 /* Define to 1 if you have the `setitimer' function. */
-/* #undef HAVE_SETITIMER */
+#define HAVE_SETITIMER 1
 
 /* Define to 1 if you have the <signal.h> header file. */
 #define HAVE_SIGNAL_H 1
@@ -228,6 +348,9 @@
 
 /* Define to enable ssm multicast support */
 /* #undef HAVE_SSM_MULTICAST */
+
+/* Define to 1 if stdbool.h conforms to C99. */
+#define HAVE_STDBOOL_H 1
 
 /* Define to 1 if you have the <stdint.h> header file. */
 #define HAVE_STDINT_H 1
@@ -250,6 +373,9 @@
 /* Define to 1 if you have the <string.h> header file. */
 #define HAVE_STRING_H 1
 
+/* Define to 1 if you have the `strtod' function. */
+#define HAVE_STRTOD 1
+
 /* Define to 1 if you have the `strtol' function. */
 #define HAVE_STRTOL 1
 
@@ -260,10 +386,17 @@
 /* #undef HAVE_STRUCT_GROUP_SOURCE_REQ */
 
 /* Define to 1 if the system has the type `struct ipv6_mreq'. */
-/* #undef HAVE_STRUCT_IPV6_MREQ */
+#define HAVE_STRUCT_IPV6_MREQ 1
 
 /* Define to 1 if the system has the type `struct ip_mreq'. */
-/* #undef HAVE_STRUCT_IP_MREQ */
+#define HAVE_STRUCT_IP_MREQ 1
+
+/* Define to 1 if the system has the type `struct ip_mreq_source'. */
+#define HAVE_STRUCT_IP_MREQ_SOURCE 1
+
+/* Define to 1 if `imr_multiaddr.s_addr' is a member of `struct
+   ip_mreq_source'. */
+#define HAVE_STRUCT_IP_MREQ_SOURCE_IMR_MULTIADDR_S_ADDR 1
 
 #ifdef CONFIG_NET_IPv6
 /* Define to 1 if the system has the type `struct sockaddr_in6'. */
@@ -282,11 +415,17 @@
 /* Define to 1 if you have the <syslog.h> header file. */
 #define HAVE_SYSLOG_H 1
 
+/* Define to 1 if you have the <sys/ioctl.h> header file. */
+#define HAVE_SYS_IOCTL_H 1
+
 /* Define to 1 if you have the <sys/select.h> header file. */
 #define HAVE_SYS_SELECT_H 1
 
 /* Define to 1 if you have the <sys/socket.h> header file. */
 #define HAVE_SYS_SOCKET_H 1
+
+/* Define to 1 if you have the <sys/sockio.h> header file. */
+#define HAVE_SYS_SOCKIO_H 1
 
 /* Define to 1 if you have the <sys/stat.h> header file. */
 #define HAVE_SYS_STAT_H 1
@@ -297,8 +436,17 @@
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
 
-/* Define if udp triggers option is desired and available */
-/* #undef HAVE_UDPTRIGGERS */
+/* Define to enable tcp stats support */
+/* #undef HAVE_TCP_STATS 1 */
+
+/* Define for thread level debugging of the code */
+/* #undef HAVE_THREAD_DEBUG */
+
+/* TUNTAP_TAP support is available */
+/* #undef HAVE_TUNTAP_TAP 1 */
+
+/* TUNTAP_TUN support is available */
+/* #undef HAVE_TUNTAP_TUN 1 */
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1
@@ -307,14 +455,6 @@
 /* Define to 1 if you have the `usleep' function. */
 #define HAVE_USLEEP 1
 #endif
-
-#ifdef CONFIG_ARCH_HAVE_VFORK
-/* Define to 1 if you have the `vfork' function. */
-#define HAVE_VFORK 1
-#endif
-
-/* Define to 1 if you have the <vfork.h> header file. */
-/* #undef HAVE_VFORK_H */
 
 /* Define to 1 if you have the `vprintf' function. */
 #define HAVE_VPRINTF 1
@@ -325,12 +465,17 @@
 /* Define if using WIN32 threads */
 /* #undef HAVE_WIN32_THREAD */
 
-/* Define to 1 if `fork' works. */
-/* #undef HAVE_WORKING_FORK */
+/* Define if winsock2.h exists. */
+/* #undef HAVE_WINSOCK2_H */
 
-#ifdef CONFIG_ARCH_HAVE_VFORK
-/* Define to 1 if `vfork' works. */
-#define HAVE_WORKING_VFORK 1
+#ifdef CONFIG_C99_BOOL
+/* Define to 1 if the system has the type `_Bool'. */
+#define HAVE__BOOL 1
+#endif
+
+#ifndef NDEBUG
+/* Define to disable asserts */
+#define NDEBUG 1
 #endif
 
 /* Name of package */
@@ -343,7 +488,7 @@
 #define PACKAGE_NAME "Iperf"
 
 /* Define to the full name and version of this package. */
-#define PACKAGE_STRING "Iperf 2.0.13a"
+#define PACKAGE_STRING "Iperf 2.1.8"
 
 /* Define to the one symbol short name of this package. */
 #define PACKAGE_TARNAME "iperf"
@@ -352,7 +497,7 @@
 #define PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#define PACKAGE_VERSION "2.0.13a"
+#define PACKAGE_VERSION "2.1.8"
 
 /* Define to the necessary symbol if this constant uses a non-standard name on
    your system. */
@@ -401,7 +546,7 @@
 /* #undef TM_IN_SYS_TIME */
 
 /* Version number of package */
-#define VERSION "2.0.13a"
+#define VERSION "2.1.8"
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

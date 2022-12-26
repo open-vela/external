@@ -38,7 +38,7 @@ config TOOLS_IPERF2_TCP_BUFSIZE
 	default 16384
 
 config TOOLS_IPERF2_DATA_REPORT_NUM
-	int "iperf2 default TCP buffer size"
+	int "iperf2 data report structure number"
 	default 100
 
 config TOOLS_IPERF2_RECV_BUFSIZE

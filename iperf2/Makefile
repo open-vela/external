@@ -18,36 +18,40 @@ include $(APPDIR)/Make.defs
 
 CXXEXT := .cpp
 
-CSRCS := iperf2/src/ReportCSV.c
-CSRCS += iperf2/src/ReportDefault.c
-CSRCS += iperf2/src/tcp_window_size.c
+CSRCS += iperf2/src/checksums.c
+CSRCS += iperf2/src/dscp.c
+CSRCS += iperf2/src/Extractor.c
 CSRCS += iperf2/src/gnu_getopt.c
 CSRCS += iperf2/src/gnu_getopt_long.c
-CSRCS += iperf2/src/stdio.c
-CSRCS += iperf2/src/sockets.c
-CSRCS += iperf2/src/SocketAddr.c
-CSRCS += iperf2/src/Locale.c
-CSRCS += iperf2/src/service.c
-CSRCS += iperf2/src/Reporter.c
-CSRCS += iperf2/src/Extractor.c
-CSRCS += iperf2/src/checksums.c
 CSRCS += iperf2/src/histogram.c
+CSRCS += iperf2/src/Locale.c
+CSRCS += iperf2/src/packet_ring.c
 CSRCS += iperf2/src/pdfs.c
+CSRCS += iperf2/src/Reporter.c
+CSRCS += iperf2/src/ReportOutputs.c
+CSRCS += iperf2/src/Reports.c
+CSRCS += iperf2/src/service.c
+CSRCS += iperf2/src/SocketAddr.c
+CSRCS += iperf2/src/socket_io.c
+CSRCS += iperf2/src/stdio.c
+CSRCS += iperf2/src/tcp_window_size.c
 
 CSRCS += iperf2/compat/delay.c
 CSRCS += iperf2/compat/error.c
+CSRCS += iperf2/compat/gettcpinfo.c
+CSRCS += iperf2/compat/inet_ntop.c
 CSRCS += iperf2/compat/signal.c
 CSRCS += iperf2/compat/string.c
 CSRCS += iperf2/compat/Thread.c
 
-CXXSRCS := iperf2/src/Listener.cpp
+CXXSRCS += iperf2/src/active_hosts.cpp
 CXXSRCS += iperf2/src/Client.cpp
-CXXSRCS += iperf2/src/Server.cpp
-CXXSRCS += iperf2/src/List.cpp
-CXXSRCS += iperf2/src/Launch.cpp
-CXXSRCS += iperf2/src/Settings.cpp
-CXXSRCS += iperf2/src/PerfSocket.cpp
 CXXSRCS += iperf2/src/isochronous.cpp
+CXXSRCS += iperf2/src/Launch.cpp
+CXXSRCS += iperf2/src/Listener.cpp
+CXXSRCS += iperf2/src/PerfSocket.cpp
+CXXSRCS += iperf2/src/Server.cpp
+CXXSRCS += iperf2/src/Settings.cpp
 
 IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" iperf2/include}
