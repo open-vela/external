@@ -31,6 +31,7 @@ CSRCS    += rtos-benchmark/src/common/bench_interrupt_latency_test.c    \
             rtos-benchmark/src/common/bench_sem_signal_release_test.c   \
             rtos-benchmark/src/common/bench_thread_switch_yield_test.c  \
             rtos-benchmark/src/common/bench_thread_test.c               \
+            rtos-benchmark/src/common/bench_malloc_free_test.c      \
             rtos-benchmark/src/common/bench_utils.c                     \
             rtos-benchmark/src/nuttx/bench_porting_layer_nuttx.c        \
             rtos-benchmark/src/nuttx/timer/timer.c
