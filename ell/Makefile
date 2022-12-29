@@ -22,7 +22,8 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ell}
 CSRCS = ell/ell/util.c ell/ell/test.c ell/ell/strv.c ell/ell/utf8.c      \
 	ell/ell/queue.c ell/ell/timeout.c ell/ell/main.c ell/ell/idle.c  \
 	ell/ell/signal.c ell/ell/io.c ell/ell/checksum.c ell/ell/log.c   \
-	ell/ell/random.c ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c \
+	ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c \
 	ell/ell/string.c
+	#ell/ell/random.c ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c \
 
 include $(APPDIR)/Application.mk
