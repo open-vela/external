@@ -32,6 +32,12 @@ config LIB_OFONO_ATMODEM
 	---help---
 		Enable AT modem driver and support vendor AT modem.
 
+config LIB_OFONO_PHONESIM
+	bool "Support phonesim modem"
+	default n
+	---help---
+		Enable phone simulator
+
 config LIB_OFONO_HUAWEIMODEM
 	bool "Support huawemi at modem"
 	default n

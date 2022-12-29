@@ -45,6 +45,10 @@ ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
 CSRCS += $(filter-out ofono/gatchat/test-server.c, \
            $(wildcard ofono/drivers/atmodem/*.c ofono/gatchat/*.c))
 BUILTIN_PLUGIN += atmodem
+ifneq ($(CONFIG_LIB_OFONO_PHONESIM),)
+CSRCS += $(wildcard ofono/drivers/hfpmodem/*.c) ofono/plugins/phonesim.c
+BUILTIN_PLUGIN += hfpmodem phonesim
+endif
 ifneq ($(CONFIG_LIB_OFONO_HUAWEIMODEM),)
 CSRCS += $(wildcard ofono/drivers/huaweimodem/*.c)
 BUILTIN_PLUGIN += huaweimodem
