@@ -21,6 +21,7 @@ CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus}
 CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/dbus}
 CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/tools}
 CFLAGS   += -Dfork=vfork -DDBUS_COMPILATION -D__linux__
+CFLAGS   += -DLOG_DAEMON=0 -DLOG_AUTH=0
 
 PRIORITY  = $(CONFIG_LIB_DBUS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_DBUS_STACKSIZE)
