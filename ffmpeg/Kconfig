@@ -42,4 +42,8 @@ config FFMPEG_TOOLS_GRAPH2DOT
 	default n
 endmenu
 
+config FFMPEG_TEST
+	bool "enable ffmpeg test"
+	default n
+
 endif # LIB_FFMPEG

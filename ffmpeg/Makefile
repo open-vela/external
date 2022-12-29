@@ -103,6 +103,21 @@ ifneq ($(CONFIG_FFMPEG_TOOLS_GRAPH2DOT),)
   MAINSRC  += $(SRC_PATH)/tools/graph2dot.c
 endif
 
+ifneq ($(CONFIG_FFMPEG_TEST),)
+PROGNAME += ffmpeg_api_band
+MAINSRC  += $(SRC_PATH)/tests/api/api-band-test.c
+PROGNAME += ffmpeg_api_flac
+MAINSRC  += $(SRC_PATH)/tests/api/api-flac-test.c
+PROGNAME += ffmpeg_api_h264_slice
+MAINSRC  += $(SRC_PATH)/tests/api/api-h264-slice-test.c
+PROGNAME += ffmpeg_api_h264
+MAINSRC  += $(SRC_PATH)/tests/api/api-h264-test.c
+PROGNAME += ffmpeg_api_seek
+MAINSRC  += $(SRC_PATH)/tests/api/api-seek-test.c
+PROGNAME += ffmpeg_api_threadmessage
+MAINSRC  += $(SRC_PATH)/tests/api/api-threadmessage-test.c
+endif
+
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(SRC_PATH)}
 
 ifeq ($(CONFIG_CODEC_FDKAAC), y)
