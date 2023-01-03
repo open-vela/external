@@ -53,6 +53,11 @@ ifneq ($(CONFIG_LIB_OPUS_ENCODE_TEST),)
   CSRCS    += tests/opus_encode_regressions.c
 endif
 
+ifneq ($(CONFIG_LIB_OPUS_DEMO),)
+  PROGNAME += opus_demo
+  MAINSRC  += src/opus_demo.c
+endif
+
 AFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus}
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}

@@ -30,6 +30,10 @@ config LIB_OPUS_ENCODE_TEST
 	bool "opus encode test"
 	default n
 
+config LIB_OPUS_DEMO
+	bool "opus demo"
+	default n
+
 config LIB_OPUS_PRIORITY
 	int "task priority"
 	default 80
