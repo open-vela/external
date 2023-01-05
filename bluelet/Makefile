@@ -118,8 +118,6 @@ CFLAGS += -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses -Wno-unused-fun
 CFLAGS += -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int
 CFLAGS += -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow
 
-BIN := $(APPDIR)/staging/libbluelet.a
-
 ifeq ($(CONFIG_BLUELET_EXAMPLES),y)
 
   CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
@@ -140,5 +138,16 @@ else
   CSRCS     += $(STACKDIR)/portings/btunix/a2dputil_dep.c
 endif
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libbluelet.a
+endif
+
+EXPORT_FILES := bluelet/src/samples/stack_adapter/inc
 endif
 include $(APPDIR)/Application.mk
