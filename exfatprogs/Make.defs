@@ -15,5 +15,7 @@
 #
 
 ifneq ($(CONFIG_LIB_EXFATPROGS),)
-CONFIGURED_APPS += $(APPDIR)/external/exfatprogs
+    ifneq ($(wildcard $(APPDIR)/external/exfatprogs/exfatprogs/.git),)
+        CONFIGURED_APPS += $(APPDIR)/external/exfatprogs
+    endif
 endif
