@@ -16,6 +16,8 @@
 
 include $(APPDIR)/Make.defs
 
+BIN := $(APPDIR)/staging/libexternal.a
+
 CSRCS     = exfatprogs/lib/libexfat.c
 CFLAGS   += -D__le16=uint16_t
 CFLAGS   += -D__le32='unsigned int'
