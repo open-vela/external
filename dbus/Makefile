@@ -93,9 +93,4 @@ MAINSRC  += dbus/tools/dbus-update-activation-environment.c
 PROGNAME += dbus_update_activation_environment
 endif
 
-dbus/dbus/dbus-arch-deps.h:
-	$(Q) cp dbus-arch-deps.h $@
-
-context:: dbus/dbus/dbus-arch-deps.h
-
 include $(APPDIR)/Application.mk
