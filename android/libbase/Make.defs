@@ -14,9 +14,5 @@
 # limitations under the License.
 #
 
-config ANDROID
-	bool "Enable Android basic support"
-	select FS_LARGEFILE
-	default n
-	---help---
-		binder, libbase, libcutils and libutils
+CONFIGURED_APPS += $(APPDIR)/external/android/libbase
+CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/libbase/libbase/include}
