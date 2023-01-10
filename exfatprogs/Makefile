@@ -16,8 +16,6 @@
 
 include $(APPDIR)/Make.defs
 
-BIN := $(APPDIR)/staging/libexternal.a
-
 CSRCS     = exfatprogs/lib/libexfat.c
 CFLAGS   += -D__le16=uint16_t
 CFLAGS   += -D__le32='unsigned int'
@@ -62,5 +60,14 @@ MAINSRC  += exfatprogs/mkfs/mkfs.c
 PROGNAME += mkfsexfat
 endif
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libexternal.a
+endif
 
 include $(APPDIR)/Application.mk
