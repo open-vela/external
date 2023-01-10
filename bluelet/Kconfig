@@ -136,14 +136,17 @@ config HFP
     Hands-Free/Headset profile support
 
 if HFP
-choice
-  prompt "Hands-Free/Headset"
-  default HFP_HF
-  config HFP_HF
+config HFP_HF
   bool "Hands-Free/Headset profile Hands-Free"
-  config HFP_AG
+  default y
+  help
+    Hands-Free/Headset profile Hands-Free
+
+config HFP_AG
   bool "Hands-Free/Headset profile Audio-Gateway"
-endchoice
+  default y
+  help
+    Hands-Free/Headset profile Audio-Gateway
 endif
 
 config OBEX
