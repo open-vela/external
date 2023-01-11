@@ -1,0 +1,39 @@
+#
+# Copyright (C) 2020 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config UTILS_DHRYSTONE
+	tristate "utils_dhrystone"
+	default n
+	---help---
+		Dhrystone is one of the most common benchmark programs
+		for measuring the computing power of processors and is commonly
+		used to measure the performance of integer computing on processors.
+
+if UTILS_DHRYSTONE
+
+config UTILS_DHRYSTONE_PROGNAME
+	string "Program Name"
+	default "utils_dhrystone"
+
+config UTILS_DHRYSTONE_STACKSIZE
+	int "utils dhrystone stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config UTILS_DHRYSTONE_PRIORITY
+	int "Task PRIORITY"
+	default 100
+
+endif
