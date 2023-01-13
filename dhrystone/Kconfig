@@ -26,7 +26,7 @@ if UTILS_DHRYSTONE
 
 config UTILS_DHRYSTONE_PROGNAME
 	string "Program Name"
-	default "utils_dhrystone"
+	default "dhrystone"
 
 config UTILS_DHRYSTONE_STACKSIZE
 	int "utils dhrystone stack size"
