@@ -62,7 +62,7 @@
 
 /* Define to 1 if you have the declaration of `IPV6_TCLASS', and to 0 if you
    don't. */
-/* #undef HAVE_DECL_IPV6_TCLASS */
+#define HAVE_DECL_IPV6_TCLASS 1
 
 /* Define to 1 if you have the declaration of `IP_ADD_MEMBERSHIP', and to 0 if
    you don't. */
