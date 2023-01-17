@@ -41,7 +41,7 @@ BUILTIN_PLUGIN += rilmodem ril rildev
 endif
 
 ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
-CSRCS += $(filter-out ofono/gatchat/test-server.c, \
+ATCSRCS += $(filter-out ofono/gatchat/test-server.c, \
            $(wildcard ofono/drivers/atmodem/*.c ofono/gatchat/*.c))
 BUILTIN_PLUGIN += atmodem
 ifneq ($(CONFIG_LIB_OFONO_PHONESIM),)
@@ -64,9 +64,9 @@ MODULE    = $(CONFIG_LIB_OFONO)
 
 ifneq ($(CONFIG_LIB_OFONO_UNITTEST),)
 CSRCS    += ofono/gatchat/ringbuffer.c $(wildcard ofono/gril/*.c) ofono/src/common.c \
-	    ofono/src/log.c ofono/src/simutil.c ofono/src/smsutil.c ofono/src/storage.c \
-	    ofono/src/stkutil.c ofono/src/util.c ofono/unit/rilmodem-test-engine.c \
-	    ofono/unit/rilmodem-test-server.c
+            ofono/src/log.c ofono/src/simutil.c ofono/src/smsutil.c ofono/src/storage.c \
+            ofono/src/stkutil.c ofono/src/util.c ofono/unit/rilmodem-test-engine.c \
+            ofono/unit/rilmodem-test-server.c
 MAINSRC  += ofono/unit/test-rilmodem-cb.c
 PROGNAME += test_rilmodem_cb
 MAINSRC  += ofono/unit/test-rilmodem-cs.c
@@ -87,12 +87,14 @@ else
 
 # ofono gatchat file(needby ofono emulator)
 
-CSRCS    += ofono/gatchat/gatchat.c ofono/gatchat/gatio.c ofono/gatchat/gatresult.c \
-	    ofono/gatchat/gatserver.c ofono/gatchat/gatutil.c ofono/gatchat/ringbuffer.c
+CSRCS    += $(sort $(ATCSRCS) ofono/gatchat/gatchat.c ofono/gatchat/gatio.c \
+              ofono/gatchat/gatresult.c ofono/gatchat/gatserver.c \
+              ofono/gatchat/gatutil.c ofono/gatchat/ringbuffer.c)
 
 # ofono core source file and compile flags
 
-CSRCS    += $(wildcard ofono/gdbus/*.c ofono/gril/*.c ofono/src/*.c)
+CSRCS    += $(filter-out ofono/src/main.c, \
+              $(wildcard ofono/gdbus/*.c ofono/gril/*.c ofono/src/*.c))
 MAINSRC  += ofono/src/main.c
 PROGNAME += ofonod
 endif

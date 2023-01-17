@@ -35,6 +35,7 @@ config LIB_OFONO_ATMODEM
 config LIB_OFONO_PHONESIM
 	bool "Support phonesim modem"
 	default n
+	depends on LIB_OFONO_ATMODEM
 	---help---
 		Enable phone simulator
 
