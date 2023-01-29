@@ -156,33 +156,33 @@ CFLAGS += -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shad
 CFLAGS += -Wno-missing-braces
 CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
-EXTRA := $(CFLAGS)
+FFEXTRA := $(CFLAGS)
 
 $(SRC_PATH)/libavutil/ffversion.h:
 	$(Q)cd $(SRC_PATH) && ./ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
 
 $(SRC_PATH)/ffbuild/config.mak:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
-	$(Q)cd $(SRC_PATH) && ./configure --disable-all             \
-		--disable-everything    --disable-autodetect            \
-		--disable-amf           --disable-audiotoolbox          \
-		--disable-cuda-llvm     --disable-cuvid                 \
-		--disable-d3d11va       --disable-doc                   \
-		--disable-dwt           --disable-dxva2                 \
-		--disable-dxva2         --disable-error-resilience      \
-		--disable-faan          --disable-ffnvcodec             \
-		--disable-htmlpages     --disable-iconv                 \
-		--disable-lsp           --disable-threads               \
-		--disable-manpages      --disable-pic                   \
-		--disable-pixelutils    --disable-podpages              \
-		--disable-nvdec         --disable-nvenc                 \
-		--disable-txtpages      --disable-v4l2-m2m              \
-		--disable-vaapi         --disable-vdpau                 \
-		--disable-videotoolbox  --disable-x86asm                \
-		--disable-xop                                           \
-		--enable-version3       --enable-small                  \
-		--extra-cflags="$(EXTRA)" --extra-ldflags="$(EXTRA)"    \
-		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS) \
+	$(Q)cd $(SRC_PATH) && ./configure --disable-all              \
+		--disable-everything    --disable-autodetect             \
+		--disable-amf           --disable-audiotoolbox           \
+		--disable-cuda-llvm     --disable-cuvid                  \
+		--disable-d3d11va       --disable-doc                    \
+		--disable-dwt           --disable-dxva2                  \
+		--disable-dxva2         --disable-error-resilience       \
+		--disable-faan          --disable-ffnvcodec              \
+		--disable-htmlpages     --disable-iconv                  \
+		--disable-lsp           --disable-threads                \
+		--disable-manpages      --disable-pic                    \
+		--disable-pixelutils    --disable-podpages               \
+		--disable-nvdec         --disable-nvenc                  \
+		--disable-txtpages      --disable-v4l2-m2m               \
+		--disable-vaapi         --disable-vdpau                  \
+		--disable-videotoolbox  --disable-x86asm                 \
+		--disable-xop                                            \
+		--enable-version3       --enable-small                   \
+		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)" \
+		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)  \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
 context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
