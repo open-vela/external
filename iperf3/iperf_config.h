@@ -146,3 +146,7 @@
 
 /* Define to empty if `const' does not conform to ANSI C. */
 /* #undef const */
+
+/* NuttX doesn't support IPv4-mapped addresses in IPv6 TCP sockets and
+   IPV6_V6ONLY option yet, undefine it to avoid triggering related logic. */
+#undef IPV6_V6ONLY
