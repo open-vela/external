@@ -35,7 +35,25 @@ CFLAGS += -Dstr2num=curl_str2num
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" curl/lib}
 
 MAINSRC = curl/src/tool_main.c
-CSRCS  += $(filter-out $(MAINSRC),$(wildcard curl/src/*.c))
+HELP_C  = tool_listhelp.c
+CSRCS  += $(HELP_C)
+CSRCS  += $(filter-out $(MAINSRC) curl/src/$(HELP_C),$(wildcard curl/src/*.c))
+
+# Get .d files with Category=important
+CMD_GEN_HELP  = grep Category curl/docs/cmdline-opts/*.d | grep important | cut -d ":" -f 1
+# Generate the listhelp.c with these .d files
+CMD_GEN_HELP += | xargs curl/docs/cmdline-opts/gen.pl listhelp
+# Add curl/src prefix to headers
+CMD_GEN_HELP += | sed 's@\#include "@\#include "curl/src/@'
+
+$(HELP_C):
+	$(Q) $(CMD_GEN_HELP) > $@
+
+context:: $(HELP_C)
+
+distclean::
+	$(call DELFILE, $(HELP_C))
+
 endif
 
 include $(APPDIR)/Application.mk
