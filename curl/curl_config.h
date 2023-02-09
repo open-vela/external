@@ -23,6 +23,8 @@
  ***************************************************************************/
 /* lib/curl_config.h.in.  Generated somehow by cmake.  */
 
+#include <nuttx/config.h>
+
 /* when building libcurl itself */
 #define BUILDING_LIBCURL 1
 
@@ -141,8 +143,10 @@
 /* your Entropy Gathering Daemon socket pathname */
 /* #undef EGD_SOCKET */
 
+#ifdef CONFIG_NET_IPv6
 /* Define if you want to enable IPv6 support */
 #define ENABLE_IPV6 1
+#endif
 
 /* Define to 1 if you have the alarm function. */
 #define HAVE_ALARM 1
