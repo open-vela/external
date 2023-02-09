@@ -140,6 +140,10 @@ ifeq ($(CONFIG_LIB_SILK),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
 endif
 
+ifeq ($(CONFIG_LIB_LC3),y)
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lc3/lc3/include}
+endif
+
 ifeq ($(CONFIG_LIB_ZLIB),y)
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 endif
