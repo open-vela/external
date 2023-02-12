@@ -31,6 +31,11 @@ CXXSRCS += binder/aidl/android/os/IServiceCallback.cpp
 CXXSRCS += binder/aidl/android/os/IServiceManager.cpp
 CXXSRCS += binder/aidl/android/os/ServiceDebugInfo.cpp
 
+CXXSRCS += binder/ndk/ibinder.cpp
+CXXSRCS += binder/ndk/parcel.cpp
+CXXSRCS += binder/ndk/process.cpp
+CXXSRCS += binder/ndk/service_manager.cpp
+CXXSRCS += binder/ndk/stability.cpp
 CXXSRCS += binder/ndk/status.cpp
 
 CXXSRCS += binder/ActivityManager.cpp
