@@ -23,7 +23,6 @@ menuconfig LIB_FLUORIDE
   select CRYPTO_RANDOM_POOL
   select EVENT_FD
   select DEV_URANDOM
-  select DEV_URANDOM_RANDOM_POOL
   select LIB_CHROMIUM
   select LIB_TINYXML2
   select LIBC_SCANSET
@@ -384,7 +383,7 @@ config BTM_MAX_REM_BD_NAME_LEN
     Maximum device name length used in btm database.
 
 config BTM_MAX_LOC_BD_NAME_LEN
-  int "Maximum local device name length stored btm database. "
+  int "Maximum local device name length stored btm database."
   default 64
   help
     Maximum local device name length stored btm database.

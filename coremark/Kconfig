@@ -25,8 +25,7 @@ config UTILS_COREMARK_ITERATIONS
 
 config UTILS_COREMARK_SEED_METHOD
 	int "CoreMark Seed Method"
-	default 2 if UTILS_COREMARK_RUN_METHOD
-	default 0 if !UTILS_COREMARK_RUN_METHOD
+	default 2
 	---help---
 		Set CoreMark Seed Method:
 		0 : SEED_ARG

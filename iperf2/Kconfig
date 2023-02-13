@@ -21,7 +21,6 @@ config TOOLS_IPERF2
 	default n
 	select HAVE_CXX
 	select LIBC_FLOATINGPOINT
-	---help---
 
 if TOOLS_IPERF2
 
