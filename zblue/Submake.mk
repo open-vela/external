@@ -325,7 +325,7 @@ else
   MODULE    = n
 endif
 
-context::
+depend::
 	$(Q) ln -sf ../../include/bluetooth port/include/bluetooth
 	$(Q) ln -sf ../../include/drivers port/include/drivers
 	$(Q) ln -sf ../../include/fs port/include/fs
