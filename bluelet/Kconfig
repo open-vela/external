@@ -55,19 +55,21 @@ endif
 
 config BREDR
   bool "BR/EDR needed"
-  default y
+  default n
   help
     BR/EDR needed.
 
 config RFCOMM
   bool "RFCOMM supported"
   default n
+  depends on BREDR
   help
     RFCOMM supported
 
 config BNEP
   bool "Bluetooth Network Encapsulation Protocol"
   default n
+  depends on BREDR
   help
     Bluetooth Network Encapsulation Protocol
 
@@ -100,6 +102,7 @@ endif
 config A2DP
   bool "A2DP Support"
   default n
+  depends on BREDR
   help
     A2DP Support
 
@@ -132,6 +135,7 @@ endif
 config HFP
   bool "Hands-Free/Headset profile support"
   default n
+  depends on BREDR
   help
     Hands-Free/Headset profile support
 
@@ -152,6 +156,7 @@ endif
 config OBEX
   bool "Generic OBEX profile"
   default n
+  depends on BREDR
   help
     Generic OBEX profile
 
@@ -180,6 +185,7 @@ endif
 config OPP
   bool "Object push"
   default n
+  depends on BREDR
   help
     Object push
 
@@ -192,6 +198,7 @@ config HID
 config PAN
   bool "Personal Area Networking Profile"
   default n
+  depends on BREDR
   select BNEP
   help
     Personal Area Networking Profile
