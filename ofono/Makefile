@@ -91,6 +91,10 @@ CSRCS    += $(sort $(ATCSRCS) ofono/gatchat/gatchat.c ofono/gatchat/gatio.c \
               ofono/gatchat/gatresult.c ofono/gatchat/gatserver.c \
               ofono/gatchat/gatutil.c ofono/gatchat/ringbuffer.c)
 
+# ofono gprs provision file
+
+CSRCS    += ofono/plugins/mbpi.c ofono/plugins/provision.c
+
 # ofono core source file and compile flags
 
 CSRCS    += $(filter-out ofono/src/main.c, \
