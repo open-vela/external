@@ -55,7 +55,7 @@ endif
 
 config BREDR
   bool "BR/EDR needed"
-  default n
+  default y
   help
     BR/EDR needed.
 
