@@ -93,14 +93,4 @@ MAINSRC  += dbus/tools/dbus-update-activation-environment.c
 PROGNAME += dbus_update_activation_environment
 endif
 
-ASRCS := $(wildcard $(ASRCS))
-CSRCS := $(wildcard $(CSRCS))
-CXXSRCS := $(wildcard $(CXXSRCS))
-MAINSRC := $(wildcard $(MAINSRC))
-NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
-
-ifneq ($(NOEXPORTSRCS),)
-BIN := $(APPDIR)/staging/libexternal.a
-endif
-
 include $(APPDIR)/Application.mk

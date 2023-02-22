@@ -103,15 +103,6 @@ MAINSRC  += ofono/src/main.c
 PROGNAME += ofonod
 endif
 
-ASRCS := $(wildcard $(ASRCS))
-CSRCS := $(wildcard $(CSRCS))
-CXXSRCS := $(wildcard $(CXXSRCS))
-MAINSRC := $(wildcard $(MAINSRC))
-NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
-
-ifneq ($(NOEXPORTSRCS),)
-BIN := $(APPDIR)/staging/libexternal.a
-
 # auto generate file for header file, version.h, builtin.h
 
 builtin.h:
@@ -121,7 +112,5 @@ context:: builtin.h
 
 clean::
 	$(call DELFILE, builtin.h)
-
-endif
 
 include $(APPDIR)/Application.mk

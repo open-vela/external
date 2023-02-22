@@ -28,14 +28,4 @@ GLIB_FILTER_OUT += glib/glib/gstdio-private.c glib/glib/gjournal-private.c glib/
 CSRCS += $(filter-out $(GLIB_FILTER_OUT), $(wildcard glib/glib/g*.c))
 CSRCS += glib/glib/libcharset/localcharset.c
 
-ASRCS := $(wildcard $(ASRCS))
-CSRCS := $(wildcard $(CSRCS))
-CXXSRCS := $(wildcard $(CXXSRCS))
-MAINSRC := $(wildcard $(MAINSRC))
-NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
-
-ifneq ($(NOEXPORTSRCS),)
-BIN := $(APPDIR)/staging/libexternal.a
-endif
-
 include $(APPDIR)/Application.mk
