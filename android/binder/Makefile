@@ -18,6 +18,10 @@ include $(APPDIR)/Make.defs
 
 CXXEXT = .cpp
 
+#############################################################################
+# binder
+#############################################################################
+
 CXXSRCS += binder/aidl/android/app/ProcessStateEnum.cpp
 CXXSRCS += binder/aidl/android/content/pm/ApexStagedEvent.cpp
 CXXSRCS += binder/aidl/android/content/pm/IPackageChangeObserver.cpp
@@ -77,5 +81,22 @@ CXXSRCS += binder/Static.cpp
 CXXSRCS += binder/Status.cpp
 CXXSRCS += binder/TextOutput.cpp
 CXXSRCS += binder/Utils.cpp
+
+#############################################################################
+# service manager
+#############################################################################
+
+MODULE    = $(CONFIG_ANDROID_BINDER)
+PRIORITY  = SCHED_PRIORITY_DEFAULT
+STACKSIZE = $(CONFIG_ANDROID_BINDER_STACKSIZE)
+
+MAINSRC  += cmds/service/service.cpp
+PROGNAME += service
+
+CXXFLAGS += -DVENDORSERVICEMANAGER
+CXXSRCS  += cmds/servicemanager/Access.cpp
+CXXSRCS  += cmds/servicemanager/ServiceManager.cpp
+MAINSRC  += cmds/servicemanager/main.cpp
+PROGNAME += servicemanager
 
 include $(APPDIR)/Application.mk

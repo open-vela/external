@@ -14,6 +14,7 @@
 # limitations under the License.
 #
 
+ifneq ($(CONFIG_ANDROID_BINDER),)
 CONFIGURED_APPS += $(APPDIR)/external/android/binder
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/include_rpc_unstable}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_ndk}
@@ -28,3 +29,4 @@ CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/bi
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_cpp}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_ndk}
 CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_platform}
+endif

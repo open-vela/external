@@ -15,8 +15,22 @@
 #
 
 config ANDROID
-	bool "Enable Android basic support"
+	bool "Enable Android compatible layer"
+	depends on LIBCXX && KVDB
 	select FS_LARGEFILE
 	default n
 	---help---
-		binder, libbase, libcutils and libutils
+		Android compatible layer, including:
+		libbase, libcutils and libutils
+
+config ANDROID_BINDER
+	tristate "Enable Android Binder"
+	depends on ANDROID
+	default n
+	---help---
+		Android binder, the codebase come from AOSP
+
+config ANDROID_BINDER_STACKSIZE
+	int "Binder service stack size"
+	depends on ANDROID_BINDER
+	default DEFAULT_TASK_STACKSIZE
