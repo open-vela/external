@@ -16,6 +16,7 @@
 
 config LIB_GOOGLETEST
 	tristate "Google's C++ test framework"
+	depends on LIBCXX
 	default n
 
 	---help---
