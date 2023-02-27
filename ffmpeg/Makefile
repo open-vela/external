@@ -28,6 +28,7 @@ AR        := $(SAR)
 
 CSRCS     :=
 ASRCS     :=
+NASRCS    :=
 SRC_PATH  := ffmpeg
 
 CFG_ARCH  := $(CONFIG_ARCH)
@@ -63,18 +64,53 @@ FFLIBS-$(CONFIG_SWSCALE)    += swscale
 SHLIBOBJS := ac3_channel_layout_tab.o to_upper4.o
 
 define DOSUBDIR
-  OBJS     :=
-  OBJS-yes :=
+  OBJS            :=
+  OBJS-yes        :=
+  X86ASM-OBJS-yes :=
   include $(SRC_PATH)/$(1)/Makefile
   -include $(SRC_PATH)/$(1)/$$(ARCH)/Makefile
   include $(SRC_PATH)/ffbuild/arch.mak
-  SOBJS := $$(filter-out $$(SHLIBOBJS), $$(OBJS) $$(OBJS-yes))
+  SOBJS := $$(filter-out $$(SHLIBOBJS), $$(OBJS) $$(OBJS-yes) $$(X86ASM-OBJS-yes))
   SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(SOBJS)))
   CSRCS += $$(wildcard $$(patsubst %.o,%.c, $$(SOBJS)))
   ASRCS += $$(wildcard $$(patsubst %.o,%.S, $$(SOBJS)))
+  NASRCS += $$(wildcard $$(patsubst %.o,%.asm, $$(SOBJS)))
 endef
 
 $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
+
+ENABLE_X86ASM =
+ifeq ($(CONFIG_ARCH_SIM),y)
+ifneq ($(CONFIG_HOST_X86_64)$(CONFIG_HOST_X86),)
+  ENABLE_X86ASM = --enable-x86asm
+endif
+else ifeq ($(CONFIG_ARCH_X86),y)
+  ENABLE_X86ASM = --enable-x86asm
+endif
+
+ifneq ($(ENABLE_X86ASM),)
+
+CFG_CMDS += $(ENABLE_X86ASM)
+NAFLAGS = -g -F dwarf -P$(SRC_PATH)/config.asm -I$(SRC_PATH)
+ifneq ($(wildcard $(SRC_PATH)/libavcodec/$(ARCH)),)
+  NAFLAGS += -I$(SRC_PATH)/libavcodec/$(ARCH)
+endif
+
+ifeq ($(CONFIG_SIM_M32),y)
+  NAFLAGS += -f elf32
+else
+  NAFLAGS += -f elf64
+endif
+
+NASUFFIX = $(subst $(DELIM),.,$(CURDIR))
+EXTOBJS  = $(NASRCS:=$(NASUFFIX)$(OBJEXT))
+
+$(EXTOBJS): %.asm$(NASUFFIX)$(OBJEXT): %.asm
+	$(Q) nasm $(NAFLAGS) $< -o $@
+	$(Q) strip -x $@
+else
+  CFG_CMDS += --disable-x86asm
+endif # --enable-x86asm
 
 PRIORITY  = $(CONFIG_LIB_FFMPEG_TOOLS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_FFMPEG_TOOLS_STACKSIZE)
@@ -182,14 +218,15 @@ $(SRC_PATH)/ffbuild/config.mak:
 		--disable-nvdec         --disable-nvenc                  \
 		--disable-txtpages      --disable-v4l2-m2m               \
 		--disable-vaapi         --disable-vdpau                  \
-		--disable-videotoolbox  --disable-x86asm                 \
-		--disable-xop                                            \
+		--disable-videotoolbox  --disable-xop                    \
 		--enable-version3       --enable-small                   \
 		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)" \
 		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)  \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
 context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
+
+depend:: $(NASRCS)
 
 distclean::
 	rm -f $(SRC_PATH)/config.h $(SRC_PATH)/config_components.h $(SRC_PATH)/.version
