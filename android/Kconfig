@@ -25,7 +25,7 @@ config ANDROID
 
 config ANDROID_BINDER
 	tristate "Enable Android Binder"
-	depends on ANDROID
+	depends on ANDROID && TLS_TASK_NELEM > 0
 	default n
 	---help---
 		Android binder, the codebase come from AOSP
