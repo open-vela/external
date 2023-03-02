@@ -41,7 +41,8 @@ BUILTIN_PLUGIN += rilmodem ril rildev
 endif
 
 ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
-ATCSRCS += $(filter-out ofono/gatchat/test-server.c, \
+ATCSRCSRM += ofono/gatchat/test-server.c ofono/gatchat/gsmdial.c ofono/gatchat/test-qcdm.c
+ATCSRCS += $(filter-out $(ATCSRCSRM), \
            $(wildcard ofono/drivers/atmodem/*.c ofono/gatchat/*.c))
 BUILTIN_PLUGIN += atmodem
 ifneq ($(CONFIG_LIB_OFONO_PHONESIM),)
