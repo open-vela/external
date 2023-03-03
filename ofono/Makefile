@@ -37,7 +37,7 @@ CFLAGS += -Dprint_buf=ofono_gril_print_buf
 ifneq ($(CONFIG_LIB_OFONO_RILMODEM),)
 CSRCS += $(wildcard ofono/drivers/rilmodem/*.c)
 CSRCS += ofono/plugins/rildev.c ofono/plugins/ril.c
-BUILTIN_PLUGIN += rilmodem ril rildev provision
+BUILTIN_PLUGIN += rildev ril rilmodem provision
 endif
 
 ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
