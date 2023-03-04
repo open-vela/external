@@ -20,4 +20,14 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libexpat/expat/lib}
 CSRCS  += $(wildcard libexpat/expat/lib/*.c)
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libtelephony.a
+endif
+
 include $(APPDIR)/Application.mk

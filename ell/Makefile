@@ -25,4 +25,14 @@ CSRCS = ell/ell/util.c ell/ell/test.c ell/ell/strv.c ell/ell/utf8.c      \
 	ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c \
 	ell/ell/string.c
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libtelephony.a
+endif
+
 include $(APPDIR)/Application.mk
