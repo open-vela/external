@@ -44,5 +44,8 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" coremark/posix}
 
 CFLAGS += -DCOMPILER_FLAGS="\"$(CFLAGS)\""
 
+# Build with WebAssembly when CONFIG_INTERPRETERS_WAMR is enabled
+
+WASM_BUILD = y
+
 include $(APPDIR)/Application.mk
-include $(APPDIR)/Wasm.mk
