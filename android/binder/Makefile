@@ -18,19 +18,6 @@ include $(APPDIR)/Make.defs
 
 CXXEXT = .cpp
 
-CXXSRCS += binder/aidl/android/app/ProcessStateEnum.cpp
-CXXSRCS += binder/aidl/android/content/pm/ApexStagedEvent.cpp
-CXXSRCS += binder/aidl/android/content/pm/IPackageChangeObserver.cpp
-CXXSRCS += binder/aidl/android/content/pm/IPackageManagerNative.cpp
-CXXSRCS += binder/aidl/android/content/pm/IStagedApexObserver.cpp
-CXXSRCS += binder/aidl/android/content/pm/PackageChangeEvent.cpp
-CXXSRCS += binder/aidl/android/content/pm/StagedApexInfo.cpp
-CXXSRCS += binder/aidl/android/os/ConnectionInfo.cpp
-CXXSRCS += binder/aidl/android/os/IClientCallback.cpp
-CXXSRCS += binder/aidl/android/os/IServiceCallback.cpp
-CXXSRCS += binder/aidl/android/os/IServiceManager.cpp
-CXXSRCS += binder/aidl/android/os/ServiceDebugInfo.cpp
-
 CXXSRCS += binder/ndk/ibinder.cpp
 CXXSRCS += binder/ndk/parcel.cpp
 CXXSRCS += binder/ndk/process.cpp
@@ -77,5 +64,10 @@ CXXSRCS += binder/Static.cpp
 CXXSRCS += binder/Status.cpp
 CXXSRCS += binder/TextOutput.cpp
 CXXSRCS += binder/Utils.cpp
+
+AIDLSRCS += $(shell find binder/aidl -name *.aidl)
+AIDLFLAGS = --lang=cpp -Ibinder/aidl -hbinder/aidl -obinder/aidl
+
+CXXSRCS  += $(patsubst %$(AIDLEXT),%$(CXXEXT),$(AIDLSRCS))
 
 include $(APPDIR)/Application.mk
