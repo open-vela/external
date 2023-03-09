@@ -79,18 +79,7 @@ endef
 
 $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
 
-ENABLE_X86ASM =
-ifeq ($(CONFIG_ARCH_SIM),y)
-ifneq ($(CONFIG_HOST_X86_64)$(CONFIG_HOST_X86),)
-  ENABLE_X86ASM = --enable-x86asm
-endif
-else ifeq ($(CONFIG_ARCH_X86),y)
-  ENABLE_X86ASM = --enable-x86asm
-endif
-
-ifneq ($(ENABLE_X86ASM),)
-
-CFG_CMDS += $(ENABLE_X86ASM)
+ifneq ($(NASRCS),)
 NAFLAGS = -g -F dwarf -P$(SRC_PATH)/config.asm -I$(SRC_PATH)
 ifneq ($(wildcard $(SRC_PATH)/libavcodec/$(ARCH)),)
   NAFLAGS += -I$(SRC_PATH)/libavcodec/$(ARCH)
@@ -108,9 +97,7 @@ EXTOBJS  = $(NASRCS:=$(NASUFFIX)$(OBJEXT))
 $(EXTOBJS): %.asm$(NASUFFIX)$(OBJEXT): %.asm
 	$(Q) nasm $(NAFLAGS) $< -o $@
 	$(Q) strip -x $@
-else
-  CFG_CMDS += --disable-x86asm
-endif # --enable-x86asm
+endif
 
 PRIORITY  = $(CONFIG_LIB_FFMPEG_TOOLS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_FFMPEG_TOOLS_STACKSIZE)
