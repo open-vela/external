@@ -16,7 +16,7 @@
 
 config ANDROID
 	bool "Enable Android compatible layer"
-	depends on LIBCXX && KVDB
+	depends on EVENT_FD && LIBCXX && KVDB
 	select FS_LARGEFILE
 	default n
 	---help---
@@ -25,7 +25,7 @@ config ANDROID
 
 config ANDROID_BINDER
 	tristate "Enable Android Binder"
-	depends on ANDROID && TLS_TASK_NELEM > 0
+	depends on ANDROID && TIMER_FD && TLS_TASK_NELEM > 0
 	default n
 	---help---
 		Android binder, the codebase come from AOSP
