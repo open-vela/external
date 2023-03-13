@@ -81,8 +81,9 @@ $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
 
 ifneq ($(NASRCS),)
 NAFLAGS = -g -F dwarf -P$(SRC_PATH)/config.asm -I$(SRC_PATH)
+NAFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 ifneq ($(wildcard $(SRC_PATH)/libavcodec/$(ARCH)),)
-  NAFLAGS += -I$(SRC_PATH)/libavcodec/$(ARCH)
+  NAFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)/libavcodec/$(ARCH)
 endif
 
 ifeq ($(CONFIG_SIM_M32),y)
@@ -141,39 +142,39 @@ PROGNAME += ffmpeg_api_threadmessage
 MAINSRC  += $(SRC_PATH)/tests/api/api-threadmessage-test.c
 endif
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(SRC_PATH)}
+CFLAGS += ${shell $(INCDIR) "$(CC)" $(SRC_PATH)}
 
 ifeq ($(CONFIG_CODEC_FDKAAC), y)
 CFLAGS += -DAACENCODER_LIB_VL0=4 -DAACENCODER_LIB_VL1=0
 endif
 
 ifeq ($(CONFIG_LIB_FLUORIDE_SBC), y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include
 endif
 
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-aac/libhelix-aac}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-aac/libhelix-aac
 endif
 ifeq ($(CONFIG_LIB_HELIX_MP3),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub
 endif
 
 ifeq ($(CONFIG_LIB_SILK),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface
 endif
 
 ifeq ($(CONFIG_LIB_LC3),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lc3/lc3/include}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/lc3/lc3/include
 endif
 
 ifeq ($(CONFIG_LIB_ZLIB),y)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
 endif
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/vendor/xiaomi/miwear/bes_aec}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/bes_aec
 
 ifeq ($(MAKECMDGOALS), context)
 CFLAGS += -Wno-error
