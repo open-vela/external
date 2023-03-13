@@ -80,8 +80,8 @@ endef
 $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
 
 ifneq ($(NASRCS),)
-NAFLAGS = -g -F dwarf -P$(SRC_PATH)/config.asm -I$(SRC_PATH)
-NAFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
+NAFLAGS = -g -F dwarf -P$(SRC_PATH)/config.asm
+NAFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)/
 ifneq ($(wildcard $(SRC_PATH)/libavcodec/$(ARCH)),)
   NAFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)/libavcodec/$(ARCH)
 endif
