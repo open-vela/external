@@ -30,7 +30,11 @@ register::
 depend::
 	$(Q) touch .depend
 
-distclean::
+clean_context::
+	$(call DELDIR, $(TOP_DIR)/include/dlg/)
+	$(call DELFILE, $(TOP_DIR)/src/dlg/dlg.c)
+
+distclean:: clean_context
 	$(call DELFILE, .depend)
 
 install::

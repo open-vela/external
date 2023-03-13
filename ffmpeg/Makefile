@@ -216,7 +216,11 @@ context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
 
 depend:: $(NASRCS)
 
-distclean::
+clean_context::
+	$(call DELFILE, $(SRC_PATH)/Makefile)
+	$(call DELFILE, $(SRC_PATH)/doc/config.texi)
+
+distclean:: clean_context
 	rm -f $(SRC_PATH)/config.h $(SRC_PATH)/config_components.h $(SRC_PATH)/.version
 	rm -f $(SRC_PATH)/ffbuild/.config $(SRC_PATH)/ffbuild/config*
 	rm -f $(SRC_PATH)/libavutil/avconfig.h  $(SRC_PATH)/libavutil/ffversion.h
