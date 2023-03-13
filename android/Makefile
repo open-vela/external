@@ -16,5 +16,8 @@
 
 include $(APPDIR)/Directory.mk
 
-all:
+context:
 	touch .kconfig
+
+register:
+depend:
