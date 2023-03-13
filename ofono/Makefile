@@ -125,4 +125,7 @@ clean::
 
 endif
 
+WASM_INITIAL_MEMORY = 327680
+WASM_BUILD          = y
+
 include $(APPDIR)/Application.mk

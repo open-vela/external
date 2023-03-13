@@ -35,4 +35,6 @@ ifneq ($(NOEXPORTSRCS),)
 BIN := $(APPDIR)/staging/libtelephony.a
 endif
 
+WASM_BUILD = y
+
 include $(APPDIR)/Application.mk
