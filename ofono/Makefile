@@ -34,8 +34,7 @@ CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_LIB_OFONO_PLUGIN_DIR -DOFONO_PLUGIN
 # OFONO Modem
 
 ifneq ($(CONFIG_LIB_OFONO_RILMODEM),)
-CSRCS += $(filter-out ofono/drivers/rilmodem/phonebook.c, \
-           $(wildcard ofono/drivers/rilmodem/*.c))
+CSRCS += $(wildcard ofono/drivers/rilmodem/*.c)
 CSRCS += ofono/plugins/rildev.c ofono/plugins/ril.c
 BUILTIN_PLUGIN += rilmodem ril rildev
 endif
