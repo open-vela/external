@@ -56,7 +56,7 @@ CXXSRCS += iperf2/src/Settings.cpp
 IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" iperf2/include}
 IPERF2_FLAGS += ${shell $(DEFINE) "$(CC)" HAVE_CONFIG_H}
-IPERF2_FLAGS += -Wno-undef -Wno-shadow
+IPERF2_FLAGS += -Wno-undef -Wno-shadow -Wno-unused-function
 IPERF2_FLAGS += -Dwarn=iperf2_warn
 IPERF2_FLAGS += -Dwarn_errno=iperf2_warn_errno
 IPERF2_FLAGS += -Dversion=iperf2_version
