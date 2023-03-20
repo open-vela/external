@@ -28,6 +28,7 @@ CSRCS    += benchtests/json-lib.c
 CSRCS    += port/error.c
 CSRCS    += port/ifunc-impl-list.c
 CSRCS    += port/programs/xmalloc.c
+CSRCS    += port/string/generic.c
 CSRCS    += port/support/support_test_main.c
 CSRCS    += port/support/support.c
 CSRCS    += port/support/timespec.c
