@@ -21,4 +21,17 @@ CSRCS = $(wildcard nghttp2/lib/*.c)
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 
+ifneq ($(CONFIG_NGHTTP2_TEST),)
+CSRCS += $(wildcard nghttp2/tests/nghttp2_*.c)
+CSRCS += $(wildcard nghttp2/tests/failmalloc*.c)
+CSRCS += $(wildcard nghttp2/tests/malloc*.c)
+PROGNAME = $(CONFIG_NGHTTP2_TEST_PROGNAME)
+MODULE = $(CONFIG_NGHTTP2_TEST)
+PRIORITY = $(CONFIG_NGHTTP2_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_NGHTTP2_TEST_STACKSIZE)
+MAINSRC = $(APPDIR)/external/nghttp2/nghttp2/tests/main.c
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nghttp2/tests}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nghttp2/lib}
+endif
+
 include $(APPDIR)/Application.mk
