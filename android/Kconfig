@@ -34,3 +34,10 @@ config ANDROID_BINDER_STACKSIZE
 	int "Binder service stack size"
 	depends on ANDROID_BINDER
 	default DEFAULT_TASK_STACKSIZE
+
+config BINDER_IPC_32BIT
+	bool "32-bit binder IPC"
+	depends on ANDROID_BINDER
+	default n
+	---help---
+		Android 32-bit binder
