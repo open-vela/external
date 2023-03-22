@@ -14,13 +14,19 @@
 # limitations under the License.
 #
 
-config ANDROID
-	bool "Enable Android compatible layer"
-	depends on EVENT_FD && LIBCXX && KVDB
-	select FS_LARGEFILE
+config ANDROID_BINDER
+	bool "Enable Android Binder"
+	depends on ANDROID && TIMER_FD && TLS_TASK_NELEM > 0
 	default n
 	---help---
-		Android compatible layer, including:
-		libbase, libcutils and libutils
+		Android binder, the codebase come from AOSP
 
-source "$APPSDIR/external/android/binder/Kconfig"
+config ANDROID_BINDER_IPC_32BIT
+	bool "32-bit binder IPC"
+	depends on ANDROID_BINDER
+	default n
+	---help---
+		Android 32-bit binder
+
+source "$APPSDIR/external/android/binder/cmds/Kconfig"
+

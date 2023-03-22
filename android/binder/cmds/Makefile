@@ -14,13 +14,21 @@
 # limitations under the License.
 #
 
-config ANDROID
-	bool "Enable Android compatible layer"
-	depends on EVENT_FD && LIBCXX && KVDB
-	select FS_LARGEFILE
-	default n
-	---help---
-		Android compatible layer, including:
-		libbase, libcutils and libutils
+include $(APPDIR)/Make.defs
 
-source "$APPSDIR/external/android/binder/Kconfig"
+CXXEXT = .cpp
+
+MODULE    = $(CONFIG_ANDROID_SERVICEMANAGER)
+PRIORITY  = SCHED_PRIORITY_DEFAULT
+STACKSIZE = $(CONFIG_ANDROID_SERVICEMANAGER_STACKSIZE)
+
+MAINSRC  += service/service.cpp
+PROGNAME += service
+
+CXXFLAGS += -DVENDORSERVICEMANAGER
+CXXSRCS  += servicemanager/Access.cpp
+CXXSRCS  += servicemanager/ServiceManager.cpp
+MAINSRC  += servicemanager/main.cpp
+PROGNAME += servicemanager
+
+include $(APPDIR)/Application.mk

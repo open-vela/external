@@ -16,6 +16,8 @@
 
 ifneq ($(CONFIG_ANDROID_BINDER),)
 CONFIGURED_APPS += $(APPDIR)/external/android/binder
+include $(wildcard $(APPDIR)/external/android/binder/*/Make.defs)
+
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/include_rpc_unstable}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_ndk}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/binder/binder/ndk/include_platform}
