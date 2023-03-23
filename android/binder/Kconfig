@@ -22,3 +22,4 @@ config ANDROID_BINDER
 		Android binder, the codebase come from AOSP
 
 source "$APPSDIR/external/android/binder/cmds/Kconfig"
+source "$APPSDIR/external/android/binder/examples/Kconfig"
