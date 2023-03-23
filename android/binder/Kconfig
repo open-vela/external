@@ -21,12 +21,4 @@ config ANDROID_BINDER
 	---help---
 		Android binder, the codebase come from AOSP
 
-config ANDROID_BINDER_IPC_32BIT
-	bool "32-bit binder IPC"
-	depends on ANDROID_BINDER
-	default n
-	---help---
-		Android 32-bit binder
-
 source "$APPSDIR/external/android/binder/cmds/Kconfig"
-
