@@ -68,7 +68,7 @@
 #define PACKAGE_VERSION "1.34"
 
 /* Mobile provider database */
-#define PROVIDER_DATABASE "/etc/mobile-broadband-provider-info/serviceproviders.xml"
+#define MBPI_DATABASE "/etc/mobile-broadband-provider-info/serviceproviders.xml"
 
 /* Define to 1 if all of the C90 standard headers exist (not just the ones
    required in a freestanding environment). This macro is provided for
