@@ -70,4 +70,18 @@ AIDLFLAGS = --lang=cpp -Ibinder/aidl -hbinder/aidl -obinder/aidl
 
 CXXSRCS  += $(patsubst %$(AIDLEXT),%$(CXXEXT),$(AIDLSRCS))
 
+MODULE    = $(CONFIG_ANDROID_BINDER_TEST)
+PRIORITY  = SCHED_PRIORITY_DEFAULT
+STACKSIZE = $(CONFIG_ANDROID_BINDER_TEST_STACKSIZE)
+
+ifeq ($(CONFIG_ANDROID_BINDER_LIB_TEST), y)
+MAINSRC  += binder/tests/binderLibTest.cpp
+PROGNAME += binderLibTest
+endif
+
+ifeq ($(CONFIG_ANDROID_BINDER_DRIVER_TEST), y)
+MAINSRC  += binder/tests/binderDriverInterfaceTest.cpp
+PROGNAME += binderDrvTest
+endif
+
 include $(APPDIR)/Application.mk

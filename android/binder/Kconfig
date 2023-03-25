@@ -21,5 +21,25 @@ config ANDROID_BINDER
 	---help---
 		Android binder, the codebase come from AOSP
 
+config ANDROID_BINDER_TEST
+	tristate "Android Binder Test Case"
+	depends on ANDROID_BINDER
+	default n
+
+config ANDROID_BINDER_TEST_STACKSIZE
+	int "Android Binder Test stack size"
+	depends on ANDROID_BINDER_TEST
+	default DEFAULT_TASK_STACKSIZE
+
+config ANDROID_BINDER_LIB_TEST
+	bool "Android Binder Lib Test Case"
+	depends on ANDROID_BINDER_TEST
+	default n
+
+config ANDROID_BINDER_DRIVER_TEST
+	bool "Android Binder Driver Test Case"
+	depends on ANDROID_BINDER_TEST
+	default n
+
 source "$APPSDIR/external/android/binder/cmds/Kconfig"
 source "$APPSDIR/external/android/binder/examples/Kconfig"
