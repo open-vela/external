@@ -21,4 +21,8 @@ CSRCS += $(wildcard libhelix-mp3/real/*.c)
 
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libhelix-mp3/pub/}
 
+ifeq ($(CONFIG_ARCH_ARM),y)
+CFLAGS += -DARM
+endif
+
 include $(APPDIR)/Application.mk
