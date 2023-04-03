@@ -29,4 +29,15 @@ CFLAGS += -DYYINITDEPTH=$(CONFIG_LIBCONFIG_YYINITDEPTH)
 CFLAGS +=  -DYYMAXDEPTH=$(CONFIG_LIBCONFIG_YYMAXDEPTH)
 CFLAGS += -Wno-strict-prototypes
 
+ifneq ($(CONFIG_LIBCONFIG_TEST),)
+PRIORITY = $(CONFIG_LIBCONFIG_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_LIBCONFIG_TEST_STACKSIZE)
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libconfig/lib}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libconfig/tinytest}
+MODULE = $(CONFIG_LIBCONFIG_TEST)
+CSRCS += libconfig/tinytest/tinytest.c
+PROGNAME += test_libconfig
+MAINSRC = libconfig/tests/tests.c
+endif
+
 include $(APPDIR)/Application.mk

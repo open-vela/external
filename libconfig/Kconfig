@@ -26,4 +26,22 @@ config LIBCONFIG_YYINITDEPTH
 config LIBCONFIG_YYMAXDEPTH
 	int "maximum size the stacks can grow to"
 	default 100
+
+config LIBCONFIG_TEST
+	tristate "The test for libconfig"
+	default n
+	help
+		"Enable the test of libconfig"
+
+if LIBCONFIG_TEST
+
+config LIBCONFIG_TEST_PRIORITY
+	int "The priority of libconfig test"
+	default 100
+
+config LIBCONFIG_TEST_STACKSIZE
+	int "The stack size of libconfig test"
+	default DEFAULT_TASK_STACKSIZE
+
+endif #LIBCONFIG_TEST
 endif
