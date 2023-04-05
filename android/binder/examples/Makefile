@@ -32,4 +32,9 @@ PROGNAME += TestClient
 MAINSRC  += aidl_demo/TestServer.cpp
 PROGNAME += TestServer
 
+MAINSRC  += aidl_demo/TestClientCpc.cpp
+PROGNAME += TestClientCpc
+MAINSRC  += aidl_demo/TestServerCpc.cpp
+PROGNAME += TestServerCpc
+
 include $(APPDIR)/Application.mk
