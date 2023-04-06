@@ -61,7 +61,11 @@
 #define DBUS_SESSION_CONFIG_FILE "/etc/dbus-1/session.conf"
 #define DBUS_SESSION_SOCKET_DIR "/var/run/dbus"
 #define DBUS_DAEMON_NAME "dbusdaemon"
+#ifndef DBUS_RPMSG_SERVER_CPUNAME
 #define DBUS_SYSTEM_BUS_DEFAULT_ADDRESS  "unix:path=/var/run/dbus/system_bus_socket"
+#else
+#define DBUS_SYSTEM_BUS_DEFAULT_ADDRESS  "rpmsg:cpu="DBUS_RPMSG_SERVER_CPUNAME",name=dbus_socket"
+#endif
 #define DBUS_SESSION_BUS_CONNECT_ADDRESS  "unix:path=/var/run/dbus/session_bus_socket"
 #define DBUS_MACHINE_UUID_FILE "/tmp/lib/dbus/machine-id"
 #define DBUS_DAEMONDIR "/bin"

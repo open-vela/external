@@ -30,13 +30,21 @@ config DBUS_DAEMON
 	---help---
 		Message bus daemon.
 
-config LIB_DBUS_PRIORITY
+config DBUS_PRIORITY
 	int "Libdbus task priority"
 	default 100
 
-config LIB_DBUS_STACKSIZE
+config DBUS_STACKSIZE
 	int "Libdbus stack size"
 	default 6144
+
+config LIB_DBUS_RPMSG_SERVER_CPUNAME
+	string "The cpu name of running dbusdaemon"
+	default ""
+	depends on NET_RPMSG && !DBUS_DAEMON
+	---help---
+		The cpu name of running dbusdaemon. Libdbus need to get connection
+		from specified name of remote proc.
 
 config DBUS_SEND
 	bool "Enable dbus_send tool"
