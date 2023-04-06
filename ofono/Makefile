@@ -30,6 +30,7 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/dbus/dbus}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/ell/ell}
 CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_LIB_OFONO_PLUGIN_DIR -DOFONO_PLUGIN_BUILTIN
+CFLAGS += -Dprint_buf=ofono_gril_print_buf
 
 # OFONO Modem
 
