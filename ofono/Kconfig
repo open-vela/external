@@ -18,7 +18,7 @@ config LIB_OFONO_PRIORITY
 
 config LIB_OFONO_STACKSIZE
 	int "Ofono daemon stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 6144
 
 config LIB_OFONO_RILMODEM
 	bool "Support RIL modem"
