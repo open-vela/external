@@ -32,4 +32,15 @@ ifneq ($(CONFIG_ARM_NEON),)
 ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)
 endif
 
+ifneq ($(CONFIG_LOTTIE_TEST),)
+CXXFLAGS += -DDEMO_DIR=\"/rlottie_resource/\"
+# ignore warning: variable ‘r3’/‘r4’ set but not used
+CXXFLAGS += -Wno-unused-but-set-variable
+PRIORITY = $(CONFIG_LOTTIE_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_LOTTIE_TEST_STACKSIZE)
+MODULE = $(CONFIG_LOTTIE_TEST)
+MAINSRC = rlottie/test/testsuite.cpp
+PROGNAME = gtest_rlottie
+endif
+
 include $(APPDIR)/Application.mk

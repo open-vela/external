@@ -43,5 +43,22 @@ config LOTTIE_LOGGING_SUPPORT
 	bool "Enable lottie log support"
 	default n
 
+config LOTTIE_TEST
+	tristate "LOTTIE tests"
+	default n
+	---help---
+		Enable the LOTTIE tests
+
+if LOTTIE_TEST
+
+config LOTTIE_TEST_PRIORITY
+	int "LOTTIE test task priority"
+	default 100
+
+config LOTTIE_TEST_STACKSIZE
+	int "LOTTIE test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
 endif
 
+endif
