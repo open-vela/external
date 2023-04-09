@@ -14,13 +14,6 @@
 # limitations under the License.
 #
 
-config ANDROID
-	bool "Enable Android compatible layer"
-	depends on EVENT_FD && LIBCXX && KVDB
-	select FS_LARGEFILE
-	default n
-	---help---
-		Android compatible layer, including:
-		libbase, libcutils and libutils
+MENUDESC = "Hardware"
 
-source "$APPSDIR/external/android/binder/Kconfig"
+include $(APPDIR)/Directory.mk

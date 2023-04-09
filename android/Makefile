@@ -14,10 +14,6 @@
 # limitations under the License.
 #
 
+MENUDESC = "Android"
+
 include $(APPDIR)/Directory.mk
-
-context:
-	touch .kconfig
-
-register:
-depend:

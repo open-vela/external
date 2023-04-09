@@ -14,7 +14,4 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_ANDROID),)
-CONFIGURED_APPS += $(APPDIR)/external/android
 include $(wildcard $(APPDIR)/external/android/*/Make.defs)
-endif

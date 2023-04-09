@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_ANDROID),)
-CONFIGURED_APPS += $(APPDIR)/external/android/libutils
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/libutils/libutils/include}
-endif
+MENUDESC = "Frameworks"
+
+include $(APPDIR)/Directory.mk

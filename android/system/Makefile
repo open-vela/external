@@ -14,8 +14,6 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_ANDROID),)
-CONFIGURED_APPS += $(APPDIR)/external/android/libbase
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/fmtlib/fmtlib/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/android/libbase/libbase/include}
-endif
+MENUDESC = "System"
+
+include $(APPDIR)/Directory.mk
