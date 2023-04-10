@@ -19,4 +19,6 @@ include $(APPDIR)/Make.defs
 CXXEXT  = .cc
 CXXSRCS = modp_b64/modp_b64.cc
 
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/modp_b64/modp_b64/modp_b64
+
 include $(APPDIR)/Application.mk
