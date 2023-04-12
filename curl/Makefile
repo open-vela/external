@@ -31,6 +31,7 @@ STACKSIZE = $(CONFIG_TOOLS_CURL_STACKSIZE)
 MODULE    = $(CONFIG_TOOLS_CURL)
 
 CFLAGS += -Dconfig_init=curl_config_init
+CFLAGS += -Dconfig_free=curl_config_free
 CFLAGS += -Dstr2num=curl_str2num
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" curl/lib}
 
