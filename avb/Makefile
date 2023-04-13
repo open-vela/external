@@ -23,7 +23,6 @@ CFLAGS += -I$(APPDIR)/external/avb/avb/libavb/sha
 CSRCS += \
         avb/libavb/avb_chain_partition_descriptor.c \
         avb/libavb/avb_cmdline.c \
-        avb/libavb/avb_crc32.c \
         avb/libavb/avb_crypto.c \
         avb/libavb/avb_descriptor.c \
         avb/libavb/avb_footer.c \
@@ -36,8 +35,15 @@ CSRCS += \
         avb/libavb/avb_sysdeps_posix.c \
         avb/libavb/avb_util.c \
         avb/libavb/avb_vbmeta_image.c \
-        avb/libavb/avb_version.c \
-        avb/libavb/sha/sha256_impl.c \
-        avb/libavb/sha/sha512_impl.c
+        avb/libavb/avb_version.c
+ifneq ($(CONFIG_LIB_AVB_CRC32),)
+CSRCS += avb/libavb/avb_crc32.c
+endif
+ifneq ($(CONFIG_LIB_AVB_SHA256),)
+CSRCS += avb/libavb/sha/sha256_impl.c
+endif
+ifneq ($(CONFIG_LIB_AVB_SHA512),)
+CSRCS += avb/libavb/sha/sha512_impl.c
+endif
 
 include $(APPDIR)/Application.mk

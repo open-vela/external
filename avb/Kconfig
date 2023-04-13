@@ -19,3 +19,41 @@ config LIB_AVB
 	default n
 	---help---
 		libavb
+
+if LIB_AVB
+
+config LIB_AVB_CRC32
+	bool "Enable CRC32"
+	default n
+
+config LIB_AVB_SHA256
+	bool "Enable SHA256"
+	default n
+if LIB_AVB_SHA256
+config LIB_AVB_ALGORITHM_TYPE_SHA256_RSA2048
+	bool "Enable algorithm type SHA256_RSA2048"
+	default n
+config LIB_AVB_ALGORITHM_TYPE_SHA256_RSA4096
+	bool "Enable algorithm type SHA256_RSA4096"
+	default n
+config LIB_AVB_ALGORITHM_TYPE_SHA256_RSA8192
+	bool "Enable algorithm type SHA256_RSA8192"
+	default n
+endif
+
+config LIB_AVB_SHA512
+	bool "Enable SHA512"
+	default n
+if LIB_AVB_SHA512
+config LIB_AVB_ALGORITHM_TYPE_SHA512_RSA2048
+	bool "Enable algorithm type SHA512_RSA2048"
+	default n
+config LIB_AVB_ALGORITHM_TYPE_SHA512_RSA4096
+	bool "Enable algorithm type SHA512_RSA4096"
+	default n
+config LIB_AVB_ALGORITHM_TYPE_SHA512_RSA8192
+	bool "Enable algorithm type SHA512_RSA8192"
+	default n
+endif
+
+endif
