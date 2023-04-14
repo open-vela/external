@@ -3,63 +3,63 @@
 # see the file kconfig-language.txt in the NuttX tools repository.
 #
 
-config LIB_OFONO
+config OFONO
 	tristate "Open Source Telephony"
 	default n
 	---help---
 		Ofono is a telephony host stack specifically targeted at
 		mobile embedded and desktop systems.
 
-if LIB_OFONO
+if OFONO
 
-config LIB_OFONO_PRIORITY
-	int "Pfono daemon task priority"
+config OFONO_PRIORITY
+	int "Ofono daemon task priority"
 	default 100
 
-config LIB_OFONO_STACKSIZE
+config OFONO_STACKSIZE
 	int "Ofono daemon stack size"
 	default 6144
 
-config LIB_OFONO_RILMODEM
+config OFONO_RILMODEM
 	bool "Support RIL modem"
 	default n
 	---help---
 		Enable RIL modem.
 
-config LIB_OFONO_ATMODEM
+config OFONO_ATMODEM
 	bool "Support AT modem"
 	default n
 	---help---
 		Enable AT modem driver and support vendor AT modem.
 
-config LIB_OFONO_PHONESIM
+config OFONO_PHONESIM
 	bool "Support phonesim modem"
 	default n
-	depends on LIB_OFONO_ATMODEM
+	depends on OFONO_ATMODEM
 	---help---
 		Enable phone simulator
 
-config LIB_OFONO_HUAWEIMODEM
+config OFONO_HUAWEIMODEM
 	bool "Support huawemi at modem"
 	default n
-	depends on LIB_OFONO_ATMODEM
+	depends on OFONO_ATMODEM
 	---help---
 		Enable huawei AT modem driver.
 
-config LIB_OFONO_UNITTEST
+config OFONO_UNITTEST
 	bool "Support unit test"
 	default n
-	depends on LIB_OFONO_RILMODEM
+	depends on OFONO_RILMODEM
 	---help---
 		Enable unit test for ofono.
 
-config LIB_OFONO_SYSCONF_DIR
+config OFONO_SYSCONF_DIR
 	string "The direcory for system configuration files"
 	default "/etc/ofono"
 	---help---
 		Directory for the system configuration files.
 
-config LIB_OFONO_PLUGIN_DIR
+config OFONO_PLUGIN_DIR
 	string "The direcory for loading plugins"
 	---help---
 		Directory for the loading plugins.

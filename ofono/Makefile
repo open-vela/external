@@ -29,27 +29,27 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib/gl
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/dbus/dbus}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/ell/ell}
-CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_LIB_OFONO_PLUGIN_DIR -DOFONO_PLUGIN_BUILTIN
+CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_OFONO_PLUGIN_DIR -DOFONO_PLUGIN_BUILTIN
 CFLAGS += -Dprint_buf=ofono_gril_print_buf
 
 # OFONO Modem
 
-ifneq ($(CONFIG_LIB_OFONO_RILMODEM),)
+ifneq ($(CONFIG_OFONO_RILMODEM),)
 CSRCS += $(wildcard ofono/drivers/rilmodem/*.c)
 CSRCS += ofono/plugins/rildev.c ofono/plugins/ril.c
 BUILTIN_PLUGIN += rildev ril rilmodem provision
 endif
 
-ifneq ($(CONFIG_LIB_OFONO_ATMODEM),)
+ifneq ($(CONFIG_OFONO_ATMODEM),)
 ATCSRCSRM += ofono/gatchat/test-server.c ofono/gatchat/gsmdial.c ofono/gatchat/test-qcdm.c
 ATCSRCS += $(filter-out $(ATCSRCSRM), \
            $(wildcard ofono/drivers/atmodem/*.c ofono/gatchat/*.c))
 BUILTIN_PLUGIN += atmodem
-ifneq ($(CONFIG_LIB_OFONO_PHONESIM),)
+ifneq ($(CONFIG_OFONO_PHONESIM),)
 CSRCS += $(wildcard ofono/drivers/hfpmodem/*.c) ofono/plugins/phonesim.c
 BUILTIN_PLUGIN += hfpmodem phonesim
 endif
-ifneq ($(CONFIG_LIB_OFONO_HUAWEIMODEM),)
+ifneq ($(CONFIG_OFONO_HUAWEIMODEM),)
 CSRCS += $(wildcard ofono/drivers/huaweimodem/*.c)
 BUILTIN_PLUGIN += huaweimodem
 CSRCS += ofono/plugins/huawei.c
@@ -57,13 +57,13 @@ BUILTIN_PLUGIN += huawei
 endif
 endif
 
-PRIORITY  = $(CONFIG_LIB_OFONO_PRIORITY)
-STACKSIZE = $(CONFIG_LIB_OFONO_STACKSIZE)
-MODULE    = $(CONFIG_LIB_OFONO)
+PRIORITY  = $(CONFIG_OFONO_PRIORITY)
+STACKSIZE = $(CONFIG_OFONO_STACKSIZE)
+MODULE    = $(CONFIG_OFONO)
 
 # ofono unit test
 
-ifneq ($(CONFIG_LIB_OFONO_UNITTEST),)
+ifneq ($(CONFIG_OFONO_UNITTEST),)
 CSRCS    += ofono/gatchat/ringbuffer.c $(wildcard ofono/gril/*.c) ofono/src/common.c \
             ofono/src/log.c ofono/src/simutil.c ofono/src/smsutil.c ofono/src/storage.c \
             ofono/src/stkutil.c ofono/src/util.c ofono/unit/rilmodem-test-engine.c \

@@ -14,7 +14,7 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_LIB_OFONO),)
+ifneq ($(CONFIG_OFONO),)
 CONFIGURED_APPS += $(APPDIR)/external/ofono
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/ofono/include}
 endif
