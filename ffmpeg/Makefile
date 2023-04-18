@@ -160,10 +160,6 @@ ifeq ($(CONFIG_LIB_HELIX_MP3),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub
 endif
 
-ifeq ($(CONFIG_LIB_SILK),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface
-endif
-
 ifeq ($(CONFIG_LIB_LDAC),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
 endif
