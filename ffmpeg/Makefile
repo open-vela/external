@@ -164,10 +164,6 @@ ifeq ($(CONFIG_LIB_SILK),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/silk-v3-decoder/silk-v3-decoder/silk/interface
 endif
 
-ifeq ($(CONFIG_LIB_LC3),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/lc3/lc3/include
-endif
-
 ifeq ($(CONFIG_LIB_LDAC),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
 endif

@@ -18,7 +18,4 @@ include $(APPDIR)/Make.defs
 
 CSRCS  += $(wildcard lc3/src/*.c)
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lc3/lc3/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lc3/lc3/include}
-
 include $(APPDIR)/Application.mk
