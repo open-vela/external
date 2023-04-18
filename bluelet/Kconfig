@@ -59,6 +59,14 @@ config BREDR
   help
     BR/EDR needed.
 
+if BREDR
+config HCI_AUTO_REPLY_IN_JUST_WORK
+  bool "Ssp auto reply in just work"
+  default y
+  help
+    Ssp auto reply in just work
+endif
+
 config RFCOMM
   bool "RFCOMM supported"
   default n
