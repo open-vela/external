@@ -151,12 +151,9 @@ endif
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-aac/libhelix-aac
 endif
+
 ifeq ($(CONFIG_LIB_HELIX_MP3),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub
-endif
-
-ifeq ($(CONFIG_LIB_LDAC),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
 endif
 
 ifeq ($(CONFIG_LIB_ZLIB),y)

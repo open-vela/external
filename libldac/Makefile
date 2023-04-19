@@ -18,7 +18,6 @@ include $(APPDIR)/Make.defs
 
 CSRCS  := libldac/src/ldaclib.c
 CSRCS  += libldac/src/ldacBT.c
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libldac/libldac/inc}
 
 ASRCS := $(wildcard $(ASRCS))
 CSRCS := $(wildcard $(CSRCS))

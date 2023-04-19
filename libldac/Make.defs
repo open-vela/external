@@ -16,4 +16,6 @@
 
 ifneq ($(CONFIG_LIB_LDAC),)
 CONFIGURED_APPS += $(APPDIR)/external/libldac
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
 endif
