@@ -19,7 +19,11 @@ include $(APPDIR)/Make.defs
 subdir := $(notdir $(CURDIR))
 ifneq ($(wildcard $(CURDIR)/$(subdir)),)
 $(MAKECMDGOALS)::
+ifeq ($(CONFIG_ZEPHYR_WORK_QUEUE),y)
+	$(Q) $(MAKE) -C $(CURDIR)/$(subdir) -f $(CURDIR)/zblue/Makefile -I $(TOPDIR) $(MAKECMDGOALS)
+else
 	$(Q) $(MAKE) -C $(CURDIR)/$(subdir) -f $(CURDIR)/Submake.mk -I $(TOPDIR) $(MAKECMDGOALS)
+endif
 endif
 
 include $(APPDIR)/Application.mk
