@@ -148,11 +148,6 @@ ifeq ($(CONFIG_CODEC_FDKAAC), y)
 CFLAGS += -DAACENCODER_LIB_VL0=4 -DAACENCODER_LIB_VL1=0
 endif
 
-ifeq ($(CONFIG_LIB_FLUORIDE_SBC), y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include
-endif
-
 ifeq ($(CONFIG_LIB_HELIX_AAC),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-aac/libhelix-aac
 endif
