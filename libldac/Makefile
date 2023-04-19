@@ -20,4 +20,14 @@ CSRCS  := libldac/src/ldaclib.c
 CSRCS  += libldac/src/ldacBT.c
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libldac/libldac/inc}
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libexternal.a
+endif
+
 include $(APPDIR)/Application.mk
