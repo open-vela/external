@@ -30,4 +30,16 @@ ifneq ($(NOEXPORTSRCS),)
 BIN := $(APPDIR)/staging/libtelephony.a
 endif
 
+ifeq ($(CONFIG_LIBEXPAT_TEST),y)
+PRIORITY  = $(CONFIG_LIBEXPAT_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_LIBEXPAT_TEST_STACKSIZE)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/libexpat/libexpat/expat/tests
+CSRCS  += libexpat/expat/tests/chardata.c \
+	libexpat/expat/tests/memcheck.c \
+	libexpat/expat/tests/minicheck.c \
+	libexpat/expat/tests/structdata.c
+PROGNAME += libexpat_runtests
+MAINSRC += libexpat/expat/tests/runtests.c
+endif
+
 include $(APPDIR)/Application.mk

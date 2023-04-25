@@ -19,3 +19,25 @@ config LIB_EXPAT
 	default n
 	---help---
 		A C library for parsing XML
+
+if LIB_EXPAT
+
+config LIBEXPAT_TEST
+    tristate "Enable Libexpat test"
+    default n
+    ---help---
+        Enable the Libexpat test.
+
+if LIBEXPAT_TEST
+
+config LIBEXPAT_TEST_PRIORITY
+    int "Libexpat test priority"
+    default 100
+
+config LIBEXPAT_TEST_STACKSIZE
+    int "Libexpat test stack size"
+    default DEFAULT_TASK_STACKSIZE
+
+endif
+
+endif
