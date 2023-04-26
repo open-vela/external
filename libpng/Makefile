@@ -26,4 +26,12 @@ endif
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
 CSRCS += $(filter-out libpng/pngtest.c, $(wildcard libpng/*.c))
 
+ifneq ($(CONFIG_LIB_PNG_TEST),)
+MODULE     = $(CONFIG_LIB_PNG_TEST)
+PRIORITY   = $(CONFIG_LIB_PNG_TEST_PRIORITY)
+STACKSIZE  = $(CONFIG_LIB_PNG_TEST_STACKSIZE)
+PROGNAME  += test_libpng
+MAINSRC    = libpng/pngtest.c
+endif
+
 include $(APPDIR)/Application.mk

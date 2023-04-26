@@ -17,3 +17,21 @@
 config LIB_PNG
 	bool "Enable libpng"
 	default n
+
+config LIB_PNG_TEST
+	tristate "Enable the test of LIB_PNG"
+	default n
+	help
+		Enable the LIB_PNG test.
+
+if LIB_PNG_TEST
+
+config LIB_PNG_TEST_PRIORITY
+	int "LIB_PNG_TEST priority."
+	default 100
+
+config LIB_PNG_TEST_STACKSIZE
+	int "LIB_PNG_TEST stacksize."
+	default DEFAULT_TASK_STACKSIZE
+
+endif # LIB_PNG_TEST
