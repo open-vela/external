@@ -46,6 +46,7 @@ config LOTTIE_LOGGING_SUPPORT
 config LOTTIE_TEST
 	tristate "LOTTIE tests"
 	default n
+	depends on GOOGLE_TEST
 	---help---
 		Enable the LOTTIE tests
 
