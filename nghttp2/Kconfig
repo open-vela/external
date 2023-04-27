@@ -20,6 +20,7 @@ config LIB_NGHTTP2
 	---help---
 		nghttp2 is an implementation of HTTP/2 and its header compression algorithm HPACK.
 
+if LIB_NGHTTP2
 config NGHTTP2_TEST
 	tristate "Enable NGHTTP2 Test"
 	default n
@@ -41,4 +42,6 @@ config NGHTTP2_TEST_PRIORITY
 config NGHTTP2_TEST_STACKSIZE
 	string "NGHTTP2 test stack size"
 	default DEFAULT_TASK_STACKSIZE
+endif
+
 endif
