@@ -28,22 +28,20 @@ config LIB_FFMPEG_CONFIGURATION
 	---help---
 		FFmpeg configuration which pass to configure
 
-config LIB_FFMPEG_TOOLS_PRIORITY
+config LIB_FFMPEG_TEST
+	bool "enable ffmpeg test"
+	default n
+
+config UTILS_FFMPEG_PRIORITY
 	int "task priority"
 	default 100
 
-config LIB_FFMPEG_TOOLS_STACKSIZE
+config UTILS_FFMPEG_STACKSIZE
 	int "stack size"
 	default 51200
 
-menu "FFmpeg tools"
-config FFMPEG_TOOLS_GRAPH2DOT
+config UTILS_FFMPEG_GRAPH2DOT
 	bool "graph2dot"
-	default n
-endmenu
-
-config FFMPEG_TEST
-	bool "enable ffmpeg test"
 	default n
 
 endif # LIB_FFMPEG

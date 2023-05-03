@@ -16,7 +16,7 @@
 
 menu "Tools: iperf3"
 
-config TOOLS_IPERF3
+config UTILS_IPERF3
 	tristate "iperf3"
 	select DEV_URANDOM
 	select FS_RAMMAP
@@ -25,20 +25,20 @@ config TOOLS_IPERF3
 	---help---
 		Enable iperf3 tool.
 
-if TOOLS_IPERF3
+if UTILS_IPERF3
 
-config TOOLS_IPERF3_PRIORITY
+config UTILS_IPERF3_PRIORITY
 	int "iperf3 task priority"
 	default 100
 	---help---
 		The priority for iperf3 task.
 
-config TOOLS_IPERF3_STACKSIZE
+config UTILS_IPERF3_STACKSIZE
 	int "iperf3 task stack size"
 	default 4096
 	---help---
 		The stack size allocated for the iperf3 task.
 
-endif # TOOLS_IPERF
+endif # UTILS_IPERF
 
 endmenu # Tools: iperf3

@@ -38,27 +38,27 @@ config LIB_CURL_PTHREAD_STACKSIZE
 
 endif
 
-config TOOLS_CURL
+config UTILS_CURL
 	tristate "Enable curl command line"
 	select LIB_CURL
 	default n
 	---help---
 		curl
 
-if TOOLS_CURL
+if UTILS_CURL
 
-config TOOLS_CURL_PROGNAME
+config UTILS_CURL_PROGNAME
 	string "Program name"
 	default "curl"
 	---help---
 		This is the name of the program that will be used when the NSH ELF
 		program is installed.
 
-config TOOLS_CURL_PRIORITY
+config UTILS_CURL_PRIORITY
 	int "curl task priority"
 	default 100
 
-config TOOLS_CURL_STACKSIZE
+config UTILS_CURL_STACKSIZE
 	int "curl stack size"
 	default 8192
 

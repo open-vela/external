@@ -24,11 +24,11 @@ CSRCS = $(wildcard curl/lib/*.c)
 CSRCS += $(wildcard curl/lib/vauth/*.c)
 CSRCS += $(wildcard curl/lib/vtls/*.c)
 
-ifneq ($(CONFIG_TOOLS_CURL),)
-PROGNAME  = $(CONFIG_TOOLS_CURL_PROGNAME)
-PRIORITY  = $(CONFIG_TOOLS_CURL_PRIORITY)
-STACKSIZE = $(CONFIG_TOOLS_CURL_STACKSIZE)
-MODULE    = $(CONFIG_TOOLS_CURL)
+ifneq ($(CONFIG_UTILS_CURL),)
+PROGNAME  = $(CONFIG_UTILS_CURL_PROGNAME)
+PRIORITY  = $(CONFIG_UTILS_CURL_PRIORITY)
+STACKSIZE = $(CONFIG_UTILS_CURL_STACKSIZE)
+MODULE    = $(CONFIG_UTILS_CURL)
 
 CFLAGS += -Dconfig_init=curl_config_init
 CFLAGS += -Dconfig_free=curl_config_free

@@ -100,8 +100,8 @@ $(EXTOBJS): %.asm$(NASUFFIX)$(OBJEXT): %.asm
 	$(Q) strip -x $@
 endif
 
-PRIORITY  = $(CONFIG_LIB_FFMPEG_TOOLS_PRIORITY)
-STACKSIZE = $(CONFIG_LIB_FFMPEG_TOOLS_STACKSIZE)
+PRIORITY  = $(CONFIG_UTILS_FFMPEG_PRIORITY)
+STACKSIZE = $(CONFIG_UTILS_FFMPEG_STACKSIZE)
 MODULE    = $(CONFIG_LIB_FFMPEG)
 CSRCS    += $(SRC_PATH)/fftools/cmdutils.c
 CSRCS    += $(SRC_PATH)/fftools/opt_common.c
@@ -122,12 +122,12 @@ ifeq ($(CONFIG_FFPROBE),yes)
   MAINSRC  += $(SRC_PATH)/fftools/ffprobe.c
 endif
 
-ifneq ($(CONFIG_FFMPEG_TOOLS_GRAPH2DOT),)
+ifneq ($(CONFIG_FFMPEG_UTILS_GRAPH2DOT),)
   PROGNAME += graph2dot
   MAINSRC  += $(SRC_PATH)/tools/graph2dot.c
 endif
 
-ifneq ($(CONFIG_FFMPEG_TEST),)
+ifneq ($(CONFIG_LIB_FFMPEG_TEST),)
 PROGNAME += ffmpeg_api_band
 MAINSRC  += $(SRC_PATH)/tests/api/api-band-test.c
 PROGNAME += ffmpeg_api_flac

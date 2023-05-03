@@ -16,31 +16,31 @@
 
 menu "Tools: iperf2"
 
-config TOOLS_IPERF2
+config UTILS_IPERF2
 	tristate "iperf2: ultimate speed test tool for TCP, UDP and SCTP"
 	default n
 	select HAVE_CXX
 	select LIBC_FLOATINGPOINT
 
-if TOOLS_IPERF2
+if UTILS_IPERF2
 
-config TOOLS_IPERF2_PRIORITY
+config UTILS_IPERF2_PRIORITY
 	int "iperf2 task priority"
 	default 100
 
-config TOOLS_IPERF2_STACKSIZE
+config UTILS_IPERF2_STACKSIZE
 	int "iperf2 stack size"
 	default DEFAULT_TASK_STACKSIZE
 
-config TOOLS_IPERF2_TCP_BUFSIZE
+config UTILS_IPERF2_TCP_BUFSIZE
 	int "iperf2 default TCP buffer size"
 	default 16384
 
-config TOOLS_IPERF2_DATA_REPORT_NUM
+config UTILS_IPERF2_DATA_REPORT_NUM
 	int "iperf2 data report structure number"
 	default 100
 
-config TOOLS_IPERF2_RECV_BUFSIZE
+config UTILS_IPERF2_RECV_BUFSIZE
 	int "Net Receive buffer size"
 	default 16384
 
