@@ -1,0 +1,105 @@
+#
+# Copyright (C) 2020-2022 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+#
+# GP TEE API Debug Options
+#
+# CONFIG_TRACE_LEVEL_MSG is not set
+# CONFIG_TRACE_LEVEL_ERROR is not set
+# CONFIG_TRACE_LEVEL_INFO is not set
+# CONFIG_TRACE_LEVEL_DEBUG=y
+# CONFIG_TRACE_LEVEL_FLOW is not set
+
+# trace level:
+# 1 --> EMSG
+# 2 --> IMSG
+# 3 --> DMSG
+# 4 --> FMSG
+CONFIG_TRACE_LEVEL=1
+
+# CONFIG_DEBUGLEVEL_ERROR is not set
+# CONFIG_DEBUGLEVEL_INFO=y
+# CONFIG_DEBUGLEVEL_DEBUG is not set
+# CONFIG_DEBUGLEVEL_FLOW is not set
+# CONFIG_DEBUGLEVEL=2
+
+#
+# System Type
+#
+CONFIG_SIM_PLAT=n
+CONFIG_ARCH_CORTEX_M33=y
+CONFIG_ARCH_FPU=y
+
+#
+# Toolchain Configuration Options
+#
+GCC_VERSION_9_2_2019Q4=y
+CONFIG_GCC_VERSION="arm-none-eabi-9-2019-q4-major-x86_64-linux"
+CONFIG_GCC_SITE="https://armkeil.blob.core.windows.net/developer/Files/downloads/gnu-rm/9-2019q4"
+CONFIG_GCC_FOLDER="gcc-arm-none-eabi-9-2019-q4-major"
+
+#
+# Application Configuration
+#
+
+#
+# Pseudo TAs:
+#
+CONFIG_APPS_HELLO_WORLD=y
+
+#
+# User TAs:
+#
+CONFIG_APPS_AES=y
+CONFIG_APPS_HOTP=y
+
+#
+# Test suite:
+#
+CONFIG_APPS_TEST=y
+
+#
+# H/W Security exception:
+#
+CONFIG_APPS_HW_SECURITY_EXCEPTION_EXAMPLE=y
+CONFIG_APPS_SPY=y
+
+#
+# file system storage dir
+#
+ifeq ($(strip $(CONFIG_SIM_PLAT)),y)
+  #sim
+  CONFIG_FS_STORAGE_DIR_PRIVATE='"/mnt/lfs/"'
+else
+  #best2003
+  CONFIG_FS_STORAGE_DIR_PRIVATE='"/sst/"'
+endif
+
+CONFIG_FS_PLAINTEXT=n
+#enabled output key meta for debug if yes
+CONFIG_FS_DEBUG_KEY_MANAGER=n
+CONFIG_FS_DEBUG_RPC_RAM=n
+#enabled OTP root key if yes
+CONFIG_OTP_ROOT_KEY_SUPPORT=y
+#temporary compatible version without OPT root key if yes
+CONFIG_OTP_SUPPORT_NO_PROVISION_TMP=y
+
+CONFIG_USER_TA_WASM=y
+CONFIG_WASM_HEAP_POOL=n
+
+CONFIG_TRACE_PERF=n
+
+CONFIG_PLAINTEXT_ERR_MSG=n
