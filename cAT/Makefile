@@ -63,9 +63,6 @@ PROGNAME += cat_test_unsolicited_read_stress
 MAINSRC  += cAT/tests/test_unsolicited_read_stress.c
 PROGNAME += cat_test_unsolicited_read_buffer
 MAINSRC  += cAT/tests/test_unsolicited_read_buffer.c
-CFLAGS   += -DCAT_UNSOLICITED_CMD_BUFFER_SIZE=2
-PROGNAME += cat_test_unsolicited_read_buffer
-MAINSRC  += cAT/tests/test_unsolicited_read_buffer.c
 PROGNAME += cat_test_hold_state
 MAINSRC  += cAT/tests/test_hold_state.c
 PROGNAME += cat_test_return_read
