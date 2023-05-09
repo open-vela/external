@@ -27,6 +27,6 @@ config UTILS_DDELTA_PRIORITY
 
 config UTILS_DDELTA_STACKSIZE
 	int "apply stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 98304
 
 endif
