@@ -33,7 +33,9 @@ ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)
 endif
 
 ifneq ($(CONFIG_LOTTIE_TEST),)
-CXXFLAGS += -DDEMO_DIR=\"/rlottie_resource/\"
+${shell mkdir -p $(BOARD_DIR)/resource/rlottie}
+${shell cp rlottie/example/resource/mask.json $(BOARD_DIR)/resource/rlottie}
+CXXFLAGS += -DDEMO_DIR=\"/resource/rlottie/\"
 # ignore warning: variable ‘r3’/‘r4’ set but not used
 CXXFLAGS += -Wno-unused-but-set-variable
 PRIORITY = $(CONFIG_LOTTIE_TEST_PRIORITY)
