@@ -23,6 +23,9 @@ ifneq ($(CONFIG_UTILS_LZ4),)
 PROGNAME += $(CONFIG_UTILS_LZ4_PROGNAME)
 PRIORITY += $(CONFIG_UTILS_LZ4_PRIORITY)
 STACKSIZE += $(CONFIG_UTILS_LZ4_STACKSIZE)
+CSRCS += lz4/programs/lz4io.c
+CSRCS += lz4/programs/bench.c
+CSRCS += lz4/programs/datagen.c
 MAINSRC += lz4/programs/lz4cli.c
 endif
 
