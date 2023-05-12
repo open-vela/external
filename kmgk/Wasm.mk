@@ -33,6 +33,7 @@ WCFLAGS += -I../../apps/interpreters/wamr/wamr/core/iwasm/include
 WCFLAGS += -DUSER_TA_WASM
 WCFLAGS += -DTRACE_TAG='"ta_keystore"'
 WCFLAGS += -DTRACE_LEVEL=$(CONFIG_TRACE_LEVEL)
+WCFLAGS += -DKM_RECV_BUF_SIZE=$(CONFIF_KM_RECV_BUF_SIZE)
 
 WLDFLAGS = -z stack-size=$(STACKSIZE) -Wl,--initial-memory=$(INITIAL_MEMORY) -Wl,--export=main -Wl,--export=__main_argc_argv
 WLDFLAGS += -Wl,--export=__heap_base -Wl,--export=__data_end

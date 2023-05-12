@@ -33,6 +33,7 @@ CFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutils/isoc/include
 CFLAGS += -I$(MITEE_IOT_DIR)/tee/include
 
 CFLAGS += -DTRACE_LEVEL=$(CONFIG_TRACE_LEVEL)
+CFLAGS += -DKM_RECV_BUF_SIZE=$(CONFIF_KM_RECV_BUF_SIZE)
 CFLAGS += -DTRACE_TAG='"ta_keystore"'
 
 include $(APPDIR)/Application.mk
