@@ -35,7 +35,7 @@ endif
 ifneq ($(CONFIG_LOTTIE_TEST),)
 ${shell mkdir -p $(BOARD_DIR)/resource/rlottie}
 ${shell cp rlottie/example/resource/mask.json $(BOARD_DIR)/resource/rlottie}
-CXXFLAGS += -DDEMO_DIR=\"/resource/rlottie/\"
+CXXFLAGS += -DDEMO_DIR=\"/resource/rlottie\"
 # ignore warning: variable ‘r3’/‘r4’ set but not used
 CXXFLAGS += -Wno-unused-but-set-variable
 PRIORITY = $(CONFIG_LOTTIE_TEST_PRIORITY)
