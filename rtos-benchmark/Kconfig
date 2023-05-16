@@ -16,6 +16,7 @@
 
 config RTOS_BENCHMARK
 	tristate "RTOS benchmark"
+	select CANCELLATION_POINTS
 	default n
 
 if RTOS_BENCHMARK
