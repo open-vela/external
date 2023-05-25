@@ -19,4 +19,8 @@ include $(APPDIR)/Make.defs
 CXXEXT  = .cpp
 CXXSRCS = tinyxml2/tinyxml2.cpp
 
+ifneq ($(filter "-O3",$(CXXFLAGS)),)
+  tinyxml2/tinyxml2.cpp_CXXFLAGS += -mlong-calls
+endif
+
 include $(APPDIR)/Application.mk
