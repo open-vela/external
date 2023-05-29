@@ -21,6 +21,8 @@
 #ifndef BENCHTESTS_PORT_PROGRAM_XMALLOC_H
 #define BENCHTESTS_PORT_PROGRAM_XMALLOC_H
 
+#include <stddef.h>
+
 void *xmalloc(size_t n);
 
 #endif

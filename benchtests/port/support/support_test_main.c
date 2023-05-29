@@ -19,13 +19,14 @@
  * License along with the GNU C Library; if not, see
  * <https://www.gnu.org/licenses/>.
  *
-****************************************************************************/
+ ****************************************************************************/
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
 #include <support/test-driver.h>
+#include <support/support_test_main.h>
 
 #include <assert.h>
 #include <errno.h>
@@ -34,6 +35,7 @@
 #include <signal.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/param.h>
 #include <sys/resource.h>

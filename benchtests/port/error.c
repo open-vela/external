@@ -35,7 +35,7 @@
  * Name: error
  ****************************************************************************/
 
-void error(const char *fmt, ...)
+void error(int status, int errnum, const char *fmt, ...)
 {
   va_list ap;
 

@@ -1,5 +1,5 @@
 /****************************************************************************
- * apps/external/benchtests/port/error.h
+ * apps/external/benchtests/port/support/support_test_main.h
  *
  * Licensed to the Apache Software Foundation (ASF) under one or more
  * contributor license agreements.  See the NOTICE file distributed with
@@ -18,9 +18,10 @@
  *
  ****************************************************************************/
 
-#ifndef BENCHTESTS_PORT_ERROR_H
-#define BENCHTESTS_PORT_ERROR_H
+#ifndef BENCHTESTS_PORT_SUPPORT_SUPPORT_TEST_MAIN_H
+#define BENCHTESTS_PORT_SUPPORT_SUPPORT_TEST_MAIN_H
 
-void error(int status, int errnum, const char *fmt, ...);
+int support_test_main(int argc, char **argv,
+                      const struct test_config *config);
 
 #endif
