@@ -45,32 +45,5 @@ endif
 ifneq ($(CONFIG_LIB_AVB_SHA512),)
 CSRCS += avb/libavb/sha/sha512_impl.c
 endif
-CSRCS := $(wildcard $(CSRCS))
-
-NOEXPORTSRCS=$(CSRCS)
-ifneq ($(NOEXPORTSRCS),)
-BIN := $(APPDIR)/staging/libexternal.a
-endif
-
-EXPORT_FILES:= \
-        avb/libavb/avb_chain_partition_descriptor.h \
-        avb/libavb/avb_cmdline.h \
-        avb/libavb/avb_crypto.h \
-        avb/libavb/avb_descriptor.h \
-        avb/libavb/avb_footer.h \
-        avb/libavb/avb_hash_descriptor.h \
-        avb/libavb/avb_hashtree_descriptor.h \
-        avb/libavb/avb_kernel_cmdline_descriptor.h \
-        avb/libavb/avb_ops.h \
-        avb/libavb/avb_property_descriptor.h \
-        avb/libavb/avb_rsa.h \
-        avb/libavb/avb_sha.h \
-        avb/libavb/avb_slot_verify.h \
-        avb/libavb/avb_sysdeps.h \
-        avb/libavb/avb_util.h \
-        avb/libavb/avb_vbmeta_image.h \
-        avb/libavb/avb_version.h \
-        avb/libavb/libavb.h \
-        avb/libavb/sha/avb_crypto_ops_impl.h
 
 include $(APPDIR)/Application.mk
