@@ -176,6 +176,7 @@ endif
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/bes_aec
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/allwinnertech/chips/r528/components/multimedia/src/libcedarx/external/include/libcedarc
 
 ifeq ($(MAKECMDGOALS), context)
 CFLAGS += -Wno-error
