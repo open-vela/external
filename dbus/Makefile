@@ -26,6 +26,10 @@ CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus}
 CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/dbus}
 CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/tools}
+CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/test}
+CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external}
+CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib}
+CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib/glib}
 CFLAGS   += -Dfork=vfork -DDBUS_COMPILATION -D__linux__
 CFLAGS   += -DLOG_DAEMON=0 -DLOG_AUTH=0
 CFLAGS   += -Dprint_message=dbus_print_message
@@ -52,7 +56,8 @@ CSRCS    += dbus/dbus/dbus-address.c dbus/dbus/dbus-auth.c dbus/dbus/dbus-bus.c 
 	dbus/dbus/dbus-string.c dbus/dbus/dbus-sysdeps.c dbus/dbus/dbus-pipe.c \
 	dbus/dbus/dbus-file-unix.c dbus/dbus/dbus-pipe-unix.c dbus/dbus/dbus-sysdeps-unix.c \
 	dbus/dbus/dbus-sysdeps-pthread.c dbus/dbus/dbus-userdb.c \
-	dbus/tools/dbus-print-message.c dbus/tools/tool-common.c
+	dbus/tools/dbus-print-message.c dbus/tools/tool-common.c \
+	dbus/dbus/dbus-test-tap.c
 
 ifneq ($(CONFIG_DBUS_DAEMON),)
 
@@ -98,6 +103,49 @@ endif
 ifneq ($(CONFIG_DBUS_UPDATE_ACTIVATION_ENVIRONMENT),)
 MAINSRC  += dbus/tools/dbus-update-activation-environment.c
 PROGNAME += dbus_update_activation_environment
+endif
+
+ifneq ($(CONFIG_DBUS_TEST),)
+CSRCS    += dbus/test/disable-crash-handling.c dbus/test/test-utils.c
+CSRCS    += dbus/test/internals/dbus-message-util.c  dbus/test/internals/dbus-auth-util.c \
+	dbus/test/internals/mempool.c dbus/test/internals/address.c dbus/test/internals/sha.c \
+	dbus/test/internals/dbus-marshal-recursive-util.c dbus/test/internals/dbus-sysdeps-util.c \
+	dbus/test/internals/dbus-marshal-byteswap-util.c dbus/test/internals/dbus-auth-script.c \
+	dbus/test/internals/dbus-string-util.c dbus/test/internals/dbus-marshal-validate-util.c \
+	dbus/test/internals/dbus-message-factory.c dbus/test/internals/dbus-credentials-util.c
+
+MAINSRC  += dbus/test/name-test/test-ids.c
+PROGNAME += dbus_test_ids
+MAINSRC  += dbus/test/name-test/test-pending-call-disconnected.c
+PROGNAME += dbus_test_pending_call_disconnected
+MAINSRC  += dbus/test/name-test/test-pending-call-dispatch.c
+PROGNAME += dbus_test_pending_call_dispatch
+MAINSRC  += dbus/test/name-test/test-pending-call-timeout.c
+PROGNAME += dbus_test_pending_call_timeout
+MAINSRC  += dbus/test/name-test/test-privserver-client.c
+PROGNAME += dbus_test_privserver_client
+MAINSRC  += dbus/test/name-test/test-shutdown.c
+PROGNAME += dbus_test_shutdown
+MAINSRC  += dbus/test/name-test/test-threads-init.c
+PROGNAME += dbus_test_threads_init
+MAINSRC  += dbus/test/test-privserver.c
+PROGNAME += dbus_test_privserver
+MAINSRC  += dbus/test/test-service.c
+PROGNAME += dbus_test_service
+
+MAINSRC  += dbus/test/internals/hash.c
+PROGNAME += dbus_test_hash
+MAINSRC  += dbus/test/internals/printf.c
+PROGNAME += dbus_test_printf
+MAINSRC  += dbus/test/internals/atomic.c
+PROGNAME += dbus_test_atomic
+MAINSRC  += dbus/test/internals/message-internals.c
+PROGNAME += dbus_test_message_internals
+MAINSRC  += dbus/test/internals/marshal-recursive.c
+PROGNAME += dbus_test_marshal_recursive
+MAINSRC  += dbus/test/internals/misc-internals.c
+PROGNAME += dbus_test_misc_internals
+
 endif
 
 ASRCS := $(wildcard $(ASRCS))

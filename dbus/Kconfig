@@ -71,4 +71,10 @@ config DBUS_UPDATE_ACTIVATION_ENVIRONMENT
 		Update environment used for D-Bus session services by
 		dbus_update_activation_environment.
 
+config DBUS_TEST
+	bool "Enable dbus_test"
+	default n
+	---help---
+		Integration testcases for D-Bus
+
 endif
