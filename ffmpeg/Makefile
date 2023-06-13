@@ -143,6 +143,8 @@ PROGNAME += ffmpeg_api_seek
 MAINSRC  += $(SRC_PATH)/tests/api/api-seek-test.c
 PROGNAME += ffmpeg_api_threadmessage
 MAINSRC  += $(SRC_PATH)/tests/api/api-threadmessage-test.c
+PROGNAME += ffmpeg_fft
+MAINSRC  += $(SRC_PATH)/libavcodec/tests/fft.c
 endif
 
 CFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
