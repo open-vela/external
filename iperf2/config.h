@@ -309,7 +309,7 @@
 #define HAVE_PTHREAD 1
 #endif
 
-#ifdef CONFIG_PTHREAD_CLEANUP
+#if defined(CONFIG_PTHREAD_CLEANUP_STACKSIZE) && CONFIG_PTHREAD_CLEANUP_STACKSIZE > 0
 /* Define to 1 if you have the `pthread_cleanup_push' function. */
 #define HAVE_PTHREAD_CLEANUP_PUSH 1
 #endif
