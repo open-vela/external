@@ -16,7 +16,6 @@
 
 include $(APPDIR)/Make.defs
 
-MODULE = $(CONFIG_LIB_GOOGLEBENCHMARK)
 CXXEXT = .cc
 
 CXXFLAGS += ${INCDIR_PREFIX}googlebenchmark/src
@@ -41,7 +40,12 @@ CXXSRCS += googlebenchmark/src/string_util.cc
 CXXSRCS += googlebenchmark/src/sysinfo.cc
 CXXSRCS += googlebenchmark/src/timers.cc
 CXXSRCS += googlebenchmark/src/sleep.cc
-CXXSRCS += googlebenchmark/src/benchmark_main.cc
+
+PRIORITY  = $(CONFIG_LIB_GOOGLEBENCHMARK_PRIORITY)
+STACKSIZE = $(CONFIG_LIB_GOOGLEBENCHMARK_STACKSIZE)
+MODULE    = $(CONFIG_LIB_GOOGLEBENCHMARK)
+
+MAINSRC  += googlebenchmark/src/benchmark_main.cc
+PROGNAME += benchmark
 
 include $(APPDIR)/Application.mk
-

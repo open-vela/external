@@ -17,3 +17,11 @@
 config LIB_GOOGLEBENCHMARK
 	tristate "google benchmark frameworks"
 	default n
+
+config LIB_GOOGLEBENCHMARK_PRIORITY
+	int "Lib googlebenchmark task priority"
+	default 100
+
+config LIB_GOOGLEBENCHMARK_STACKSIZE
+	int "Lib googlebenchmark stack size"
+	default DEFAULT_TASK_STACKSIZE
