@@ -23,7 +23,6 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
 
 ifneq ($(CONFIG_NGHTTP2_TEST),)
 CSRCS += $(wildcard nghttp2/tests/nghttp2_*.c)
-CSRCS += $(wildcard nghttp2/tests/failmalloc*.c)
 CSRCS += $(wildcard nghttp2/tests/malloc*.c)
 PROGNAME = $(CONFIG_NGHTTP2_TEST_PROGNAME)
 MODULE = $(CONFIG_NGHTTP2_TEST)
