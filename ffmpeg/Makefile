@@ -142,7 +142,7 @@ PROGNAME += ffmpeg_api_threadmessage
 MAINSRC  += $(SRC_PATH)/tests/api/api-threadmessage-test.c
 endif
 
-CFLAGS += ${shell $(INCDIR) "$(CC)" $(SRC_PATH)}
+CFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 
 ifeq ($(CONFIG_CODEC_FDKAAC), y)
 CFLAGS += -DAACENCODER_LIB_VL0=4 -DAACENCODER_LIB_VL1=0

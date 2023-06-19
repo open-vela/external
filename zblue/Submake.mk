@@ -260,8 +260,8 @@ CSRCS += lib/os/hex.c
 
 ifeq ($(CONFIG_ARCH_CHIP_R328),y)
   CSRCS += port/chip/xr829/xr829.c
-  CFLAGS += ${shell $(INCDIR) "$(CC)" $(TOPDIR)/arch/arm/src/r328/include/drivers}
-  CFLAGS += ${shell $(INCDIR) "$(CC)" $(TOPDIR)/arch/arm/src/r328/include}
+  CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)/arch/arm/src/r328/include/drivers
+  CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)/arch/arm/src/r328/include
 endif
 
 ifeq ($(CONFIG_BT_LIBUSB),y)

@@ -16,8 +16,6 @@
 
 ifneq ($(CONFIG_LIB_CURL),)
   CONFIGURED_APPS += $(APPDIR)/external/curl
-  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
-          $(APPDIR)/external/curl/curl/include}
-  CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" \
-          $(APPDIR)/external/curl/curl/include}
+  CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/curl/curl/include
+  CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/curl/curl/include
 endif
