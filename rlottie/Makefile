@@ -24,9 +24,9 @@ CXXSRCS  += $(wildcard rlottie/src/vector/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/freetype/*.cpp)
 CXXSRCS  += $(wildcard rlottie/src/vector/stb/*.cpp)
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rlottie/src/vector/freetype}
+CXXFLAGS += ${INCDIR_PREFIX}.
+CXXFLAGS += ${INCDIR_PREFIX}rlottie/src/vector
+CXXFLAGS += ${INCDIR_PREFIX}rlottie/src/vector/freetype
 
 ifneq ($(CONFIG_ARM_NEON),)
 ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)

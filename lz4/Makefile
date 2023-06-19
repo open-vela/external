@@ -17,7 +17,7 @@
 include $(APPDIR)/Make.defs
 
 CSRCS += $(wildcard lz4/lib/*.c)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" lz4/lib}
+CFLAGS += ${INCDIR_PREFIX}lz4/lib
 
 ifneq ($(CONFIG_UTILS_LZ4),)
 PROGNAME += $(CONFIG_UTILS_LZ4_PROGNAME)

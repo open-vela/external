@@ -24,11 +24,11 @@ CSRCS += zlib/contrib/minizip/zip.c
 
 ifneq ($(CONFIG_LIB_BZIP2),)
 CFLAGS += -DHAVE_BZIP2
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/bzip2/bzip2}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/bzip2/bzip2
 endif
 
 CFLAGS += -Dunix -Wno-shadow -Wno-strict-prototypes -Wno-undef
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zlib}
+CFLAGS += ${INCDIR_PREFIX}zlib
 
 MODULE = $(CONFIG_LIB_ZLIB)
 

@@ -16,6 +16,6 @@
 
 ifneq ($(CONFIG_LIB_FREETYPE),)
 CONFIGURED_APPS += $(APPDIR)/external/freetype
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/freetype/freetype/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/freetype/freetype/include}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/freetype/freetype/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/freetype/freetype/include
 endif

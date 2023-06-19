@@ -19,8 +19,8 @@ include $(APPDIR)/Make.defs
 MODULE = $(CONFIG_LIB_GOOGLETEST)
 CXXEXT = .cc
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" googletest/googletest}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" googletest/googlemock}
+CXXFLAGS += ${INCDIR_PREFIX}googletest/googletest
+CXXFLAGS += ${INCDIR_PREFIX}googletest/googlemock
 
 CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
 

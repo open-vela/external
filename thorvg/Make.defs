@@ -16,5 +16,5 @@
 
 ifneq ($(CONFIG_LIB_THORVG),)
 CONFIGURED_APPS += $(APPDIR)/external/thorvg
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/thorvg/thorvg/src/bindings/capi}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/thorvg/thorvg/src/bindings/capi
 endif

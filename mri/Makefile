@@ -16,9 +16,9 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" mri}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" mri/cmsis}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" mri/cmsis/LPC43xx}
+CFLAGS += ${INCDIR_PREFIX}mri
+CFLAGS += ${INCDIR_PREFIX}mri/cmsis
+CFLAGS += ${INCDIR_PREFIX}mri/cmsis/LPC43xx
 
 CFLAGS += -DMRI_ALLWAYS_HARDWARE_BREAKPOINT
 CFLAGS += -DMRI_THREAD_MRI=0

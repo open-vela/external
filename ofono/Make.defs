@@ -16,5 +16,5 @@
 
 ifneq ($(CONFIG_OFONO),)
 CONFIGURED_APPS += $(APPDIR)/external/ofono
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/ofono/include}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ofono/include
 endif

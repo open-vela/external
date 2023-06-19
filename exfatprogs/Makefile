@@ -24,8 +24,8 @@ CFLAGS   += -D__u8=uint8_t
 CFLAGS   += -D__u16=uint16_t
 CFLAGS   += -D__u32='unsigned int'
 CFLAGS   += -D__u64=uint64_t
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" exfatprogs/include}
+CFLAGS   += ${INCDIR_PREFIX}.
+CFLAGS   += ${INCDIR_PREFIX}exfatprogs/include
 PRIORITY  = $(CONFIG_LIB_EXFATPROGS_PRIORITY)
 STACKSIZE = $(CONFIG_LIB_EXFATPROGS_STACKSIZE)
 MODULE    = $(CONFIG_LIB_EXFATPROGS)
@@ -46,7 +46,7 @@ PROGNAME += tuneexfat
 endif
 
 ifneq ($(CONFIG_LIB_EXFATPROGS_FSCK),)
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" exfatprogs/fsck}
+CFLAGS   += ${INCDIR_PREFIX}exfatprogs/fsck
 CSRCS    += exfatprogs/fsck/repair.c
 CSRCS    += exfatprogs/fsck/de_iter.c
 MAINSRC  += exfatprogs/fsck/fsck.c
@@ -54,7 +54,7 @@ PROGNAME += fsckexfat
 endif
 
 ifneq ($(CONFIG_LIB_EXFATPROGS_MKFS),)
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" exfatprogs/mkfs}
+CFLAGS   += ${INCDIR_PREFIX}exfatprogs/mkfs
 CSRCS    += exfatprogs/mkfs/upcase.c
 MAINSRC  += exfatprogs/mkfs/mkfs.c
 PROGNAME += mkfsexfat

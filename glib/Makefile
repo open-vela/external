@@ -19,9 +19,9 @@ include $(APPDIR)/Make.defs
 CFLAGS += -DG_LOG_DOMAIN=\"GLib\" -DGLIB_COMPILATION
 CFLAGS += -Dfork=vfork -Db_coverage=false -DGLIB_CHARSETALIAS_DIR=\"/etc/locale/lib/\"
 CFLAGS += -DSIGWINCH=21 -DSIGABRT=22 -DNSIG=_NSIG
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" glib/}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" glib/glib}
+CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}glib
+CFLAGS += ${INCDIR_PREFIX}glib/glib
 
 GLIB_FILTER_OUT  = $(wildcard glib/glib/*win32*.c) glib/glib/gtester.c
 GLIB_FILTER_OUT += glib/glib/gstdio-private.c glib/glib/gjournal-private.c glib/glib/gregex.c

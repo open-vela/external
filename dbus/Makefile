@@ -22,14 +22,14 @@ ifneq ($(CONFIG_LIB_DBUS_RPMSG_SERVER_CPUNAME),"")
 endif
 endif
 
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/dbus}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/tools}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" dbus/test}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib}
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib/glib}
+CFLAGS   += ${INCDIR_PREFIX}.
+CFLAGS   += ${INCDIR_PREFIX}dbus
+CFLAGS   += ${INCDIR_PREFIX}dbus/dbus
+CFLAGS   += ${INCDIR_PREFIX}dbus/tools
+CFLAGS   += ${INCDIR_PREFIX}dbus/test
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CFLAGS   += -Dfork=vfork -DDBUS_COMPILATION -D__linux__
 CFLAGS   += -DLOG_DAEMON=0 -DLOG_AUTH=0
 CFLAGS   += -Dprint_message=dbus_print_message
@@ -61,7 +61,7 @@ CSRCS    += dbus/dbus/dbus-address.c dbus/dbus/dbus-auth.c dbus/dbus/dbus-bus.c 
 
 ifneq ($(CONFIG_DBUS_DAEMON),)
 
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libexpat/libexpat/expat/lib}
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/libexpat/libexpat/expat/lib
 
 # dbus utils source files
 

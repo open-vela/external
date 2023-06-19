@@ -160,23 +160,23 @@ CXXSRCS += $(wildcard connectedhomeip/port/src/platform/Linux/ConnectivityUtils.
 CXXSRCS += $(wildcard connectedhomeip/port/src/platform/Linux/DeviceInfoProviderImpl.cpp)
 CXXSRCS += $(wildcard connectedhomeip/port/src/platform/Linux/ConnectivityManagerImpl.cpp)
 
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/port}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/port/src}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/port/src/platform/Linux}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/src}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/src/include}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/src/lib/dnssd}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/zzz_generated}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/zzz_generated/lighting-app}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/zzz_generated/app-common}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/src/platform/Linux}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/examples/platform/linux}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external//nlassert/nlassert/include}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/nlio/nlio/include}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zblue/zblue/port/include}
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/inipp/inipp}
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/port
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/port/src
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/port/src/platform/Linux
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/src
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/src/include
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/src/lib/dnssd
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/zzz_generated
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/zzz_generated/lighting-app
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/zzz_generated/app-common
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/src/platform/Linux
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/examples/platform/linux
+MATTERFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external//nlassert/nlassert/include
+MATTERFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/nlio/nlio/include
+MATTERFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zblue/zblue/port/include
+MATTERFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/inipp/inipp
 
-MATTERFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" connectedhomeip/examples/lighting-app/lighting-common/include}
+MATTERFLAGS += ${INCDIR_PREFIX}connectedhomeip/examples/lighting-app/lighting-common/include
 
 CXXFLAGS += -DCHIP_HAVE_CONFIG_H
 CXXFLAGS += -fpermissive -std=c++17 -Wno-undef -Wno-format

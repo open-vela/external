@@ -16,8 +16,8 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libexpat/expat/lib}
+CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}libexpat/expat/lib
 CSRCS  += $(wildcard libexpat/expat/lib/*.c)
 
 ASRCS := $(wildcard $(ASRCS))

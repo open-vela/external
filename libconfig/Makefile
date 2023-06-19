@@ -35,8 +35,8 @@ ${shell cp -r libconfig/tests/testdata $(BOARD_DIR)/resource/libconfig}
 CFLAGS += -DCONFIG_TEST_DIR=\"/resource/libconfig/testdata\"
 PRIORITY = $(CONFIG_LIBCONFIG_TEST_PRIORITY)
 STACKSIZE = $(CONFIG_LIBCONFIG_TEST_STACKSIZE)
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libconfig/lib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libconfig/tinytest}
+CFLAGS += ${INCDIR_PREFIX}libconfig/lib
+CFLAGS += ${INCDIR_PREFIX}libconfig/tinytest
 MODULE = $(CONFIG_LIBCONFIG_TEST)
 CSRCS += libconfig/tinytest/tinytest.c
 PROGNAME += test_libconfig

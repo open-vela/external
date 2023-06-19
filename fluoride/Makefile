@@ -167,55 +167,55 @@ ifeq ($(CONFIG_ARCH_SIM),y)
   FLRDFLAGS += -ffunction-sections -fdata-sections
 endif
 
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/port}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/port/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/.}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta/sys}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/utils/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/internal_include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/types}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/service}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/service/common}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/btif/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/hci/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/linux_include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/btcore/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/btif/avrcp}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/btm}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta/gatt}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta/hh}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/bta/dm}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/udrv/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/device/include}
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/port
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/port/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/.
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta/sys
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/utils/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/internal_include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/types
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/service
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/service/common
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/btif/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/hci/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/linux_include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/btcore/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/btif/avrcp
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/btm
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta/gatt
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta/hh
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/bta/dm
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/udrv/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/device/include
 
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/avct}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/eatt}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/l2cap}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/gatt}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/stack/sdp}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/vnd/ble}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/gd}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/gd/dumpsys}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/audio_a2dp_hw/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/audio_hearing_aid_hw/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/profile/avrcp}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/packet/avrcp}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/vnd/include}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/audio_hal_interface}
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/avct
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/eatt
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/l2cap
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/gatt
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/stack/sdp
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/vnd/ble
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/gd
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/gd/dumpsys
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/audio_a2dp_hw/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/audio_hearing_aid_hw/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/profile/avrcp
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/packet/avrcp
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/vnd/include
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/audio_hal_interface
 
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/android}
+FLRDFLAGS += ${INCDIR_PREFIX}fluoride/android
 
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libchrome/libchrome/nuttx}
-FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/tinyxml2/tinyxml2}
+FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/libchrome
+FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/libchrome/nuttx
+FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/tinyxml2/tinyxml2
 
 ifeq ($(CONFIG_ARCH_SIM),)
-  FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" fluoride/port/deprecated}
+  FLRDFLAGS += ${INCDIR_PREFIX}fluoride/port/deprecated
 endif
 
 CXXSRCS += fluoride/stack/a2dp/a2dp_aac.cc
@@ -229,9 +229,9 @@ ifneq ($(CONFIG_CODEC_LDAC),)
   CXXSRCS += fluoride/port/stack/a2dp/a2dp_vendor_ldac_encoder.cc
   CXXSRCS += fluoride/port/stack/a2dp/a2dp_vendor_ldac_abr.cc
 
-  FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libldac/libldac/inc}
-  FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libldac/libldac/src}
-  FLRDFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libldac/libldac/abr/inc}
+  FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/inc
+  FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/src
+  FLRDFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libldac/libldac/abr/inc
 endif
 
 ifneq ($(CONFIG_CODEC_APTX),)

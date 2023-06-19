@@ -21,6 +21,6 @@
 # It allows `<rlottie_capi.h>` import.
 ifneq ($(CONFIG_LIB_RLOTTIE),)
 CONFIGURED_APPS += $(APPDIR)/external/rlottie
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/rlottie/rlottie/inc}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/rlottie/rlottie/inc}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/rlottie/rlottie/inc
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/rlottie/rlottie/inc
 endif

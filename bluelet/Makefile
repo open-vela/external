@@ -56,13 +56,13 @@ endif
 
 ifeq ($(CONFIG_HID),y)
   CSRCS  += $(wildcard $(STACKDIR)/hid/*.c)
-  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/hid}
+  CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/hid
 endif
 
 ifeq ($(CONFIG_RFCOMM),y)
   CSRCS  += $(wildcard $(STACKDIR)/rfcomm/*.c)
   CSRCS  += $(wildcard $(STACKDIR)/spp/*.c)
-  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/rfcomm}
+  CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/rfcomm
 endif
 
 ifeq ($(CONFIG_OBEX),y)
@@ -101,16 +101,15 @@ endif
 
 CSRCS += $(STACKDIR)/portings/btunix/unixdep.c
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/portings/btunix}
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/portings/btunix
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/*/}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/avnet}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/alcatel}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/nsc}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/stm}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(STACKDIR)/btsoc/include/siw}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(ADAPTERDIR)/inc}
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include/avnet
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include/alcatel
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include/nsc
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include/stm
+CFLAGS += ${INCDIR_PREFIX}$(STACKDIR)/btsoc/include/siw
+CFLAGS += ${INCDIR_PREFIX}$(ADAPTERDIR)/inc
 
 CFLAGS += -Wno-pointer-sign -Wno-format -Wno-unused-variable -Wno-return-type
 CFLAGS += -Wno-unused-value -Wno-unused-but-set-variable -Wno-strict-prototypes

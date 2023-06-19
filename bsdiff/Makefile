@@ -24,14 +24,14 @@ MODULE    = $(CONFIG_UTILS_BSDIFF)
 CFLAGS    += -DBSPATCH_EXECUTABLE
 
 ifneq ($(CONFIG_LIB_BZIP2),)
-CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/bzip2/bzip2}
+CFLAGS    += ${INCDIR_PREFIX}$(APPDIR)/external/bzip2/bzip2
 endif
 
 ifneq ($(CONFIG_LIB_LZ4),)
-CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/lz4/lz4/lib}
+CFLAGS    += ${INCDIR_PREFIX}$(APPDIR)/external/lz4/lz4/lib
 endif
 
-CFLAGS    += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
+CFLAGS    += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
 MAINSRC = bsdiff/bspatch.c
 endif
 

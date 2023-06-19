@@ -18,17 +18,17 @@ include $(APPDIR)/Make.defs
 
 # ofono compile flags
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ofono}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ofono/src}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ofono/gatchat}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ofono/gril}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ofono/gdbus}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib/glib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/glib/glib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/dbus/dbus}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/ell/ell}
+CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}ofono
+CFLAGS += ${INCDIR_PREFIX}ofono/src
+CFLAGS += ${INCDIR_PREFIX}ofono/gatchat
+CFLAGS += ${INCDIR_PREFIX}ofono/gril
+CFLAGS += ${INCDIR_PREFIX}ofono/gdbus
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/dbus/dbus
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ell/ell
 CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_OFONO_PLUGIN_DIR -DOFONO_PLUGIN_BUILTIN
 CFLAGS += -Dprint_buf=ofono_gril_print_buf
 

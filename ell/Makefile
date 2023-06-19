@@ -17,7 +17,7 @@
 include $(APPDIR)/Make.defs
 
 CFLAGS += -DHAVE_EXPLICIT_BZERO -DHAVE_RAWMEMCHR
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" ell}
+CFLAGS += ${INCDIR_PREFIX}ell
 
 CSRCS = ell/ell/util.c ell/ell/test.c ell/ell/strv.c ell/ell/utf8.c      \
 	ell/ell/queue.c ell/ell/timeout.c ell/ell/main.c ell/ell/idle.c  \

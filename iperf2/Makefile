@@ -53,8 +53,8 @@ CXXSRCS += iperf2/src/PerfSocket.cpp
 CXXSRCS += iperf2/src/Server.cpp
 CXXSRCS += iperf2/src/Settings.cpp
 
-IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-IPERF2_FLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" iperf2/include}
+IPERF2_FLAGS += ${INCDIR_PREFIX}.
+IPERF2_FLAGS += ${INCDIR_PREFIX}iperf2/include
 IPERF2_FLAGS += ${shell $(DEFINE) "$(CC)" HAVE_CONFIG_H}
 IPERF2_FLAGS += -Wno-undef -Wno-shadow -Wno-unused-function
 IPERF2_FLAGS += -Dwarn=iperf2_warn

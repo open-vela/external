@@ -21,15 +21,15 @@ CXXSRCS = $(wildcard aac/*/src/*$(CXXEXT))
 
 CXXFLAGS += -Wno-undef
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libArithCoding/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libDRCdec/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libFDK/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libMpegTPDec/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libMpegTPEnc/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libPCMutils/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libSACdec/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libSACenc/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libSBRdec/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" aac/libSBRenc/include}
+CXXFLAGS += ${INCDIR_PREFIX}aac/libArithCoding/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libDRCdec/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libFDK/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libMpegTPDec/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libMpegTPEnc/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libPCMutils/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libSACdec/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libSACenc/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libSBRdec/include
+CXXFLAGS += ${INCDIR_PREFIX}aac/libSBRenc/include
 
 include $(APPDIR)/Application.mk

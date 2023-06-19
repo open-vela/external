@@ -16,6 +16,6 @@
 
 ifneq ($(CONFIG_LIB_GOOGLETEST),)
 CONFIGURED_APPS += $(APPDIR)/external/googletest
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/googletest/googletest/googletest/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/googletest/googletest/googlemock/include}
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/googletest/googletest/googletest/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/googletest/googletest/googlemock/include
 endif

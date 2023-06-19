@@ -22,19 +22,19 @@ MODULE    = $(CONFIG_THORVG)
 
 CXXEXT = .cpp
 
-CFLAGS     += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/bindings/capi}
-CFLAGS     += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/lib/sw_engine}
+CFLAGS     += ${INCDIR_PREFIX}thorvg/src/bindings/capi
+CFLAGS     += ${INCDIR_PREFIX}thorvg/src/lib/sw_engine
 
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/../}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/inc}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/lib}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/png}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/raw}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/jpg}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/tvg}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/svg}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/loaders/external_png}
-CXXFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" thorvg/src/lib/sw_engine}
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/../
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/inc
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/lib
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/png
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/raw
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/jpg
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/tvg
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/svg
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/loaders/external_png
+CXXFLAGS   += ${INCDIR_PREFIX}thorvg/src/lib/sw_engine
 
 CFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-variable
 CXXFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-variable

@@ -23,7 +23,7 @@ else
 CFLAGS += -DPNG_ARM_NEON_IMPLEMENTATION=0
 endif
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
 CSRCS += $(filter-out libpng/pngtest.c, $(wildcard libpng/*.c))
 
 ifneq ($(CONFIG_LIB_PNG_TEST),)

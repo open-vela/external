@@ -16,8 +16,8 @@
 
 ifneq ($(CONFIG_LIB_FLUORIDE_SBC),)
 CONFIGURED_APPS += $(APPDIR)/external/libfluoride-sbc
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include}
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/decoder/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libfluoride-sbc/libfluoride-sbc/encoder/include
 endif

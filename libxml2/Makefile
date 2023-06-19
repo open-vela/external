@@ -29,7 +29,7 @@ CSRCSRM += $(wildcard libxml2/test*.c)
 CSRCSALL = $(wildcard libxml2/*.c)
 CSRCS    = $(filter-out $(CSRCSRM), $(CSRCSALL))
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += -Wno-format-extra-args -Wno-undef
 
 include $(APPDIR)/Application.mk

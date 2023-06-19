@@ -23,8 +23,8 @@ STACKSIZE = $(CONFIG_UTILS_DIVIDE_STACKSIZE)
 PROGNAME = divide_benchmark divide_benchmark_branchfree divide_test_c99 divide_tester
 MAINSRC = benchmark.cpp benchmark_branchfree.cpp test_c99.c tester.cpp
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libdivide}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libdivide}
+CFLAGS += ${INCDIR_PREFIX}libdivide
+CXXFLAGS += ${INCDIR_PREFIX}libdivide
 
 CXXEXT := .cpp
 VPATH += libdivide/test

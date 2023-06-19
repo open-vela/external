@@ -16,11 +16,11 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/compat}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/listhash}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" libtar/lib}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/external/zlib/zlib}
+CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}libtar/compat
+CFLAGS += ${INCDIR_PREFIX}libtar/listhash
+CFLAGS += ${INCDIR_PREFIX}libtar/lib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
 
 CFLAGS += -DMAXPATHLEN=PATH_MAX
 

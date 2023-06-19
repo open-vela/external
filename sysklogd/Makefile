@@ -23,7 +23,7 @@ MODULE    = $(CONFIG_SYSLOGD)
 CFLAGS   += -DSYSCONFDIR=CONFIG_SYSLOGD_CONFDIR \
             -DRUNSTATEDIR=CONFIG_SYSLOGD_STATEDIR \
             -DMAXLINE=CONFIG_SYSLOGD_LINE_MAX
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS   += ${INCDIR_PREFIX}.
 CSRCS    += sysklogd/src/timer.c     \
             sysklogd/src/socket.c    \
             sysklogd/lib/pidfile.c   \

@@ -23,7 +23,7 @@ PRIORITY  = $(CONFIG_RTOS_BENCHMARK_PRIORITY)
 STACKSIZE = $(CONFIG_RTOS_BENCHMARK_STACKSIZE)
 MODULE    = $(CONFIG_RTOS_BENCHMARK)
 
-CFLAGS   += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" rtos-benchmark/h}
+CFLAGS   += ${INCDIR_PREFIX}rtos-benchmark/h
 
 CSRCS    += rtos-benchmark/src/common/bench_interrupt_latency_test.c    \
             rtos-benchmark/src/common/bench_mutex_lock_unlock_test.c    \

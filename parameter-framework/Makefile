@@ -24,12 +24,12 @@ CXXSRCS  += $(wildcard parameter-framework/xmlserializer/*.cpp)
 CXXSRCS  += $(wildcard parameter-framework/utility/*.cpp)
 CXXSRCS  += $(wildcard parameter-framework/utility/nuttx/*.cpp)
 
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/parameter/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/parameter/log/include}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/remote-processor}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/xmlserializer}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/utility}
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" parameter-framework/asio/stub}
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/parameter/include
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/parameter/log/include
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/remote-processor
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/xmlserializer
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/utility
+CXXFLAGS += ${INCDIR_PREFIX}parameter-framework/asio/stub
 CXXFLAGS += --std=c++11
 
 ifeq ($(NETWORKING),)

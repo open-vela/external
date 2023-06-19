@@ -26,6 +26,6 @@ CXXSRCS += $(wildcard yoga/yoga/internal/*.cpp)
 
 CXXFLAGS += -Wno-shadow
 CXXFLAGS += -std=c++11
-CXXFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" yoga}
+CXXFLAGS += ${INCDIR_PREFIX}yoga
 
 include $(APPDIR)/Application.mk

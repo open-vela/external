@@ -58,13 +58,13 @@ ifneq ($(CONFIG_LIB_OPUS_DEMO),)
   MAINSRC  += src/opus_demo.c
 endif
 
-AFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus}
+AFLAGS += ${INCDIR_PREFIX}opus
 
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus/celt}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus/silk}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" opus/silk/fixed}
+CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}opus
+CFLAGS += ${INCDIR_PREFIX}opus/celt
+CFLAGS += ${INCDIR_PREFIX}opus/silk
+CFLAGS += ${INCDIR_PREFIX}opus/silk/fixed
 CFLAGS += -DHAVE_CONFIG_H -DOPUS_WILL_BE_SLOW
 
 ifeq ($(CONFIG_ARCH_ARM),y)

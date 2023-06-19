@@ -19,7 +19,7 @@ include $(APPDIR)/Make.defs
 CSRCS += $(wildcard zint/backend/*.c)
 
 CFLAGS += -DNO_PNG
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zint/backend}
+CFLAGS += ${INCDIR_PREFIX}zint/backend
 
 ifneq ($(CONFIG_UTILS_ZINT),)
   PRIORITY  = $(CONFIG_UTILS_ZINT_PRIORITY)

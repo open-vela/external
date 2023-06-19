@@ -19,7 +19,7 @@ include $(APPDIR)/Make.defs
 CSRCS = $(wildcard nghttp2/lib/*.c)
 
 CFLAGS += -DHAVE_CONFIG_H
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" .}
+CFLAGS += ${INCDIR_PREFIX}.
 
 ifneq ($(CONFIG_NGHTTP2_TEST),)
 CSRCS += $(wildcard nghttp2/tests/nghttp2_*.c)
@@ -29,8 +29,8 @@ MODULE = $(CONFIG_NGHTTP2_TEST)
 PRIORITY = $(CONFIG_NGHTTP2_TEST_PRIORITY)
 STACKSIZE = $(CONFIG_NGHTTP2_TEST_STACKSIZE)
 MAINSRC = $(APPDIR)/external/nghttp2/nghttp2/tests/main.c
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nghttp2/tests}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" nghttp2/lib}
+CFLAGS += ${INCDIR_PREFIX}nghttp2/tests
+CFLAGS += ${INCDIR_PREFIX}nghttp2/lib
 endif
 
 include $(APPDIR)/Application.mk
