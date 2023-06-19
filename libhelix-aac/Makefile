@@ -48,6 +48,13 @@ CSRCS += libhelix-aac/sbrside.c
 CSRCS += libhelix-aac/sbrtabs.c
 endif
 
+ifeq ($(CONFIG_ARCH_ARM),y)
+ASRCS += libhelix-aac/sbrcov.s
+ASRCS += libhelix-aac/sbrqmfak.s
+ASRCS += libhelix-aac/sbrqmfsk.s
+AFLAGS += -Wa,-mimplicit-it=thumb
+endif
+
 CFLAGS += -DUSE_DEFAULT_STDLIB
 
 include $(APPDIR)/Application.mk
