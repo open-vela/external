@@ -476,8 +476,10 @@
 /* Define to 1 if you have the `socket' function. */
 #define HAVE_SOCKET 1
 
+#ifdef CONFIG_NET_LOCAL
 /* Define to 1 if you have the `socketpair' function. */
 #define HAVE_SOCKETPAIR 1
+#endif
 
 /* Define to 1 if you have the <ssl.h> header file. */
 /* #undef HAVE_SSL_H */
