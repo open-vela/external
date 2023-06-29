@@ -19,3 +19,11 @@ config LIB_ENET
 	default n
 	---help---
 		Enable support for ENet reliable UDP networking library
+
+if LIB_ENET
+
+config LIB_ENET_BUFSIZE
+	int "ENet default buffer size"
+	default 16384
+
+endif
