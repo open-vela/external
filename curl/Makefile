@@ -19,6 +19,7 @@ include $(APPDIR)/Make.defs
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
+CFLAGS += ${INCDIR_PREFIX}curl/lib
 
 CSRCS = $(wildcard curl/lib/*.c)
 CSRCS += $(wildcard curl/lib/vauth/*.c)
@@ -33,7 +34,6 @@ MODULE    = $(CONFIG_UTILS_CURL)
 CFLAGS += -Dconfig_init=curl_config_init
 CFLAGS += -Dconfig_free=curl_config_free
 CFLAGS += -Dstr2num=curl_str2num
-CFLAGS += ${INCDIR_PREFIX}curl/lib
 
 MAINSRC = curl/src/tool_main.c
 HELP_C  = tool_listhelp.c
