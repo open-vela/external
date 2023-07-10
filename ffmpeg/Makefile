@@ -69,6 +69,9 @@ define DOSUBDIR
   X86ASM-OBJS-yes :=
   include $(SRC_PATH)/$(1)/Makefile
   -include $(SRC_PATH)/$(1)/$$(ARCH)/Makefile
+  ifeq ($(CONFIG_ARM_HAVE_NEON),y)
+    -include $(SRC_PATH)/$(1)/neon/Makefile
+  endif
   include $(SRC_PATH)/ffbuild/arch.mak
   SOBJS := $$(filter-out $$(SHLIBOBJS), $$(OBJS) $$(OBJS-yes) $$(X86ASM-OBJS-yes))
   SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(SOBJS)))
