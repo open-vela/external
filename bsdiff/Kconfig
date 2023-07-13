@@ -27,7 +27,7 @@ config UTILS_BSDIFF_PRIORITY
 
 config UTILS_BSDIFF_STACKSIZE
 	int "bsdiff stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 4096
 
 config BSPATCH_BUF_SIZE
 	int "bspatch read & write buff size"
