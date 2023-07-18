@@ -191,6 +191,10 @@ CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
 FFEXTRA := $(CFLAGS)
 
+ifeq ($(CONFIG_DEBUG_CUSTOMOPT),y)
+  CFG_CMDS += --optflags=$(strip $(CONFIG_DEBUG_OPTLEVEL))
+endif
+
 $(SRC_PATH)/libavutil/ffversion.h:
 	$(Q)cd $(SRC_PATH) && ./ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
 
