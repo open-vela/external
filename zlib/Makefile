@@ -53,4 +53,11 @@ STACKSIZE += $(CONFIG_UTILS_UNZIP_STACKSIZE)
 MAINSRC += zlib/contrib/minizip/miniunz.c
 endif
 
+ifneq ($(CONFIG_LIB_ZLIB_TEST),)
+PRIORITY += $(CONFIG_LIB_ZLIB_TEST_PRIORITY)
+STACKSIZE += $(CONFIG_LIB_ZLIB_TEST_STACKSIZE)
+PROGNAME += zlib_infcover_test
+MAINSRC += zlib/test/infcover.c
+endif
+
 include $(APPDIR)/Application.mk

@@ -20,6 +20,24 @@ config LIB_ZLIB
 
 if LIB_ZLIB
 
+config LIB_ZLIB_TEST
+	tristate "zlib test"
+	default n
+	help
+		Enable the test for zlib.
+
+if LIB_ZLIB_TEST
+
+config LIB_ZLIB_TEST_PRIORITY
+	int "Zlib test priority"
+	default 100
+
+config LIB_ZLIB_TEST_STACKSIZE
+	int "Zlib test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif # LIB_ZLIB_TEST
+
 config UTILS_GZIP
 	bool "GZIP tool"
 	default n
