@@ -15,5 +15,4 @@
 #
 config MRI
 	tristate "\"mri!\" program"
-	depends on DEBUG_TCBINFO
 	default n
