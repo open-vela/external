@@ -70,5 +70,6 @@ CXXSRCS := $(filter-out $(REMOVE_CXX),$(CXXSRCS))
 
 
 CXXFLAGS += -Wno-shadow -Wno-undef -Wno-register
+CXXFLAGS += -Dt_qua_gain7b=t_qua_gain7b_amrwb
 
 include $(APPDIR)/Application.mk
