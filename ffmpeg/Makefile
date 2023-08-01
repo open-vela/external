@@ -160,6 +160,10 @@ ifeq ($(CONFIG_LIB_HELIX_MP3),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libhelix-mp3/libhelix-mp3/pub
 endif
 
+ifeq ($(CONFIG_LIB_LHDC),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/liblhdc/liblhdc/include
+endif
+
 ifeq ($(CONFIG_LIB_OPENCORE_AMR),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libopencore-amr/libopencore-amr/include
 endif
