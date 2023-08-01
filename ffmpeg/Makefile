@@ -178,6 +178,10 @@ ifneq ($(CONFIG_H264_MCVENC_ENCODER)$(CONFIG_JPEG_MCVENC_ENCODER),)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xring/platform/media/venc/include
 endif
 
+ifeq ($(CONFIG_LVX_USE_VIDEO_ADAPTER),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/graphics/lvgl/ext/video
+endif
+
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/bes_aec
