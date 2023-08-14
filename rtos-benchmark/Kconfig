@@ -16,8 +16,7 @@
 
 config RTOS_BENCHMARK
 	tristate "RTOS benchmark"
-	depends on PTHREAD_MUTEX_TYPES
-	select CANCELLATION_POINTS
+	depends on PTHREAD_MUTEX_TYPES && CANCELLATION_POINTS
 	default n
 
 if RTOS_BENCHMARK
