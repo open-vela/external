@@ -56,4 +56,11 @@ config LIB_AVB_ALGORITHM_TYPE_SHA512_RSA8192
 	default n
 endif
 
+config LIB_AVB_FOOTER_SEARCH_BLKSIZE
+	int "Block size of AVB Footer searching"
+	default 0
+	---help---
+		Default zero disables AVB Footer searching(read last 64 bytes directly),
+		set value greater than zero as searching step size to enable.
+
 endif
