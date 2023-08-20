@@ -26,26 +26,26 @@ CFLAGS   += -D__u32='unsigned int'
 CFLAGS   += -D__u64=uint64_t
 CFLAGS   += ${INCDIR_PREFIX}.
 CFLAGS   += ${INCDIR_PREFIX}exfatprogs/include
-PRIORITY  = $(CONFIG_LIB_EXFATPROGS_PRIORITY)
-STACKSIZE = $(CONFIG_LIB_EXFATPROGS_STACKSIZE)
-MODULE    = $(CONFIG_LIB_EXFATPROGS)
+PRIORITY  = $(CONFIG_UTILS_EXFATPROGS_PRIORITY)
+STACKSIZE = $(CONFIG_UTILS_EXFATPROGS_STACKSIZE)
+MODULE    = $(CONFIG_UTILS_EXFATPROGS)
 
-ifneq ($(CONFIG_LIB_EXFATPROGS_DUMP),)
+ifneq ($(CONFIG_UTILS_EXFATPROGS_DUMP),)
 MAINSRC  += exfatprogs/dump/dump.c
 PROGNAME += dumpexfat
 endif
 
-ifneq ($(CONFIG_LIB_EXFATPROGS_LABEL),)
+ifneq ($(CONFIG_UTILS_EXFATPROGS_LABEL),)
 MAINSRC  += exfatprogs/label/label.c
 PROGNAME += labelexfat
 endif
 
-ifneq ($(CONFIG_LIB_EXFATPROGS_TUNE),)
+ifneq ($(CONFIG_UTILS_EXFATPROGS_TUNE),)
 MAINSRC  += exfatprogs/tune/tune.c
 PROGNAME += tuneexfat
 endif
 
-ifneq ($(CONFIG_LIB_EXFATPROGS_FSCK),)
+ifneq ($(CONFIG_UTILS_EXFATPROGS_FSCK),)
 CFLAGS   += ${INCDIR_PREFIX}exfatprogs/fsck
 CSRCS    += exfatprogs/fsck/repair.c
 CSRCS    += exfatprogs/fsck/de_iter.c
@@ -53,7 +53,7 @@ MAINSRC  += exfatprogs/fsck/fsck.c
 PROGNAME += fsckexfat
 endif
 
-ifneq ($(CONFIG_LIB_EXFATPROGS_MKFS),)
+ifneq ($(CONFIG_UTILS_EXFATPROGS_MKFS),)
 CFLAGS   += ${INCDIR_PREFIX}exfatprogs/mkfs
 CSRCS    += exfatprogs/mkfs/upcase.c
 MAINSRC  += exfatprogs/mkfs/mkfs.c
