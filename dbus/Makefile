@@ -30,7 +30,7 @@ CFLAGS   += ${INCDIR_PREFIX}dbus/test
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
-CFLAGS   += -Dfork=vfork -DDBUS_COMPILATION -D__linux__
+CFLAGS   += -DDBUS_COMPILATION -D__linux__
 CFLAGS   += -DLOG_DAEMON=0 -DLOG_AUTH=0
 CFLAGS   += -Dprint_message=dbus_print_message
 

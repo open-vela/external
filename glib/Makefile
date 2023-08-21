@@ -17,7 +17,7 @@
 include $(APPDIR)/Make.defs
 
 CFLAGS += -DG_LOG_DOMAIN=\"GLib\" -DGLIB_COMPILATION
-CFLAGS += -Dfork=vfork -Db_coverage=false -DGLIB_CHARSETALIAS_DIR=\"/etc/locale/lib/\"
+CFLAGS += -Db_coverage=false -DGLIB_CHARSETALIAS_DIR=\"/etc/locale/lib/\"
 CFLAGS += -DSIGWINCH=21 -DSIGABRT=22 -DNSIG=_NSIG
 CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += ${INCDIR_PREFIX}glib
