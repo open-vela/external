@@ -17,6 +17,7 @@
 config LIB_GOOGLETEST
 	tristate "Google's C++ test framework"
 	depends on LIBCXX
+	depends on LIBC_NETDB
 	depends on TLS_TASK_NELEM > 0
 	depends on TLS_NELEM > 0
 	default n
