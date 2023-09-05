@@ -29,6 +29,7 @@ MAINSRC = mmc-utils/mmc.c
 CSRCS  += mmc-utils/mmc_cmds.c
 CSRCS  += mmc-utils/lsmmc.c
 CSRCS  += mmc-utils/3rdparty/hmac_sha/hmac_sha2.c
+CSRCS  += mmc-utils/3rdparty/hmac_sha/sha2.c
 CFLAGS += -Wno-shadow
 CFLAGS += ${DEFINE_PREFIX}__u32=uint32_t ${DEFINE_PREFIX}__u64=uint64_t
 CFLAGS += ${DEFINE_PREFIX}__u8=uint8_t   ${DEFINE_PREFIX}__u16=uint16_t
