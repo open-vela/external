@@ -1,0 +1,93 @@
+#
+# Licensed to the Apache Software Foundation (ASF) under one or more
+# contributor license agreements.  See the NOTICE file distributed with
+# this work for additional information regarding copyright ownership.  The
+# ASF licenses this file to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance with the
+# License.  You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+# License for the specific language governing permissions and limitations
+# under the License.
+#
+
+menuconfig BENCHMARK_COREMARK_PRO
+	bool "Coremark Pro Benchmark"
+	default n
+	depends on LIBC_FLOATINGPOINT
+
+if BENCHMARK_COREMARK_PRO
+
+config COREMARK_PRO_STACKSIZE
+	int "Coremark Pro stack size"
+	default 131072
+
+config COREMARK_PRO_PRIORITY
+	int "Coremark Pro priority"
+	default 100
+
+config COREMARK_PRO_USE_SINGLE_CONTEXT
+	bool "use single context"
+	default n
+
+config COREMARK_PRO_SMP
+	bool "Relevant configurations in case of SMP"
+	default n
+	depends on SMP && !COREMARK_PRO_USE_SINGLE_CONTEXT
+
+config COREMARK_PRO_64BIT
+	bool "Running on 64-bit operating systems"
+	default n
+
+config COREMARK_PRO_USE_FP64
+	bool "USE FP64 Data for Test"
+	default n
+
+config COREMARK_PRO_CORE_TEST
+	bool "Core Test"
+	default n
+
+config COREMARK_PRO_CJPEG_TEST
+	bool "cjpeg-rose7-preset"
+	default n
+	---help---
+		Before using this case, place the files in coremark-pro/benchmarks/libbmp
+		and coremark-pro/benchmarks/libjpeg in /data/libbmp and /data/libjpeg
+		respectively
+
+config COREMARK_PRO_LINEAR_ALG_MID_TEST
+	bool "Linear_alg_mid TEST"
+	default n
+
+config COREMARK_PRO_SHA_TEST
+	bool "SHA Test"
+	default n
+
+config COREMARK_PRO_ZIP_TEST
+	bool "Zip Test"
+	depends on LIB_ZLIB
+	default n
+
+choice
+	prompt "Coremark Pro FP Test Case configuration"
+	default COREMARK_PRO_RADIX_TEST
+
+config COREMARK_PRO_RADIX_TEST
+	bool "Radix Test"
+
+config COREMARK_PRO_LOOPS_ALL_MID_TEST
+	bool "Loops-all-mid test"
+
+config COREMARK_PRO_NNET_TEST
+	bool "Nnet Test"
+
+config COREMARK_PRO_PARSER_125K
+	bool "Parser 125K Test"
+
+endchoice
+
+endif
