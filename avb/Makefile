@@ -18,7 +18,11 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += -DAVB_COMPILATION
 CFLAGS += -I$(APPDIR)/external/avb/avb
+ifneq ($(CONFIG_LIB_AVB_SHA256_CRYPTODEV)$(CONFIG_LIB_AVB_SHA512_CRYPTODEV),)
+CFLAGS += -I$(APPDIR)/external/avb/avb/libavb/cryptodev
+else
 CFLAGS += -I$(APPDIR)/external/avb/avb/libavb/sha
+endif
 
 CSRCS += \
         avb/libavb/avb_chain_partition_descriptor.c \
@@ -40,10 +44,18 @@ ifneq ($(CONFIG_LIB_AVB_CRC32),)
 CSRCS += avb/libavb/avb_crc32.c
 endif
 ifneq ($(CONFIG_LIB_AVB_SHA256),)
+ifneq ($(CONFIG_LIB_AVB_SHA256_CRYPTODEV),)
+CSRCS += avb/libavb/cryptodev/sha256_cryptodev.c
+else
 CSRCS += avb/libavb/sha/sha256_impl.c
 endif
+endif
 ifneq ($(CONFIG_LIB_AVB_SHA512),)
+ifneq ($(CONFIG_LIB_AVB_SHA512_CRYPTODEV),)
+CSRCS += avb/libavb/cryptodev/sha512_cryptodev.c
+else
 CSRCS += avb/libavb/sha/sha512_impl.c
+endif
 endif
 CSRCS := $(wildcard $(CSRCS))
 
