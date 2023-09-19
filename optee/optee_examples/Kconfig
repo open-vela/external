@@ -1,0 +1,56 @@
+#
+# Copyright (C) 2023 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "OP-TEE CA examples"
+
+config OPTEE_EXAMPLES_CA_HELLOWORLD
+	bool "optee ca hello world example"
+	depends on LIB_TEEC
+	default n
+	---help---
+		"optee ca hello world example"
+
+if OPTEE_EXAMPLES_CA_HELLOWORLD
+
+config OPTEE_EXAMPLES_CA_HELLOWORLD_PROGNAME
+	string "ca hello world program name"
+	default "optee_example_hello_world"
+	---help---
+		This is the name of the optee ca hello world program.
+
+config OPTEE_EXAMPLES_CA_HELLOWORLD_PRIORITY
+	int "hello world program task priority"
+	default 100
+
+config OPTEE_EXAMPLES_CA_HELLOWORLD_STACKSIZE
+	int "hello world program stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
+
+endmenu
+
+
+menu "OP-TEE TA examples"
+
+config OPTEE_EXAMPLES_TA_HELLOWORLD
+	bool "optee ta hello world example"
+	depends on OPTEE_OS
+	default n
+	---help---
+		"optee ta hello world example"
+
+endmenu
