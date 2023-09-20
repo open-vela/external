@@ -64,6 +64,11 @@ config LIB_AVB_SHA512_CRYPTODEV
 	default n
 endif
 
+config LIB_AVB_RSA_VERIFY_CRYPTODEV
+	bool "Enable RSA Accelerator via /dev/crypto"
+	depends on CRYPTO_CRYPTODEV
+	default n
+
 config LIB_AVB_FOOTER_SEARCH_BLKSIZE
 	int "Block size of AVB Footer searching"
 	default 0

@@ -34,7 +34,6 @@ CSRCS += \
         avb/libavb/avb_hashtree_descriptor.c \
         avb/libavb/avb_kernel_cmdline_descriptor.c \
         avb/libavb/avb_property_descriptor.c \
-        avb/libavb/avb_rsa.c \
         avb/libavb/avb_slot_verify.c \
         avb/libavb/avb_sysdeps_posix.c \
         avb/libavb/avb_util.c \
@@ -56,6 +55,11 @@ CSRCS += avb/libavb/cryptodev/sha512_cryptodev.c
 else
 CSRCS += avb/libavb/sha/sha512_impl.c
 endif
+endif
+ifneq ($(CONFIG_LIB_AVB_RSA_VERIFY_CRYPTODEV),)
+CSRCS += avb/libavb/cryptodev/rsa_cryptodev.c
+else
+CSRCS += avb/libavb/avb_rsa.c
 endif
 CSRCS := $(wildcard $(CSRCS))
 
