@@ -35,6 +35,8 @@ CSRCS += mri/semihost/semihost.c
 CSRCS += mri/semihost/mbed/semihost_mbed.c
 CSRCS += mri/semihost/newlib/semihost_newlib.c
 
+CFLAGS += -fno-sanitize=kernel-address
+
 ASRCS += mri/semihost/newlib/newlib_stubs.S
 
 include $(APPDIR)/Application.mk
