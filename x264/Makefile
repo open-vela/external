@@ -31,8 +31,8 @@ else
   endif
 endif
 
-# suppress -Wundef
-CFLAGS += -Wno-undef
+# suppress -Wundef -Wno-format
+CFLAGS += -Wno-undef -Wno-format
 
 SRCS = common/osdep.c common/base.c common/cpu.c common/tables.c \
        encoder/api.c
@@ -187,7 +187,6 @@ CSRCS := $(addprefix $(SRCPATH)$(DELIM), $(SRCS) $(SRCS_X))
 
 X264EASFLAGS := $(ASFLAGS)
 X264ECFLAGS := $(CFLAGS)
-X264ELDFLAGS := $(LDFLAGS)
 
 CFLAGS += -DHIGH_BIT_DEPTH=0 -DBIT_DEPTH=8
 
@@ -196,6 +195,7 @@ ifdef ARCH_X86
   AS=nasm
 else
   ASMEXT=S
+  AS=$(CC)
 endif
 
 NASUFFIX = $(subst $(DELIM),.,$(CURDIR)$(DELIM)$(SRCPATH))
@@ -230,9 +230,8 @@ $(SRCPATH)/config.mak:
   --disable-thread --disable-avs --disable-swscale \
   --disable-lavf --disable-ffms --disable-gpac --disable-lsmash \
   --extra-asflags="$(X264EASFLAGS)" --extra-cflags="$(X264ECFLAGS)" \
-  --extra-ldflags="$(X264ELDFLAGS)" --bit-depth=8 \
-  $(CFG_CMDS)
-	$(Q)cd $(SRCPATH) && sed -n '/^\(SYS_ARCH\|CFLAGS\|LDFLAGS\|ASFLAGS\|HAVE_GETOPT_LONG\)=/ p' config.mak > config.mak.mod \
+  --bit-depth=8 $(CFG_CMDS)
+	$(Q)cd $(SRCPATH) && sed -n '/^\(SYS_ARCH\|CFLAGS\|ASFLAGS\|HAVE_GETOPT_LONG\)=/ p' config.mak > config.mak.mod \
     && mv -f config.mak.mod config.mak
 
 context:: $(SRCPATH)/config.mak
