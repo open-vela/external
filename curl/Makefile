@@ -18,7 +18,7 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += -DHAVE_CONFIG_H
 CFLAGS += ${INCDIR_PREFIX}.
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 CFLAGS += ${INCDIR_PREFIX}curl/lib
 
 CSRCS = $(wildcard curl/lib/*.c)

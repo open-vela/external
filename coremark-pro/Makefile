@@ -79,7 +79,7 @@ ifneq ($(CONFIG_COREMARK_PRO_SHA_TEST),)
 endif
 
 ifneq ($(CONFIG_COREMARK_PRO_ZIP_TEST),)
-  CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
+  CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
   CFLAGS   += -Dgzclose_r=coremark_zip_gzclose_r -Dgzclose_w=coremark_zip_gzclose_w
   CSRCS    += coremark-pro/benchmarks/darkmark/zip/zip_darkmark.c
   MAINSRC  += coremark-pro/workloads/zip-test/zip-test.c

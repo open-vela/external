@@ -20,7 +20,7 @@ CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += ${INCDIR_PREFIX}libtar/compat
 CFLAGS += ${INCDIR_PREFIX}libtar/listhash
 CFLAGS += ${INCDIR_PREFIX}libtar/lib
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 
 CFLAGS += -DMAXPATHLEN=PATH_MAX
 

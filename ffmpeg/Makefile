@@ -169,7 +169,7 @@ CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libopencore-amr/libopencore-amr/inc
 endif
 
 ifeq ($(CONFIG_LIB_ZLIB),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/zlib/zlib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 endif
 
 ifneq ($(CONFIG_H264_MCVDEC_DECODER)$(CONFIG_VP8_MCVDEC_DECODER),)
