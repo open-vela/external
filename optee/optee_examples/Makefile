@@ -26,6 +26,8 @@ MAINSRC += optee_examples/hello_world/host/main.c
 endif
 
 ifneq ($(CONFIG_OPTEE_EXAMPLES_TA_HELLOWORLD),)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutee/include
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutils/ext/include
 CFLAGS += ${INCDIR_PREFIX}optee_examples/hello_world/ta/include
 CFLAGS += -DHELLO_WORLD_TA_NAME=\"hello_world.ta\"
 CSRCS += hello_world_ta.c
