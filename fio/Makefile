@@ -32,7 +32,8 @@ CFLAGS += -DBLOOM_SIZE=1024*1024 -DBUF_SIZE=512*1024
 CFLAGS += -DMAX_POOLS=4 -DINITIAL_POOLS=2 -DINITIAL_SIZE=512*1024
 CFLAGS += -DCONFIG_SEED_BUCKETS=8 -DBITS_PER_LONG=32
 CFLAGS += -Ifio -Ifio/arch -Ifio/crc -Ifio/os
-CFLAGS += -DXXH32_digest=fio_XXH32_digest -DXXH32_update=fio_XXH32_update -DXXH32=fio_XXH32
+CFLAGS += -DXXH32_digest=fio_XXH32_digest -DXXH32_update=fio_XXH32_update -DXXH32=fio_XXH32 \
+          -Dparse_options=fio_parse_options -Dparse_option=fio_parse_option
 
 ifneq ($(CONFIG_ARCH_ARM),)
 CFLAGS += -D__ARM_ARCH_6__
