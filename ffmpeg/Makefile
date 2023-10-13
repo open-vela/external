@@ -16,6 +16,8 @@
 
 include $(APPDIR)/Make.defs
 
+BIN := $(APPDIR)/staging/libexternal.a
+
 SBINDIR   := $(BINDIR)
 SINCDIR   := $(INCDIR)
 SAR       := $(AR)
@@ -236,18 +238,6 @@ $(SRC_PATH)/ffbuild/config.mak:
 		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)" \
 		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)  \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
-
-ASRCS := $(wildcard $(ASRCS))
-CSRCS := $(wildcard $(CSRCS))
-CXXSRCS := $(wildcard $(CXXSRCS))
-MAINSRC := $(wildcard $(MAINSRC))
-NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
-
-ifneq ($(NOEXPORTSRCS),)
-	BIN := $(APPDIR)/staging/libexternal.a
-endif
-
-EXPORT_FILES := ffmpeg/libavdevice/vtun.h
 
 context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
 
