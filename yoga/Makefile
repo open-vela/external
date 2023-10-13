@@ -16,13 +16,22 @@
 
 include $(APPDIR)/Make.defs
 
-BIN := $(APPDIR)/staging/libexternal.a
 
 CXXEXT  := .cpp
 
 CXXSRCS += $(wildcard yoga/yoga/*.cpp)
 CXXSRCS += $(wildcard yoga/yoga/event/*.cpp)
 CXXSRCS += $(wildcard yoga/yoga/internal/*.cpp)
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libexternal.a
+endif
+
 
 CXXFLAGS += -Wno-shadow
 CXXFLAGS += -std=c++11
