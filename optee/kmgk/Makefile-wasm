@@ -16,11 +16,10 @@ CSRCS += kmgk/keymaster/ta/shift.c
 CSRCS += kmgk/keymaster/ta/crypto_ec.c
 CSRCS += kmgk/keymaster/ta/attestation.c
 CSRCS += kmgk/keymaster/ta/mbedtls_proxy.c
-MITEE_IOT_DIR = ../../vendor/xiaomi/mitee_iot/
-CSRCS += $(MITEE_IOT_DIR)/tee/lib/libutee/wasm_ta_framework.c
+CSRCS += ../optee_nuttx/optee_nuttx/compat/wasm/wasm_ta_framework.c
 
 CFLAGS += -Ikmgk/keymaster/ta/include
 
-WASI_SDK_ROOT = ../../prebuilts/clang/linux/wasm
+WASI_SDK_ROOT = ../../../prebuilts/clang/linux/wasm
 include ./defconfig
 include Wasm.mk

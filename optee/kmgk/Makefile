@@ -16,7 +16,6 @@
 
 include $(APPDIR)/Make.defs
 
-MITEE_IOT_DIR = $(APPDIR)/vendor/xiaomi/mitee_iot/
 include ./defconfig
 
 BIN := libkeystore$(LIBEXT)
@@ -25,12 +24,12 @@ CSRCS = $(wildcard kmgk/keymaster/ta/*.c)
 
 CFLAGS += -Ikmgk/keymaster/ta/include
 
-CFLAGS += -I$(MITEE_IOT_DIR)/tee_client/public
-CFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutee/include
+OPTEE_IOT_DIR = $(APPDIR)/external/optee
+CFLAGS += -I$(OPTEE_IOT_DIR)/optee_client/optee_client/public
+CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutee/include
 
-CFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutils/ext/include
-CFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutils/isoc/include
-CFLAGS += -I$(MITEE_IOT_DIR)/tee/include
+CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutils/ext/include
+CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/core/include
 
 CFLAGS += -DTRACE_LEVEL=$(CONFIG_TRACE_LEVEL)
 CFLAGS += -DKM_RECV_BUF_SIZE=$(CONFIF_KM_RECV_BUF_SIZE)

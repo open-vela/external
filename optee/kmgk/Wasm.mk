@@ -19,16 +19,28 @@ INITIAL_MEMORY ?= 65536
 # Toolchain setting
 
 WCC = $(WASI_SDK_ROOT)/bin/clang
-MITEE_IOT_DIR = ../../vendor/xiaomi/mitee_iot/
 
 WCFLAGS = $(filter-out $(ARCHCPUFLAGS) $(ARCHCFLAGS) $(ARCHINCLUDES) $(ARCHDEFINES) $(ARCHOPTIMIZATION) $(EXTRAFLAGS),$(CFLAGS))
 WCFLAGS += --sysroot=$(WASI_SDK_ROOT)/share/wasi-sysroot -nostdlib $(MAXOPTIMIZATION)
+
+ifeq ($(strip $(CONFIG_OPTEE_OS)),y)
+OPTEE_IOT_DIR = ../
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_nuttx/optee_nuttx/compat/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutils/ext/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutee/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/../../nuttx/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/core/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/core/lib/libtomcrypt/include
+else
+MITEE_IOT_DIR = ../../vendor/xiaomi/mitee_iot/
 WCFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutee/include
 
 WCFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutils/ext/include
 WCFLAGS += -I$(MITEE_IOT_DIR)/tee/lib/libutils/isoc/include
 WCFLAGS += -I$(MITEE_IOT_DIR)/tee/include
 WCFLAGS += -I$(MITEE_IOT_DIR)/crypto/libtomcrypt/include
+endif
+
 WCFLAGS += -I../../apps/interpreters/wamr/wamr/core/iwasm/include
 WCFLAGS += -DUSER_TA_WASM
 WCFLAGS += -DTRACE_TAG='"ta_keystore"'
