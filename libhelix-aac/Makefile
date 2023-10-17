@@ -55,6 +55,6 @@ ASRCS += libhelix-aac/sbrqmfsk.s
 AFLAGS += -Wa,-mimplicit-it=thumb
 endif
 
-CFLAGS += -DUSE_DEFAULT_STDLIB
+CFLAGS += -DUSE_DEFAULT_STDLIB -fno-sanitize=undefined
 
 include $(APPDIR)/Application.mk
