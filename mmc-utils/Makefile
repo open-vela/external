@@ -22,7 +22,7 @@ include $(APPDIR)/Make.defs
 
 PROGNAME  = mmc
 PRIORITY  = 100
-STACKSIZE = 4096
+STACKSIZE = 8192
 MODULE    = $(CONFIG_UTILS_MMC)
 
 MAINSRC = mmc-utils/mmc.c
