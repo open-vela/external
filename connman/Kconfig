@@ -18,6 +18,7 @@ menu "Connection Manager"
 
 config CONNMAN
 	tristate "Connection Manager deamon"
+	depends on LIB_DBUS
 	default n
 	---help---
 		Connection Manager service program, is a deamon process
