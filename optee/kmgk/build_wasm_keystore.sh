@@ -1,7 +1,7 @@
 WAMRC=../../../prebuilts/clang/linux/wasm/wamrc
 
 rm ./kmgk/keymaster/ta/*.wo
-rm ../optee_nuttx/optee_nuttx/compat/wasm/wasm_ta_framework.wo
+rm ../optee_nuttx/optee_nuttx/wasm/wasm_ta_framework.wo
 rm 88A89F14B906EF4EBD96940EFFDABEF4
 rm 88A89F14B906EF4EBD96940EFFDABEF4.aot
 

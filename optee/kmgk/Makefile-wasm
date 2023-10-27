@@ -16,7 +16,7 @@ CSRCS += kmgk/keymaster/ta/shift.c
 CSRCS += kmgk/keymaster/ta/crypto_ec.c
 CSRCS += kmgk/keymaster/ta/attestation.c
 CSRCS += kmgk/keymaster/ta/mbedtls_proxy.c
-CSRCS += ../optee_nuttx/optee_nuttx/compat/wasm/wasm_ta_framework.c
+CSRCS += ../optee_nuttx/optee_nuttx/wasm/wasm_ta_framework.c
 
 CFLAGS += -Ikmgk/keymaster/ta/include
 

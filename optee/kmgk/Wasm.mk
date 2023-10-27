@@ -25,7 +25,7 @@ WCFLAGS += --sysroot=$(WASI_SDK_ROOT)/share/wasi-sysroot -nostdlib $(MAXOPTIMIZA
 
 ifeq ($(strip $(CONFIG_OPTEE_OS)),y)
 OPTEE_IOT_DIR = ../
-WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_nuttx/optee_nuttx/compat/include
+WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_nuttx/optee_nuttx/include
 WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutils/ext/include
 WCFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutee/include
 WCFLAGS += -I$(OPTEE_IOT_DIR)/../../nuttx/include
