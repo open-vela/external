@@ -51,7 +51,6 @@ CSRCS += panic.c
 CSRCS += random.c
 CSRCS += scall.c
 CSRCS += spinlock.c
-CSRCS += tee_entry.c
 CSRCS += tee_time_system.c
 CSRCS += thread.c
 CSRCS += thread_optee_compat.c
