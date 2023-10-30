@@ -27,4 +27,10 @@ else ifeq ($(CONFIG_ARCH),arm)
     $(shell cp $(LIB_SRC_PATH)/arm32/lhdcv5_dec/liblhdcv5dec_arm.a $(LIB_DST_PATH))
 endif
 
+distclean::
+	$(call DELFILE, $(LIB_DST_PATH)/liblhdc*.a)
+	$(call DELFILE, Make.dep)
+	$(call DELFILE, .depend)
+	$(call DELFILE, .built)
+
 include $(APPDIR)/Application.mk
