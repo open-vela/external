@@ -28,6 +28,7 @@ CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutils/ext/include
 
 CFLAGS += -DARM32
+CFLAGS += -DCFG_COMPAT_GP10_DES
 CFLAGS += -DCFG_CONCURRENT_SINGLE_INSTANCE_TA
 CFLAGS += -DCFG_CORE_BIGNUM_MAX_BITS=4096
 CFLAGS += -DCFG_CORE_DYN_SHM
@@ -75,12 +76,20 @@ CFLAGS += -DTRACE_LEVEL=3
 CFLAGS += -DTRACE_PERF
 CFLAGS += -D__KERNEL__
 
+ifeq ($(CONFIG_ENABLE_CRYPTO_SM3),y)
+CFLAGS += -DCFG_CRYPTO_SM3
+CSRCS += optee_os/core/crypto/sm3.c \
+         optee_os/core/crypto/sm3-hash.c \
+         optee_os/core/crypto/sm3-hmac.c
+endif
+
 CSRCS += \
         optee_os/core/crypto/aes-gcm-sw.c \
         optee_os/core/crypto/aes-gcm.c \
         optee_os/core/crypto/cbc-mac.c \
         optee_os/core/crypto/crypto.c \
         optee_os/core/crypto/rng_hw.c \
+        optee_os/core/crypto/sm2-kdf.c \
         optee_os/core/kernel/huk_subkey.c \
         optee_os/core/kernel/initcall.c \
         optee_os/core/kernel/mutex.c \

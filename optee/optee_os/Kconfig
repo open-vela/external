@@ -19,3 +19,8 @@ config OPTEE_OS
 	default n
 	---help---
 		"optee os"
+
+config ENABLE_CRYPTO_SM3
+	bool "sm3 crypto"
+	depends on OPTEE_OS
+	default n
