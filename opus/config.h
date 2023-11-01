@@ -99,7 +99,7 @@
 #define OPUS_ARM_INLINE_MEDIA 1
 
 /* Use ARM NEON inline asm optimizations */
-#ifdef CONFIG_ARM_NEON
+#if defined(CONFIG_ARM_NEON) || defined(CONFIG_ARM64_NEON)
 #define OPUS_ARM_INLINE_NEON 1
 #endif
 
@@ -110,12 +110,12 @@
 #define OPUS_ARM_MAY_HAVE_MEDIA 1
 
 /* Define if compiler supports NEON instructions */
-#ifdef CONFIG_ARM_NEON
+#if defined(CONFIG_ARM_NEON) || defined(CONFIG_ARM64_NEON)
 #define OPUS_ARM_MAY_HAVE_NEON 1
 #endif
 
 /* Compiler supports ARMv7/Aarch64 Neon Intrinsics */
-#ifdef CONFIG_ARM_NEON
+#if defined(CONFIG_ARM_NEON) || defined(CONFIG_ARM64_NEON)
 #define OPUS_ARM_MAY_HAVE_NEON_INTR 1
 #endif
 
@@ -129,12 +129,12 @@
 #define OPUS_ARM_PRESUME_MEDIA 1
 
 /* Define if binary requires NEON instruction support */
-#ifdef CONFIG_ARM_NEON
+#if defined(CONFIG_ARM_NEON) || defined(CONFIG_ARM64_NEON)
 #define OPUS_ARM_PRESUME_NEON 1
 #endif
 
 /* Define if binary requires NEON intrinsics support */
-#ifdef CONFIG_ARM_NEON
+#if defined(CONFIG_ARM_NEON) || defined(CONFIG_ARM64_NEON)
 #define OPUS_ARM_PRESUME_NEON_INTR 1
 #endif
 

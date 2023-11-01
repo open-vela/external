@@ -46,7 +46,7 @@ ifneq ($(CONFIG_CRYPTO_MBEDTLS),)
   CFG_CMDS += --enable-mbedtls
 endif
 
-ifeq ($(CONFIG_ARM_NEON),)
+ifeq ($(findstring y, $(CONFIG_ARM_NEON)$(CONFIG_ARM64_NEON)),)
   CFG_CMDS += --disable-neon
 endif
 
