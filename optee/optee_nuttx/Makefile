@@ -43,6 +43,7 @@ CSRCS += host_fs.c
 CSRCS += ldelf_loader.c
 CSRCS += malloc.c
 CSRCS += mempool.c
+CSRCS += mobj.c
 CSRCS += mobj_dyn_shm.c
 CSRCS += msg_param.c
 CSRCS += notif.c
