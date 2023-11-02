@@ -5,7 +5,7 @@
 
 config OFONO
 	tristate "Open Source Telephony"
-	depends on LIB_DBUS && LIB_ELL
+	depends on LIB_DBUS && LIB_ELL && LIB_GLIB
 	default n
 	---help---
 		Ofono is a telephony host stack specifically targeted at

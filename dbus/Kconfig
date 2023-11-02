@@ -16,7 +16,6 @@
 
 config LIB_DBUS
 	tristate "D-bus library"
-	depends on LIB_GLIB
 	default n
 	---help---
 		D-Bus is a simple system for interprocess communication and
