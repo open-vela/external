@@ -16,7 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
-LIB_DST_PATH = $(TOPDIR)/$(CONFIG_ARCH_BOARD_CUSTOM_DIR)/libs/$(CONFIG_ARCH_BOARD_CUSTOM_NAME)
+LIB_DST_PATH = $(APPDIR)/staging
 LIB_SRC_PATH = $(APPDIR)/external/liblhdc/liblhdc/libs
 
 ifeq ($(CONFIG_ARCH),sim)
