@@ -28,7 +28,7 @@ CXXFLAGS += ${INCDIR_PREFIX}.
 CXXFLAGS += ${INCDIR_PREFIX}rlottie/src/vector
 CXXFLAGS += ${INCDIR_PREFIX}rlottie/src/vector/freetype
 
-ifneq ($(findstring y, $(CONFIG_ARM_NEON)_$(CONFIG_ARM64_NEON)),)
+ifneq ($(CONFIG_ARM_NEON)$(CONFIG_ARM64_NEON),)
 ASRCS += $(wildcard rlottie/src/vector/pixman/*.S)
 endif
 

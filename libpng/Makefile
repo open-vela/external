@@ -16,7 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
-ifneq ($(findstring y, $(CONFIG_ARM_NEON)_$(CONFIG_ARM64_NEON)),)
+ifneq ($(CONFIG_ARM_NEON)$(CONFIG_ARM64_NEON),)
 CSRCS += $(wildcard libpng/arm/*.c)
 ASRCS += $(wildcard libpng/arm/*.S)
 else
