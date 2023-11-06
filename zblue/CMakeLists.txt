@@ -319,6 +319,7 @@ if(CONFIG_BT)
     ${ZBLUE_DIR}port/kernel/mutex.c
     ${ZBLUE_DIR}port/kernel/queue.c
     ${ZBLUE_DIR}port/kernel/thread.c
+    ${ZBLUE_DIR}port/kernel/rand32.c
     ${ZBLUE_DIR}port/subsys/net/buf.c
     ${ZBLUE_DIR}port/common/defines.c)
 
@@ -415,6 +416,9 @@ if(CONFIG_BT)
     COMMAND ln -sf ../../include/settings ${ZBLUE_DIR}port/include/settings
     COMMAND ln -sf ../../include/power ${ZBLUE_DIR}port/include/power
     COMMAND ln -sf ../../include/random ${ZBLUE_DIR}port/include/random
+    COMMAND ln -sf ${ZBLUE_DIR}port/include/bluetooth ${ZBLUE_DIR}port/include/zephyr/bluetooth
+    COMMAND ln -sf ${ZBLUE_DIR}port/include/random ${ZBLUE_DIR}port/include/zephyr/random
+    COMMAND ln -sf ${ZBLUE_DIR}port/include/sys ${ZBLUE_DIR}port/include/zephyr/sys
     COMMAND ln -sf shell.c ${ZBLUE_DIR}port/subsys/bluetooth/shell/bredr.c
     COMMAND ln -sf shell.c ${ZBLUE_DIR}port/subsys/bluetooth/shell/bt.c
     COMMAND ln -sf shell.c ${ZBLUE_DIR}port/subsys/bluetooth/shell/gatt.c
