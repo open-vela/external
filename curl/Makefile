@@ -26,6 +26,7 @@ CFLAGS += ${INCDIR_PREFIX}curl/lib
 
 CSRCS = $(wildcard curl/lib/*.c)
 CSRCS += $(wildcard curl/lib/vauth/*.c)
+CSRCS += $(wildcard curl/lib/vquic/*.c)
 CSRCS += $(wildcard curl/lib/vtls/*.c)
 
 ifneq ($(CONFIG_UTILS_CURL),)
