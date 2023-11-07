@@ -5,6 +5,7 @@
 
 config LIB_GLIB
 	bool "GLib library"
+	depends on LIBC_EXECFUNCS
 	default n
 	---help---
 		GLib is the low-level core library that forms the basis
