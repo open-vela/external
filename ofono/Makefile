@@ -19,6 +19,7 @@ include $(APPDIR)/Make.defs
 # ofono compile flags
 
 CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}ell
 CFLAGS += ${INCDIR_PREFIX}ofono
 CFLAGS += ${INCDIR_PREFIX}ofono/src
 CFLAGS += ${INCDIR_PREFIX}ofono/gatchat
@@ -28,9 +29,16 @@ CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/dbus/dbus
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ell/ell
 CFLAGS += -DHAVE_CONFIG_H -DPLUGINDIR=CONFIG_OFONO_PLUGIN_DIR -DOFONO_PLUGIN_BUILTIN
 CFLAGS += -Dprint_buf=ofono_gril_print_buf
+CFLAGS += -DHAVE_EXPLICIT_BZERO -DHAVE_RAWMEMCHR
+
+# ELL (Embedded Linux library)
+
+CSRCS = ell/ell/util.c ell/ell/test.c ell/ell/strv.c ell/ell/utf8.c      \
+        ell/ell/queue.c ell/ell/timeout.c ell/ell/main.c ell/ell/idle.c  \
+        ell/ell/signal.c ell/ell/io.c ell/ell/checksum.c ell/ell/log.c   \
+        ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c ell/ell/string.c
 
 # OFONO Modem
 
