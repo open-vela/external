@@ -19,7 +19,6 @@ menu "Middle Ware: Chromium general utility library"
 config LIB_CHROMIUM
   bool "The Chromium general utility library"
   default n
-  select LIB_MODPB64
   ---help---
     The Chromium project has an general utility library referred to as libbase.
     Because it is standalone and does not depend on any other parts of Chromium,

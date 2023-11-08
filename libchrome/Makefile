@@ -179,6 +179,8 @@ CXXSRCS += libchrome/nuttx/base/message_loop/message_pump_glib.cc
 CXXSRCS += libchrome/nuttx/base/message_loop/message_pump_libevent.cc
 CXXSRCS += libchrome/nuttx/base/sys_info_posix.cc
 
+CXXSRCS += modp_b64/modp_b64.cc
+
 CXXFLAGS := $(filter-out -D__GLIBCXX__,$(CXXFLAGS))
 
 CXXFLAGS += -DOS_POSIX -D_POSIX_MONOTONIC_CLOCK=1
@@ -186,6 +188,7 @@ CXXFLAGS += -Wno-undef -Wno-shadow -Wno-unused-variable -Wno-unused-but-set-vari
 CXXFLAGS += -Wno-unused-value -Wno-sign-compare -D_GNU_SOURCE -fpermissive -fno-exceptions
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/libchrome/nuttx
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/libchrome
-CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/modp_b64/modp_b64
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/modp_b64
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libchrome/modp_b64/modp_b64
 
 include $(APPDIR)/Application.mk
