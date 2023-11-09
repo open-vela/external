@@ -85,6 +85,15 @@ CSRCS += optee_os/core/crypto/sm3.c \
          optee_os/core/crypto/sm3-hmac.c
 endif
 
+ifeq ($(CONFIG_OPTEE_RPMB_FS),y)
+CFLAGS += -DCFG_RPMB_FS
+CFLAGS += -DCFG_RPMB_FS_DEV_ID=0
+CFLAGS += -DCFG_RPMB_FS_RD_ENTRIES=1
+CFLAGS += -DCFG_RPMB_FS_CACHE_ENTRIES=0
+CSRCS += \
+        optee_os/core/tee/tee_rpmb_fs.c
+endif
+
 CSRCS += \
         optee_os/core/crypto/aes-gcm-sw.c \
         optee_os/core/crypto/aes-gcm.c \
@@ -104,6 +113,7 @@ CSRCS += \
         optee_os/core/kernel/tee_time.c \
         optee_os/core/kernel/wait_queue.c \
         optee_os/core/lib/libtomcrypt/tomcrypt.c \
+        optee_os/core/mm/tee_mm.c \
         optee_os/core/tee/entry_std.c \
         optee_os/core/tee/fs_dirfile.c \
         optee_os/core/tee/fs_htree.c \

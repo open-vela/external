@@ -24,3 +24,8 @@ config ENABLE_CRYPTO_SM3
 	bool "sm3 crypto"
 	depends on OPTEE_OS
 	default n
+
+config OPTEE_RPMB_FS
+	bool "enable rpmb fs in optee os"
+	depends on OPTEE_OS && BLK_RPMSG
+	default n

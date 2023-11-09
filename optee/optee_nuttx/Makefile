@@ -49,6 +49,7 @@ CSRCS += optee_nuttx/compat/notif.c
 CSRCS += optee_nuttx/compat/otp_stubs.c
 CSRCS += optee_nuttx/compat/panic.c
 CSRCS += optee_nuttx/compat/random.c
+CSRCS += optee_nuttx/compat/rpmb_fs.c
 CSRCS += optee_nuttx/compat/scall.c
 CSRCS += optee_nuttx/compat/spinlock.c
 CSRCS += optee_nuttx/compat/tee_time_system.c
