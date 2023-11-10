@@ -18,5 +18,5 @@ config LIB_FFI
 	bool "Enable libffi"
 	default n
 	---help---
-		A portable, high level programming interface to various calling
-                conventions.
+		A portable, high level programming interface to various
+		calling conventions.

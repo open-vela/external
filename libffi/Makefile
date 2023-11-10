@@ -16,16 +16,16 @@
 
 include $(APPDIR)/Make.defs
 
-ifeq ($(CONFIG_ARCH), arm)
+ifeq ($(CONFIG_ARCH),arm)
 TARGETDIR := arm
 LIBFFI_TARGET=ARM
-else ifeq ($(CONFIG_ARCH), arm64)
+else ifeq ($(CONFIG_ARCH),arm64)
 TARGETDIR := aarch64
 LIBFFI_TARGET=AARCH64
-else ifeq ($(CONFIG_ARCH), xtensa)
+else ifeq ($(CONFIG_ARCH),xtensa)
 TARGETDIR := xtensa
 LIBFFI_TARGET=XTENSA
-else ifeq ($(CONFIG_ARCH), sim)
+else ifeq ($(CONFIG_ARCH),sim)
 CFLAGS += -fno-sanitize=kernel-address
 TARGETDIR := x86
 LIBFFI_TARGET=X86_64
