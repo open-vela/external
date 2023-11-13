@@ -23,6 +23,7 @@ MODULE    = $(CONFIG_BENCHTEST)
 CFLAGS   += -DDURATION=$(CONFIG_BENCHTEST_DURATION)
 CFLAGS   += -DCLOCK_MONOTONIC_RAW=CLOCK_MONOTONIC
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/benchtests/port
+CFLAGS   += -Dxmalloc=benchtests_xmalloc
 
 CSRCS    += benchtests/json-lib.c
 CSRCS    += port/error.c
