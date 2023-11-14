@@ -41,7 +41,7 @@ WCFLAGS += -I$(MITEE_IOT_DIR)/tee/include
 WCFLAGS += -I$(MITEE_IOT_DIR)/crypto/libtomcrypt/include
 endif
 
-WCFLAGS += -I../../apps/interpreters/wamr/wamr/core/iwasm/include
+WCFLAGS += -I../../../apps/interpreters/wamr/wamr/core/iwasm/include
 WCFLAGS += -DUSER_TA_WASM
 WCFLAGS += -DTRACE_TAG='"ta_keystore"'
 WCFLAGS += -DTRACE_LEVEL=$(CONFIG_TRACE_LEVEL)
