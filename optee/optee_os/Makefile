@@ -231,4 +231,14 @@ CSRCS += \
         optee_os/lib/libutils/ext/snprintk.c \
         optee_os/lib/libutils/ext/trace.c
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/liboptee$(LIBEXT)
+endif
+
 include $(APPDIR)/Application.mk

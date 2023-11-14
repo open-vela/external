@@ -19,7 +19,17 @@ include $(APPDIR)/Make.defs
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_client/optee_client/libteec/include
 CFLAGS += -DBINARY_PREFIX=\"TEEC\"
 
-CSRCS += tee_client_api.c teec_trace.c
-VPATH += :optee_client/libteec/src
+CSRCS += optee_client/libteec/src/tee_client_api.c
+CSRCS += optee_client/libteec/src/teec_trace.c
+
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libopteec$(LIBEXT)
+endif
 
 include $(APPDIR)/Application.mk

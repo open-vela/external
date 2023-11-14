@@ -34,48 +34,54 @@ CFLAGS += -DCFG_WITH_USER_TA
 CFG_HOST_FS_PARENT_PATH ?= /sst
 CFLAGS += -DHOST_FS_PARENT_PATH=\"$(CFG_HOST_FS_PARENT_PATH)\"
 
-VPATH += :optee_nuttx/compat
-
-CSRCS += abort.c
-CSRCS += atomic.c
-CSRCS += core_mmu.c
-CSRCS += hmac_memory.c
-CSRCS += host_fs.c
-CSRCS += ldelf_loader.c
-CSRCS += malloc.c
-CSRCS += mempool.c
-CSRCS += mobj.c
-CSRCS += mobj_dyn_shm.c
-CSRCS += msg_param.c
-CSRCS += notif.c
-CSRCS += otp_stubs.c
-CSRCS += panic.c
-CSRCS += random.c
-CSRCS += scall.c
-CSRCS += spinlock.c
-CSRCS += tee_time_system.c
-CSRCS += thread.c
-CSRCS += thread_optee_compat.c
-CSRCS += trace_ext.c
-CSRCS += ts_manager.c
-CSRCS += user_access.c
-CSRCS += user_mode_ctx.c
-CSRCS += vm.c
+CSRCS += optee_nuttx/compat/abort.c
+CSRCS += optee_nuttx/compat/atomic.c
+CSRCS += optee_nuttx/compat/core_mmu.c
+CSRCS += optee_nuttx/compat/hmac_memory.c
+CSRCS += optee_nuttx/compat/host_fs.c
+CSRCS += optee_nuttx/compat/ldelf_loader.c
+CSRCS += optee_nuttx/compat/malloc.c
+CSRCS += optee_nuttx/compat/mempool.c
+CSRCS += optee_nuttx/compat/mobj.c
+CSRCS += optee_nuttx/compat/mobj_dyn_shm.c
+CSRCS += optee_nuttx/compat/msg_param.c
+CSRCS += optee_nuttx/compat/notif.c
+CSRCS += optee_nuttx/compat/otp_stubs.c
+CSRCS += optee_nuttx/compat/panic.c
+CSRCS += optee_nuttx/compat/random.c
+CSRCS += optee_nuttx/compat/scall.c
+CSRCS += optee_nuttx/compat/spinlock.c
+CSRCS += optee_nuttx/compat/tee_time_system.c
+CSRCS += optee_nuttx/compat/thread.c
+CSRCS += optee_nuttx/compat/thread_optee_compat.c
+CSRCS += optee_nuttx/compat/trace_ext.c
+CSRCS += optee_nuttx/compat/ts_manager.c
+CSRCS += optee_nuttx/compat/user_access.c
+CSRCS += optee_nuttx/compat/user_mode_ctx.c
+CSRCS += optee_nuttx/compat/vm.c
 
 ifeq ($(strip $(CONFIG_USER_TA_WASM)),y)
 CFLAGS += -DUSER_TA_WASM
-VPATH += :optee_nuttx/wasm
 
-CSRCS += user_ta_wasm.c
-CSRCS += libtee_builtin_wrapper.c
+CSRCS += optee_nuttx/wasm/user_ta_wasm.c
+CSRCS += optee_nuttx/wasm/libtee_builtin_wrapper.c
 endif
 
 ifeq ($(CONFIG_OPTEE_SERVER_NONE),)
 PROGNAME = $(CONFIG_OPTEE_SERVER_PROGNAME)
 PRIORITY = $(CONFIG_OPTEE_SERVER_PRIORITY)
 STACKSIZE = $(CONFIG_OPTEE_SERVER_STACKSIZE)
-VPATH += :optee_nuttx/server
-MAINSRC := opteed.c
+MAINSRC = optee_nuttx/server/opteed.c
+endif
+
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/liboptee$(LIBEXT)
 endif
 
 include $(APPDIR)/Application.mk
