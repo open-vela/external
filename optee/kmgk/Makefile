@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2022 Xiaomi Corporation
+# Copyright (C) 2023 Xiaomi Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,23 +16,24 @@
 
 include $(APPDIR)/Make.defs
 
-include ./defconfig
+CFLAGS += ${INCDIR_PREFIX}kmgk/keymaster/ta/include
+CSRCS += \
+  kmgk/keymaster/ta/attestation.c \
+  kmgk/keymaster/ta/auth.c \
+  kmgk/keymaster/ta/crypto_aes.c \
+  kmgk/keymaster/ta/crypto_ec.c \
+  kmgk/keymaster/ta/crypto_rsa.c \
+  kmgk/keymaster/ta/generator.c \
+  kmgk/keymaster/ta/master_crypto.c \
+  kmgk/keymaster/ta/mbedtls_proxy.c \
+  kmgk/keymaster/ta/operations.c \
+  kmgk/keymaster/ta/paddings.c \
+  kmgk/keymaster/ta/parameters.c \
+  kmgk/keymaster/ta/parsel.c \
+  kmgk/keymaster/ta/shift.c \
+  kmgk/keymaster/ta/tables.c
+MAINSRC += kmgk/keymaster/ta/keystore_ta.c
+PROGNAME += ta_keystore
+MODULE = $(CONFIG_TA_KEYSTORE)
 
-BIN := libkeystore$(LIBEXT)
-
-CSRCS = $(wildcard kmgk/keymaster/ta/*.c)
-
-CFLAGS += -Ikmgk/keymaster/ta/include
-
-OPTEE_IOT_DIR = $(APPDIR)/external/optee
-CFLAGS += -I$(OPTEE_IOT_DIR)/optee_client/optee_client/public
-CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutee/include
-
-CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/lib/libutils/ext/include
-CFLAGS += -I$(OPTEE_IOT_DIR)/optee_os/optee_os/core/include
-
-CFLAGS += -DTRACE_LEVEL=$(CONFIG_TRACE_LEVEL)
-CFLAGS += -DKM_RECV_BUF_SIZE=$(CONFIF_KM_RECV_BUF_SIZE)
-CFLAGS += -DTRACE_TAG='"ta_keystore"'
-
-include $(APPDIR)/Application.mk
+include $(APPDIR)/external/optee/TA.mk

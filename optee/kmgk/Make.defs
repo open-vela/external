@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2022 Xiaomi Corporation
+# Copyright (C) 2023 Xiaomi Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,7 +15,5 @@
 #
 
 ifneq ($(CONFIG_TA_KEYSTORE),)
-ifeq ($(CONFIG_USER_TA_WASM),n)
-CONFIGURED_APPS += $(APPDIR)/external/kmgk
-endif
+CONFIGURED_APPS += $(APPDIR)/external/optee/kmgk
 endif
