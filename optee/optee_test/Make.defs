@@ -14,6 +14,6 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_OPTEE_TEST_CA),)
+ifneq ($(CONFIG_OPTEE_TEST_CA)$(CONFIG_OPTEE_TEST_TA),)
 CONFIGURED_APPS += $(APPDIR)/external/optee/optee_test
 endif

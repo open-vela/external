@@ -16,7 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_client/optee_client/public
+ifneq ($(CONFIG_OPTEE_TEST_CA),)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutils/ext/include
 CFLAGS += ${INCDIR_PREFIX}optee_test/host/supp_plugin/include
@@ -65,3 +65,37 @@ PRIORITY = $(CONFIG_OPTEE_TEST_CA_PRIORITY)
 STACKSIZE = $(CONFIG_OPTEE_TEST_CA_STACKSIZE)
 
 include $(APPDIR)/Application.mk
+endif
+
+ifneq ($(CONFIG_OPTEE_TEST_TA),)
+CFLAGS += ${INCDIR_PREFIX}optee_test/ta/crypt/include
+CFLAGS += ${INCDIR_PREFIX}optee_test/ta/include
+CFLAGS += ${INCDIR_PREFIX}optee_test/ta/storage2/include
+
+# crypt
+CSRCS += \
+	optee_test/ta/crypt/aes_impl.c \
+	optee_test/ta/crypt/aes_taf.c \
+	optee_test/ta/crypt/arith_taf.c \
+	optee_test/ta/crypt/cryp_taf.c \
+	optee_test/ta/crypt/derive_key_taf.c \
+	optee_test/ta/crypt/handle.c \
+	optee_test/ta/crypt/seed_rng_taf.c \
+	optee_test/ta/crypt/sha2_impl.c \
+	optee_test/ta/crypt/sha2_taf.c
+MAINSRC += optee_test/ta/crypt/ta_crypt_entry.c
+PROGNAME += ta_crypt
+
+# storage
+CSRCS += optee_test/ta/storage/storage.c
+MAINSRC += optee_test/ta/storage/ta_storage_entry.c
+PROGNAME += ta_storage
+
+# storage2
+MAINSRC += optee_test/ta/storage2/ta_storage2_entry.c
+PROGNAME += ta_storage2
+
+MODULE = $(CONFIG_OPTEE_TEST_TA)
+
+include $(APPDIR)/external/optee/TA.mk
+endif
