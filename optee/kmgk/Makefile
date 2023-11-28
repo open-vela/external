@@ -16,6 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
+CFLAGS += -DKM_RECV_BUF_SIZE=$(CONFIG_KM_RECV_BUF_SIZE)
 CFLAGS += ${INCDIR_PREFIX}kmgk/keymaster/ta/include
 CSRCS += \
   kmgk/keymaster/ta/attestation.c \

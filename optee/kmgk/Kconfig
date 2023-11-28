@@ -22,3 +22,8 @@ config TA_KEYSTORE
 	depends on RTC
 	---help---
 		"GP TA: KEYSTORE"
+
+config KM_RECV_BUF_SIZE
+	int "KEYSTORE TA receive message buffer size"
+	depends on TA_KEYSTORE
+	default 1024
