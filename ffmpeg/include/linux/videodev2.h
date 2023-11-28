@@ -19,6 +19,6 @@
 #ifndef __LINUX_VIDEODEV2_H
 #define __LINUX_VIDEODEV2_H
 
-#include <nuttx/video/video.h>
+#include <sys/videoio.h>
 
 #endif /* __LINUX_VIDEODEV2_H */
