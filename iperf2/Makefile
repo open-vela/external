@@ -64,15 +64,6 @@ IPERF2_FLAGS += -Dversion=iperf2_version
 CFLAGS += $(IPERF2_FLAGS) -Wno-strict-prototypes
 CXXFLAGS += $(IPERF2_FLAGS)
 
-# workaround for clang.
-#
-# iperf2/src/Listener.cpp:1127:34: warning: absolute value function 'abs'
-# given an argument of type 'long long' but has parameter of type 'int' which
-# may cause truncation of value [-Wabsolute-value]
-ifneq "$(shell $(CXX) --version | grep clang)" ""
-  CXXFLAGS += -Wno-absolute-value
-endif
-
 MAINSRC = iperf2/src/main.cpp
 PROGNAME = iperf2
 APPNAME = iperf2
