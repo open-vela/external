@@ -19,6 +19,14 @@ include $(APPDIR)/Make.defs
 ifneq ($(CONFIG_ARM_NEON)$(CONFIG_ARM64_NEON),)
 CSRCS += $(wildcard libpng/arm/*.c)
 ASRCS += $(wildcard libpng/arm/*.S)
+
+# Workaround for "Illegal instruction" error in goldfish-armv7a environment
+ifneq ($(CONFIG_BUILD_LOADABLE)$(CELFFLAGS),)
+libpng/arm/palette_neon_intrinsics.c_CELFFLAGS += -Os
+else
+libpng/arm/palette_neon_intrinsics.c_CFLAGS += -Os
+endif
+
 else
 CFLAGS += -DPNG_ARM_NEON_IMPLEMENTATION=0
 endif
