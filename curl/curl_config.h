@@ -56,7 +56,7 @@
 /* #undef CURL_DISABLE_FILE */
 
 /* disables FTP */
-#define CURL_DISABLE_FTP 1
+/* #undef CURL_DISABLE_FTP */
 
 /* disables GOPHER */
 #define CURL_DISABLE_GOPHER 1
