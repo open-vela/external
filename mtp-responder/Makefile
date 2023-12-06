@@ -20,7 +20,7 @@ OCSRCS += mtp-responder/src/mtp_init.c mtp-responder/src/mtp_util_media_info.c \
           mtp-responder/src/mtp_usb_driver_ffs.c mtp-responder/src/mtp_descs_strings.c
 CSRCS  += $(filter-out $(OCSRCS), \
             $(wildcard mtp-responder/src/*.c))
-CSRCS  += mtp_port.c
+CSRCS  += mtp_port.c mtp_usb_driver_nuttx.c
 
 CFLAGS += -D__le16=uint16_t -D__le32=uint32_t -D__u16=uint16_t
 CFLAGS += -DMSG_STAT=IPC_STAT -DSET_USB_NONE=0 -DMTP_FFS_PATH=\"/dev/mtp\"
