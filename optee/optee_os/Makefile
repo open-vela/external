@@ -17,6 +17,9 @@
 include $(APPDIR)/Make.defs
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include
+ifeq ($(CONFIG_OPTEE_COMPAT_MITEE_FS),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include/mitee_compat
+endif
 CFLAGS += ${INCDIR_PREFIX}optee_os/core/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/core/lib/libtomcrypt/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/core/lib/libtomcrypt/src/headers
@@ -101,7 +104,6 @@ CSRCS += \
         optee_os/core/crypto/crypto.c \
         optee_os/core/crypto/rng_hw.c \
         optee_os/core/crypto/sm2-kdf.c \
-        optee_os/core/kernel/huk_subkey.c \
         optee_os/core/kernel/initcall.c \
         optee_os/core/kernel/mutex.c \
         optee_os/core/kernel/otp_stubs.c \
@@ -115,17 +117,11 @@ CSRCS += \
         optee_os/core/lib/libtomcrypt/tomcrypt.c \
         optee_os/core/mm/tee_mm.c \
         optee_os/core/tee/entry_std.c \
-        optee_os/core/tee/fs_dirfile.c \
-        optee_os/core/tee/fs_htree.c \
         optee_os/core/tee/tee_cryp_utl.c \
         optee_os/core/tee/tee_fs_key_manager.c \
-        optee_os/core/tee/tee_fs_rpc.c \
-        optee_os/core/tee/tee_obj.c \
         optee_os/core/tee/tee_pobj.c \
-        optee_os/core/tee/tee_ree_fs.c \
         optee_os/core/tee/tee_svc.c \
         optee_os/core/tee/tee_svc_cryp.c \
-        optee_os/core/tee/tee_svc_storage.c \
         optee_os/core/tee/tee_time_generic.c \
         optee_os/core/tee/uuid.c \
         optee_os/lib/libmbedtls/core/aes.c \
@@ -240,6 +236,17 @@ CSRCS += \
         optee_os/lib/libutils/ext/memzero_explicit.c \
         optee_os/lib/libutils/ext/snprintk.c \
         optee_os/lib/libutils/ext/trace.c
+
+ifeq ($(CONFIG_OPTEE_COMPAT_MITEE_FS),)
+CSRCS += \
+        optee_os/core/kernel/huk_subkey.c \
+        optee_os/core/tee/fs_dirfile.c \
+        optee_os/core/tee/fs_htree.c \
+        optee_os/core/tee/tee_fs_rpc.c \
+        optee_os/core/tee/tee_obj.c \
+        optee_os/core/tee/tee_ree_fs.c \
+        optee_os/core/tee/tee_svc_storage.c
+endif
 
 ASRCS := $(wildcard $(ASRCS))
 CSRCS := $(wildcard $(CSRCS))

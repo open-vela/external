@@ -17,6 +17,9 @@
 include $(APPDIR)/Make.defs
 
 CFLAGS += ${INCDIR_PREFIX}optee_nuttx/include
+ifeq ($(CONFIG_OPTEE_COMPAT_MITEE_FS),y)
+CFLAGS += ${INCDIR_PREFIX}optee_nuttx/include/mitee_compat
+endif
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/core/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/ldelf/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutils/ext/include
@@ -62,6 +65,19 @@ CSRCS += optee_nuttx/compat/vm.c
 
 ifneq ($(CONFIG_OPTEE_RPMB_FS),)
 CSRCS += optee_nuttx/compat/rpmb_fs.c
+endif
+
+ifeq ($(CONFIG_OPTEE_COMPAT_MITEE_FS),y)
+CFLAGS += -DFS_STORAGE_DIR_PRIVATE=\"/sst/\"
+
+CSRCS += optee_nuttx/compat/mitee_compat/huk_subkey.c
+CSRCS += optee_nuttx/compat/mitee_compat/mitee_crypt.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_fs_rpc.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_fs_key_manager_compat.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_obj.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_ree_fs.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_svc_compat.c
+CSRCS += optee_nuttx/compat/mitee_compat/tee_svc_storage.c
 endif
 
 ifeq ($(strip $(CONFIG_USER_TA_WASM)),y)
