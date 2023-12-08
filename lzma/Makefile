@@ -67,7 +67,7 @@ CFLAGS += -D_7ZIP_ST
 MODULE = $(CONFIG_LIB_LZMA)
 
 VPATH += lzma/C
-ROOTDEPPATH += --dep-path lzma/C
+DEPPATH += --dep-path lzma/C
 
 ifneq ($(CONFIG_UTILS_7Z),)
 PROGNAME  += $(CONFIG_UTILS_7Z_PROGNAME)
@@ -76,7 +76,7 @@ STACKSIZE += $(CONFIG_UTILS_7Z_STACKSIZE)
 
 MAINSRC += 7zMain.c
 VPATH += lzma/C/Util/7z
-ROOTDEPPATH += --dep-path lzma/C/Util/7z
+DEPPATH += --dep-path lzma/C/Util/7z
 endif
 
 ifneq ($(CONFIG_UTILS_LZMA),)
@@ -86,7 +86,7 @@ STACKSIZE += $(CONFIG_UTILS_LZMA_STACKSIZE)
 
 MAINSRC += LzmaUtil.c
 VPATH += lzma/C/Util/Lzma
-ROOTDEPPATH += --dep-path lzma/C/Util/Lzma
+DEPPATH += --dep-path lzma/C/Util/Lzma
 endif
 
 include $(APPDIR)/Application.mk

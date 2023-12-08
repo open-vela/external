@@ -17,6 +17,7 @@
 include $(APPDIR)/Make.defs
 
 VPATH += :nanopb
+DEPPATH += --dep-path nanopb
 CSRCS += pb_common.c pb_decode.c pb_encode.c
 
 include $(APPDIR)/Application.mk
