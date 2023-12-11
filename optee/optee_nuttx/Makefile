@@ -49,7 +49,6 @@ CSRCS += optee_nuttx/compat/notif.c
 CSRCS += optee_nuttx/compat/otp_stubs.c
 CSRCS += optee_nuttx/compat/panic.c
 CSRCS += optee_nuttx/compat/random.c
-CSRCS += optee_nuttx/compat/rpmb_fs.c
 CSRCS += optee_nuttx/compat/scall.c
 CSRCS += optee_nuttx/compat/spinlock.c
 CSRCS += optee_nuttx/compat/tee_time_system.c
@@ -60,6 +59,10 @@ CSRCS += optee_nuttx/compat/ts_manager.c
 CSRCS += optee_nuttx/compat/user_access.c
 CSRCS += optee_nuttx/compat/user_mode_ctx.c
 CSRCS += optee_nuttx/compat/vm.c
+
+ifneq ($(CONFIG_OPTEE_RPMB_FS),)
+CSRCS += optee_nuttx/compat/rpmb_fs.c
+endif
 
 ifeq ($(strip $(CONFIG_USER_TA_WASM)),y)
 CFLAGS += -DUSER_TA_WASM
