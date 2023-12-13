@@ -154,6 +154,8 @@ ifeq ($(CONFIG_SETTINGS),y)
   CSRCS += zblue/subsys/settings/src/settings_line.c
   ifeq ($(CONFIG_SETTINGS_FS),y)
     CSRCS += zblue/subsys/settings/src/settings_file.c
+  else ifeq ($(CONFIG_SETTINGS_NONE),y)
+    CSRCS += zblue/subsys/settings/src/settings_none.c
   endif
   CFLAGS += ${INCDIR_PREFIX}zblue/subsys/settings/include
 endif
