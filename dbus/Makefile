@@ -159,6 +159,6 @@ BIN := $(APPDIR)/staging/libtelephony.a
 endif
 
 WASM_INITIAL_MEMORY = 131072
-WASM_BUILD = y
+WASM_BUILD = n
 
 include $(APPDIR)/Application.mk
