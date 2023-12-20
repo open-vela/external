@@ -25,10 +25,42 @@ config ENABLE_CRYPTO_SM3
 	depends on OPTEE_OS
 	default n
 
+choice
+	prompt "Select optee fs"
+	default OPTEE_REE_FS
+
+config OPTEE_REE_FS
+	bool "enable ree fs in optee os"
+
 config OPTEE_RPMB_FS
 	bool "enable rpmb fs in optee os"
 	depends on OPTEE_OS && BLK_RPMSG
+
+if OPTEE_RPMB_FS
+
+config OPTEE_RPMB_REMOTE_CPU
+	string "remote cpu where rpmb device is located"
+	default "ap"
+
+config OPTEE_RPMB_WRITE_KEY
+	bool "enable rpmb key derived from huks(Only for testing and factory setup)"
 	default n
+
+config OPTEE_RPMB_TESTKEY
+	bool "enable using the default rpmb key(Only for testing)"
+	default n
+
+config OPTEE_HUK_SUBKEY_COMPAT
+	bool "enable using subkeys derived from dieid"
+	default n
+
+config OPTEE_RPMB_COMPAT_MITEE_FS
+	bool "enable rpmbfs to compat with mitee fs"
+	default n
+
+endif # OPTEE_RPMB_FS
+
+endchoice
 
 config OPTEE_COMPAT_MITEE_FS
 	bool "to compat with mitee fs"
