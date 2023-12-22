@@ -53,5 +53,21 @@ config JX9_ENABLE_MATH_FUNC
 	bool "enable built-in math functions"
 	default n
 
+config UNQLITE_ENABLE_TESTS
+	bool "enable unqlite testcase"
+	default n
+
+if UNQLITE_ENABLE_TESTS
+
+config UNQLITE_TESTS_PRIORITY
+	int "unqlite tests priority"
+	default 100
+
+config UNQLITE_TESTS_STACKSIZE
+	int "unqlite tests stacksize"
+	default 8192
+
+endif # UNQLITE_ENABLE_TESTS
+
 endif # UNQLITE
 
