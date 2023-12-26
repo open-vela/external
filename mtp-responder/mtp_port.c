@@ -71,7 +71,7 @@ int main(int argc, char **argv)
 int vconf_get_int(const char* key, int* intval)
 {
     if (strcmp(key, VCONFKEY_IDLE_LOCK_STATE_READ_ONLY) == 0) {
-        *intval = MTP_PHONE_LOCK_OFF;
+        *intval = 0;
     } else if (strcmp(key, VCONFKEY_SYSMAN_MMC_STATUS) == 0) {
         *intval = VCONFKEY_SYSMAN_MMC_MOUNTED;
     } else if (strcmp(key, VCONFKEY_SYSMAN_USB_STATUS) == 0) {
@@ -335,7 +335,7 @@ int storage_foreach_device_supported(storage_device_supported_cb callback, void*
 
 int storage_get_internal_memory_size(struct statvfs* buf)
 {
-    return 0;
+    return statvfs(MTP_INTERNAL_PATH_CHAR, buf);
 }
 
 int media_content_disconnect(void)
