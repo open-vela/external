@@ -54,6 +54,14 @@ config OPTEE_HUK_SUBKEY_COMPAT
 	bool "enable using subkeys derived from dieid"
 	default n
 
+config OPTEE_FS_KM_CHIP_ID_LENGTH
+	int "the length of chip id for key management"
+	default 32
+
+config OPTEE_FS_SSK_STRING
+	string "string used to derive the SSK key"
+	default "ONLY_FOR_tee_fs_ssk"
+
 config OPTEE_RPMB_COMPAT_MITEE_FS
 	bool "enable rpmbfs to compat with mitee fs"
 	default n
