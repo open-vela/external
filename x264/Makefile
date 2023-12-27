@@ -32,7 +32,7 @@ else
 endif
 
 # suppress -Wundef -Wno-format
-CFLAGS += -Wno-undef -Wno-format
+CFLAGS += -Wno-undef -Wno-format -fno-var-tracking-assignments -Wno-unused-but-set-variable
 
 SRCS = common/osdep.c common/base.c common/cpu.c common/tables.c \
        encoder/api.c
