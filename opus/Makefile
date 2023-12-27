@@ -32,6 +32,7 @@ ifeq ($(CONFIG_ARCH_ARM),y)
     CSRCS += $(CELT_SOURCES_ARM_NEON_INTR)
     CSRCS += $(SILK_SOURCES_ARM_NEON_INTR)
     CSRCS += $(SILK_SOURCES_FIXED_ARM_NEON_INTR)
+    CFLAGS += -fno-aggressive-loop-optimizations
   endif
   ifeq ($(CONFIG_LIB_NE10),y)
     CSRCS += $(CELT_SOURCES_ARM_NE10)
