@@ -27,7 +27,11 @@ CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
 ifeq ($(GCCVER),12)
 CXXFLAGS += -Wno-alloc-size-larger-than
 CXXFLAGS += -Wno-maybe-uninitialized
+endif
+
+ifeq ($(GCCVER),13)
 CXXFLAGS += -Wno-array-bounds
+CXXFLAGS += -Wno-alloc-size-larger-than
 endif
 
 CXXSRCS += googletest/googletest/src/gtest-all.cc
