@@ -24,15 +24,7 @@ CXXFLAGS += ${INCDIR_PREFIX}googletest/googlemock
 
 CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
 
-ifeq ($(GCCVER),12)
-CXXFLAGS += -Wno-alloc-size-larger-than
-CXXFLAGS += -Wno-maybe-uninitialized
-endif
-
-ifeq ($(GCCVER),13)
-CXXFLAGS += -Wno-array-bounds
-CXXFLAGS += -Wno-alloc-size-larger-than
-endif
+CXXFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds -Wno-alloc-size-larger-than
 
 CXXSRCS += googletest/googletest/src/gtest-all.cc
 CXXSRCS += googletest/googlemock/src/gmock-all.cc
