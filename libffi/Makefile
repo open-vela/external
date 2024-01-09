@@ -58,5 +58,9 @@ CXXSRCS := $(wildcard $(CXXSRCS))
 MAINSRC := $(wildcard $(MAINSRC))
 NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
 
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libffi.a
+endif
+
 include $(APPDIR)/Application.mk
 
