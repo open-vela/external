@@ -37,4 +37,14 @@ MODULE    = $(CONFIG_MTP_RESPONDER)
 MAINSRC  += mtp-responder/src/mtp_init.c
 PROGNAME += mtp_responder
 
+ASRCS := $(wildcard $(ASRCS))
+CSRCS := $(wildcard $(CSRCS))
+CXXSRCS := $(wildcard $(CXXSRCS))
+MAINSRC := $(wildcard $(MAINSRC))
+NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+ifneq ($(NOEXPORTSRCS),)
+BIN := $(APPDIR)/staging/libmtp-responder.a
+endif
+
 include $(APPDIR)/Application.mk
