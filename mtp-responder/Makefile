@@ -24,6 +24,7 @@ CSRCS  += $(filter-out $(OCSRCS), \
 CFLAGS += -D__le16=uint16_t -D__le32=uint32_t -D__u16=uint16_t
 CFLAGS += -DMSG_STAT=IPC_STAT -DSET_USB_NONE=0 -DMTP_FFS_PATH=\"/dev/mtp\"
 CFLAGS += -DM_MMAP_THRESHOLD=0 -DM_TRIM_THRESHOLD=0 -Dfork=vfork
+CFLAGS += -DMTP_MAX_PATHNAME_SIZE=CONFIG_PATH_MAX -DMTP_MAX_FILENAME_SIZE=CONFIG_NAME_MAX
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/mtp-responder/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/mtp-responder/mtp-responder/include
