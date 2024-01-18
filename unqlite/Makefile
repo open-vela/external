@@ -70,6 +70,6 @@ MAINSRC  += unqlite/example/demovfs/unqlite_demovfs.c
 endif
 
 CFLAGS += -Wno-unused-function -Wno-misleading-indentation
-CFLAGS += -Wno-shadow
+CFLAGS += -Wno-shadow -Wstringop-overflow=0
 
 include $(APPDIR)/Application.mk
