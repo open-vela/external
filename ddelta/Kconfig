@@ -29,4 +29,8 @@ config UTILS_DDELTA_STACKSIZE
 	int "apply stack size"
 	default 98304
 
+config UTILS_DDELTA_DEBUG
+	bool "ddelta debug"
+	default n
+
 endif
