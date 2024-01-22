@@ -1,0 +1,3 @@
+ifneq ($(CONFIG_GOLDFISH_RILD),)
+CONFIGURED_APPS += $(APPDIR)/external/ril
+endif
