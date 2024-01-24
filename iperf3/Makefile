@@ -33,6 +33,7 @@ CSRCS    += iperf3/src/cjson.c
 endif
 
 CFLAGS   += -Dlinux
+CFLAGS   += -Dversion=iperf3_version
 CFLAGS   += ${INCDIR_PREFIX}.
 
 include $(APPDIR)/Application.mk
