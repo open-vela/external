@@ -70,6 +70,10 @@ CSRCS += optee_os/core/crypto/sm3.c \
          optee_os/core/crypto/sm3-hmac.c
 endif
 
+ifeq ($(CONFIG_TEE_CORE_DEBUG),y)
+CFLAGS += -DCFG_TEE_CORE_DEBUG
+endif
+
 ifeq ($(CONFIG_OPTEE_REE_FS),y)
 CFLAGS += -DCFG_REE_FS
 endif

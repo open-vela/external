@@ -74,3 +74,8 @@ config OPTEE_COMPAT_MITEE_FS
 	bool "to compat with mitee fs"
 	depends on OPTEE_OS
 	default n
+
+config TEE_CORE_DEBUG
+	bool "Enable tee core debug"
+	depends on OPTEE_OS
+	default n
