@@ -16,6 +16,9 @@
 
 include $(APPDIR)/Make.defs
 
+ifeq ($(CONFIG_ARCH_TOOLCHAIN_CLANG),)
+CFLAGS += -Wno-stringop-overread
+endif
 CSRCS  += $(wildcard silk-v3-decoder/silk/src/*.c)
 
 include $(APPDIR)/Application.mk
