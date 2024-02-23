@@ -1,0 +1,19 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_QUADPROGPP
+	bool "QuadProgpp library"
+	default n
+
+if LIB_QUADPROGPP
+
+config LIB_QUADPROGPP_TESTCASE
+	tristate "QuadProgpp library passability test"
+	default n
+	---help---
+		Used to check whether there will be any problems
+		with the library running on NuttX
+
+endif
