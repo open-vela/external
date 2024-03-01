@@ -44,7 +44,15 @@ CFLAGS := $(filter-out $(CFLAGS_FILTER_OUT), $(CFLAGS))
 CSRCS += libffi/src/prep_cif.c libffi/src/types.c libffi/src/raw_api.c \
          libffi/src/java_raw_api.c libffi/src/closures.c libffi/src/debug.c
 
-CSRCS += libffi/src/$(TARGETDIR)/ffi.c
+ifeq ($(CONFIG_ARCH_SIM),)
+  CSRCS += libffi/src/$(TARGETDIR)/ffi.c
+else ifeq ($(CONFIG_SIM_M32),)
+  CFLAGS += -D__ILP32__
+  CSRCS += libffi/src/$(TARGETDIR)/ffi64.c
+  ASRCS += libffi/src/$(TARGETDIR)/unix64.S
+else
+  CSRCS += libffi/src/$(TARGETDIR)/ffi.c
+endif
 ASRCS += libffi/src/$(TARGETDIR)/sysv.S
 
 AFLAGS += $(FLAGS)
