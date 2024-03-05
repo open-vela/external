@@ -58,3 +58,7 @@ config USER_TA_WASM
 	bool "Enable Ta wasm in tee"
 	depends on INTERPRETERS_WAMR
 	default y
+
+config OPTEE_HOST_FS_PARENT_PATH
+	string "Enable custom hostfs pathname"
+	default "/sst"

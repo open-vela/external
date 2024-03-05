@@ -38,7 +38,7 @@ CFLAGS += -DCFG_TEE_CORE_DEBUG
 CSRCS += optee_nuttx/compat/spin_lock_debug.c
 endif
 
-CFG_HOST_FS_PARENT_PATH ?= /sst
+CFG_HOST_FS_PARENT_PATH ?= $(CONFIG_OPTEE_HOST_FS_PARENT_PATH)
 CFLAGS += -DHOST_FS_PARENT_PATH=\"$(CFG_HOST_FS_PARENT_PATH)\"
 
 CSRCS += optee_nuttx/compat/abort.c
