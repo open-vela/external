@@ -10,6 +10,8 @@ config MTP_RESPONDER
 		The MTP-Responder allows files to be transferred to
 		and from devices through the devices USB port.
 
+if MTP_RESPONDER
+
 config MTP_RESPONDER_PRIORITY
 	int "MTP-responder task priority"
 	default 100
@@ -17,3 +19,43 @@ config MTP_RESPONDER_PRIORITY
 config MTP_RESPONDER_STACKSIZE
 	int "MTP-responder stack size"
 	default DEFAULT_TASK_STACKSIZE
+
+config MTP_RESPONDER_DEVICE_NAME
+	string "The device name that display on pc"
+	default "MTP Device"
+
+config MTP_RESPONDER_INTRERNAL_STORAGE_PATH
+	string "The path of Internal storage in device"
+	default "/log/"
+
+config MTP_RESPONDER_INTRERNAL_STORAGE_LOCK_ON
+	bool "Internal storage lock state of device, default on"
+	default y
+	---help---
+		The locked status of the device will affect whether
+		the Interrnal storage(MTP_INTERNAL_PATH_CHAR) is
+		mounted and displayed by the PC.
+
+config MTP_RESPONDER_EXTERNAL_STORAGE_RESERVED_SPACE
+	int "External storage reserved space, unit in MB"
+	default "1024"
+	---help---
+		Used to reserve emmc space for the system to prevent
+		the PC from filling up the device storage through the
+		MTP service.
+
+config MTP_RESPONDER_EXTERNAL_STORYAGE_DIRECTORY_LIST
+	string "A first-level directory list of external storage"
+	default ""
+	---help---
+		A first-level directory list of external storage on
+		the device that can be displayed on the PC side through
+		the MTP service.
+
+config MTP_RESPONDER_ICON_PATH
+	string "The path of icon can be displayed on the pc"
+	default ""
+	---help---
+		The path of icon can be displayed on the pc.
+
+endif
