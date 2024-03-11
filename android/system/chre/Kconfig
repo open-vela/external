@@ -81,4 +81,27 @@ config CHRE_WWAN_SUPPORT_ENABLED
 	---help---
 		WWAN support
 
+config CHRE_UNIT_TEST
+	bool "CHRE Unit Test"
+	default n
+	depends on LIB_GOOGLETEST
+	---help---
+		CHRE Unit Test
+
+if CHRE_UNIT_TEST
+
+config CHRE_UNIT_TEST_PROGNAME
+	string "Program name"
+	default "chre_test"
+
+config CHRE_UNIT_TEST_PRIORITY
+	int "Priority"
+	default 100
+
+config CHRE_UNIT_TEST_STACKSIZE
+	int "Stack size"
+	default 12288
+
+endif #CHRE_UNIT_TEST
+
 endif # CHRE

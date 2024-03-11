@@ -123,10 +123,37 @@ CXXFLAGS += $(TARGET_CFLAGS)
 CXXFLAGS += -DCHRE_FILENAME=__FILE__
 CXXFLAGS += -DCHRE_PLATFORM_ID=$(TARGET_PLATFORM_ID)
 
+# Unit Test
+ifneq ($(CONFIG_CHRE_UNIT_TEST),)
+CXXFLAGS += -Wno-error=shadow
+CXXFLAGS += -Wno-error=deprecated-copy
+CXXFLAGS += -Wno-error=double-promotion
+CXXFLAGS += -I$(CHRE_PREFIX)
+CXXFLAGS += -I$(CHRE_PREFIX)/test/common/include
+CXXFLAGS += -I$(CHRE_PREFIX)/test/simulation/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_cross_validator_wifi/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_cross_validator_sensor/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_settings_test/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_api_test/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_stress_test/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/rpc_service_test/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/chre_audio_concurrency_test/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/common/shared/inc
+CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/chqts/src
+CXXFLAGS += -I$(CHRE_PREFIX)/platform/shared
+endif
+
 MAINSRC = $(CHRE_PREFIX)/platform/nuttx/init.cc
 PROGNAME = $(CONFIG_CHRE_PROGNAME)
 PRIORITY = $(CONFIG_CHRE_PRIORITY)
 STACKSIZE = $(CONFIG_CHRE_STACKSIZE)
 MODULE = $(CONFIG_CHRE)
+
+ifneq ($(CONFIG_CHRE_UNIT_TEST),)
+MAINSRC += $(CHRE_PREFIX)/platform/nuttx/test.cc
+PROGNAME += $(CONFIG_CHRE_UNIT_TEST_PROGNAME)
+PRIORITY += $(CONFIG_CHRE_UNIT_TEST_PRIORITY)
+STACKSIZE += $(CONFIG_CHRE_UNIT_TEST_STACKSIZE)
+endif
 
 include $(APPDIR)/Application.mk
