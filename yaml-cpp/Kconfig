@@ -1,0 +1,19 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_YAMLCPP
+	bool "yaml-cpp library"
+	default n
+
+if LIB_YAMLCPP
+
+config LIB_YAMLCPP_TESTCASE
+	tristate "yaml-cpp library passability test"
+	default n
+	---help---
+		Used to check whether there will be any problems
+		with the library running on NuttX
+
+endif
