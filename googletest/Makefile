@@ -33,14 +33,14 @@ ifneq ($(CONFIG_UTILS_GTEST),)
 PROGNAME += $(CONFIG_UTILS_GTEST_PROGNAME)
 PRIORITY += $(CONFIG_UTILS_GTEST_PRIORITY)
 STACKSIZE += $(CONFIG_UTILS_GTEST_STACKSIZE)
-MAINCXXSRCS += googletest/googletest/src/gtest_main.cc
+MAINSRC += googletest/googletest/src/gtest_main.cc
 endif
 
 ifneq ($(CONFIG_UTILS_GMOCK),)
 PROGNAME += $(CONFIG_UTILS_GMOCK_PROGNAME)
 PRIORITY += $(CONFIG_UTILS_GMOCK_PRIORITY)
 STACKSIZE += $(CONFIG_UTILS_GMOCK_STACKSIZE)
-MAINCXXSRCS += googletest/googlemock/src/gmock_main.cc
+MAINSRC += googletest/googlemock/src/gmock_main.cc
 endif
 
 include $(APPDIR)/Application.mk
