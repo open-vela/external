@@ -40,6 +40,10 @@ config CHRE_CLI_APP_MAX
 	int "Max number of CLI param"
 	default 8
 
+config CHRE_APP_SPAMMER_USLEEP
+	int "Suspend time(microseconds) used by apps/spammer"
+	default 1
+
 config CHRE_MESSAGE_TO_HOST_MAX_SIZE
 	int "Maximum size of message sent to host(in bytes)"
 	default 2048
