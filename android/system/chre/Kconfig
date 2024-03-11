@@ -35,6 +35,10 @@ config CHRE_STACKSIZE
 	int "Stack size of CHRE"
 	default 8192
 
+config CHRE_CLI_APP_MAX
+	int "Max number of CLI param"
+	default 8
+
 config CHRE_MESSAGE_TO_HOST_MAX_SIZE
 	int "Maximum size of message sent to host(in bytes)"
 	default 2048
@@ -103,5 +107,94 @@ config CHRE_UNIT_TEST_STACKSIZE
 	default 12288
 
 endif #CHRE_UNIT_TEST
+
+config CHRE_EXAMPLES
+	bool "CHRE examples"
+	default n
+
+if CHRE_EXAMPLES
+
+config CHRE_EXAMPLES_ALL
+	bool "Enable all examples"
+	default n
+	select CHRE_EXAMPLES_HELLO_WORLD
+	select CHRE_EXAMPLES_TIMER_WORLD
+	select CHRE_EXAMPLES_HOST_ASAKE_WORKD
+	select CHRE_EXAMPLES_BLE_WORLD
+	select CHRE_EXAMPLES_GNSS_WORLD
+	select CHRE_EXAMPLES_MESSAGE_WORLD
+	select CHRE_EXAMPLES_RPC_WORLD
+	select CHRE_EXAMPLES_SENSOR_WORLD
+	select CHRE_EXAMPLES_DEBUG_DUMP_WORLD
+	select CHRE_EXAMPLES_AUDIO_WORLD
+	select CHRE_EXAMPLES_TFLM_DEMO
+	select CHRE_EXAMPLES_WWAN_WORLD
+	select CHRE_EXAMPLES_AUDIO_STRESS_TEST
+	select CHRE_EXAMPLES_WIFI_WORLD
+
+config CHRE_EXAMPLES_HELLO_WORLD
+	bool "hello_workd"
+	default n
+
+config CHRE_EXAMPLES_TIMER_WORLD
+	bool "timer_world"
+	default n
+
+config CHRE_EXAMPLES_HOST_ASAKE_WORKD
+	bool "host_awake_world"
+	default n
+
+config CHRE_EXAMPLES_BLE_WORLD
+	bool "ble_world"
+	depends on CHRE_BLE_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_GNSS_WORLD
+	bool "gnss_world"
+	depends on CHRE_GNSS_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_MESSAGE_WORLD
+	bool "message_world"
+	default n
+
+config CHRE_EXAMPLES_RPC_WORLD
+	bool "rpc_world"
+	default n
+
+config CHRE_EXAMPLES_SENSOR_WORLD
+	bool "sensor_world"
+	depends on CHRE_SENSORS_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_DEBUG_DUMP_WORLD
+	bool "debug_dump_world"
+	default n
+
+config CHRE_EXAMPLES_AUDIO_WORLD
+	bool "audio_world"
+	depends on CHRE_AUDIO_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_TFLM_DEMO
+	bool "tflm_demo"
+	default n
+
+config CHRE_EXAMPLES_WWAN_WORLD
+	bool "wwan_world"
+	depends on CHRE_WWAN_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_AUDIO_STRESS_TEST
+	bool "audio_stress_test"
+	depends on CHRE_AUDIO_SUPPORT_ENABLED
+	default n
+
+config CHRE_EXAMPLES_WIFI_WORLD
+	bool "wifi_world"
+	depends on CHRE_WIFI_SUPPORT_ENABLED
+	default n
+
+endif #CHRE_EXAMPLES
 
 endif # CHRE

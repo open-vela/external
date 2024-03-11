@@ -143,6 +143,84 @@ CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/chqts/src
 CXXFLAGS += -I$(CHRE_PREFIX)/platform/shared
 endif
 
+# DSO(dynamic shared object)
+
+OUT_APP = $(CHRE_PREFIX)/platform/nuttx/out/apps
+
+ifneq ($(CONFIG_CHRE_EXAMPLES),)
+
+ifneq ($(CONFIG_CHRE_EXAMPLES_HELLO_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/hello_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_TIMER_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/timer_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_HOST_ASAKE_WORKD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/host_awake_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_BLE_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/ble_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_GNSS_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/gnss_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_MESSAGE_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/message_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_RPC_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/rpc_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_SENSOR_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/sensor_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_DEBUG_DUMP_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/debug_dump_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_AUDIO_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/audio_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_TFLM_DEMO),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/tflm_demo
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_WWAN_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/wwan_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_AUDIO_STRESS_TEST),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/audio_stress_test
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_WIFI_WORLD),)
+  NUTTX_DSO_DIRS += $(CHRE_PREFIX)/apps/wifi_world
+endif
+
+SYMTAB_SRC=$(CHRE_PREFIX)/platform/nuttx/symtab.c
+CSRCS += $(SYMTAB_SRC)
+CFLAGS += -Wno-error=builtin-declaration-mismatch
+
+gen_symtab:
+	$(APPDIR)/tools/mksymtab.sh $(OUT_APP) g_chre > $(SYMTAB_SRC)
+
+context:: build_dso_all gen_symtab
+install:: build_dso_all
+
+.PHONY: build_dso_all gen_symtab
+build_dso_all:
+	$(foreach var,$(NUTTX_DSO_DIRS), \
+		$(MAKE) -C $(var) install \
+		OUT_APP="$(OUT_APP)" \
+		NUTTX_DSO_PROGNAME="" \
+		OPT_LEVEL="$(OPT_LEVEL)" \
+		TOPDIR="$(TOPDIR)" \
+		APPDIR="$(APPDIR)" \
+		CROSSDEV=$(CROSSDEV) \
+		CXXFLAGS="$(CXXFLAGS)" \
+		CHRE_PREFIX="$(CHRE_PREFIX)" \
+		NANOAPP_IS_SYSTEM_NANOAPP=0 \
+		CHRE_TARGET_EXTENSION="$(CHRE_PREFIX)/platform/nuttx/dso.mk" \
+		NANOAPP_VENDOR_STRING="\\\"Xiaomi\\\"" \
+		CHRE_STD_OVERRIDES_ALLOWED=false || exit; \
+	)
+endif # CONFIG_CHRE_EXAMPLES
+
 MAINSRC = $(CHRE_PREFIX)/platform/nuttx/init.cc
 PROGNAME = $(CONFIG_CHRE_PROGNAME)
 PRIORITY = $(CONFIG_CHRE_PRIORITY)
