@@ -37,6 +37,7 @@ CSRCS    += port/support/xthread.c
 
 #bench-string
 
+ifeq ($(CONFIG_BENCHTEST_STRING),y)
 PROGNAME += bench_bzero
 MAINSRC  += benchtests/bench-bzero.c
 PROGNAME += bench_memccpy
@@ -105,6 +106,7 @@ PROGNAME += bench_strstr
 MAINSRC  += benchtests/bench-strstr.c
 PROGNAME += bench_strtok
 MAINSRC  += benchtests/bench-strtok.c
+endif
 
 #other
 

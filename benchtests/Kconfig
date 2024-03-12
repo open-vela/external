@@ -33,4 +33,10 @@ config BENCHTEST_DURATION
 	int "benchtest duration"
 	default 1
 
+config BENCHTEST_STRING
+	tristate "Build String Test"
+	default n
+	---help---
+		When enabling this option, ensure that the _start_impl section exists
+
 endif
