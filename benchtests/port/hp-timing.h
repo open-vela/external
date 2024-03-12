@@ -33,7 +33,7 @@
  ****************************************************************************/
 
 typedef uint64_t hp_timing_t;
-#define HP_TIMING_NOW(var)               (var) = up_perf_gettime()
+#define HP_TIMING_NOW(var)               (var) = perf_gettime()
 #define HP_TIMING_DIFF(diff, start, end) (diff) = (end) - (start)
 #define HP_TIMING_ACCUM_NT(sum, diff)    (sum) += (diff)
 
