@@ -16,6 +16,10 @@ config MTP_RESPONDER_PRIORITY
 	int "MTP-responder task priority"
 	default 100
 
+config MTP_RESPONDER_THREAD_PRIORITY
+	int "MTP-responder thread priority"
+	default 100
+
 config MTP_RESPONDER_STACKSIZE
 	int "MTP-responder stack size"
 	default DEFAULT_TASK_STACKSIZE
