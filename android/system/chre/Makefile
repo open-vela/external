@@ -205,7 +205,7 @@ install:: build_dso_all
 .PHONY: build_dso_all gen_symtab
 build_dso_all:
 	$(foreach var,$(NUTTX_DSO_DIRS), \
-		$(MAKE) -C $(var) install \
+		$(MAKE) -B -C $(var) install \
 		OUT_APP="$(OUT_APP)" \
 		NUTTX_DSO_PROGNAME="" \
 		OPT_LEVEL="$(OPT_LEVEL)" \
