@@ -40,8 +40,10 @@ size_t
 __libc_ifunc_impl_list(const char *name, struct libc_ifunc_impl *array,
                        size_t max)
 {
+#ifndef bzero
   IFUNC_IMPL(max, name, bzero,
              IFUNC_IMPL_ADD(array, max, bzero, 1, bzero));
+#endif
 
   IFUNC_IMPL(max, name, memccpy,
              IFUNC_IMPL_ADD(array, max, memccpy, 1, memccpy));
