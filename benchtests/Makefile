@@ -23,7 +23,8 @@ MODULE    = $(CONFIG_BENCHTEST)
 CFLAGS   += -DDURATION=$(CONFIG_BENCHTEST_DURATION)
 CFLAGS   += -DCLOCK_MONOTONIC_RAW=CLOCK_MONOTONIC
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/benchtests/port
-CFLAGS   += -Dxmalloc=benchtests_xmalloc
+CFLAGS   += -Dxmalloc=benchtests_xmalloc -Dxasprintf=benchtests_xasprintf \
+            -Derror=benchtest_error
 
 CFLAGS   += -Wno-unused-variable
 CFLAGS   += -Wno-shadow
