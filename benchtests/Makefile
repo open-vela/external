@@ -25,6 +25,9 @@ CFLAGS   += -DCLOCK_MONOTONIC_RAW=CLOCK_MONOTONIC
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/benchtests/port
 CFLAGS   += -Dxmalloc=benchtests_xmalloc
 
+CFLAGS   += -Wno-unused-variable
+CFLAGS   += -Wno-shadow
+
 CSRCS    += benchtests/json-lib.c
 CSRCS    += port/error.c
 CSRCS    += port/ifunc-impl-list.c
