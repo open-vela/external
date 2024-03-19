@@ -21,7 +21,7 @@ CSRCS += $(wildcard libpng/arm/*.c)
 ASRCS += $(wildcard libpng/arm/*.S)
 
 # Workaround for "Illegal instruction" error in goldfish-armv7a environment
-ifneq ($(CONFIG_BUILD_LOADABLE)$(CELFFLAGS),)
+ifneq ($(CONFIG_MODULES)$(CELFFLAGS),)
 libpng/arm/palette_neon_intrinsics.c_CELFFLAGS += -Os
 else
 libpng/arm/palette_neon_intrinsics.c_CFLAGS += -Os
