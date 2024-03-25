@@ -18,5 +18,8 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += -Wno-shadow -Wno-undef
 CSRCS  += $(wildcard Chipmunk2D/src/*.c)
+ifneq ($(CONFIG_ARCH_ARM),)
+CFLAGS += -DCP_USE_DOUBLES=0
+endif
 
 include $(APPDIR)/Application.mk
