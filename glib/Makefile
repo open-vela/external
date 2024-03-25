@@ -24,7 +24,11 @@ CFLAGS += ${INCDIR_PREFIX}glib
 CFLAGS += ${INCDIR_PREFIX}glib/glib
 
 GLIB_FILTER_OUT  = $(wildcard glib/glib/*win32*.c) glib/glib/gtester.c
-GLIB_FILTER_OUT += glib/glib/gstdio-private.c glib/glib/gjournal-private.c glib/glib/gregex.c
+GLIB_FILTER_OUT += glib/glib/gstdio-private.c glib/glib/gjournal-private.c
+ifeq ($(CONFIG_LIB_PCRE2),)
+GLIB_FILTER_OUT += glib/glib/gregex.c
+endif
+
 CSRCS += $(filter-out $(GLIB_FILTER_OUT), $(wildcard glib/glib/g*.c))
 CSRCS += glib/glib/libcharset/localcharset.c
 
