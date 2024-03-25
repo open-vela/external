@@ -26,6 +26,7 @@ CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/benchtests/port
 CFLAGS   += -Dxmalloc=benchtests_xmalloc -Dxasprintf=benchtests_xasprintf \
             -Derror=benchtest_error
 
+CFLAGS   += -Wno-unused-function
 CFLAGS   += -Wno-unused-variable
 CFLAGS   += -Wno-shadow
 
