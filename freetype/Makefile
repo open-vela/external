@@ -38,3 +38,5 @@ distclean:: clean_context
 	$(call DELFILE, .depend)
 
 install::
+
+postinstall::
