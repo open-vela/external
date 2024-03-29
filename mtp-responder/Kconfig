@@ -62,4 +62,8 @@ config MTP_RESPONDER_ICON_PATH
 	---help---
 		The path of icon can be displayed on the pc.
 
+config MTP_RESPONDER_OP_COPYOBJECT_ENABLE
+	bool "Enable operation CopyObject"
+	default n
+
 endif
