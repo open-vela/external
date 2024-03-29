@@ -24,7 +24,8 @@ CFLAGS   += -DDURATION=$(CONFIG_BENCHTEST_DURATION)
 CFLAGS   += -DCLOCK_MONOTONIC_RAW=CLOCK_MONOTONIC
 CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/benchtests/port
 CFLAGS   += -Dxmalloc=benchtests_xmalloc -Dxasprintf=benchtests_xasprintf \
-            -Derror=benchtest_error
+            -Derror=benchtest_error -Dgeneric_memcpy=benchtests_memcpy \
+            -Dgeneric_memmove=benchtests_memmove -Dgeneric_memset=benchtests_memset
 
 CFLAGS   += -Wno-unused-function
 CFLAGS   += -Wno-unused-variable
