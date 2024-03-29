@@ -201,7 +201,7 @@ CSRCS += $(SYMTAB_SRC)
 CFLAGS += -Wno-builtin-declaration-mismatch
 
 gen_symtab:
-	$(APPDIR)/tools/mksymtab.sh $(OUT_APP) g_chre > $(SYMTAB_SRC)
+	$(APPDIR)/tools/mksymtab.sh $(OUT_APP) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt > $(SYMTAB_SRC)
 
 context:: build_dso_all gen_symtab
 install:: build_dso_all
