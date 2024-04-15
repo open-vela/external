@@ -66,4 +66,8 @@ config MTP_RESPONDER_OP_COPYOBJECT_ENABLE
 	bool "Enable operation CopyObject"
 	default n
 
+config MTP_RESPONDER_EVENT_OBJECTADDDELETE
+	bool "Enable ObjectAdded/ObjectRemoved events"
+	default n
+
 endif
