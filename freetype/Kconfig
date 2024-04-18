@@ -16,6 +16,7 @@
 
 config LIB_FREETYPE
 	bool "Enable FreeType"
+	depends on ARCH_SETJMP_H
 	default n
 
 config LIB_FREETYPE_MEMSIZE
