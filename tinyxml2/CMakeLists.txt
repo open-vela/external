@@ -1,0 +1,6 @@
+if(CONFIG_LIB_TINYXML2)
+  set(tinyxml2_SHARED_LIBS OFF)
+  add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/tinyxml2)
+  nuttx_add_external_library(tinyxml2)
+  nuttx_export_header(TARGET tinyxml2 INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/tinyxml2)
+endif()
