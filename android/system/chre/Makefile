@@ -26,6 +26,10 @@ CHRE_PREFIX = $(ANDROID_BUILD_TOP)/system/chre/chre
 CHRE_TOKENIZED_LOGGING_ENABLED = false
 COMMON_CFLAGS += -I$(CHRE_PREFIX)/platform/shared/sensor_pal/include
 
+ifneq ($(V), 0)
+CHRE_BUILD_VERBOSE = true
+endif
+
 CHRE_VARIANT_MK_INCLUDES=$(CHRE_PREFIX)/variant/nuttx/variant.mk
 
 include $(CHRE_VARIANT_MK_INCLUDES)
