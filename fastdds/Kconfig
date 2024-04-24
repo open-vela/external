@@ -1,0 +1,98 @@
+#
+# Copyright (C) 2024 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	  http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+menu "FastDDS"
+
+config FASTDDS
+	bool "Enable FastDDS"
+	default n
+	depends on LIB_TINYXML2
+	---help---
+		eProsima Fast Fast-DDS is a standalone Cpp middleware implementation
+		providing both the OMG Fast-DDS 1.4 and the OMG RTPS 2.2 interoperable
+		wire-protocol standards.
+
+config FASTDDS_ENABLE_OLD_LOG_MACROS
+	bool "Enable OLD LOG MACROS"
+	default y
+	---help---
+		Open the macro definition of log
+
+config FASTDDS_LOG_NO_INFO
+	bool "info log"
+	default n
+	depends on ENABLE_OLD_LOG_MACROS
+	---help---
+		Set the log level to info
+
+config FASTDDS_LOG_NO_WARNING
+	bool "warning log"
+	default n
+	depends on ENABLE_OLD_LOG_MACROS
+	depends on FASTDDS_LOG_NO_INFO
+	---help---
+		Set the log level to warning
+
+config FASTDDS_LOG_NO_ERROR
+	bool "error log"
+	default n
+	depends on ENABLE_OLD_LOG_MACROS
+	depends on FASTDDS_LOG_NO_WARNING
+	---help---
+		Set the log level to error
+
+choice
+	prompt "Example Type"
+	default FASTDDS_NoExample
+
+config FASTDDS_NoExample
+	bool "Fast-DDS No Example"
+	---help---
+		Fast-D打死No Example
+
+config FASTDDS_HelloWorldExampleTCP
+	bool "Fast-DDS HelloWorldExample TCP"
+	---help---
+		Open fastdds HelloWorldExample TCP
+
+config FASTDDS_HelloWorldExample
+	bool "Fast-DDS HelloWorldExample"
+	---help---
+		Open fastdds HelloWorldExample
+
+config FASTDDS_HelloWorldExampleSharedMem
+	bool "Fast-DDS HelloWorldExampleSharedMem"
+	---help---
+		Open fastdds HelloWorldExampleSharedMem
+
+config FASTDDS_ZeroCopyExample
+	bool "Fast-DDS ZeroCopyExample"
+	---help---
+		Open fastdds ZeroCopyExample
+
+config FASTDDS_BasicConfigurationExample
+	bool "Fast-DDS BasicConfigurationExample"
+	---help---
+		Open fastdds BasicConfigurationExample
+
+config FASTDDS_DiscoveryServerExample
+	bool "Fast-DDS DiscoveryServerExample"
+	---help---
+		Open fastdds DiscoveryServerExample
+
+endchoice
+
+endmenu # FastDDS
