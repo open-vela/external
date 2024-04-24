@@ -194,7 +194,7 @@ endif
 
 SYMTAB_SRC=$(CHRE_PREFIX)/platform/nuttx/symtab.c
 CSRCS += $(SYMTAB_SRC)
-CFLAGS += -Wno-error=builtin-declaration-mismatch
+CFLAGS += -Wno-builtin-declaration-mismatch
 
 gen_symtab:
 	$(APPDIR)/tools/mksymtab.sh $(OUT_APP) g_chre > $(SYMTAB_SRC)
