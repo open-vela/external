@@ -16,6 +16,7 @@
 
 config LIB_PNG
 	bool "Enable libpng"
+	depends on ARCH_SETJMP_H && LIB_ZLIB
 	default n
 
 if LIB_PNG
