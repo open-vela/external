@@ -64,6 +64,7 @@ REMOVE_CXX = $(NBDEC_SRC_DIR)/decoder_gsm_amr.cpp \
              $(COMMON_SRC_DIR)/r_fft.cpp \
              $(COMMON_SRC_DIR)/vad1.cpp \
              $(COMMON_SRC_DIR)/vad2.cpp \
+             $(COMMON_SRC_DIR)/overflow_tbl.cpp \
              $(WBDEC_SRC_DIR)/decoder_amr_wb.cpp \
 
 CXXSRCS := $(filter-out $(REMOVE_CXX),$(CXXSRCS))
