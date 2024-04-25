@@ -1,13 +1,13 @@
 #include <gtest/gtest.h>
 
-#include "c/client.cpp"
-#include "c/eventlog_test.cpp"
-#include "c/memq_test.cpp"
-#include "c/udpm_test.cpp"
+#include "test/c/client.cpp"
+#include "test/c/eventlog_test.cpp"
+#include "test/c/memq_test.cpp"
+#include "test/c/udpm_test.cpp"
 
-#include "cpp/client.cpp"
-#include "cpp/common.cpp"
-#include "cpp/memq_test.cpp"
+#include "test/cpp/client.cpp"
+#include "test/cpp/common.cpp"
+#include "test/cpp/memq_test.cpp"
 
 extern "C" int main(int argc, char** argv)
 {

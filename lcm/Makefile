@@ -24,26 +24,26 @@ CSRCS += $(wildcard lcm/lcm/lcmtypes/*.c)
 ifneq ($(CONFIG_LIB_LCM_TESTCASE),)
 
 CFLAGS += ${INCDIR_PREFIX}lcm
-CFLAGS += ${INCDIR_PREFIX}lcm/test/types
+CFLAGS += ${INCDIR_PREFIX}test/types
 
 CXXFLAGS += ${INCDIR_PREFIX}lcm
-CXXFLAGS += ${INCDIR_PREFIX}lcm/test/types
+CXXFLAGS += ${INCDIR_PREFIX}test/types
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 
-CXXFLAGS += ${INCDIR_PREFIX}lcm/test
+CXXFLAGS += ${INCDIR_PREFIX}test
 
-CXXFLAGS += -Wno-shadow -Wno-sign-compare
+CXXFLAGS += -Wno-shadow -Wno-sign-compare -fexceptions
 CFLAGS += -Wno-strict-prototypes
 
 CSRCS += $(wildcard lcm/test/c/*.c)
-CSRCS += $(wildcard lcm/test/types/*.c)
+CSRCS += $(wildcard test/types/*.c)
 
 PROGNAME += lcm_test
-MAINSRC += lcm_test.cpp
+MAINSRC += test/lcm_test.cpp
 PRIORITY += SCHED_PRIORITY_DEFAULT
 STACKSIZE += $(CONFIG_DEFAULT_TASK_STACKSIZE)
 
