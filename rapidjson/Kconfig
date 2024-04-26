@@ -1,0 +1,19 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_RAPIDJSON
+	bool "rapidjson library"
+	default n
+
+if LIB_RAPIDJSON
+
+config LIB_QPOASES_TESTCASE
+	tristate "rapidjson library passability test"
+	default n
+	---help---
+		Used to check whether there will be any problems
+		with the library running on NuttX
+
+endif
