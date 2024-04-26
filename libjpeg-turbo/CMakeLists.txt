@@ -20,6 +20,7 @@ if(CONFIG_LIB_JPEG_TURBO)
   # Library Configuration
   # ############################################################################
 
+  include(GNUInstallDirs)
   set(ENABLE_SHARED OFF CACHE BOOL "Disable turbojpeg shared library" FORCE)
   set(WITH_SIMD OFF CACHE BOOL "Disable SIMD extensions" FORCE)
   set(HAVE_THREAD_LOCAL TRUE CACHE BOOL "Disable THREAD_LOCAL warning" FORCE)
