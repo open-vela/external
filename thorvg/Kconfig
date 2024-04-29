@@ -30,10 +30,6 @@ config THORVG_PRIORITY
 	---help---
 		The higher the priority value, the lower the priority.
 
-config THORVG_SW_RASTER_SUPPORT
-	bool "Enable software raster"
-	default y
-
 config THORVG_SVG_LOADER_SUPPORT
 	bool "Enable svg loader"
 	default y
