@@ -30,9 +30,6 @@ CFLAGS +=  -DYYMAXDEPTH=$(CONFIG_LIBCONFIG_YYMAXDEPTH)
 CFLAGS += -Wno-strict-prototypes
 
 ifneq ($(CONFIG_LIBCONFIG_TEST),)
-${shell mkdir -p $(BOARD_DIR)/resource/libconfig}
-${shell cp -r libconfig/tests/testdata $(BOARD_DIR)/resource/libconfig}
-CFLAGS += -DCONFIG_TEST_DIR=\"/resource/libconfig/testdata\"
 PRIORITY = $(CONFIG_LIBCONFIG_TEST_PRIORITY)
 STACKSIZE = $(CONFIG_LIBCONFIG_TEST_STACKSIZE)
 CFLAGS += ${INCDIR_PREFIX}libconfig/lib
