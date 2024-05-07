@@ -18,6 +18,7 @@ config CHRE
 	tristate "Context Hub Runtime Environment"
 	default n
 	depends on HAVE_CXX
+	depends on LIBC_DLFCN
 	---help---
 		Enable Context Hub Runtime Environment (CHRE)
 
