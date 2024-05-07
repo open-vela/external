@@ -33,6 +33,7 @@ CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CFLAGS   += -DDBUS_COMPILATION -D__linux__
 CFLAGS   += -DLOG_DAEMON=0 -DLOG_AUTH=0
 CFLAGS   += -Dprint_message=dbus_print_message
+CFLAGS   += -DHAVE_SYSLOG_H
 
 PRIORITY  = $(CONFIG_DBUS_PRIORITY)
 STACKSIZE = $(CONFIG_DBUS_STACKSIZE)
