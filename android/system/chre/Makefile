@@ -200,13 +200,13 @@ SYMTAB_SRC=$(CHRE_PREFIX)/platform/nuttx/symtab.c
 CSRCS += $(SYMTAB_SRC)
 CFLAGS += -Wno-builtin-declaration-mismatch
 
-gen_symtab:
+depend::
 	$(APPDIR)/tools/mksymtab.sh $(OUT_APP) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt > $(SYMTAB_SRC)
 
-context:: build_dso_all gen_symtab
+context:: build_dso_all
 install:: build_dso_all
 
-.PHONY: build_dso_all gen_symtab
+.PHONY: build_dso_all
 build_dso_all:
 	$(foreach var,$(NUTTX_DSO_DIRS), \
 		$(MAKE) -B -C $(var) install \
