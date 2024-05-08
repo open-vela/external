@@ -34,7 +34,6 @@ endif
 FLAGS += ${INCDIR_PREFIX}.
 FLAGS += ${INCDIR_PREFIX}libffi
 FLAGS += ${INCDIR_PREFIX}libffi/src
-FLAGS += ${INCDIR_PREFIX}libffi/include
 FLAGS += ${INCDIR_PREFIX}libffi/src/$(TARGETDIR)
 
 CFLAGS += $(FLAGS)

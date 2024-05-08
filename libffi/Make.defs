@@ -16,4 +16,7 @@
 
 ifneq ($(CONFIG_LIB_FFI),)
 CONFIGURED_APPS += $(APPDIR)/external/libffi
+AFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/libffi/libffi/include
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/libffi/libffi/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libffi/libffi/include
 endif
