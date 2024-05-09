@@ -18,7 +18,7 @@ include $(APPDIR)/Make.defs
 
 CXXEXT = .cpp
 
-CFLAGS += -Wno-unused-but-set-variable
+CFLAGS += -Wno-unused-but-set-variable -Wno-maybe-uninitialized
 CSRCS += $(wildcard eigen/blas/*.c)
 CSRCS += $(wildcard eigen/blas/f2c/*.c)
 CXXSRCS += $(wildcard eigen/blas/*.cpp)
