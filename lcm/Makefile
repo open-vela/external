@@ -37,13 +37,18 @@ CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CXXFLAGS += ${INCDIR_PREFIX}test
 
 CXXFLAGS += -Wno-shadow -Wno-sign-compare -fexceptions
-CFLAGS += -Wno-strict-prototypes
+CFLAGS += -Wno-strict-prototypes -Wno-stringop-overflow
+CFLAGS += -Wno-array-bounds -Wno-restrict
 
 CSRCS += $(wildcard lcm/test/c/*.c)
 CSRCS += $(wildcard test/types/*.c)
 
-PROGNAME += lcm_test
+MAINSRC += lcm/test/c/server.c
+PROGNAME += lcm_server
+
 MAINSRC += test/lcm_test.cpp
+PROGNAME += lcm_test
+
 PRIORITY += SCHED_PRIORITY_DEFAULT
 STACKSIZE += $(CONFIG_DEFAULT_TASK_STACKSIZE)
 
