@@ -29,6 +29,7 @@ CSRCS += pcre2/src/pcre2_substring.c pcre2/src/pcre2_tables.c pcre2/src/pcre2_uc
 CSRCS += pcre2/src/pcre2_valid_utf.c pcre2/src/pcre2_xclass.c
 
 CFLAGS += ${INCDIR_PREFIX}.
+CFLAGS += ${INCDIR_PREFIX}pcre2
 CFLAGS += ${INCDIR_PREFIX}pcre2/src
 CFLAGS += -DPCRE2_CODE_UNIT_WIDTH=8 -DHAVE_CONFIG_H
 
