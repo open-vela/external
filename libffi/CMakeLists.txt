@@ -51,7 +51,9 @@ if(CONFIG_LIB_FFI)
   nuttx_add_library(libffi STATIC)
 
   target_sources(libffi PRIVATE ${SRCS})
-  target_include_directories(libffi PRIVATE ${CMAKE_CURRENT_LIST_DIR})
+  target_include_directories(
+    libffi PRIVATE ${CMAKE_CURRENT_LIST_DIR}
+                   ${CMAKE_CURRENT_LIST_DIR}/libffi/src/${TARGETDIR})
   target_compile_options(libffi PRIVATE ${FLAGS})
 
 endif()
