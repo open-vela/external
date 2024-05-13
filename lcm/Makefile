@@ -40,7 +40,7 @@ CXXFLAGS += -Wno-shadow -Wno-sign-compare -fexceptions
 CFLAGS += -Wno-strict-prototypes -Wno-stringop-overflow
 CFLAGS += -Wno-array-bounds -Wno-restrict
 
-CSRCS += $(wildcard lcm/test/c/*.c)
+CSRCS += $(filter-out lcm/test/c/server.c, $(wildcard lcm/test/c/*.c))
 CSRCS += $(wildcard test/types/*.c)
 
 MAINSRC += lcm/test/c/server.c
