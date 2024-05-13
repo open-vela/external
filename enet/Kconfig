@@ -16,6 +16,7 @@
 
 config LIB_ENET
 	bool "ENet reliable UDP networking library"
+	depends on LIBC_NETDB
 	default n
 	---help---
 		Enable support for ENet reliable UDP networking library
