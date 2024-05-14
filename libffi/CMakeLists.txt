@@ -29,11 +29,6 @@ if(CONFIG_LIB_FFI)
     set(TARGETDIR x86)
   endif()
 
-  set_property(
-    TARGET nuttx
-    APPEND
-    PROPERTY NUTTX_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libffi/include)
-
   list(
     APPEND
     SRCS
@@ -46,14 +41,26 @@ if(CONFIG_LIB_FFI)
     libffi/src/${TARGETDIR}/ffi.c
     libffi/src/${TARGETDIR}/sysv.S)
 
+  list(APPEND INC_DIRS ${CMAKE_CURRENT_LIST_DIR}
+       ${CMAKE_CURRENT_LIST_DIR}/libffi ${CMAKE_CURRENT_LIST_DIR}/libffi/src
+       ${CMAKE_CURRENT_LIST_DIR}/libffi/src/${TARGETDIR})
+
   list(APPEND FLAGS -Wno-deprecated-declarations -Wno-undef)
 
-  nuttx_add_library(libffi STATIC)
+  nuttx_create_symlink(${CMAKE_CURRENT_LIST_DIR}/libffi/include
+                       ${CMAKE_CURRENT_BINARY_DIR}/include)
 
+  configure_file(${CMAKE_CURRENT_LIST_DIR}/libffi/src/${TARGETDIR}//ffitarget.h
+                 ${CMAKE_CURRENT_BINARY_DIR}/include/ffitarget.h COPYONLY)
+
+  set_property(
+    TARGET nuttx
+    APPEND
+    PROPERTY NUTTX_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_BINARY_DIR}/include)
+
+  nuttx_add_library(libffi STATIC)
   target_sources(libffi PRIVATE ${SRCS})
-  target_include_directories(
-    libffi PRIVATE ${CMAKE_CURRENT_LIST_DIR}
-                   ${CMAKE_CURRENT_LIST_DIR}/libffi/src/${TARGETDIR})
+  target_include_directories(libffi PRIVATE ${INC_DIRS})
   target_compile_options(libffi PRIVATE ${FLAGS})
 
 endif()

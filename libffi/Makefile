@@ -18,13 +18,10 @@ include $(APPDIR)/Make.defs
 
 ifeq ($(CONFIG_ARCH),arm)
 TARGETDIR := arm
-LIBFFI_TARGET=ARM
 else ifeq ($(CONFIG_ARCH),arm64)
 TARGETDIR := aarch64
-LIBFFI_TARGET=AARCH64
 else ifeq ($(CONFIG_ARCH),xtensa)
 TARGETDIR := xtensa
-LIBFFI_TARGET=XTENSA
 else ifeq ($(CONFIG_ARCH),sim)
 
 # When libffi builds the stack frame, it will modify the contents of the
@@ -35,13 +32,12 @@ else ifeq ($(CONFIG_ARCH),sim)
 
 CFLAGS += -fno-sanitize=all
 TARGETDIR := x86
-LIBFFI_TARGET=X86_64
 endif
 
 FLAGS += ${INCDIR_PREFIX}.
 FLAGS += ${INCDIR_PREFIX}libffi
 FLAGS += ${INCDIR_PREFIX}libffi/src
-FLAGS += ${INCDIR_PREFIX}libffi/src/$(TARGETDIR)
+FLAGS += ${INCDIR_PREFIX}libffi/${TARGETDIR}
 
 CFLAGS += $(FLAGS)
 CFLAGS += -Wno-deprecated-declarations
@@ -71,6 +67,16 @@ CSRCS := $(wildcard $(CSRCS))
 CXXSRCS := $(wildcard $(CXXSRCS))
 MAINSRC := $(wildcard $(MAINSRC))
 NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
+
+TARGET_H  = libffi/include/ffitarget.h
+
+$(TARGET_H):
+	$(Q) cp -f libffi/src/$(TARGETDIR)/ffitarget.h $@
+
+context:: $(TARGET_H)
+
+distclean::
+	$(call DELFILE, $(TARGET_H))
 
 ifneq ($(NOEXPORTSRCS),)
 BIN := $(APPDIR)/staging/libffi.a
