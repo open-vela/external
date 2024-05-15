@@ -133,7 +133,9 @@ clean::
 
 endif
 
+ifneq ($(CONFIG_OFONO_WASM),)
 WASM_INITIAL_MEMORY = 327680
 WASM_BUILD          = n
+endif
 
 include $(APPDIR)/Application.mk

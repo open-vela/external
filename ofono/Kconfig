@@ -65,6 +65,13 @@ config OFONO_PLUGIN_DIR
 	---help---
 		Directory for the loading plugins.
 
+config OFONO_WASM
+	bool "Compile to Wasm"
+	default n
+	---help---
+		Compile ofono to Wasm module instead of builitn app,
+		only available if any wasm runtime eanbled.
+
 config OFONO_DATA_LOG_OVER_MIWEAR
 	bool "support data log over miwear"
 	default n
