@@ -135,7 +135,7 @@ endif
 
 ifneq ($(CONFIG_OFONO_WASM),)
 WASM_INITIAL_MEMORY = 327680
-WASM_BUILD          = n
+WASM_BUILD          = y
 endif
 
 include $(APPDIR)/Application.mk
