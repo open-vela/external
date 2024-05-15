@@ -26,7 +26,7 @@ CXXFLAGS += ${INCDIR_PREFIX}rapidjson/test/unittest
 CXXFLAGS += -fexceptions -Wno-shadow -Wno-sign-compare -Wno-infinite-recursion
 CXXFLAGS += -Wno-class-memaccess -Wno-deprecated-declarations
 
-MAINSRC += rapidjson/test/unittest/unittest.cpp
+MAINSRC += unittest.cpp
 PROGNAME += unittest
 
 include $(APPDIR)/Application.mk
