@@ -35,9 +35,6 @@ CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 CSRCS += $(filter-out libpng/pngtest.c, $(wildcard libpng/*.c))
 
 ifneq ($(CONFIG_LIB_PNG_TEST),)
-${shell mkdir -p $(BOARD_DIR)/resource/libpng}
-${shell cp libpng/pngtest.png $(BOARD_DIR)/resource/libpng}
-CFLAGS += -DPNG_TEST_DIR=\"/resource/libpng\"
 MODULE     = $(CONFIG_LIB_PNG_TEST)
 PRIORITY   = $(CONFIG_LIB_PNG_TEST_PRIORITY)
 STACKSIZE  = $(CONFIG_LIB_PNG_TEST_STACKSIZE)
