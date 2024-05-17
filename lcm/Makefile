@@ -24,6 +24,11 @@ CXXFLAGS += ${INCDIR_PREFIX}.
 CSRCS += $(wildcard lcm/lcm/*.c)
 CSRCS += $(wildcard lcm/lcm/lcmtypes/*.c)
 
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
+
 ifneq ($(CONFIG_LIB_LCM_TESTCASE),)
 
 CFLAGS += ${INCDIR_PREFIX}lcm
@@ -31,13 +36,6 @@ CFLAGS += ${INCDIR_PREFIX}test/types
 
 CXXFLAGS += ${INCDIR_PREFIX}lcm
 CXXFLAGS += ${INCDIR_PREFIX}test/types
-
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
-CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
-CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
-
-CXXFLAGS += ${INCDIR_PREFIX}test
 
 CXXFLAGS += -Wno-shadow -Wno-sign-compare -fexceptions
 CFLAGS += -Wno-strict-prototypes -Wno-stringop-overflow
