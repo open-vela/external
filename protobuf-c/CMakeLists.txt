@@ -16,5 +16,10 @@
 
 if(CONFIG_PROTOBUF_C)
   file(GLOB CSRCS protobuf-c/protobuf-c/*.c)
-  target_sources(apps PRIVATE ${CSRCS})
+  nuttx_add_library(protobuf-c STATIC)
+  target_sources(protobuf-c PRIVATE ${CSRCS})
+  target_include_directories(protobuf-c PUBLIC
+    ${CMAKE_CURRENT_LIST_DIR}/protobuf-c/
+  )
+  target_link_libraries(apps protobuf-c)
 endif()
