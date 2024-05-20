@@ -14,7 +14,6 @@
 # limitations under the License.
 #
 
-ifneq ($(CONFIG_NANOPB),)
+ifneq ($(CONFIG_LIB_NANOPB),)
 CONFIGURED_APPS += $(APPDIR)/external/nanopb
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/nanopb/nanopb
 endif
