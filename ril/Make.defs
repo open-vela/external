@@ -1,3 +1,6 @@
-ifneq ($(CONFIG_GOLDFISH_RILD),)
+ifneq ($(CONFIG_RILD),)
 CONFIGURED_APPS += $(APPDIR)/external/ril
+
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ril/ril/include
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ril/ril/include
 endif

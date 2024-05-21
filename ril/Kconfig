@@ -3,20 +3,26 @@
 # see the file kconfig-language.txt in the NuttX tools repository.
 #
 
-config GOLDFISH_RILD
-	bool "Enable Goldfish RILD"
+config RILD
+	tristate "Enable RILD"
 	default n
 	---help---
-		Enable goldfish rild
+		Enable ril daemon
 
-if GOLDFISH_RILD
+if RILD
 
-config GOLDFISH_RILD_PRIORITY
+config RILD_PRIORITY
 	int "Rild task priority"
 	default 100
 
-config GOLDFISH_RILD_STACKSIZE
+config RILD_STACKSIZE
 	int "Rild stack size"
 	default 4096
+
+config GOLDFISH_RIL
+	bool "Enable goldfish ril"
+	default n
+	--help--
+		Enable goldfish ril
 
 endif
