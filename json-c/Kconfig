@@ -25,3 +25,23 @@ config LIB_JSONC_PRIORITY
 config LIB_JSONC_STACKSIZE
 	int "Lib json-c stack size"
 	default DEFAULT_TASK_STACKSIZE
+
+if LIB_JSONC
+
+config LIB_JSONC_TEST
+	bool "Enable LIB_JSONC test"
+	default n
+
+if LIB_JSONC_TEST
+
+config LIB_JSONC_TEST_PRIORITY
+	int "LIB_JSONC test priority"
+	default 100
+
+config LIB_JSONC_TEST_STACKSIZE
+	int "LIB_JSONC test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif #LIB_JSONC_TEST
+
+endif #LIB_JSONC
