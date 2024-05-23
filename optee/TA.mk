@@ -28,6 +28,9 @@ else ifneq ($(CONFIG_DEBUG_WARN),)
 CFLAGS += -DTRACE_LEVEL=2
 else ifneq ($(CONFIG_DEBUG_ERROR),)
 CFLAGS += -DTRACE_LEVEL=1
+else
+# the default TRACE_LEVEL are 1(with error level)
+CFLAGS += -DTRACE_LEVEL=1
 endif
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include

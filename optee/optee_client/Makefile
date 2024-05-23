@@ -19,6 +19,17 @@ include $(APPDIR)/Make.defs
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_client/optee_client/libteec/include
 CFLAGS += -DBINARY_PREFIX=\"TEEC\"
 
+ifneq ($(CONFIG_DEBUG_INFO),)
+CFLAGS += -DDEBUGLEVEL=3
+else ifneq ($(CONFIG_DEBUG_WARN),)
+CFLAGS += -DDEBUGLEVEL=2
+else ifneq ($(CONFIG_DEBUG_ERROR),)
+CFLAGS += -DDEBUGLEVEL=1
+else
+# the default DEBUGLEVEL are 1(with error level)
+CFLAGS += -DDEBUGLEVEL=1
+endif
+
 CSRCS += optee_client/libteec/src/tee_client_api.c
 CSRCS += optee_client/libteec/src/teec_trace.c
 

@@ -33,6 +33,17 @@ CFLAGS += -DCFG_OTP_SUPPORT
 CFLAGS += -DCFG_OTP_SUPPORT_NO_PROVISION_TMP
 CFLAGS += -DCFG_WITH_USER_TA
 
+ifneq ($(CONFIG_DEBUG_INFO),)
+CFLAGS += -DTRACE_LEVEL=3
+else ifneq ($(CONFIG_DEBUG_WARN),)
+CFLAGS += -DTRACE_LEVEL=2
+else ifneq ($(CONFIG_DEBUG_ERROR),)
+CFLAGS += -DTRACE_LEVEL=1
+else
+# the default TRACE_LEVEL are 1(with error level)
+CFLAGS += -DTRACE_LEVEL=1
+endif
+
 ifeq ($(CONFIG_TEE_CORE_DEBUG),y)
 CFLAGS += -DCFG_TEE_CORE_DEBUG
 CSRCS += optee_nuttx/compat/spin_lock_debug.c
