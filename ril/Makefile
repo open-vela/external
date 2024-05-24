@@ -2,7 +2,9 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += ${INCDIR_PREFIX}ril/libril
 CFLAGS += ${INCDIR_PREFIX}ril/librilutils
+ifneq ($(CONFIG_GOLDFISH_RIL),)
 CFLAGS += ${INCDIR_PREFIX}ril/reference-ril
+endif
 
 CXXEXT:= .cpp
 CXXFLAGS += ${INCDIR_PREFIX}ril/libril
@@ -14,10 +16,7 @@ CXXSRCS += ril/libril/ril_event.cpp
 CSRCS += $(wildcard ril/librilutils/*.c)
 
 ifneq ($(CONFIG_GOLDFISH_RIL),)
-CSRCS += ril/reference-ril/at_tok.c
-CSRCS += ril/reference-ril/atchannel.c
-CSRCS += ril/reference-ril/misc.c
-CSRCS += ril/reference-ril/reference-ril.c
+CSRCS += $(wildcard ril/reference-ril/*.c)
 endif
 
 PRIORITY  += $(CONFIG_RILD_PRIORITY)
