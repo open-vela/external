@@ -1,0 +1,22 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config PCIUTILS
+	tristate "\"pcituils\""
+	default n
+	---help---
+		Enable the \"pciutils\"
+
+if PCIUTILS
+
+config PCIUTILS_PRIORITY
+	int "pciutils task priority"
+	default 100
+
+config PCIUTILS_STACKSIZE
+	int "pciutils stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
