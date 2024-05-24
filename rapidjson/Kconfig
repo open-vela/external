@@ -9,7 +9,7 @@ config LIB_RAPIDJSON
 
 if LIB_RAPIDJSON
 
-config LIB_QPOASES_TESTCASE
+config LIB_RAPIDJSON_TESTCASE
 	tristate "rapidjson library passability test"
 	default n
 	---help---

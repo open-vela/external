@@ -24,9 +24,9 @@ STACKSIZE += $(CONFIG_DEFAULT_TASK_STACKSIZE)
 CXXFLAGS += ${INCDIR_PREFIX}rapidjson/test/unittest
 
 CXXFLAGS += -fexceptions -Wno-shadow -Wno-sign-compare -Wno-infinite-recursion
-CXXFLAGS += -Wno-class-memaccess -Wno-deprecated-declarations
+CXXFLAGS += -Wno-class-memaccess -Wno-deprecated-declarations -DRAPIDJSON_HAS_STDSTRING=1
 
-MAINSRC += unittest.cpp
 PROGNAME += unittest
+MAINSRC += unittest.cpp
 
 include $(APPDIR)/Application.mk
