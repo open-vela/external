@@ -21,4 +21,30 @@ include $(APPDIR)/Make.defs
 #
 CSRCS = $(wildcard protobuf-c/protobuf-c/*.c)
 
+ifeq ($(CONFIG_PROTOBUF_C_TEST),y)
+context::
+	$(Q) cd protobuf-c && \
+	protoc-c --c_out=. t/test.proto && \
+	protoc-c --c_out=. t/test-full.proto && \
+	protoc-c --c_out=. t/test-optimized.proto
+	$(Q) cd protobuf-c/protobuf-c && \
+	protoc-c --c_out=. protobuf-c.proto
+	$(Q) protoc-c --c_out=. google/protobuf/descriptor.proto
+
+clean::
+	$(call DELFILE, protobuf-c/t/*pb-c.h)
+	$(call DELFILE, protobuf-c/t/*pb-c.c)
+	$(call DELFILE, protobuf-c/protobuf-c/*pb-c.h)
+	$(call DELFILE, protobuf-c/protobuf-c/*pb-c.c)
+	$(call DELFILE, google/protobuf/descriptor.pb-c.*)
+
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/protobuf-c/protobuf-c
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/protobuf-c
+CSRCS    += $(wildcard protobuf-c/t/*.c)
+PRIORITY  = $(CONFIG_PROTOBUF_C_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_PROTOBUF_C_TEST_STACKSIZE)
+MAINSRC  += protobuf-c/t/generated-code/test-generated-code.c
+PROGNAME += test_generated_code
+endif
+
 include $(APPDIR)/Application.mk

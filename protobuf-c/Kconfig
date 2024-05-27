@@ -17,3 +17,23 @@
 config PROTOBUF_C
 	bool "Enable Protocol Buffer C"
 	default n
+
+if PROTOBUF_C
+
+config PROTOBUF_C_TEST
+	bool "Enable the test for protobuf-c"
+	default n
+
+if PROTOBUF_C_TEST
+
+config PROTOBUF_C_TEST_PRIORITY
+	int "PROTOBUF_C test priority"
+	default 100
+
+config PROTOBUF_C_TEST_STACKSIZE
+	int "PROTOBUF_C test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif #PROTOBUF_C_TEST
+
+endif #PROTOBUF_C
