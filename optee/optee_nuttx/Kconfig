@@ -46,7 +46,7 @@ config OPTEE_SERVER_PRIORITY
 
 config OPTEE_SERVER_STACKSIZE
 	int "Stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 4096
 
 config OPTEE_NATIVE_STACKSIZE
 	int "Thread stack size"
