@@ -13,15 +13,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+ifeq ($(DST_PATH),)
+  include $(APPDIR)/Make.defs
+  BIN := $(APPDIR)/staging/libffmpeg.a
+  # configure in place
+  DST_PATH := ffmpeg
+else
+  # configure out of tree
+  DST_PATH = $(realpath $(DST_PATH))
+  include $(DST_PATH)/Make.defs
+  BIN := $(DST_PATH)/libffmpeg.a
+  # enable Application.mk PREFIX
+  PREFIX := $(DST_PATH)$(DELIM)
+endif
 
-include $(APPDIR)/Make.defs
-
-BIN := $(APPDIR)/staging/libexternal.a
+FFMPEG_CONFIG_SCRIPT := $(CURDIR)$(DELIM)ffmpeg$(DELIM)configure
+FFMPEG_VERSION_SCRIPT := $(CURDIR)$(DELIM)ffmpeg$(DELIM)ffbuild$(DELIM)version.sh
 
 SBINDIR   := $(BINDIR)
 SINCDIR   := $(INCDIR)
 SAR       := $(AR)
--include ffmpeg/ffbuild/config.mak
+-include $(DST_PATH)/ffbuild/config.mak
 BINDIR    := $(SBINDIR)
 INCDIR    := $(SINCDIR)
 AR        := $(SAR)
@@ -150,6 +162,11 @@ endif
 CFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 AFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 
+ifneq ($(DST_PATH),)
+  CFLAGS += ${INCDIR_PREFIX}$(DST_PATH)
+  AFLAGS += ${INCDIR_PREFIX}$(DST_PATH)
+endif
+
 ifeq ($(CONFIG_CODEC_FDKAAC), y)
 CFLAGS += -DAACENCODER_LIB_VL0=4 -DAACENCODER_LIB_VL1=0
 endif
@@ -213,12 +230,13 @@ ifeq ($(CONFIG_DEBUG_CUSTOMOPT),y)
   CFG_CMDS += --optflags=$(strip $(CONFIG_DEBUG_OPTLEVEL))
 endif
 
-$(SRC_PATH)/libavutil/ffversion.h:
-	$(Q)cd $(SRC_PATH) && ./ffbuild/version.sh . libavutil/ffversion.h $(EXTRA_VERSION)
+$(DST_PATH)/libavutil/ffversion.h:
+	$(Q)cd $(DST_PATH) && $(FFMPEG_VERSION_SCRIPT) . libavutil/ffversion.h $(EXTRA_VERSION)
 
-$(SRC_PATH)/ffbuild/config.mak:
+$(DST_PATH)/ffbuild/config.mak:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
-	$(Q)cd $(SRC_PATH) && ./configure --disable-all              \
+	$(Q)cd $(DST_PATH) &&                              \
+		$(FFMPEG_CONFIG_SCRIPT) --disable-all                    \
 		--disable-everything    --disable-autodetect             \
 		--disable-amf           --disable-audiotoolbox           \
 		--disable-cuda-llvm     --disable-cuvid                  \
@@ -239,7 +257,11 @@ $(SRC_PATH)/ffbuild/config.mak:
 		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)  \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
-context:: $(SRC_PATH)/ffbuild/config.mak $(SRC_PATH)/libavutil/ffversion.h
+context:: $(DST_PATH)/ffbuild/config.mak $(DST_PATH)/libavutil/ffversion.h
+ifneq ($(DST_PATH),)
+	@$(eval ALL_SRCS = $(ASRCS) $(CSRCS) $(MAINSRC) $(NASRCS))
+	@$(foreach src,$(ALL_SRCS),$(shell mkdir -p $(DST_PATH)$(DELIM)$(dir $(src))))
+endif
 
 depend:: $(NASRCS)
 
