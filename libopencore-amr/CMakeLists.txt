@@ -85,6 +85,7 @@ if(CONFIG_LIB_OPENCORE_AMR)
   # ############################################################################
 
   nuttx_add_library(libopencore-amr STATIC)
+  target_compile_options(libopencore-amr PRIVATE ${CXXFLAGS})
   target_sources(libopencore-amr PRIVATE ${CXXSRCS})
   target_include_directories(libopencore-amr PUBLIC ${INCDIR})
 
