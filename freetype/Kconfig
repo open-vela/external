@@ -23,3 +23,22 @@ config LIB_FREETYPE_MEMSIZE
 	int "Size of the custom memory used by `ft_alloc/ft_realloc/ft_free` in kilobytes"
 	depends on LIB_FREETYPE
 	default 0
+
+config LIB_FREETYPE_MBFC
+	bool "Enable FreeType's Multi-block cache read"
+	default n
+
+config LIB_FREETYPE_MBFC_BLOCK_SIZE
+	int "Size of a block in bytes used by the Multi-block cache read"
+	depends on LIB_FREETYPE_MBFC
+	default 16384
+
+config LIB_FREETYPE_MBFC_CACHE_NUM
+	int "Maximum number of blocks in the Multi-block cache read"
+	depends on LIB_FREETYPE_MBFC
+	default 16
+
+config LIB_FREETYPE_MBFC_DEBUG
+	bool "Enable debugging messages for the Multi-block cache read"
+	depends on LIB_FREETYPE_MBFC
+	default n
