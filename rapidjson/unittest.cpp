@@ -12,9 +12,6 @@
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
 
-#include "unittest.h"
-#include "rapidjson/rapidjson.h"
-
 #include "allocatorstest.cpp"
 #include "bigintegertest.cpp"
 #include "documenttest.cpp"
@@ -27,18 +24,42 @@
 #include "itoatest.cpp"
 #include "jsoncheckertest.cpp"
 // #include "namespacetest.cpp"
-#include "ostreamwrappertest.cpp"
 #include "pointertest.cpp"
-#include "prettywritertest.cpp"
-#include "readertest.cpp"
 #include "regextest.cpp"
-#include "schematest.cpp"
-#include "simdtest.cpp"
 #include "strfunctest.cpp"
 #include "stringbuffertest.cpp"
 #include "strtodtest.cpp"
+
+namespace {
+#include "prettywritertest.cpp"
+}
+
+#define OStreamWrapper OStreamWrapperTest
+#define TestStringStream OSTestStringStream
+#include "ostreamwrappertest.cpp"
+
+#define wprintf(...) (void(0))
+#include "schematest.cpp"
+
+#define TerminateHandler valueTerminateHandler
 #include "valuetest.cpp"
+
+namespace {
+#undef OStreamWrapper
+#define OStreamWrapper WOStreamWrapper
 #include "writertest.cpp"
+}
+
+#undef TerminateHandler
+#define TerminateHandler RTerminateHandler
+#define IStreamWrapper RIStreamWrapper
+#undef TEST_TERMINATION
+#include "readertest.cpp"
+
+#undef RAPIDJSON_NAMESPACE
+namespace {
+#include "simdtest.cpp"
+}
 
 #ifdef __clang__
 #pragma GCC diagnostic push
