@@ -16,6 +16,10 @@
 
 config LIB_SQLITE
 	bool "SQLITE library"
+	depends on SYSTEM_POPEN
+	depends on FS_LARGEFILE
+	depends on PSEUDOFS_SOFTLINKS
+	depends on FS_LOCK_BUCKET_SIZE > 0
 	default n
 
 if LIB_SQLITE
