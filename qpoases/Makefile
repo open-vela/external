@@ -22,10 +22,9 @@ CXXSRCS += $(wildcard qpoases/src/*.cpp)
 CXXSRCS += $(wildcard qpoases/interfaces/c/*.cpp)
 
 CFLAGS += ${INCDIR_PREFIX}qpoases/interfaces/c
-CFLAGS += -Wno-strict-prototypes -D__DSPACE__
+CFLAGS += -Wno-strict-prototypes
 CXXFLAGS += -Wno-format-truncation -Wno-overloaded-virtual -Wno-unused-variable -Wno-undef \
             -Wno-misleading-indentation -Wno-shadow
-CXXFLAGS += -D__DSPACE__
 
 define qpoases_add_benchmark
   PROGNAME += qpoases_$1
