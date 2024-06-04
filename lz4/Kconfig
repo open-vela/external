@@ -40,4 +40,20 @@ config UTILS_LZ4_STACKSIZE
 	default DEFAULT_TASK_STACKSIZE
 endif
 
+config LIB_LZ4_TEST
+	bool "Enable the test for lib_lz4 test"
+	default n
+
+if LIB_LZ4_TEST
+
+config LIB_LZ4_TEST_PRIORITY
+	int "Lib_lz4 test priority"
+	default 100
+
+config LIB_LZ4_TEST_STACKSIZE
+	int "Lib_lz4 test stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif # LIB_LZ4_TEST
+
 endif

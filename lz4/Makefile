@@ -29,4 +29,23 @@ CSRCS += lz4/programs/datagen.c
 MAINSRC += lz4/programs/lz4cli.c
 endif
 
+ifneq ($(CONFIG_LIB_LZ4_TEST),)
+CFLAGS   += ${INCDIR_PREFIX}$(APPDIR)/external/lz4/lz4/programs
+CFLAGS   += -D_start=lz4_start
+PRIORITY  = $(CONFIG_LIB_LZ4_TEST_PRIORITY)
+STACKSIZE = $(CONFIG_LIB_LZ4_TEST_STACKSIZE)
+MAINSRC  += lz4/tests/frametest.c
+PROGNAME += lz4_frametest
+MAINSRC  += lz4/tests/abiTest.c
+PROGNAME += lz4_abitest
+MAINSRC  += lz4/tests/checkTag.c
+PROGNAME += lz4_checktag
+MAINSRC  += lz4/tests/freestanding.c
+PROGNAME += lz4_freestanding
+MAINSRC  += lz4/tests/fullbench.c
+PROGNAME += lz4_fullbench
+MAINSRC  += lz4/tests/roundTripTest.c
+PROGNAME += lz4_roundTripTest
+endif
+
 include $(APPDIR)/Application.mk
