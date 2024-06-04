@@ -69,6 +69,18 @@ if(CONFIG_LIB_THORVG)
     target_include_directories(thorvg PRIVATE ${LIBTHORVG_DIR}/src/loaders/tvg)
   endif()
 
+  if(CONFIG_THORVG_TTF_LOADER_SUPPORT)
+    file(GLOB TTF_LOADER_CXXSRCS ${LIBTHORVG_DIR}/src/loaders/ttf/*.cpp)
+    list(APPEND CXXSRCS ${TTF_LOADER_CXXSRCS})
+    target_include_directories(thorvg PRIVATE ${LIBTHORVG_DIR}/src/loaders/ttf)
+  endif()
+
+  if(CONFIG_THORVG_WEBP_LOADER_SUPPORT)
+    file(GLOB WEBP_LOADER_CXXSRCS ${LIBTHORVG_DIR}/src/loaders/webp/*.cpp)
+    list(APPEND CXXSRCS ${WEBP_LOADER_CXXSRCS})
+    target_include_directories(thorvg PRIVATE ${LIBTHORVG_DIR}/src/loaders/webp)
+  endif()
+
   set(INCDIR ${LIBTHORVG_DIR}/inc)
   set(CAPI_INCDIR ${LIBTHORVG_DIR}/src/bindings/capi)
 

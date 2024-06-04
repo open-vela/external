@@ -50,4 +50,12 @@ config THORVG_LOTTIE_LOADER_SUPPORT
 	bool "Enable lottie loader"
 	default y
 
+config THORVG_TTF_LOADER_SUPPORT
+	bool "Enable ttf loader"
+	default y
+
+config THORVG_WEBP_LOADER_SUPPORT
+	bool "Enable webp loader"
+	default y
+
 endif

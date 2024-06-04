@@ -35,6 +35,8 @@ CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/png
 CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/raw
 CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/svg
 CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/tvg
+CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/ttf
+CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/loaders/webp
 CXXFLAGS += ${INCDIR_PREFIX}thorvg/src/common
 
 CFLAGS   += -Wno-shadow
@@ -49,6 +51,8 @@ CXXSRCS  += $(wildcard thorvg/src/loaders/png/*$(CXXEXT))
 CXXSRCS  += $(wildcard thorvg/src/loaders/raw/*$(CXXEXT))
 CXXSRCS  += $(wildcard thorvg/src/loaders/svg/*$(CXXEXT))
 CXXSRCS  += $(wildcard thorvg/src/loaders/tvg/*$(CXXEXT))
+CXXSRCS  += $(wildcard thorvg/src/loaders/ttf/*$(CXXEXT))
+CXXSRCS  += $(shell find thorvg/src/loaders/webp -name '*$(CXXEXT)')
 CXXSRCS  += $(wildcard thorvg/src/common/*$(CXXEXT))
 
 include $(APPDIR)/Application.mk
