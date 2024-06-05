@@ -25,6 +25,10 @@ if(CONFIG_LIB_RAPIDJSON)
       -Wno-deprecated-declarations
       -DRAPIDJSON_HAS_STDSTRING=1)
   set(INCDIR ${LIBRAPIDJSON_DIR}/include)
+  set_property(
+    TARGET nuttx
+    APPEND
+    PROPERTY NUTTX_CXX_INCLUDE_DIRECTORIES ${INCDIR})
 
   if(CONFIG_LIB_RAPIDJSON_TESTCASE)
     list(APPEND INCDIR ${LIBRAPIDJSON_DIR}/test/unittest)
@@ -33,8 +37,6 @@ if(CONFIG_LIB_RAPIDJSON)
       unittest
       SRCS
       ${CMAKE_CURRENT_SOURCE_DIR}/unittest.cpp
-      INCLUDE_DIRECTORIES
-      ${INCDIR}
       COMPILE_FLAGS
       ${CXXFLAGS})
   endif()
