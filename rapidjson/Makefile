@@ -16,6 +16,7 @@
 
 include $(APPDIR)/Make.defs
 
+ifneq ($(CONFIG_LIB_RAPIDJSON_TESTCASE),)
 CXXEXT = .cpp
 
 PRIORITY  += SCHED_PRIORITY_DEFAULT
@@ -28,5 +29,6 @@ CXXFLAGS += -Wno-class-memaccess -Wno-deprecated-declarations -DRAPIDJSON_HAS_ST
 
 PROGNAME += unittest
 MAINSRC += unittest.cpp
+endif
 
 include $(APPDIR)/Application.mk

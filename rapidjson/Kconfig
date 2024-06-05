@@ -12,6 +12,7 @@ if LIB_RAPIDJSON
 config LIB_RAPIDJSON_TESTCASE
 	tristate "rapidjson library passability test"
 	default n
+	depends on LIB_GOOGLETEST
 	---help---
 		Used to check whether there will be any problems
 		with the library running on NuttX
