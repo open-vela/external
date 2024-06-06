@@ -37,6 +37,8 @@ if(CONFIG_LIB_RAPIDJSON)
       unittest
       SRCS
       ${CMAKE_CURRENT_SOURCE_DIR}/unittest.cpp
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
       COMPILE_FLAGS
       ${CXXFLAGS})
   endif()
