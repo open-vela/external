@@ -22,7 +22,7 @@ config RILD_STACKSIZE
 config GOLDFISH_RIL
 	bool "Enable goldfish ril"
 	default n
-	--help--
+	---help---
 		Enable goldfish ril
 
 endif
