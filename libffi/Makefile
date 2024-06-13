@@ -26,7 +26,14 @@ else ifeq ($(CONFIG_ARCH),xtensa)
 TARGETDIR := xtensa
 LIBFFI_TARGET=XTENSA
 else ifeq ($(CONFIG_ARCH),sim)
-CFLAGS += -fno-sanitize=kernel-address
+
+# When libffi builds the stack frame, it will modify the contents of the
+# asan red zone, causing runtime errors.
+#
+# For details, refer to the following issues:
+# https://github.com/libffi/libffi/issues/255
+
+CFLAGS += -fno-sanitize=all
 TARGETDIR := x86
 LIBFFI_TARGET=X86_64
 endif
