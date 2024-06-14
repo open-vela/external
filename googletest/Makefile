@@ -23,6 +23,11 @@ CXXFLAGS += ${INCDIR_PREFIX}googletest/googletest
 CXXFLAGS += ${INCDIR_PREFIX}googletest/googlemock
 
 CXXFLAGS += -DGTEST_HAS_POSIX_RE=0
+ifneq ($(CONFIG_CXX_WCHAR),)
+CXXFLAGS += -DGTEST_HAS_STD_WSTRING=1
+else
+CXXFLAGS += -DGTEST_HAS_STD_WSTRING=0
+endif
 
 CXXFLAGS += -Wno-maybe-uninitialized -Wno-array-bounds -Wno-alloc-size-larger-than
 
