@@ -224,4 +224,40 @@ config CHRE_EXAMPLES_WIFI_WORLD
 
 endif #CHRE_EXAMPLES
 
+config CHREHOST
+	tristate "CHREHOST"
+	default n
+	depends on NETUTILS_JSONCPP
+	---help---
+		Enable CHREHOST
+
+if CHREHOST
+
+config CHREHOST_TEST
+	bool "chre host Test"
+	default n
+	---help---
+		CHRE HOST Test
+
+config CHREHOST_PROGNAME
+	string "Program name of CHRE framework"
+	default "chredaemon"
+	depends on CHREHOST_TEST
+
+config CHREHOST_PRIORITY
+	int "Priority of CHRE"
+	default 100
+	depends on CHREHOST_TEST
+
+config CHREHOST_STACKSIZE
+	int "Stack size of CHRE"
+	default 8192
+	depends on CHREHOST_TEST
+
+config CHREHOST_PRELOAD_CONFIG
+	string "preload config for chre"
+	default "/etc/chre/product_nanoapps.json"
+
+endif # CHREHOST
+
 endif # CHRE

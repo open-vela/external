@@ -154,14 +154,28 @@ depend::
 distclean::
 	$(Q) $(call DELFILE, $(SYMTABSRC))
 
+ifneq ($(CONFIG_CHRE),)
 BIN = $(APPDIR)/staging/libchre$(LIBEXT)
 LDLIBS += $(BIN)
 
-MAINSRC = $(CHRE_PREFIX)/platform/nuttx/init.cc
-PROGNAME = $(CONFIG_CHRE_PROGNAME)
-PRIORITY = $(CONFIG_CHRE_PRIORITY)
-STACKSIZE = $(CONFIG_CHRE_STACKSIZE)
+MAINSRC += $(CHRE_PREFIX)/platform/nuttx/init.cc
+PROGNAME += $(CONFIG_CHRE_PROGNAME)
+PRIORITY += $(CONFIG_CHRE_PRIORITY)
+STACKSIZE += $(CONFIG_CHRE_STACKSIZE)
 MODULE = $(CONFIG_CHRE)
+endif
+
+ifneq ($(CONFIG_CHREHOST),)
+include $(CHRE_PREFIX)/host/nuttx/nuttx.mk
+BIN = $(APPDIR)/staging/libchrehost$(LIBEXT)
+ifneq ($(CONFIG_CHREHOST_TEST),)
+LDLIBS += $(BIN)
+PROGNAME += $(CONFIG_CHREHOST_PROGNAME)
+MAINSRC += $(CHRE_PREFIX)/host/nuttx/test.cc
+PRIORITY += $(CONFIG_CHREHOST_PRIORITY)
+STACKSIZE += $(CONFIG_CHREHOST_STACKSIZE)
+endif
+endif
 
 ifneq ($(CONFIG_CHRE_UNIT_TEST),)
 MAINSRC += $(CHRE_PREFIX)/platform/nuttx/test.cc
