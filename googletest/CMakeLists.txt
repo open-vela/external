@@ -27,11 +27,6 @@ if(CONFIG_LIB_GOOGLETEST)
 
   set(CXXFLAGS -DGTEST_HAS_POSIX_RE=0 -Wno-maybe-uninitialized
                -Wno-array-bounds -Wno-alloc-size-larger-than)
-  if(CONFIG_CXX_WCHAR)
-    set(CXXFLAGS -DGTEST_HAS_STD_WSTRING=1)
-  else()
-    set(CXXFLAGS -DGTEST_HAS_STD_WSTRING=0)
-  endif()
 
   set(INCDIR ${GTEST_DIR} ${GMOCK_DIR})
   target_sources(googletest PRIVATE ${GTEST_DIR}/src/gtest-all.cc
