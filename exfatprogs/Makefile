@@ -24,6 +24,7 @@ CFLAGS   += -D__u8=uint8_t
 CFLAGS   += -D__u16=uint16_t
 CFLAGS   += -D__u32='unsigned int'
 CFLAGS   += -D__u64=uint64_t
+CFLAGS   += -Dshow_version=fschk_show_version
 CFLAGS   += ${INCDIR_PREFIX}.
 CFLAGS   += ${INCDIR_PREFIX}exfatprogs/include
 PRIORITY  = $(CONFIG_UTILS_EXFATPROGS_PRIORITY)
