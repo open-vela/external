@@ -26,6 +26,8 @@ LIBJPEG_FILTER_OUT += libjpeg-turbo/jdmrg565.c
 LIBJPEG_FILTER_OUT += libjpeg-turbo/jdmrgext.c
 LIBJPEG_FILTER_OUT += libjpeg-turbo/jstdhuff.c
 
+CFLAGS += -Dread_stdin=libjpeg_read_stdin
+
 CSRCS += $(filter-out $(LIBJPEG_FILTER_OUT), $(wildcard libjpeg-turbo/j*.c))
 
 include $(APPDIR)/Application.mk
