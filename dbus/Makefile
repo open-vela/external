@@ -107,6 +107,7 @@ PROGNAME += dbus_update_activation_environment
 endif
 
 ifneq ($(CONFIG_DBUS_TEST),)
+CFLAGS   += -DDBUS_ENABLE_EMBEDDED_TESTS=1
 CSRCS    += dbus/test/disable-crash-handling.c dbus/test/test-utils.c
 CSRCS    += dbus/test/internals/dbus-message-util.c  dbus/test/internals/dbus-auth-util.c \
 	dbus/test/internals/mempool.c dbus/test/internals/address.c dbus/test/internals/sha.c \

@@ -234,6 +234,7 @@ if(CONFIG_LIB_DBUS)
   endif()
 
   if(CONFIG_DBUS_TEST)
+    list(APPEND CFLAGS -DDBUS_ENABLE_EMBEDDED_TESTS=1)
     list(
       APPEND
       CSRCS
