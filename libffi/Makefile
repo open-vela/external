@@ -23,6 +23,8 @@ TARGETDIR := aarch64
 else ifeq ($(CONFIG_ARCH),xtensa)
 TARGETDIR := xtensa
 else ifeq ($(CONFIG_ARCH),sim)
+TARGETDIR := x86
+endif
 
 # When libffi builds the stack frame, it will modify the contents of the
 # asan red zone, causing runtime errors.
@@ -30,9 +32,7 @@ else ifeq ($(CONFIG_ARCH),sim)
 # For details, refer to the following issues:
 # https://github.com/libffi/libffi/issues/255
 
-CFLAGS += -fno-sanitize=all
-TARGETDIR := x86
-endif
+CFLAGS += -fno-sanitize=all -fno-stack-protector
 
 FLAGS += ${INCDIR_PREFIX}.
 FLAGS += ${INCDIR_PREFIX}libffi

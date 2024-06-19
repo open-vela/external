@@ -25,7 +25,6 @@ if(CONFIG_LIB_FFI)
   elseif("${CONFIG_ARCH}" STREQUAL "xtensa")
     set(TARGETDIR xtensa)
   elseif("${CONFIG_ARCH}" STREQUAL "sim")
-    list(APPEND FLAGS -fno-sanitize=kernel-address)
     set(TARGETDIR x86)
   endif()
 
@@ -45,6 +44,7 @@ if(CONFIG_LIB_FFI)
        ${CMAKE_CURRENT_LIST_DIR}/libffi ${CMAKE_CURRENT_LIST_DIR}/libffi/src
        ${CMAKE_CURRENT_LIST_DIR}/libffi/src/${TARGETDIR})
 
+  list(APPEND FLAGS -fno-sanitize=all -fno-stack-protector)
   list(APPEND FLAGS -Wno-deprecated-declarations -Wno-undef)
 
   nuttx_create_symlink(${CMAKE_CURRENT_LIST_DIR}/libffi/include
