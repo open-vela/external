@@ -14,11 +14,27 @@
 # limitations under the License.
 #
 
-include $(APPDIR)/Make.defs
+ifeq ($(DST_PATH),)
+  include $(APPDIR)/Make.defs
+  # configure in place
+  DST_PATH := x264
+else
+  # configure out of tree
+  DST_PATH := $(realpath $(DST_PATH))
+  include $(DST_PATH)/Make.defs
+  BIN := $(DST_PATH)/libx264.a
+  # enable Application.mk PREFIX
+  PREFIX := $(DST_PATH)$(DELIM)
 
-SRCPATH=x264
+  CFLAGS  += $(INCDIR_PREFIX)$(DST_PATH)
+  ASFLAGS += $(INCDIR_PREFIX)$(DST_PATH)
+endif
 
--include $(SRCPATH)/config.mak
+X264_CONFIG_SCRIPT := $(CURDIR)$(DELIM)x264$(DELIM)configure
+
+SRCPATH:=x264
+
+-include $(DST_PATH)/config.mak
 
 ifneq ($(CONFIG_ARCH),sim)
   CFG_CMDS += --host=$(CONFIG_ARCH)-unknown-linux-gnu
@@ -32,7 +48,7 @@ else
 endif
 
 # suppress -Wundef -Wno-format
-CFLAGS += -Wno-undef -Wno-format -fno-var-tracking-assignments -Wno-unused-but-set-variable
+CFLAGS += -Wno-undef -Wno-format -fno-var-tracking-assignments -Wno-unused-but-set-variable -Wno-cpp
 
 SRCS = common/osdep.c common/base.c common/cpu.c common/tables.c \
        encoder/api.c
@@ -55,7 +71,7 @@ SRCCLI = autocomplete.c input/input.c input/timecode.c input/raw.c \
 
 SRCCLI_X = filters/video/cache.c filters/video/depth.c
 
-CONFIG := $(shell cat $(SRCPATH)/config.h)
+CONFIG := $(shell cat $(DST_PATH)/config.h)
 
 # Optional module sources
 ifneq ($(findstring HAVE_AVS 1, $(CONFIG)),)
@@ -200,19 +216,19 @@ endif
 
 NASUFFIX = $(subst $(DELIM),.,$(CURDIR)$(DELIM)$(SRCPATH))
 
-SRCASM_8 := $(addprefix $(SRCPATH)$(DELIM), $(SRCASM_8) $(SRCASM_X))
-SRCASM_G := $(addprefix $(SRCPATH)$(DELIM), $(SRCASM_G))
+SRCASM_8 := $(addprefix $(SRCPATH)$(DELIM),$(SRCASM_8) $(SRCASM_X))
+SRCASM_G := $(addprefix $(SRCPATH)$(DELIM),$(SRCASM_G))
 
-OBJASM_8 = $(SRCASM_8:=$(NASUFFIX)$(OBJEXT))
-OBJASM_G = $(SRCASM_G:=$(NASUFFIX)$(OBJEXT))
+OBJASM_8 = $(addprefix $(PREFIX),$(addsuffix $(NASUFFIX)$(OBJEXT),$(SRCASM_8)))
+OBJASM_G = $(addprefix $(PREFIX),$(addsuffix $(NASUFFIX)$(OBJEXT),$(SRCASM_G)))
 
 EXTOBJS = $(OBJASM_8) $(OBJASM_G)
 
-$(OBJASM_8): %.$(ASMEXT)$(NASUFFIX)$(OBJEXT): %.$(ASMEXT)
-	$(Q) $(AS) $(ASFLAGS) -DBIT_DEPTH=8 -Dprivate_prefix=x264_8 -o $@ $<
+$(OBJASM_8): $(PREFIX)%.$(ASMEXT)$(NASUFFIX)$(OBJEXT): %.$(ASMEXT)
+	$(Q) $(AS) $(ASFLAGS) -DBIT_DEPTH=8 -Dprivate_prefix=x264_8 $< -o $@
 
-$(OBJASM_G): %.$(ASMEXT)$(NASUFFIX)$(OBJEXT): %.$(ASMEXT)
-	$(Q) $(AS) $(ASFLAGS) -o $@ $<
+$(OBJASM_G): $(PREFIX)%.$(ASMEXT)$(NASUFFIX)$(OBJEXT): %.$(ASMEXT)
+	$(Q) $(AS) $(ASFLAGS) $< -o $@
 
 ifneq ($(CONFIG_UTILS_X264),)
   MODULE    += CONFIG_UTILS_X264
@@ -223,21 +239,27 @@ ifneq ($(CONFIG_UTILS_X264),)
   CSRCS     += $(addprefix $(SRCPATH)$(DELIM), $(SRCCLI) $(SRCCLI_X))
 endif
 
-$(SRCPATH)/config.mak:
+$(DST_PATH)/config.mak:
 	$(Q)echo "X264 configure... $(CONFIG_ARCH)"
-	$(Q)cd $(SRCPATH) && ./configure --disable-cli --enable-static \
+	$(Q)cd $(DST_PATH) && $(X264_CONFIG_SCRIPT) --disable-cli --enable-static \
   --disable-bashcompletion --disable-opencl \
   --disable-thread --disable-avs --disable-swscale \
   --disable-lavf --disable-ffms --disable-gpac --disable-lsmash \
   --extra-asflags="$(X264EASFLAGS)" --extra-cflags="$(X264ECFLAGS)" \
   --bit-depth=8 $(CFG_CMDS)
-	$(Q)cd $(SRCPATH) && sed -n '/^\(SYS_ARCH\|CFLAGS\|ASFLAGS\|HAVE_GETOPT_LONG\)=/ p' config.mak > config.mak.mod \
+	$(Q)cd $(DST_PATH) && sed -n '/^\(SYS_ARCH\|CFLAGS\|ASFLAGS\|HAVE_GETOPT_LONG\)=/ p' config.mak > config.mak.mod \
     && mv -f config.mak.mod config.mak
 
-context:: $(SRCPATH)/config.mak
+context:: $(DST_PATH)/config.mak
+ifneq ($(PREFIX),)
+	@$(eval ALL_SRCS = $(ASRCS) $(CSRCS) $(MAINSRC) $(NASRCS) $(SRCASM_8) $(SRCASM_G))
+	@$(foreach src,$(ALL_SRCS),$(shell mkdir -p $(PREFIX)$(dir $(src))))
+endif
+
 
 distclean::
-	$(Q)rm -f $(SRCPATH)/x264_config.h $(SRCPATH)/config.mak \
-    $(SRCPATH)/config.log $(SRCPATH)/x264.pc $(SRCPATH)/x264.def
+	$(Q)rm -f $(DST_PATH)/x264_config.h $(DST_PATH)/config.mak \
+    $(DST_PATH)/config.log $(DST_PATH)/x264.pc $(DST_PATH)/x264.def
 
 include $(APPDIR)/Application.mk
+
