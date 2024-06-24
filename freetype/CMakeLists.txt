@@ -31,12 +31,18 @@ if(CONFIG_LIB_FREETYPE)
       "builds/nuttx/ftsystem.c"
       CACHE STRING "Path to ftsystem.c source file" FORCE)
 
+  set(INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/freetype/include)
+
   add_compile_options(-Wno-dangling-pointer)
 
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/freetype
                    ${CMAKE_CURRENT_BINARY_DIR}/freetype EXCLUDE_FROM_ALL)
   nuttx_add_external_library(freetype)
-  nuttx_export_header(TARGET freetype INCLUDE_DIRECTORIES
-                      ${CMAKE_CURRENT_SOURCE_DIR}/freetype/include)
+
+  # Export headers to global
+  set_property(
+    TARGET nuttx
+    APPEND
+    PROPERTY NUTTX_INCLUDE_DIRECTORIES ${INCDIR})
 
 endif()
