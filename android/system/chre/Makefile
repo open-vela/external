@@ -94,7 +94,7 @@ endif
 # is scoped to the API version, so we can adjust the offset when a new API
 # version is released.
 EPOCH=$(shell $(DATE_CMD) --date='2017-01-01' +%s)
-CHRE_PATCH_VERSION = $(shell echo $$(((`$(DATE_CMD) +%s` - $(EPOCH)) / (60 * 60))))
+CHRE_PATCH_VERSION = $(shell echo $$(( $$(((`$(DATE_CMD) +%s` - $(EPOCH)) / (60 * 60))) % 65535)))
 endif
 
 COMMON_CFLAGS += -DCHRE_PATCH_VERSION=$(CHRE_PATCH_VERSION)
