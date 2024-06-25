@@ -16,4 +16,57 @@
 
 ifneq ($(CONFIG_CHRE),)
 CONFIGURED_APPS += $(APPDIR)/external/android/system/chre
+
+ifneq ($(CONFIG_CHRE_EXAMPLES),)
+
+CHRE_PREFIX = $(APPDIR)/external/android/system/chre/chre/platform/nuttx
+export CHRE_PREFIX
+
+PATH_CHRE = $(APPDIR)/external/android/system/chre/chre
+
+ifneq ($(CONFIG_CHRE_EXAMPLES_HELLO_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/hello_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_TIMER_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/timer_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_HOST_ASAKE_WORKD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/host_awake_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_BLE_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/ble_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_GNSS_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/gnss_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_MESSAGE_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/message_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_RPC_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/rpc_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_SENSOR_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/sensor_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_DEBUG_DUMP_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/debug_dump_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_AUDIO_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/audio_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_TFLM_DEMO),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/tflm_demo
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_WWAN_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/wwan_world
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_AUDIO_STRESS_TEST),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/audio_stress_test
+endif
+ifneq ($(CONFIG_CHRE_EXAMPLES_WIFI_WORLD),)
+  CONFIGURED_APPS += $(PATH_CHRE)/apps/wifi_world
+endif
+
+endif
+
 endif
