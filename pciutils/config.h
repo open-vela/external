@@ -10,3 +10,4 @@
 #define PCI_PATH_IDS_DIR "/etc"
 #define xmalloc pciutils_xmalloc
 #define xrealloc pciutils_xrealloc
+#define xstrdup pciutils_xstrdup
