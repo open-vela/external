@@ -23,6 +23,9 @@ CFLAGS += -DTHREAD_STACKSIZE=CONFIG_UTILS_SSH_STACKSIZE
 CFLAGS += -DBLOCKSIZE=4096 -DBUF_SIZE=4096 -DCHUNKSIZE=4096
 CFLAGS += -DERROR_BUFFERLEN=512 -DLOG_SIZE=256 -DMAX_LINE_SIZE=512
 CFLAGS += -Dmd5_init=sshmd5_init -Dmd5_update=sshmd5_update -Dmd5_final=sshmd5_final
+CFLAGS += -Dsha1_init=sshsha1_init -Dsha256_init=sshsha256_init
+CFLAGS += -Dsha384_init=sshsha384_init -Dsha512_init=sshsha512_init
+CFLAGS += -Dhmac_init=ssh_hmac_init
 CFLAGS += -Wno-deprecated-declarations
 
 SKIP  = libssh/src/dh_crypto.c libssh/src/ecdh_crypto.c libssh/src/ecdh_gcrypt.c
