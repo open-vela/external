@@ -27,21 +27,21 @@ config FASTDDS
 
 config FASTDDS_ENABLE_OLD_LOG_MACROS
 	bool "Enable OLD LOG MACROS"
-	default y
+	default n
 	---help---
 		Open the macro definition of log
 
 config FASTDDS_LOG_NO_INFO
 	bool "info log"
 	default n
-	depends on ENABLE_OLD_LOG_MACROS
+	depends on FASTDDS_ENABLE_OLD_LOG_MACROS
 	---help---
 		Set the log level to info
 
 config FASTDDS_LOG_NO_WARNING
 	bool "warning log"
 	default n
-	depends on ENABLE_OLD_LOG_MACROS
+	depends on FASTDDS_ENABLE_OLD_LOG_MACROS
 	depends on FASTDDS_LOG_NO_INFO
 	---help---
 		Set the log level to warning
@@ -49,7 +49,7 @@ config FASTDDS_LOG_NO_WARNING
 config FASTDDS_LOG_NO_ERROR
 	bool "error log"
 	default n
-	depends on ENABLE_OLD_LOG_MACROS
+	depends on FASTDDS_ENABLE_OLD_LOG_MACROS
 	depends on FASTDDS_LOG_NO_WARNING
 	---help---
 		Set the log level to error

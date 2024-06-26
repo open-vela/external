@@ -14,7 +14,7 @@ if(CONFIG_FASTDDS)
   set(SQLITE3_SUPPORT 0)
   set(COMPILE_TOOLS OFF)
 
-  if(CONFIG_ENABLE_OLD_LOG_MACROS)
+  if(CONFIG_FASTDDS_ENABLE_OLD_LOG_MACROS)
     set(ENABLE_OLD_LOG_MACROS_ 1)
   endif()
 
@@ -51,7 +51,6 @@ if(CONFIG_FASTDDS)
     list(APPEND FASTDDS_FLAGS -Wno-psabi)
   endif()
 
-  include_directories(${CMAKE_BINARY_DIR}/include/libcxx)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/nlohmann-json)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/filewatch)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/boost/include)
@@ -88,6 +87,9 @@ if(CONFIG_FASTDDS)
 
   set(FOONATHAN_MEMORY_BUILD_TOOLS OFF)
 
+  set(CMAKE_CXX_FLAGS
+      "${CMAKE_CXX_FLAGS} -I${NUTTX_DIR}/libs/libxx/libcxx/include -I${NUTTX_DIR}/include -I${CMAKE_BINARY_DIR}/include -I${CMAKE_BINARY_DIR}/include_arch"
+  )
   add_subdirectory(${BUILD_MEMORY_SRC_DIR})
   nuttx_add_external_library(foonathan_memory)
   target_compile_options(foonathan_memory PRIVATE ${FASTDDS_FLAGS})
