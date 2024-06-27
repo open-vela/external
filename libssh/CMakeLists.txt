@@ -27,6 +27,11 @@ if(CONFIG_LIB_SSH)
       -Dmd5_init=sshmd5_init
       -Dmd5_update=sshmd5_update
       -Dmd5_final=sshmd5_final
+      -Dsha1_init=sshsha1_init
+      -Dsha256_init=sshsha256_init
+      -Dsha384_init=sshsha384_init
+      -Dsha512_init=sshsha512_init
+      -Dhmac_init=ssh_hmac_init
       -Wno-deprecated-declarations)
 
   set(LIBSSH_INCDIR ${CMAKE_CURRENT_LIST_DIR}
