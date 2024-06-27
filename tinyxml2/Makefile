@@ -20,7 +20,9 @@ CXXEXT  = .cpp
 CXXSRCS = tinyxml2/tinyxml2.cpp
 
 ifneq ($(filter "-O3",$(CXXFLAGS)),)
+ifeq ($(filter x86_64 x86,$(CONFIG_ARCH)),)
   tinyxml2/tinyxml2.cpp_CXXFLAGS += -mlong-calls
+endif
 endif
 
 include $(APPDIR)/Application.mk
