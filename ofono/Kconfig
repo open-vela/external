@@ -65,4 +65,9 @@ config OFONO_PLUGIN_DIR
 	---help---
 		Directory for the loading plugins.
 
+config OFONO_DATA_LOG_OVER_MIWEAR
+	bool "support data log over miwear"
+	default n
+	---help---
+		Enable data log over miwear to onetrack
 endif
