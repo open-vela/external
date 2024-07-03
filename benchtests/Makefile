@@ -30,6 +30,7 @@ CFLAGS   += -Dxmalloc=benchtests_xmalloc -Dxasprintf=benchtests_xasprintf \
 CFLAGS   += -Wno-unused-function
 CFLAGS   += -Wno-unused-variable
 CFLAGS   += -Wno-shadow
+CFLAGS   += -Wno-overflow
 
 CSRCS    += benchtests/json-lib.c
 CSRCS    += port/error.c
