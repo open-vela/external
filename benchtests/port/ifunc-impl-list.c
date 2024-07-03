@@ -25,6 +25,7 @@
 #include <assert.h>
 #include <string.h>
 #include <stdio.h>
+#include <wchar.h>
 
 #include "ifunc-impl-list.h"
 
@@ -142,6 +143,54 @@ __libc_ifunc_impl_list(const char *name, struct libc_ifunc_impl *array,
 
   IFUNC_IMPL(max, name, strtok,
              IFUNC_IMPL_ADD(array, max, strtok, 1, strtok));
+
+  IFUNC_IMPL(max, name, wctomb,
+             IFUNC_IMPL_ADD(array, max, wctomb, 1, wctomb));
+
+  IFUNC_IMPL(max, name, wcscat,
+             IFUNC_IMPL_ADD(array, max, wcscat, 1, wcscat));
+
+  IFUNC_IMPL(max, name, wcschr,
+             IFUNC_IMPL_ADD(array, max, wcschr, 1, wcschr));
+
+  IFUNC_IMPL(max, name, wcscmp,
+             IFUNC_IMPL_ADD(array, max, wcscmp, 1, wcscmp));
+
+  IFUNC_IMPL(max, name, wcscpy,
+             IFUNC_IMPL_ADD(array, max, wcscpy, 1, wcscpy));
+
+  IFUNC_IMPL(max, name, wcslen,
+             IFUNC_IMPL_ADD(array, max, wcslen, 1, wcslen));
+
+  IFUNC_IMPL(max, name, wcscspn,
+             IFUNC_IMPL_ADD(array, max, wcscspn, 1, wcscspn));
+
+  IFUNC_IMPL(max, name, wcslen,
+             IFUNC_IMPL_ADD(array, max, wcslen, 1, wcslen));
+
+  IFUNC_IMPL(max, name, wcsncat,
+             IFUNC_IMPL_ADD(array, max, wcsncat, 1, wcsncat));
+
+  IFUNC_IMPL(max, name, wcsncpy,
+             IFUNC_IMPL_ADD(array, max, wcsncpy, 1, wcsncpy));
+
+  IFUNC_IMPL(max, name, wcspbrk,
+             IFUNC_IMPL_ADD(array, max, wcspbrk, 1, wcspbrk));
+
+  IFUNC_IMPL(max, name, wcsrchr,
+             IFUNC_IMPL_ADD(array, max, wcsrchr, 1, wcsrchr));
+
+  IFUNC_IMPL(max, name, wcsspn,
+             IFUNC_IMPL_ADD(array, max, wcsspn, 1, wcsspn));
+
+  IFUNC_IMPL(max, name, wmemchr,
+             IFUNC_IMPL_ADD(array, max, wmemchr, 1, wmemchr));
+
+  IFUNC_IMPL(max, name, wmemcmp,
+             IFUNC_IMPL_ADD(array, max, wmemcmp, 1, wmemcmp));
+
+  IFUNC_IMPL(max, name, wmemset,
+             IFUNC_IMPL_ADD(array, max, wmemset, 1, wmemset));
 
   return 0;
 }

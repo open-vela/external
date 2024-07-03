@@ -33,10 +33,23 @@ config BENCHTEST_DURATION
 	int "benchtest duration"
 	default 1
 
-config BENCHTEST_STRING
-	tristate "Build String Test"
+config BENCHTEST_STRING_TESTS
+	tristate "Enable String / WString Test"
 	default n
 	---help---
 		When enabling this option, ensure that the _start_impl section exists
+
+choice
+	prompt "Libc Benchtest String / WString Test Case configuration"
+	default BENCHTEST_STRING
+	depends on BENCHTEST_STRING_TESTS
+
+config BENCHTEST_STRING
+	bool "Build String Test"
+
+config BENCHTEST_WSTRING
+	bool "Build WString Test"
+
+endchoice
 
 endif

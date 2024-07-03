@@ -115,6 +115,40 @@ PROGNAME += bench_strtok
 MAINSRC  += benchtests/bench-strtok.c
 endif
 
+ifeq ($(CONFIG_BENCHTEST_WSTRING),y)
+CFLAGS += -Wno-implicit-function-declaration
+PROGNAME += bench_wcrtomb
+MAINSRC  += benchtests/bench-wcrtomb.c
+PROGNAME += bench_wcscat
+MAINSRC  += benchtests/bench-wcscat.c
+PROGNAME += bench_wcschr
+MAINSRC  += benchtests/bench-wcschr.c
+PROGNAME += bench_wcscmp
+MAINSRC  += benchtests/bench-wcscmp.c
+PROGNAME += bench_wcscpy
+MAINSRC  += benchtests/bench-wcscpy.c
+PROGNAME += bench_wcscspn
+MAINSRC  += benchtests/bench-wcscspn.c
+PROGNAME += bench_wcslen
+MAINSRC  += benchtests/bench-wcslen.c
+PROGNAME += bench_wcsncat
+MAINSRC  += benchtests/bench-wcsncat.c
+PROGNAME += bench_wcsncpy
+MAINSRC  += benchtests/bench-wcsncpy.c
+PROGNAME += bench_wcspbrk
+MAINSRC  += benchtests/bench-wcspbrk.c
+PROGNAME += bench_wcsrchr
+MAINSRC  += benchtests/bench-wcsrchr.c
+PROGNAME += bench_wcsspn
+MAINSRC  += benchtests/bench-wcsspn.c
+PROGNAME += bench_wmemchr
+MAINSRC  += benchtests/bench-wmemchr.c
+PROGNAME += bench_wmemcmp
+MAINSRC  += benchtests/bench-wmemcmp.c
+PROGNAME += bench_wmemset
+MAINSRC  += benchtests/bench-wmemset.c
+endif
+
 #other
 
 context::
