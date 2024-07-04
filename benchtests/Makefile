@@ -306,6 +306,12 @@ MAINSRC  += benchtests/bench-pthread-thread_create.c
     PROGNAME += bench_pthread_locks
     MAINSRC  += benchtests/bench-pthread-locks.c
   endif
+  ifneq ($(CONFIG_PTHREAD_SPINLOCKS),)
+    PROGNAME += bench_pthread_spin_trylock
+    MAINSRC  += benchtests/bench-pthread-spin-trylock.c
+    PROGNAME += bench_pthread_spin_lock
+    MAINSRC  += benchtests/bench-pthread-spin-lock.c
+  endif
 endif
 
 ifneq ($(CONFIG_CRYPTO_RANDOM_POOL),)
