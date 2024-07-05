@@ -207,8 +207,8 @@ ifneq ($(CONFIG_V4L2_M2M), )
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ffmpeg/include
 endif
 
-ifeq ($(CONFIG_LIB_X264),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/x264/x264
+ifeq ($(CONFIG_VIDEOUTILS_LIBX264),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/videoutils/x264/x264
 endif
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc
