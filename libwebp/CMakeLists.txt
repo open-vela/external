@@ -20,6 +20,8 @@ if(CONFIG_LIB_WEBP)
   # Library Configuration
   # ############################################################################
 
+  list(APPEND CFLAGS -Wno-maybe-uninitialized)
+
   set(WEBP_BUILD_ANIM_UTILS
       OFF
       CACHE BOOL "Disable animation utilities." FORCE)

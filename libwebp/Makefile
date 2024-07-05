@@ -16,6 +16,8 @@
 
 include $(APPDIR)/Make.defs
 
+CFLAGS += -Wno-maybe-uninitialized
+
 CFLAGS += ${INCDIR_PREFIX}libwebp/
 CFLAGS += ${INCDIR_PREFIX}libwebp/src/
 
