@@ -88,7 +88,7 @@ if(CONFIG_FASTDDS)
   set(FOONATHAN_MEMORY_BUILD_TOOLS OFF)
 
   set(CMAKE_CXX_FLAGS
-      "${CMAKE_CXX_FLAGS} -I${NUTTX_DIR}/libs/libxx/libcxx/include -I${NUTTX_DIR}/include -I${CMAKE_BINARY_DIR}/include -I${CMAKE_BINARY_DIR}/include_arch"
+      "${CMAKE_CXX_FLAGS} -I${NUTTX_DIR}/libs/libxx/libcxx/include -I${NUTTX_DIR}/include -I${CMAKE_BINARY_DIR}/include"
   )
   add_subdirectory(${BUILD_MEMORY_SRC_DIR})
   nuttx_add_external_library(foonathan_memory)
