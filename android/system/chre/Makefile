@@ -147,6 +147,14 @@ CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/chqts/src
 CXXFLAGS += -I$(CHRE_PREFIX)/platform/shared
 endif
 
+SYMTAB_SRC=$(CHRE_PREFIX)/platform/nuttx/symtab.c
+CSRCS += $(SYMTAB_SRC)
+CFLAGS += -Wno-builtin-declaration-mismatch
+
+depend::
+	mkdir -p $(NANOAPP_OUT)
+	$(APPDIR)/tools/mksymtab.sh $(NANOAPP_OUT) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt > $(SYMTAB_SRC)
+
 BIN = $(APPDIR)/staging/libchre$(LIBEXT)
 LDLIBS += $(BIN)
 
