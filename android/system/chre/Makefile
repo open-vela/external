@@ -122,6 +122,8 @@ include $(CHRE_PREFIX)/build/variant/nuttx.mk
 
 CXXSRCS += $(COMMON_SRCS)
 CXXSRCS += $(TARGET_VARIANT_SRCS)
+SYMTABSRC = $(CHRE_PREFIX)/platform/nuttx/symtab.c
+SYMTABOBJ = $(SYMTABSRC:.c=$(OBJEXT))
 CXXFLAGS += $(COMMON_CFLAGS)
 CXXFLAGS += $(TARGET_CFLAGS)
 CXXFLAGS += -DCHRE_FILENAME=__FILE__
@@ -147,13 +149,21 @@ CXXFLAGS += -I$(CHRE_PREFIX)/apps/test/chqts/src
 CXXFLAGS += -I$(CHRE_PREFIX)/platform/shared
 endif
 
-SYMTAB_SRC=$(CHRE_PREFIX)/platform/nuttx/symtab.c
-CSRCS += $(SYMTAB_SRC)
-CFLAGS += -Wno-builtin-declaration-mismatch
-
 depend::
 	mkdir -p $(NANOAPP_OUT)
-	$(APPDIR)/tools/mksymtab.sh $(NANOAPP_OUT) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt > $(SYMTAB_SRC)
+
+$(SYMTABOBJ): %$(OBJEXT): %.c
+	$(call COMPILE, $<, $@, -fno-lto -fno-builtin)
+
+$(SYMTABSRC):
+	$(Q) $(APPDIR)$(DELIM)tools$(DELIM)mksymtab.sh $(BINDIR) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt >$@.tmp
+	$(Q) $(call TESTANDREPLACEFILE, $@.tmp, $@)
+
+postinstall:: $(SYMTABOBJ)
+	$(call ARLOCK, $(call CONVERT_PATH,$(BIN)), $^)
+
+distclean::
+	$(Q) $(call DELFILE, $(SYMTABSRC))
 
 BIN = $(APPDIR)/staging/libchre$(LIBEXT)
 LDLIBS += $(BIN)
