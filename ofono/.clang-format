@@ -1,0 +1,20 @@
+---
+Language: Cpp
+BasedOnStyle: LLVM
+
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
+AllowShortFunctionsOnASingleLine: None
+BreakBeforeBraces: Linux
+ColumnLimit: 80
+ConstructorInitializerIndentWidth: 8
+ContinuationIndentWidth: 8
+Cpp11BracedListStyle: false
+IndentWidth: 8
+MaxEmptyLinesToKeep: 1
+PointerAlignment: Right
+UseTab: Always
+SeparateDefinitionBlocks: Always
+SpaceAfterCStyleCast: true
+SpacesInCStyleCastParentheses: true
+TabWidth: 8
