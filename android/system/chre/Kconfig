@@ -24,6 +24,28 @@ config CHRE
 
 if CHRE
 
+config CHRE_CLIENT_COUNT
+	int "CHRE client count"
+	default 2
+
+config CHRE_RPMSG_SERVER
+	bool "chre rpmsg server support"
+	default n
+	depends on NET_RPMSG
+	---help---
+		chre rpmsg server support
+
+config CHRE_LOCAL_SOCKET_SERVER
+	bool "chre local socket server support"
+	default n
+	depends on NET_LOCAL
+	---help---
+		chre local socket server support
+
+config CHRE_NANOAPP_SAVEPATH
+	string "nanoapp save path"
+	default "/data/chre"
+
 config CHRE_PROGNAME
 	string "Program name of CHRE framework"
 	default "chred"
