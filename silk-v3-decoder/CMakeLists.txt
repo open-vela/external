@@ -29,19 +29,14 @@ if(CONFIG_LIB_SILK)
   set(INCDIR ${CMAKE_CURRENT_LIST_DIR}/silk-v3-decoder/silk/interface)
 
   # ############################################################################
-  # Flags
-  # ############################################################################
-
-  if(NOT ${CONFIG_ARCH_TOOLCHAIN_CLANG})
-    set(CFLAGS "-Wno-stringop-overread")
-  endif()
-
-  # ############################################################################
   # Library Configuration
   # ############################################################################
 
   nuttx_add_library(silk-v3-decoder STATIC)
   target_sources(silk-v3-decoder PRIVATE ${CSRCS})
   target_include_directories(silk-v3-decoder PUBLIC ${INCDIR})
+  if(NOT CONFIG_ARCH_TOOLCHAIN_CLANG)
+    target_compile_options(silk-v3-decoder PRIVATE -Wno-stringop-overread)
+  endif()
 
 endif()

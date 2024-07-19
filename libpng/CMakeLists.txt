@@ -19,36 +19,46 @@ if(CONFIG_LIB_PNG)
   # ############################################################################
   # Library Configuration
   # ############################################################################
+  nuttx_add_library(png_static)
 
-  set(PNG_SHARED
-      OFF
-      CACHE BOOL "Disable libpng shared library" FORCE)
-  set(PNG_EXECUTABLES
-      OFF
-      CACHE BOOL "Disable libpng executable" FORCE)
-  set(PNG_TESTS
-      OFF
-      CACHE BOOL "Disable libpng tests program" FORCE)
-  set(M_LIBRARY
-      ""
-      CACHE STRING "Disable libm" FORCE)
-  set(ZLIB_INCLUDE_DIRS
-      "${NUTTX_APPS_DIR}/system/zlib/zlib"
-      CACHE STRING "Disable zlib include files" FORCE)
-  set(ZLIB_INCLUDE_DIR
-      "${NUTTX_APPS_DIR}/system/zlib/zlib"
-      CACHE STRING "Disable zlib include files for generate files" FORCE)
-  set(PNG_BUILD_ZLIB
-      ON
-      CACHE BOOL "Disable zlib compile" FORCE)
   if(CONFIG_ARM_NEON OR CONFIG_ARM64_NEON)
-    set(CMAKE_SYSTEM_PROCESSOR "arm64")
+    file(GLOB CSRCS libpng/arm/*.c libpng/arm/*.S)
+    set_source_files_properties(
+      ${CMAKE_CURRENT_LIST_DIR}/libpng/arm/palette_neon_intrinsics.c
+      PROPERTIES COMPILE_FLAGS -Os)
+
+    target_sources(png_static PRIVATE ${CSRCS})
+
+  else()
+    target_compile_options(png_static PRIVATE -DPNG_ARM_NEON_IMPLEMENTATION=0)
   endif()
 
-  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libpng
-                   ${CMAKE_CURRENT_BINARY_DIR}/libpng EXCLUDE_FROM_ALL)
-  nuttx_add_external_library(png_static)
+  target_include_directories(png_static
+                             PRIVATE ${NUTTX_APPS_DIR}/system/zlib/zlib)
+  file(GLOB CSRCS libpng/*.c)
+  list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libpng/pngtest.c)
+
+  target_sources(png_static PRIVATE ${CSRCS})
   nuttx_export_header(TARGET png_static INCLUDE_DIRECTORIES
                       ${CMAKE_CURRENT_SOURCE_DIR}/libpng)
-  nuttx_add_dependencies(TARGET png_static DEPENDS zlib)
+  # ############################################################################
+  # Applications Configuration
+  # ############################################################################
+
+  if(CONFIG_LIB_PNG_TEST)
+    nuttx_add_application(
+      NAME
+      test_libpng
+      STACKSIZE
+      ${CONFIG_LIB_PNG_TEST_STACKSIZE}
+      PRIORITY
+      ${CONFIG_LIB_PNG_TEST_PRIORITY}
+      SRCS
+      ${CMAKE_CURRENT_SOURCE_DIR}/libpng/pngtest.c
+      MODULE
+      ${CONFIG_LIB_PNG_TEST}
+      DEPENDS
+      png_static)
+  endif()
+
 endif()

@@ -18,32 +18,15 @@ if(CONFIG_LIB_ZINT)
   # ############################################################################
   # Library Configuration
   # ############################################################################
+  nuttx_add_library(zint-static)
+  file(GLOB CSRCS zint/backend/*.c)
+  target_sources(zint-static PRIVATE ${CSRCS})
+  target_include_directories(zint-static
+                             PRIVATE ${CMAKE_CURRENT_LIST_DIR}/zint/backend)
+  target_compile_options(zint-static PRIVATE -DNO_PNG)
 
-  set(ZINT_USE_PNG
-      OFF
-      CACHE BOOL "Build with PNG support" FORCE)
-  set(ZINT_STATIC
-      ON
-      CACHE BOOL "Build zint static" FORCE)
-  set(ZINT_VERSION_MAJOR 2)
-  set(ZINT_VERSION_MINOR 11)
-  set(ZINT_VERSION_RELEASE 1)
-  set(ZINT_VERSION_BUILD 9)
-  set(ZINT_VERSION
-      "${ZINT_VERSION_MAJOR}.${ZINT_VERSION_MINOR}.${ZINT_VERSION_RELEASE}.${ZINT_VERSION_BUILD}"
-  )
-  set(INCLUDE_INSTALL_DIR {CMAKE_CURRENT_BINARY_DIR}/zint)
-  add_definitions(-DZINT_VERSION=\"${ZINT_VERSION}\")
-  get_property(TARGET_SUPPORTS_SHARED_ORIG GLOBAL
-               PROPERTY TARGET_SUPPORTS_SHARED_LIBS)
-  set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
-  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/zint/backend
-                   ${CMAKE_CURRENT_BINARY_DIR}/zint/backend EXCLUDE_FROM_ALL)
-  nuttx_add_external_library(zint-static)
   nuttx_export_header(TARGET zint-static INCLUDE_DIRECTORIES
                       ${CMAKE_CURRENT_SOURCE_DIR}/zint/backend)
-  set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS
-                               ${TARGET_SUPPORTS_SHARED_ORIG})
 
   # ############################################################################
   # Applications Configuration

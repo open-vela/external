@@ -20,51 +20,15 @@ if(CONFIG_LIB_WEBP)
   # Library Configuration
   # ############################################################################
 
-  list(APPEND CFLAGS -Wno-maybe-uninitialized)
+  nuttx_add_library(webpdecoder)
+  file(GLOB CSRCS libwebp/src/dec/*.c libwebp/src/dsp/*.c libwebp/src/utils/*.c)
+  target_sources(webpdecoder PRIVATE ${CSRCS})
+  target_include_directories(
+    webpdecoder PRIVATE ${CMAKE_CURRENT_LIST_DIR}/libwebp
+                        ${CMAKE_CURRENT_LIST_DIR}/libwebp/src)
+  target_compile_options(webpdecoder PRIVATE -Wno-maybe-uninitialized)
 
-  set(WEBP_BUILD_ANIM_UTILS
-      OFF
-      CACHE BOOL "Disable animation utilities." FORCE)
-  set(WEBP_BUILD_CWEBP
-      OFF
-      CACHE BOOL "Disable the cwebp command line tool." FORCE)
-  set(WEBP_BUILD_DWEBP
-      OFF
-      CACHE BOOL "Disable the dwebp command line tool." FORCE)
-  set(WEBP_BUILD_GIF2WEBP
-      OFF
-      CACHE BOOL "Disable the gif2webp conversion tool." FORCE)
-  set(WEBP_BUILD_IMG2WEBP
-      OFF
-      CACHE BOOL "Disable the img2webp animation tool." FORCE)
-  set(WEBP_BUILD_VWEBP
-      OFF
-      CACHE BOOL "Disable the vwebp viewer tool." FORCE)
-  set(WEBP_BUILD_WEBPINFO
-      OFF
-      CACHE BOOL "Disable the webpinfo command line tool." FORCE)
-  set(WEBP_BUILD_LIBWEBPMUX
-      OFF
-      CACHE BOOL "Disable the libwebpmux library." FORCE)
-  set(WEBP_BUILD_WEBPMUX
-      OFF
-      CACHE BOOL "Disable the webpmux command line tool." FORCE)
-  set(WEBP_BUILD_EXTRAS
-      OFF
-      CACHE BOOL "Disable extras." FORCE)
-  set(WEBP_BUILD_WEBP_JS
-      OFF
-      CACHE BOOL "Disable Emscripten build of webp.js." FORCE)
-  set(WEBP_USE_THREAD
-      OFF
-      CACHE BOOL "Disable threading support" FORCE)
-  set(WEBP_NEAR_LOSSLESS
-      OFF
-      CACHE BOOL "Disable near-lossless encoding" FORCE)
-
-  add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/libwebp
-                   ${CMAKE_CURRENT_BINARY_DIR}/libwebp EXCLUDE_FROM_ALL)
-  nuttx_add_external_library(webpdecoder)
   nuttx_export_header(TARGET webpdecoder INCLUDE_DIRECTORIES
                       ${CMAKE_CURRENT_SOURCE_DIR}/libwebp/src)
+
 endif()

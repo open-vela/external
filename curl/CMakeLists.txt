@@ -44,6 +44,8 @@ if(CONFIG_LIB_CURL)
 
     add_custom_command(
       OUTPUT ${HELP_C}
+      COMMAND ${CMAKE_COMMAND} -E make_directory
+              ${CMAKE_CURRENT_BINARY_DIR}/curl
       COMMAND
         grep -r "Category" ${CMAKE_CURRENT_LIST_DIR}/curl/docs/cmdline-opts/ |
         grep "important" | cut -d ":" -f 1 | xargs
@@ -59,7 +61,8 @@ if(CONFIG_LIB_CURL)
     add_dependencies(curl gen_help_c)
 
     file(GLOB TOOL_SRCS curl/src/*.c)
-    list(REMOVE_ITEM TOOL_SRCS ${CMAKE_CURRENT_LIST_DIR}/curl/src/tool_listhelp.c
+    list(REMOVE_ITEM TOOL_SRCS
+         ${CMAKE_CURRENT_LIST_DIR}/curl/src/tool_listhelp.c
          ${CMAKE_CURRENT_LIST_DIR}/curl/src/tool_main.c)
     list(APPEND CURL_SRCS ${HELP_C} ${TOOL_SRCS})
 
