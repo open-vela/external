@@ -33,6 +33,9 @@ if(CONFIG_LIB_FREETYPE)
 
   set(INCDIR ${CMAKE_CURRENT_SOURCE_DIR}/freetype/include)
 
+  add_definitions(-DFT_CONFIG_MODULES_H="../builds/nuttx/ftmodule.h"
+                  -DFT_CONFIG_OPTIONS_H="../builds/nuttx/ftoption.h")
+
   add_compile_options(-Wno-dangling-pointer)
 
   add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/freetype

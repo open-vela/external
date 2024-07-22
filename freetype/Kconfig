@@ -14,31 +14,199 @@
 # limitations under the License.
 #
 
-config LIB_FREETYPE
+menuconfig LIB_FREETYPE
 	bool "Enable FreeType"
 	depends on ARCH_SETJMP_H
 	default n
 
+if LIB_FREETYPE
+
 config LIB_FREETYPE_MEMSIZE
 	int "Size of the custom memory used by `ft_alloc/ft_realloc/ft_free` in kilobytes"
-	depends on LIB_FREETYPE
 	default 0
 
-config LIB_FREETYPE_MBFC
-	bool "Enable FreeType's Multi-block cache read"
+menuconfig LIB_FREETYPE_MBFC
+	bool "Enable Multi-block file cache read"
 	default n
 
+if LIB_FREETYPE_MBFC
+
 config LIB_FREETYPE_MBFC_BLOCK_SIZE
-	int "Size of a block in bytes used by the Multi-block cache read"
-	depends on LIB_FREETYPE_MBFC
+	int "Size of a block in the Multi-block cache read in bytes"
 	default 16384
 
 config LIB_FREETYPE_MBFC_CACHE_NUM
-	int "Maximum number of blocks in the Multi-block cache read"
-	depends on LIB_FREETYPE_MBFC
+	int "Maximum number of cache blocks"
 	default 16
 
 config LIB_FREETYPE_MBFC_DEBUG
-	bool "Enable debugging messages for the Multi-block cache read"
-	depends on LIB_FREETYPE_MBFC
+	bool "Enable debugging messages"
 	default n
+
+endif # LIB_FREETYPE_MBFC
+
+menu "Font modules"
+
+config LIB_FREETYPE_FONT_MODULES_TRUETYPE
+	bool "TrueType font driver"
+	default y
+	depends on LIB_FREETYPE_FONT_MODULES_SFNT
+	help
+		This driver needs the `sfnt' module.
+
+config LIB_FREETYPE_FONT_MODULES_TYPE1
+	bool "PostScript Type 1 font driver"
+	default n
+	depends on LIB_FREETYPE_AUX_MODULES_PSAUX
+	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
+	depends on LIB_FREETYPE_HINTING_MODULES_PSHINTER
+	help
+		This driver needs the `psaux', `pshinter', and `psnames' modules.
+
+config LIB_FREETYPE_FONT_MODULES_CFF
+	bool "CFF/OpenType font driver"
+	default y
+	depends on LIB_FREETYPE_FONT_MODULES_SFNT
+	depends on LIB_FREETYPE_AUX_MODULES_PSAUX
+	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
+	depends on LIB_FREETYPE_AUX_MODULES_OTVALID
+	depends on LIB_FREETYPE_HINTING_MODULES_PSHINTER
+	help
+		This driver needs the `sfnt', `psaux', `pshinter', and `psnames' modules.
+
+config LIB_FREETYPE_FONT_MODULES_CID
+	bool "Type 1 CID-keyed font driver"
+	default n
+	depends on LIB_FREETYPE_AUX_MODULES_PSAUX
+	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
+	depends on LIB_FREETYPE_HINTING_MODULES_PSHINTER
+	help
+		This driver needs the `psaux', `pshinter', and `psnames' modules.
+
+config LIB_FREETYPE_FONT_MODULES_PFR
+	bool "PFR/TrueDoc font driver"
+	default n
+	help
+		See optional extension ftpfr.c below also.
+
+config LIB_FREETYPE_FONT_MODULES_TYPE42
+	bool "PostScript Type 42 font driver"
+	default n
+	depends on LIB_FREETYPE_FONT_MODULES_TRUETYPE
+	depends on LIB_FREETYPE_AUX_MODULES_PSAUX
+	help
+		This driver needs the `truetype' and `psaux' modules.
+
+config LIB_FREETYPE_FONT_MODULES_WINFONTS
+	bool "Windows FONT/FNT font driver"
+	default n
+	help
+		See optional extension ftwinfnt.c below also.
+
+config LIB_FREETYPE_FONT_MODULES_PCF
+	bool "PCF font driver"
+	default n
+	help
+		If debugging and tracing is enabled, needs `ftbitmap.c'.
+
+config LIB_FREETYPE_FONT_MODULES_BDF
+	bool "Enable BDF driver"
+	default n
+	help
+		See optional extension ftbdf.c below also.
+
+config LIB_FREETYPE_FONT_MODULES_SFNT
+	bool "SFNT files support"
+	default y
+	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
+	help
+		If used without `truetype' or `cff', it supports bitmap-only fonts within an SFNT wrapper.
+		This driver needs the `psnames' module.
+
+endmenu # Font modules
+
+menu "Hinting modules"
+
+config LIB_FREETYPE_HINTING_MODULES_AUTOFIT
+	bool "FreeType's auto hinter"
+	default n
+
+config LIB_FREETYPE_HINTING_MODULES_PSHINTER
+	bool "PostScript hinter"
+	default y
+
+endmenu
+
+menu "Raster modules"
+
+config LIB_FREETYPE_RASTER_MODULES_RASTER
+	bool "Monochrome rasterizer"
+	default n
+
+config LIB_FREETYPE_RASTER_MODULES_SMOOTH
+	bool "Anti-aliasing rasterizer"
+	default y
+
+config LIB_FREETYPE_RASTER_MODULES_SDF
+	bool "Signed distance field rasterizer"
+	default n
+
+endmenu # Hinting modules
+
+menu "Auxiliary modules"
+
+config LIB_FREETYPE_AUX_MODULES_CACHE
+	bool "FreeType's cache sub-system"
+	default n
+	help
+		FreeType's cache sub-system (quite stable but still in beta -- this means
+		that its public API is subject to change if necessary).  See
+		include/freetype/ftcache.h.  Needs `ftglyph.c'.
+
+config LIB_FREETYPE_AUX_MODULES_GXVALID
+	bool "TrueType GX/AAT table validation"
+	default n
+	help
+		Needs `ftgxval.c' below.
+
+config LIB_FREETYPE_AUX_MODULES_GZIP
+	bool "Support for streams compressed with gzip (files with suffix .gz)"
+	default y
+	help
+		See include/freetype/ftgzip.h for the API.
+
+config LIB_FREETYPE_AUX_MODULES_LZW
+	bool "Support for streams compressed with LZW (files with suffix .Z)"
+	default n
+	help
+		See include/freetype/ftlzw.h for the API.
+
+config LIB_FREETYPE_AUX_MODULES_BZIP2
+	bool "Support for streams compressed with bzip2 (files with suffix .bz2)"
+	default n
+	help
+		See include/freetype/ftbzip2.h for the API.
+
+config LIB_FREETYPE_AUX_MODULES_OTVALID
+	bool "OpenType table validation"
+	default y
+	help
+		Needs `ftotval.c' below.
+
+config LIB_FREETYPE_AUX_MODULES_PSAUX
+	bool "Auxiliary PostScript driver component to share common code"
+	default y
+	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
+	help
+		This module depends on `psnames'.
+
+config LIB_FREETYPE_AUX_MODULES_PSNAMES
+	bool "Support for PostScript glyph names"
+	default y
+	help
+		This module can be controlled in ftconfig.h
+		(FT_CONFIG_OPTION_POSTSCRIPT_NAMES).
+
+endmenu # Auxiliary modules
+
+endif # LIB_FREETYPE

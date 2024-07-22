@@ -19,7 +19,7 @@ include $(APPDIR)/Make.defs
 TOP_DIR = freetype
 CONFIG_MK = $(TOP_DIR)/builds/nuttx/nuttx.mk
 # FTOPTION_H = $(TOP_DIR)/builds/nuttx/ftoption.h
-# MODULES_CFG = $(TOP_DIR)/builds/nuttx/modules.cfg
+MODULES_CFG = $(TOP_DIR)/builds/nuttx/modules.cfg
 
 include $(TOP_DIR)/Makefile
 
