@@ -23,7 +23,7 @@ include $(APPDIR)/Make.defs
 PRIORITY  = $(CONFIG_PCIUTILS_PRIORITY)
 STACKSIZE = $(CONFIG_PCIUTILS_STACKSIZE)
 
-CFLAGS += -I. -Ipciutils
+CFLAGS += -I. -Ipciutils -Wno-parentheses -Wno-shadow
 CSRCS += pciutils/common.c pciutils/lib/access.c \
          pciutils/lib/caps.c pciutils/lib/dump.c \
          pciutils/lib/filter.c pciutils/lib/generic.c \
