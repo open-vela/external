@@ -31,6 +31,7 @@ if(CONFIG_LIB_EIGEN)
       -Wno-nonnull
       -Wno-stringop-overflow
       -U__GLIBCXX__
+      -DEIGEN_NO_IO
       -DEIGEN_TEST_MAX_SIZE=320
       -DEIGEN_TEST_PART_1=1
       -DEIGEN_TEST_PART_2=1

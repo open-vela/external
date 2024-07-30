@@ -39,6 +39,7 @@ CXXFLAGS += ${DEFINE_PREFIX}EIGEN_TEST_MAX_SIZE=320
 
 # Compatible with NuttX conflict resolution and added compilation options
 CXXFLAGS += -U__GLIBCXX__
+CXXFLAGS += -DEIGEN_NO_IO
 CXXFLAGS += -fno-var-tracking-assignments
 CXXFLAGS += -Wno-unused-function -Wno-unused-variable -Wno-maybe-uninitialized
 CXXFLAGS += -Wno-unused-local-typedefs -Wno-unused-parameter -Wno-return-type
