@@ -78,7 +78,7 @@ config LIB_AVB_FOOTER_SEARCH_BLKSIZE
 
 config LIB_AVB_BUF_SIZE
 	int "Max buffer size (Bytes) for partition message digest calculation"
-	default 16384
+	default 65536
 	---help---
 		Zero means alloc memory of size of full partition.
 
