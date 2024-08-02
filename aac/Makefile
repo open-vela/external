@@ -19,7 +19,7 @@ include $(APPDIR)/Make.defs
 CXXEXT = .cpp
 CXXSRCS = $(wildcard aac/*/src/*$(CXXEXT))
 
-CXXFLAGS += -Wno-undef
+CXXFLAGS += -Wno-undef -Wno-maybe-uninitialized
 
 CXXFLAGS += ${INCDIR_PREFIX}aac/libArithCoding/include
 CXXFLAGS += ${INCDIR_PREFIX}aac/libDRCdec/include
