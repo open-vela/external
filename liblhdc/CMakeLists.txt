@@ -19,17 +19,12 @@ if(CONFIG_LIB_LHDC)
   set(LIB_SRC_PATH ${CMAKE_CURRENT_LIST_DIR}/liblhdc/libs)
 
   if(${CONFIG_ARCH} STREQUAL "sim")
-    set_property(
-      GLOBAL APPEND
-      PROPERTY NUTTX_EXTRA_LIBRARIES
-               ${LIB_SRC_PATH}/x86/lhdcv4_dec/liblhdcDec_x86.a
-               ${LIB_SRC_PATH}/x86/lhdcv5_dec/liblhdcv5dec_x86.a)
+    nuttx_add_extra_library(${LIB_SRC_PATH}/x86/lhdcv4_dec/liblhdcDec_x86.a
+                            ${LIB_SRC_PATH}/x86/lhdcv5_dec/liblhdcv5dec_x86.a)
+
   elseif(${CONFIG_ARCH} STREQUAL "arm")
-    set_property(
-      GLOBAL APPEND
-      PROPERTY NUTTX_EXTRA_LIBRARIES
-               ${LIB_SRC_PATH}/arm32/lhdcv4_dec/liblhdc-dec_arm.a
-               ${LIB_SRC_PATH}/arm32/lhdcv5_dec/liblhdcv5dec_arm.a)
+    nuttx_add_extra_library(${LIB_SRC_PATH}/arm32/lhdcv4_dec/liblhdc-dec_arm.a
+                            ${LIB_SRC_PATH}/arm32/lhdcv5_dec/liblhdcv5dec_arm.a)
   endif()
 
 endif()
