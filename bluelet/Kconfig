@@ -127,6 +127,13 @@ config BLUELET_A2DP_SBC_MAX_BIT_POOL
   help
     A2DP sbc codec max bit pool 1~53
 
+config AVDTP_HEADSET_PATCH
+  bool "AVDTP_HEADSET_PATCH"
+  default y
+  help
+    Notify upper layer when the peer device request an AVDTP connection
+    without SEP discovery or SEP configurations triggered
+
 config BLUELET_AVRCP_TG_ABSVOL_SUPPORT
   bool "Avrcp target absolute volume support"
   default n
