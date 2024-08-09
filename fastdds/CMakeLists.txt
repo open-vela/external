@@ -51,6 +51,11 @@ if(CONFIG_FASTDDS)
     list(APPEND FASTDDS_FLAGS -Wno-psabi)
   endif()
 
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/Fast-CDR/include
+                      ${CMAKE_CURRENT_BINARY_DIR}/Fast-CDR/include)
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/Fast-DDS/include
+                      ${CMAKE_CURRENT_BINARY_DIR}/Fast-DDS/include)
+  include_directories(${CMAKE_CURRENT_LIST_DIR}/memory/include)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/nlohmann-json)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/filewatch)
   include_directories(${LIB_FASTDDS_DIR}/thirdparty/boost/include)
@@ -84,7 +89,9 @@ if(CONFIG_FASTDDS)
       ${DATA_INSTALL_DIR}/${PROJECT_NAME}
       CACHE PATH "Installation directory for licenses")
   set(Asio_INCLUDE_DIR ${EXTERNAL_DIR}/asio/asio/asio/include)
-
+  set(CMAKE_DL_LIBS
+      ""
+      CACHE STRING "Disable dl.so")
   set(FOONATHAN_MEMORY_BUILD_TOOLS OFF)
 
   set(CMAKE_CXX_FLAGS
