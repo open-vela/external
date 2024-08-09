@@ -17,12 +17,17 @@
 ifneq ($(CONFIG_CHRE),)
 CONFIGURED_APPS += $(APPDIR)/external/android/system/chre
 
+PATH_CHRE = $(APPDIR)/external/android/system/chre/chre
+
+CFLAGS += ${INCDIR_PREFIX}$(PATH_CHRE)/chre_api/include/chre_api
+CXXFLAGS += ${INCDIR_PREFIX}$(PATH_CHRE)/chre_api/include/chre_api
+CFLAGS += -DCHRE_MESSAGE_TO_HOST_MAX_SIZE=$(CONFIG_CHRE_MESSAGE_TO_HOST_MAX_SIZE)
+CXXFLAGS += -DCHRE_MESSAGE_TO_HOST_MAX_SIZE=$(CONFIG_CHRE_MESSAGE_TO_HOST_MAX_SIZE)
+
 ifneq ($(CONFIG_CHRE_EXAMPLES),)
 
 CHRE_PREFIX = $(APPDIR)/external/android/system/chre/chre/platform/nuttx
 export CHRE_PREFIX
-
-PATH_CHRE = $(APPDIR)/external/android/system/chre/chre
 
 ifneq ($(CONFIG_CHRE_EXAMPLES_HELLO_WORLD),)
   CONFIGURED_APPS += $(PATH_CHRE)/apps/hello_world
