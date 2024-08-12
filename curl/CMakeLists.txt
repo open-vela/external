@@ -25,6 +25,10 @@ if(CONFIG_LIB_CURL)
       -Dconfig_free=curl_config_free
       -Dstr2num=curl_str2num)
 
+  if(CONFIG_LIB_CARES)
+    list(APPEND CURL_FLAGS -DUSE_ARES)
+  endif()
+
   set(CURL_INCDIR
       ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/curl/lib
       ${CMAKE_CURRENT_LIST_DIR}/curl/src ${NUTTX_APPS_DIR}/system/zlib/zlib)

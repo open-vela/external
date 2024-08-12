@@ -1,0 +1,38 @@
+#
+# Copyright (C) 2024 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config LIB_CARES
+	bool "Enable lib c-ares"
+	depends on LIBC_FLOATINGPOINT
+	depends on NETDB_RESOLVCONF
+	default n
+
+config UTILS_CARES
+	tristate "Enable c-ares command line"
+	depends on LIB_CARES
+	default n
+
+if UTILS_CARES
+
+config UTILS_CARES_PRIORITY
+	int "c-ares task priority"
+	default 100
+
+config UTILS_CARES_STACKSIZE
+	int "c-ares stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
