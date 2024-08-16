@@ -25,6 +25,12 @@ if LIB_AVB
 config LIB_AVB_CRC32
 	bool "Enable CRC32"
 	default n
+if LIB_AVB_CRC32
+config LIB_AVB_CRC32_CRYPTODEV
+	bool "Enable CRC32 Accelerator via /dev/crypto"
+	depends on CRYPTO_CRYPTODEV
+	default n
+endif
 
 config LIB_AVB_SHA256
 	bool "Enable SHA256"
@@ -81,5 +87,11 @@ config LIB_AVB_BUF_SIZE
 	default 65536
 	---help---
 		Zero means alloc memory of size of full partition.
+
+config LIB_AVB_DISABLE_VERIFY
+	bool "Disable RSA verify"
+	default n
+	---help---
+		Disable RSA verify, check MD only.
 
 endif
