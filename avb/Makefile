@@ -18,7 +18,7 @@ include $(APPDIR)/Make.defs
 
 CFLAGS += -DAVB_COMPILATION
 CFLAGS += -I$(APPDIR)/external/avb/avb
-ifneq ($(CONFIG_LIB_AVB_SHA256_CRYPTODEV)$(CONFIG_LIB_AVB_SHA512_CRYPTODEV),)
+ifneq ($(CONFIG_LIB_AVB_CRC32_CRYPTODEV)$(CONFIG_LIB_AVB_SHA256_CRYPTODEV)$(CONFIG_LIB_AVB_SHA512_CRYPTODEV),)
 CFLAGS += -I$(APPDIR)/external/avb/avb/libavb/cryptodev
 else
 CFLAGS += -I$(APPDIR)/external/avb/avb/libavb/sha
@@ -41,6 +41,9 @@ CSRCS += \
         avb/libavb/avb_version.c
 ifneq ($(CONFIG_LIB_AVB_CRC32),)
 CSRCS += avb/libavb/avb_crc32.c
+endif
+ifneq ($(CONFIG_LIB_AVB_CRC32_CRYPTODEV),)
+CSRCS += avb/libavb/cryptodev/crc32_cryptodev.c
 endif
 ifneq ($(CONFIG_LIB_AVB_SHA256),)
 ifneq ($(CONFIG_LIB_AVB_SHA256_CRYPTODEV),)

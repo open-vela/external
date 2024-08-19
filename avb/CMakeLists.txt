@@ -20,7 +20,7 @@ if(CONFIG_LIB_AVB)
   set(CFLAGS -DAVB_COMPILATION)
   set(INCDIR ${NUTTX_APPS_DIR}/external/avb/avb)
 
-  if(CONFIG_LIB_AVB_SHA256_CRYPTODEV OR CONFIG_LIB_AVB_SHA512_CRYPTODEV)
+  if(CONFIG_LIB_AVB_CRC32_CRYPTODEV OR CONFIG_LIB_AVB_SHA256_CRYPTODEV OR CONFIG_LIB_AVB_SHA512_CRYPTODEV)
     list(APPEND INCDIR ${NUTTX_APPS_DIR}/external/avb/avb/libavb/cryptodev)
   else()
     list(APPEND INCDIR ${NUTTX_APPS_DIR}/external/avb/avb/libavb/sha)
@@ -44,6 +44,9 @@ if(CONFIG_LIB_AVB)
 
   if(CONFIG_LIB_AVB_CRC32)
     list(APPEND CSRCS avb/libavb/avb_crc32.c)
+    if(CONFIG_LIB_AVB_CRC32_CRYPTODEV)
+      list(APPEND CSRCS avb/libavb/cryptodev/crc32_cryptodev.c)
+    endif()
   endif()
 
   if(CONFIG_LIB_AVB_SHA256)
