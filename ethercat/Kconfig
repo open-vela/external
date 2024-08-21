@@ -1,0 +1,103 @@
+#
+# Copyright (C) 2024 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#	   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+config ETHERCAT
+	bool "Enable ethercat"
+	default n
+	---help---
+	  ethercat
+
+if ETHERCAT
+
+config ETHERCAT_MASTER
+	bool "Enable etherCAT master"
+	default n
+
+if ETHERCAT_MASTER
+
+config ETHERCAT_MASTER_EXAMMPLE
+	tristate "EtherCAT master example"
+	default n
+
+config ETHERCAT_MASTER_PROGNAME
+	string "EtherCAT master program name"
+	default "ethercat_master"
+	---help---
+	  This is the name of the etherCAT master.
+
+config ETHERCAT_MASTER_PRIORITY
+	int "EtherCAT master task priority"
+	default 100
+
+config ETHERCAT_MASTER_STACKSIZE
+	int "EtherCAT master stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
+
+config ETHERCAT_SLAVE
+	bool "Enable etherCAT slave"
+	default n
+
+if ETHERCAT_SLAVE
+
+config ETHERCAT_SLAVE_EXAMMPLE
+	tristate "EtherCAT slave example"
+	default n
+
+config ETHERCAT_SLAVE_PROGNAME
+	string "EtherCAT slave program name"
+	default "ethercat_slave"
+	---help---
+	  This is the name of the etherCAT slave.
+
+config ETHERCAT_SLAVE_PRIORITY
+	int "EtherCAT slave task priority"
+	default 100
+
+config ETHERCAT_SLAVE_STACKSIZE
+	int "EtherCAT slave stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
+
+config ETHERCAT_TOOL
+	tristate "Enable etherCAT tool"
+	default n
+
+if ETHERCAT_TOOL
+
+config ETHERCAT_TOOL_PROGNAME
+	string "EtherCAT tool program name"
+	default "ethercat"
+	---help---
+	  This is the name of the etherCAT tool.
+
+config ETHERCAT_TOOL_PRIORITY
+	int "EtherCAT tool task priority"
+	default 100
+
+config ETHERCAT_TOOL_STACKSIZE
+	int "EtherCAT tool stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+config ETHERCAT_TOOL_ENABLE_EOE
+	bool "Enable EtherCAT tool EOE"
+	default n
+
+endif
+
+endif
