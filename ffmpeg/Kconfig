@@ -44,4 +44,11 @@ config UTILS_FFMPEG_GRAPH2DOT
 	bool "graph2dot"
 	default n
 
+config LIB_FFMPEG_DISABLE_KASAN
+	bool "disable kasan for ffmpeg"
+	default n
+	depends on MM_KASAN
+	---help---
+	    Use -fno-sanitize=all to disable kasan for ffmpeg module
+
 endif # LIB_FFMPEG

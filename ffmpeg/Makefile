@@ -227,6 +227,10 @@ CFLAGS += -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shad
 CFLAGS += -Wno-missing-braces
 CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
+ifneq ($(CONFIG_LIB_FFMPEG_DISABLE_KASAN),)
+CFLAGS += -fno-sanitize=all
+endif
+
 FFEXTRA := $(CFLAGS)
 
 ifeq ($(CONFIG_DEBUG_CUSTOMOPT),y)
