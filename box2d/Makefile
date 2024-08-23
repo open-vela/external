@@ -23,7 +23,7 @@ CXXEXT     := .cpp
 CXXFLAGS +=  ${INCDIR_PREFIX}$(APPDIR)/external/box2d/box2d/src
 
 CFLAGS += -Wno-shadow -Wno-undef
-CXXFLAGS += -Wno-shadow -Wno-unused-but-set-variable
+CXXFLAGS += -Wno-shadow -Wno-unused-but-set-variable -Wno-class-memaccess
 
 
 CXXSRCS += $(wildcard box2d/src/collision/*.cpp)
