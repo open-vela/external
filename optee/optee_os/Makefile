@@ -29,7 +29,12 @@ CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libmbedtls/core
 CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutils/ext/include
 
+ifeq ($(CONFIG_ARCH_ARM64),y)
+CFLAGS += -DARM64
+else ifeq ($(CONFIG_ARCH_ARM),y)
 CFLAGS += -DARM32
+endif
+
 CFLAGS += -DCFG_COMPAT_GP10_DES
 CFLAGS += -DCFG_CORE_BIGNUM_MAX_BITS=4096
 CFLAGS += -DCFG_CORE_DYN_SHM
