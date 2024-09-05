@@ -143,7 +143,7 @@ if(CONFIG_OPTEE_OS)
   endif()
 
   if(CONFIG_ENABLE_CRYPTO_SM3)
-
+    list(APPEND CFLAGS -DCFG_CRYPTO_SM3)
     list(APPEND CSRCS optee_os/core/crypto/sm3.c
          optee_os/core/crypto/sm3-hash.c optee_os/core/crypto/sm3-hmac.c)
   endif()
