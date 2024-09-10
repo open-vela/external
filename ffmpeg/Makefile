@@ -202,10 +202,6 @@ ifneq ($(CONFIG_H264_MCVENC_ENCODER)$(CONFIG_JPEG_MCVENC_ENCODER),)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xring/platform/media/venc/include
 endif
 
-ifeq ($(CONFIG_LVX_USE_VIDEO_ADAPTER),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/graphics/lvgl/ext/video
-endif
-
 ifneq ($(CONFIG_V4L2_M2M), )
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ffmpeg/include
 endif
