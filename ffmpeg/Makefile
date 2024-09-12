@@ -142,6 +142,15 @@ ifeq ($(CONFIG_FFMPEG),yes)
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_filter.c
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_hw.c
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_mux.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_mux_init.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_dec.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_demux.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_enc.c
+  CSRCS    += $(SRC_PATH)/fftools/ffmpeg_sched.c
+  CSRCS    += $(SRC_PATH)/fftools/sync_queue.c
+  CSRCS    += $(SRC_PATH)/fftools/thread_queue.c
+  CSRCS    += $(SRC_PATH)/fftools/opt_common.c
+  CSRCS    += $(SRC_PATH)/fftools/objpool.c
 endif
 
 ifeq ($(CONFIG_FFPROBE),yes)
@@ -265,7 +274,7 @@ $(DST_PATH)/ffbuild/config.mak:
 		--disable-dxva2         --disable-error-resilience       \
 		--disable-faan          --disable-ffnvcodec              \
 		--disable-htmlpages     --disable-iconv                  \
-		--disable-lsp           --disable-threads                \
+		--disable-lsp                                            \
 		--disable-manpages      --disable-pic                    \
 		--disable-pixelutils    --disable-podpages               \
 		--disable-nvdec         --disable-nvenc                  \
