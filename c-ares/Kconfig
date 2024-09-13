@@ -20,9 +20,33 @@ config LIB_CARES
 	depends on NETDB_RESOLVCONF
 	default n
 
+if LIB_CARES
+
+config LIB_CARES_TIMEOUT
+	int "Default DNS receive timeout"
+	default 2000
+	---help---
+		This is the timeout value when DNS receives response after
+		query send, each timeout will wait twice as long as the
+		previous timeout. If the timeout in the process is greater
+		than LIB_CARES_MAXTIMEOUT, the LIB_CARES_MAXTIMEOUT shall prevail
+		unit: milliseconds.
+
+config LIB_CARES_MAXTIMEOUT
+	int "Maximum DNS receive timeout"
+	default 2000
+	--help--
+		Maximum DNS receive timeout, unit: milliseconds.
+
+config LIB_CARES_TRIES
+	int "Number of retries for DNS request"
+	default 8
+	---help---
+		This setting determines how many times resolver retries request
+		until failing.
+
 config UTILS_CARES
 	tristate "Enable c-ares command line"
-	depends on LIB_CARES
 	default n
 
 if UTILS_CARES
@@ -34,5 +58,7 @@ config UTILS_CARES_PRIORITY
 config UTILS_CARES_STACKSIZE
 	int "c-ares stack size"
 	default DEFAULT_TASK_STACKSIZE
+
+endif
 
 endif
