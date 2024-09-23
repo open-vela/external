@@ -28,16 +28,6 @@ config ETHERCAT_MASTER
 
 if ETHERCAT_MASTER
 
-config ETHERCAT_MASTER_EXAMMPLE
-	tristate "EtherCAT master example"
-	default n
-
-config ETHERCAT_MASTER_PROGNAME
-	string "EtherCAT master program name"
-	default "ethercat_master"
-	---help---
-	  This is the name of the etherCAT master.
-
 config ETHERCAT_MASTER_PRIORITY
 	int "EtherCAT master task priority"
 	default 100
@@ -45,6 +35,29 @@ config ETHERCAT_MASTER_PRIORITY
 config ETHERCAT_MASTER_STACKSIZE
 	int "EtherCAT master stack size"
 	default DEFAULT_TASK_STACKSIZE
+
+config ETHERCAT_MASTER_IFNAME
+	string "The name of the network card used for EtherCAT transmission"
+	default "eth0"
+
+config ETHERCAT_MASTER_RING_SIZE
+	int "The external datagram ring is used for slave FSMs"
+	default 10
+	---help---
+	  This is the size of the external datagram ring.
+
+config ETHERCAT_MASTER_DEVICE_COUNT
+	int "The count of etherCAT master"
+	range 1 32
+	default 1
+	---help---
+	  This is the count of etherCAT master.
+
+config ETHERCAT_MASTER_DEVICE_LIST
+	string "EtherCAT master device MAC address list"
+	default "\"02:02:03:04:05:06\", \"\""
+	---help---
+	  This is the devices MAC address list of etherCAT master.
 
 endif
 
