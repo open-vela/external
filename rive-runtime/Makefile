@@ -16,15 +16,19 @@
 
 include $(APPDIR)/Make.defs
 
-MODULE = $(CONFIG_LIB_RIVE_RUNTIME)
+CXXEXT := .cpp
 
-CXXEXT     := .cpp
+RIVE_RUNTIME_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/rive-runtime/rive-runtime
 
-RIVE_RUNTIME_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/rive-runtime
+CXXFLAGS += -Wno-shadow -Wno-sign-compare -Wno-class-memaccess -Wno-alloc-size-larger-than
+CXXFLAGS += -Wno-format-security -Wno-format -Wno-nonnull -Wno-maybe-uninitialized -Wno-stringop-overflow -Wno-array-bounds
 
-CFLAGS += -Wno-shadow -Wno-undef
-CXXFLAGS += -Wno-shadow -Wno-unused-but-set-variable
+CXXSRCS += $(shell find -L rive-runtime/src -name *.cpp)
 
-CXXSRCS += $(shell find -L $(RIVE_RUNTIME_DIR)/rive-runtime/src -name *.cpp)
+ifeq ($(and $(CONFIG_LIB_HARFBUZZ),$(CONFIG_LIB_SHEENBIDI)),y)
+CXXFLAGS += -DWITH_RIVE_TEXT=1
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
+CXXFLAGS +=  ${INCDIR_PREFIX}$(APPDIR)/external/harfbuzz/harfbuzz/src
+endif
 
 include $(APPDIR)/Application.mk

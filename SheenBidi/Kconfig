@@ -14,20 +14,6 @@
 # limitations under the License.
 #
 
-include $(APPDIR)/Make.defs
-
-CXXEXT := .cc
-
-HARFBUZZ_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/harfbuzz/harfbuzz
-
-CFLAGS += -Wno-shadow -Wno-sign-compare  -Wno-format -Wno-nonnull -Wno-format-signedness -Wno-format-truncation
-CXXFLAGS += -Wno-shadow -Wno-sign-compare  -Wno-format -Wno-nonnull -Wno-format-signedness -Wno-format-truncation
-
-
-ifeq ($(CONFIG_LIB_FREETYPE),y)
-CXXFLAGS += "-DHAVE_FREETYPE=1"
-endif
-
-CXXSRCS += $(wildcard $(HARFBUZZ_DIR)/src/harfbuzz.cc)
-
-include $(APPDIR)/Application.mk
+menuconfig LIB_SHEENBIDI
+	bool "Enable SheenBidi library"
+	default n

@@ -18,16 +18,11 @@ include $(APPDIR)/Make.defs
 
 CXXEXT := .cc
 
-HARFBUZZ_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/harfbuzz/harfbuzz
+SHEENBIDI_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi
 
-CFLAGS += -Wno-shadow -Wno-sign-compare  -Wno-format -Wno-nonnull -Wno-format-signedness -Wno-format-truncation
-CXXFLAGS += -Wno-shadow -Wno-sign-compare  -Wno-format -Wno-nonnull -Wno-format-signedness -Wno-format-truncation
+CFLAGS += -Wno-shadow -Wno-maybe-uninitialized -Wstringop-overflow=0
 
-
-ifeq ($(CONFIG_LIB_FREETYPE),y)
-CXXFLAGS += "-DHAVE_FREETYPE=1"
-endif
-
-CXXSRCS += $(wildcard $(HARFBUZZ_DIR)/src/harfbuzz.cc)
+CSRCS += $(wildcard $(SHEENBIDI_DIR)/Source/*.c)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
 
 include $(APPDIR)/Application.mk
