@@ -15,63 +15,61 @@
 #
 
 include $(APPDIR)/Make.defs
+
 ifeq ($(CONFIG_ETHERCAT_MASTER),y)
 
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ethercat/ethercat/devices
-
-CSRCS += \
-    ethercat/master/soe_request.c \
-    ethercat/master/slave_config.c \
-    ethercat/master/slave.c \
-    ethercat/master/sdo_request.c \
-    ethercat/master/sdo_entry.c \
-    ethercat/master/sdo.c \
-    ethercat/master/reg_request.c \
-    ethercat/master/pdo_list.c \
-    ethercat/master/pdo_entry.c \
-    ethercat/master/pdo.c \
-    ethercat/master/os.c \
-    ethercat/master/master_socket.c \
-    ethercat/master/module.c \
-    ethercat/master/mbox_gateway_request.c \
-    ethercat/master/master.c \
-    ethercat/master/mailbox.c \
-    ethercat/master/fsm_soe.c \
-    ethercat/master/fsm_slave_scan.c \
-    ethercat/master/fsm_slave_config.c \
-    ethercat/master/fsm_reboot.c \
-    ethercat/master/fsm_mbox_gateway.c \
-    ethercat/master/fsm_master.c \
-    ethercat/master/fsm_foe.c \
-    ethercat/master/fsm_coe.c \
-    ethercat/master/domain.c \
-    ethercat/master/device.c \
-    ethercat/master/datagram_pair.c \
-    ethercat/master/datagram.c \
-    ethercat/master/coe_emerg_ring.c \
-    ethercat/master/sync_config.c \
-    ethercat/master/sync.c \
-    ethercat/master/soe_errors.c \
-    ethercat/master/fsm_slave.c \
-    ethercat/master/fsm_sii.c \
-    ethercat/master/fsm_pdo_entry.c \
-    ethercat/master/fsm_pdo.c \
-    ethercat/master/fsm_change.c \
-    ethercat/master/fmmu_config.c \
-    ethercat/master/doxygen.c \
-    ethercat/master/dict_request.c \
-    ethercat/master/ioctl.c \
-
+CFLAGS += -Wno-discarded-qualifiers
+CFLAGS += -Wno-pointer-sign
+CFLAGS += -Wno-stringop-truncation
+CFLAGS += -Wno-implicit-function-declaration
 CFLAGS += ${DEFINE_PREFIX}VERSION='"${VERSION}"'
 
-ifeq ($(CONFIG_ETHERCAT_MASTER_EXAMMPLE),y)
-MAINSRC   += ethercat/examples/velaos/main.c
-PROGNAME  += $(CONFIG_ETHERCAT_MASTER_PROGNAME)
-PRIORITY  += $(CONFIG_ETHERCAT_MASTER_PRIORITY)
-STACKSIZE += $(CONFIG_ETHERCAT_MASTER_STACKSIZE)
-MODULE    += $(CONFIG_ETHERCAT_MASTER)
-endif
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ethercat
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ethercat/nuttx
 
+CSRCS += \
+    ethercat/master/coe_emerg_ring.c \
+    ethercat/master/datagram.c \
+    ethercat/master/datagram_pair.c \
+    ethercat/master/device.c \
+    ethercat/master/domain.c \
+    ethercat/master/doxygen.c \
+    ethercat/master/flag.c \
+    ethercat/master/fmmu_config.c \
+    ethercat/master/foe_request.c \
+    ethercat/master/fsm_change.c \
+    ethercat/master/fsm_coe.c \
+    ethercat/master/fsm_foe.c \
+    ethercat/master/fsm_master.c \
+    ethercat/master/fsm_pdo.c \
+    ethercat/master/fsm_pdo_entry.c \
+    ethercat/master/fsm_sii.c \
+    ethercat/master/fsm_slave.c \
+    ethercat/master/fsm_slave_config.c \
+    ethercat/master/fsm_slave_scan.c \
+    ethercat/master/fsm_soe.c \
+    ethercat/master/ioctl.c \
+    ethercat/master/mailbox.c \
+    ethercat/master/master.c \
+    ethercat/master/module.c \
+    ethercat/master/pdo.c \
+    ethercat/master/pdo_entry.c \
+    ethercat/master/pdo_list.c \
+    ethercat/master/reg_request.c \
+    ethercat/master/sdo.c \
+    ethercat/master/sdo_entry.c \
+    ethercat/master/sdo_request.c \
+    ethercat/master/slave.c \
+    ethercat/master/slave_config.c \
+    ethercat/master/soe_errors.c \
+    ethercat/master/soe_request.c \
+    ethercat/master/sync.c \
+    ethercat/master/sync_config.c \
+    ethercat/master/voe_handler.c \
+    nuttx/linux/kthread.c \
+    nuttx/linux/skbuff.c \
+    nuttx/ec_cdev.c \
+    nuttx/ethercat.c
 endif
 
 ifeq ($(CONFIG_ETHERCAT_TOOL),y)
