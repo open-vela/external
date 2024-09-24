@@ -34,11 +34,8 @@ endif
 
 
 CXXFLAGS += -Wno-shadow
-CXXFLAGS += -std=c++11
 CXXFLAGS += ${INCDIR_PREFIX}yoga
 
-ifeq ($(GCCVER),13)
 CXXFLAGS += -Wno-array-bounds
-endif
 
 include $(APPDIR)/Application.mk

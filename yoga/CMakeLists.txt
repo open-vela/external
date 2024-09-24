@@ -22,11 +22,7 @@ if(CONFIG_LIB_YOGA)
   # Flags
   # ############################################################################
 
-  set(CFLAGS -Wno-shadow -std=c++11)
-
-  if(${GCCVER} NOT EQUAL 13)
-    list(APPEND CFLAGS -Wno-array-bounds)
-  endif()
+  set(CFLAGS -Wno-shadow -Wno-array-bounds)
 
   # ############################################################################
   # Sources
