@@ -32,10 +32,7 @@ ifneq ($(NOEXPORTSRCS),)
 BIN := $(APPDIR)/staging/libexternal.a
 endif
 
-
-CXXFLAGS += -Wno-shadow
+CXXFLAGS += -Wno-shadow -Wno-array-bounds
 CXXFLAGS += ${INCDIR_PREFIX}yoga
-
-CXXFLAGS += -Wno-array-bounds
 
 include $(APPDIR)/Application.mk
