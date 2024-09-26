@@ -17,6 +17,14 @@ CSRCS += $(wildcard ril/librilutils/*.c)
 
 ifneq ($(CONFIG_GOLDFISH_RIL),)
 CSRCS += $(wildcard ril/reference-ril/*.c)
+
+advancedFeatures:
+	@echo "ModemSimulator = on" > ../../nuttx/advancedFeatures.ini
+
+context:: advancedFeatures
+
+clean::
+	$(call DELFILE, ../../nuttx/advancedFeatures.ini)
 endif
 
 PRIORITY  += $(CONFIG_RILD_PRIORITY)
