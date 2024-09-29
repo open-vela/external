@@ -122,8 +122,6 @@ include $(CHRE_PREFIX)/build/variant/nuttx.mk
 
 CXXSRCS += $(COMMON_SRCS)
 CXXSRCS += $(TARGET_VARIANT_SRCS)
-SYMTABSRC = $(CHRE_PREFIX)/platform/nuttx/symtab.c
-SYMTABOBJ = $(SYMTABSRC:.c=$(OBJEXT))
 CXXFLAGS += $(COMMON_CFLAGS)
 CXXFLAGS += $(TARGET_CFLAGS)
 CXXFLAGS += -DCHRE_FILENAME=__FILE__
@@ -151,16 +149,7 @@ endif
 
 depend::
 	mkdir -p $(NANOAPP_OUT)
-
-$(SYMTABOBJ): %$(OBJEXT): %.c
-	$(call COMPILE, $<, $@, -fno-lto -fno-builtin)
-
-$(SYMTABSRC):
-	$(Q) $(APPDIR)$(DELIM)tools$(DELIM)mksymtab.sh $(BINDIR) g_chre $(CHRE_PREFIX)/platform/nuttx/exports_chre_api.txt >$@.tmp
-	$(Q) $(call TESTANDREPLACEFILE, $@.tmp, $@)
-
-postinstall:: $(SYMTABOBJ)
-	$(call ARLOCK, $(call CONVERT_PATH,$(BIN)), $^)
+	$(call PREPROCESS, $(PATH_CHRE)/platform/nuttx/exports_chre_api.txt, $(PATH_CHRE)/platform/nuttx/exports_chre_api.txt.i)
 
 distclean::
 	$(Q) $(call DELFILE, $(SYMTABSRC))

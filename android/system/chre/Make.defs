@@ -29,6 +29,8 @@ ifneq ($(CONFIG_CHRE_EXAMPLES),)
 CHRE_PREFIX = $(APPDIR)/external/android/system/chre/chre/platform/nuttx
 export CHRE_PREFIX
 
+SYMTABEXT="-a $(PATH_CHRE)/platform/nuttx/exports_chre_api.txt.i"
+
 ifneq ($(CONFIG_CHRE_EXAMPLES_HELLO_WORLD),)
   CONFIGURED_APPS += $(PATH_CHRE)/apps/hello_world
 endif
