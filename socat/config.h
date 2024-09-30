@@ -107,8 +107,7 @@
 #define HAVE_UNAME 1
 
 /* Define if you have the getpgid function.  */
-
-/* #undef HAVE_GETPGID */
+#define HAVE_GETPGID 1
 
 /* Define if you have the getsid function.  */
 
@@ -279,8 +278,7 @@
 /* #undef HAVE_ARPA_NAMESER_H */
 
 /* Define if you have the <resolv.h> header file.  */
-
-/* #undef HAVE_RESOLV_H */
+#define HAVE_RESOLV_H 1
 
 /* Define if you have the <termios.h> header file.  */
 #define HAVE_TERMIOS_H 1
@@ -298,7 +296,11 @@
 
 /* Define if you have the <linux/errqueue.h> header file.  */
 
+#ifdef __NuttX__
 /* #undef HAVE_LINUX_ERRQUEUE_H */
+#else
+#define HAVE_LINUX_ERRQUEUE_H 1
+#endif
 
 /* Define if you have the <linux/if_tun.h> header file.  */
 #define HAVE_LINUX_IF_TUN_H 1
@@ -384,10 +386,8 @@
 /* #undef HAVE_FDS_BITS */
 
 /* struct termios may have components c_ispeed,c_ospeed */
-
-/* #undef HAVE_STRUCT_TERMIOS_C_ISPEED */
-
-/* #undef HAVE_STRUCT_TERMIOS_C_OSPEED */
+#define HAVE_STRUCT_TERMIOS_C_ISPEED 1
+#define HAVE_STRUCT_TERMIOS_C_OSPEED 1
 
 /* Define if you have the sa_family_t */
 #define HAVE_TYPE_SA_FAMILY_T 1
@@ -396,7 +396,8 @@
 #define HAVE_STRUCT_SIGACTION_SA_SIGACTION 1
 
 /* define if you have struct sock_extended_err */
-#define HAVE_STRUCT_SOCK_EXTENDED_ERR 1
+
+/* #undef HAVE_STRUCT_SOCK_EXTENDED_ERR */
 
 /* Define if your termios.h likes _SVID3 defined */
 
@@ -407,8 +408,7 @@
 /* #undef _XPG4_2 */
 
 /* Define if your ctime_r() choices need _POSIX_PTHREAD_SEMANTICS */
-
-/* #undef _POSIX_PTHREAD_SEMANTICS */
+#define _POSIX_PTHREAD_SEMANTICS 1
 
 /* Define if you need __EXTENSIONS__ */
 
@@ -438,7 +438,11 @@
 
 /* Define if you have struct group_source_req */
 
+#ifdef __NuttX__
 /* #undef HAVE_STRUCT_GROUP_SOURCE_REQ */
+#else
+#define HAVE_STRUCT_GROUP_SOURCE_REQ 1
+#endif
 
 /* Define if you have struct ifreq */
 #define HAVE_STRUCT_IFREQ 1
@@ -494,7 +498,8 @@
 /* #undef HAVE_STRUCT_IP_IP_HL */
 
 /* Define if you have the setns function */
-#define HAVE_SETNS 1
+
+/* #undef HAVE_SETNS */
 
 /* Define if you have the setenv function */
 #define HAVE_SETENV 1
@@ -517,7 +522,8 @@
 #endif
 
 /* Define if you have the OPENSSL_init_ssl function */
-#define HAVE_OPENSSL_INIT_SSL 1
+
+/* #undef HAVE_OPENSSL_INIT_SSL */
 
 /* Define if you have the OPENSSL_INIT_SETTINGS type (guarded for OpenBSD) */
 
@@ -778,11 +784,11 @@
 
 #define HAVE_DIRENT_D_TYPE 1
 
-#define HAVE_RES_RETRANS 1
+/* #undef HAVE_RES_RETRANS */
 
-#define HAVE_RES_RETRY 1
+/* #undef HAVE_RES_RETRY */
 
-#define HAVE_RES_NSADDR_LIST 1
+/* #undef HAVE_RES_NSADDR_LIST */
 
 /* #undef HAVE_SETGRENT */
 
@@ -806,7 +812,7 @@
 
 #define WITH_GOPEN 1
 
-/* #undef WITH_TERMIOS */
+#define WITH_TERMIOS 1
 
 #define WITH_PIPE 1
 
@@ -830,15 +836,15 @@
 
 #define WITH_UDP 1
 
-#define WITH_UDPLITE 1
+/* #undef WITH_UDPLITE */
 
-#define WITH_SCTP 1
+/* #undef WITH_SCTP */
 
 /* #undef WITH_DCCP */
 
 #define WITH_LISTEN 1
 
-#define WITH_POSIXMQ 1
+/* #undef WITH_POSIXMQ */
 
 /* #undef WITH_SOCKS4 */
 
@@ -862,7 +868,7 @@
 
 #define WITH_TUN 1
 
-/* #undef WITH_PTY */
+#define WITH_PTY 1
 
 #define WITH_FS 1
 
@@ -905,5 +911,15 @@
 #ifdef __NuttX__
 #  define L_ctermid 20
 #endif
+
+#define chroot(path) (0)
+
+#define setsid() (0)
+
+#define setgroups(size, list) (0)
+
+#define tcsetpgrp(fd, pgrpid) (0)
+
+#define setpgid(pid, pgid) (0)
 
 #endif /* !defined(__config_h_included) */
