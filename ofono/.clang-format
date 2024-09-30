@@ -16,5 +16,5 @@ PointerAlignment: Right
 UseTab: Always
 SeparateDefinitionBlocks: Always
 SpaceAfterCStyleCast: true
-SpacesInCStyleCastParentheses: true
+SpacesInCStyleCastParentheses: false
 TabWidth: 8
