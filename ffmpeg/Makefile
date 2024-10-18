@@ -171,6 +171,7 @@ PROGNAME += ffmpeg_fft
 MAINSRC  += $(SRC_PATH)/libavcodec/tests/fft.c
 endif
 
+CFLAGS += $(CPPFLAGS)
 CFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 AFLAGS += ${INCDIR_PREFIX}$(SRC_PATH)
 
