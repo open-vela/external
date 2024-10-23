@@ -33,6 +33,8 @@
 #include <sys/prctl.h>
 #include <systemd/sd-daemon.h>
 #include <unistd.h>
+#include <nuttx/config.h>
+#include <nuttx/usb/usb.h>
 /*
  * GLOBAL AND EXTERN VARIABLES
  */
@@ -47,6 +49,7 @@ extern mtp_config_t g_conf;
 #define USB_PTPREQUEST_GETSTATUS 0x67 /* Get Device Status */
 #define USB_PTPREQUEST_CANCELIO_SIZE 6
 #define USB_PTPREQUEST_GETSTATUS_SIZE 12
+static mtp_int32 g_usb_ep0 = -1;       /* read (g_usb_ep0, ...) */
 static mtp_int32 g_usb_ep_in = -1; /* write (g_usb_ep_in, ...) */
 static mtp_int32 g_usb_ep_out = -1; /* read (g_usb_ep_out, ...) */
 static mtp_int32 g_usb_ep_status = -1; /* write (g_usb_ep_status, ...) */
@@ -69,10 +72,16 @@ static mtp_bool __io_init(void)
         g_usb_ep_status = SD_LISTEN_FDS_START + 3;
         return TRUE;
     }
+    g_usb_ep0 = open(MTP_EP0_PATH, O_RDWR);
+    if (g_usb_ep0 < 0) {
+        ERR("Error opening ep0");
+        goto cleanup;
+    }
+
     g_usb_ep_in = open(MTP_EP_IN_PATH, O_RDWR);
     if (g_usb_ep_in < 0) {
         ERR("Error opening bulk-in");
-        goto cleanup;
+        goto cleanup_ep0;
     }
     g_usb_ep_out = open(MTP_EP_OUT_PATH, O_RDWR);
     if (g_usb_ep_out < 0) {
@@ -89,6 +98,8 @@ cleanup_out:
     close(g_usb_ep_out);
 cleanup_in:
     close(g_usb_ep_in);
+cleanup_ep0:
+    close(g_usb_ep0);
 cleanup:
     return FALSE;
 }
@@ -119,6 +130,9 @@ static mtp_bool ffs_transport_init_usb_device(void)
 }
 static void ffs_transport_deinit_usb_device(void)
 {
+    if (g_usb_ep0 >= 0)
+        close(g_usb_ep0);
+    g_usb_ep0 = -1;
     if (g_usb_ep_in >= 0)
         close(g_usb_ep_in);
     g_usb_ep_in = -1;
@@ -144,7 +158,7 @@ static mtp_uint32 ffs_get_rx_pkt_size(void)
  * A created message queue will be used to help data transfer between
  * MTP module and usb buffer.
  * @return  This function returns TRUE on success or
- *	returns FALSE on failure.
+ *          returns FALSE on failure.
  */
 static mtp_int32 ffs_transport_mq_init(msgq_id_t* rx_mqid, msgq_id_t* tx_mqid)
 {
@@ -178,8 +192,8 @@ static void* ffs_transport_thread_usb_write(void* arg)
     fds[0].events = POLLOUT;
     do {
         /* original LinuxThreads cancelation didn't work right
-	 * so test for it explicitly.
-	 */
+         * so test for it explicitly.
+         */
         pthread_testcancel();
         _util_rcv_msg_from_mq(*mqid, &mtp_buf, &len, &mtype);
         if (mtype == MTP_BULK_PACKET || mtype == MTP_DATA_PACKET) {
@@ -192,8 +206,8 @@ static void* ffs_transport_thread_usb_write(void* arg)
                     continue;
                 }
 
-                if ((fds[0].revents & POLLHUP) == POLLHUP) {
-                    break;
+                if ((fds[0].revents & POLLOUT) == 0) {
+                    continue;
                 }
 
                 status = write(g_usb_ep_in, mtp_buf + written, len - written);
@@ -225,7 +239,7 @@ static void* ffs_transport_thread_usb_write(void* arg)
         }
         if (status < 0) {
             ERR("write data to the device node Fail:\
-		    status = %d\n",
+                 status = %d\n",
                 status);
             break;
         }
@@ -268,8 +282,190 @@ static void* ffs_transport_thread_usb_read(void* arg)
     pthread_cleanup_pop(1);
     return NULL;
 }
+static void __handle_control_request(mtp_int32 request)
+{
+    static mtp_bool kernel_reset = FALSE;
+    static mtp_bool host_cancel = FALSE;
+    mtp_int32 status = 0;
+
+    switch (request) {
+    case USB_PTPREQUEST_CANCELIO:
+        // XXX: Convert cancel request data from little-endian
+        // before use:  le32_to_cpu(x), le16_to_cpu(x).
+        ERR("USB_PTPREQUEST_CANCELIO\n");
+        cancel_req_t cancelreq_data;
+
+        host_cancel = TRUE;
+        _transport_set_control_event(PTP_EVENTCODE_CANCELTRANSACTION);
+        status = read(g_usb_ep0, &cancelreq_data, sizeof(cancelreq_data));
+        if (status < 0) {
+            char error[256];
+            strerror_r(errno, error, sizeof(error));
+            ERR("Failed to read data for CANCELIO request\n: %s", error);
+        }
+        break;
+
+    case USB_PTPREQUEST_RESET:
+
+        ERR("USB_PTPREQUEST_RESET\n");
+        _reset_mtp_device();
+        if (kernel_reset == FALSE) {
+            kernel_reset = TRUE;
+       }
+
+        status = read(g_usb_ep0, NULL, 0);
+        if (status < 0) {
+            ERR("IOCTL MTP_SEND_RESET_ACK Failed [%d]\n",
+                status);
+        }
+        break;
+    case USB_PTPREQUEST_GETSTATUS:
+
+        ERR("USB_PTPREQUEST_GETSTATUS");
+
+        /* Send busy status response just once. This flag is also for
+         * the case that mtp misses the cancel request packet.
+         */
+        static mtp_bool sent_busy = FALSE;
+        usb_status_req_t statusreq_data = { 0 };
+        mtp_dword num_param = 0;
+
+        memset(&statusreq_data, 0x00, sizeof(usb_status_req_t));
+        if (host_cancel == TRUE || (sent_busy == FALSE &&
+            kernel_reset == FALSE)) {
+            DBG("Send busy response, set host_cancel to FALSE");
+            statusreq_data.len = 0x08;
+            statusreq_data.code = PTP_RESPONSE_DEVICEBUSY;
+            host_cancel = FALSE;
+        } else if (_device_get_phase() == DEVICE_PHASE_NOTREADY) {
+            statusreq_data.code =
+                PTP_RESPONSE_TRANSACTIONCANCELLED;
+            DBG("PTP_RESPONSE_TRANSACTIONCANCELLED");
+            statusreq_data.len = (mtp_word)(sizeof(usb_status_req_t) +
+                (num_param - 2) * sizeof(mtp_dword));
+        } else if (_device_get_status() == DEVICE_STATUSOK) {
+            DBG("PTP_RESPONSE_OK");
+            statusreq_data.len = 0x08;
+            statusreq_data.code = PTP_RESPONSE_OK;
+
+        if (kernel_reset == TRUE)
+            kernel_reset = FALSE;
+        } else {
+            DBG("PTP_RESPONSE_GEN_ERROR");
+            statusreq_data.len = 0x08;
+            statusreq_data.code = PTP_RESPONSE_GEN_ERROR;
+        }
+
+        if (statusreq_data.code == PTP_RESPONSE_DEVICEBUSY) {
+            sent_busy = TRUE;
+        } else {
+            sent_busy = FALSE;
+        }
+
+        break;
+
+    case USB_PTPREQUEST_GETEVENT:
+       ERR("USB_PTPREQUEST_GETEVENT");
+       break;
+
+    default:
+       DBG("Invalid class specific setup request");
+       break;
+    }
+    return;
+}
+static int __setup(int ep0, struct usb_ctrlreq_s *ctrl)
+{
+    const char* requests[] = {
+        "CANCELIO",  /* 0x64 */
+        "GETEVENT",  /* 0x65 */
+        "RESET",     /* 0x66 */
+        "GETSTATUS", /* 0x67 */
+    };
+    __u16 value = GETUINT16(ctrl->value);
+    __u16 index = GETUINT16(ctrl->index);
+    __u16 len = GETUINT16(ctrl->len);
+    int rc = -EOPNOTSUPP;
+    int status = 0;
+
+    if ((ctrl->type & 0x7f) != (USB_REQ_TYPE_CLASS | USB_REQ_RECIPIENT_INTERFACE)) {
+        ERR(__FILE__ "(%s):%d: Invalid request type: %d",
+            __func__, __LINE__, ctrl->type);
+        goto stall;
+    }
+
+    ERR("USB_PTPREQUEST_%s", requests[ctrl->req-0x64]);
+    switch (((ctrl->type & 0x80) << 8) | ctrl->req) {
+        case ((USB_REQ_DIR_OUT << 8) | USB_PTPREQUEST_CANCELIO):
+            if (value != 0 || index != 0 || len != 6) {
+                ERR("Invalid request parameters: wValue:%hu wIndex:%hu wLength:%hu\n", index, value, len);
+                rc = -EINVAL;
+                goto stall;
+            }
+            __handle_control_request(ctrl->req);
+            break;
+
+        case ((USB_REQ_DIR_IN << 8) | USB_PTPREQUEST_GETSTATUS):
+        case ((USB_REQ_DIR_OUT << 8) | USB_PTPREQUEST_RESET):
+            __handle_control_request(ctrl->req);
+            break;
+
+        case ((USB_REQ_DIR_IN << 8) | USB_PTPREQUEST_GETEVENT):
+            /* Optional, may stall */
+            rc = -EOPNOTSUPP;
+            goto stall;
+            break;
+
+        default:
+            ERR("Invalid request: %d", ctrl->req);
+            goto stall;
+    }
+    return 0;
+
+stall:
+
+    ERR(__FILE__"(%s):%d:stall %0x2x.%02x\n",
+        __func__, __LINE__, ctrl->type, ctrl->req);
+    if ((ctrl->type & 0x80) == USB_REQ_DIR_IN)
+        status = read(g_usb_ep0, NULL, 0);
+    else
+        status = write(g_usb_ep0, NULL, 0);
+
+    if (status != -1) {
+        ERR(__FILE__"(%s):%d:stall error\n",
+            __func__, __LINE__);
+        rc = errno;
+    }
+    return rc;
+}
 static void* ffs_transport_thread_usb_control(void* arg)
 {
+    mtp_int32 status = 0;
+    struct usb_ctrlreq_s event;
+    msgq_id_t *mqid = (msgq_id_t *)arg;
+
+    pthread_cleanup_push(__clean_up_msg_queue, mqid);
+
+    do {
+        pthread_testcancel();
+
+        status = read(g_usb_ep0, &event, sizeof(event));
+        if (status < 0) {
+            ERR("read from ep0 failed: %d", errno);
+            continue;
+        }
+
+        ERR("SETUP: type:%d request:%d value:%d index:%d length:%d\n",
+            event.type,
+            event.req,
+            GETUINT16(event.value),
+            GETUINT16(event.index),
+            GETUINT16(event.len));
+        __setup(g_usb_ep0, &event);
+    } while (status > 0);
+
+    pthread_cleanup_pop(1);
+
     return NULL;
 }
 static mtp_int32 __handle_usb_read_err(mtp_int32 err,
@@ -326,7 +522,7 @@ static void __clean_up_msg_queue(void* mq_id)
  * mtp_bool ffs_transport_mq_deinit()
  * This function destroy a message queue for MTP,
  * @return  This function returns TRUE on success or
- *	returns FALSE on failure.
+ *          returns FALSE on failure.
  */
 static mtp_bool ffs_transport_mq_deinit(msgq_id_t* rx_mqid, msgq_id_t* tx_mqid)
 {
