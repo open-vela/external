@@ -17,9 +17,9 @@
 include $(APPDIR)/Make.defs
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/mbedtls/mbedtls/library
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/frameworks/security/optee_vela/include
 ifeq ($(CONFIG_OPTEE_COMPAT_MITEE_FS),y)
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include/mitee_compat
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/frameworks/security/optee_vela/include/mitee_compat
 endif
 CFLAGS += ${INCDIR_PREFIX}optee_os/core/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/core/lib/libtomcrypt/include

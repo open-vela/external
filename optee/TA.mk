@@ -33,12 +33,12 @@ else
 CFLAGS += -DTRACE_LEVEL=1
 endif
 
-CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_nuttx/optee_nuttx/include
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/frameworks/security/optee_vela/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/core/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutils/ext/include
 
-CSRCS += $(APPDIR)/external/optee/optee_nuttx/optee_nuttx/wasm/wasm_ta_framework.c
+CSRCS += $(APPDIR)/frameworks/security/optee_vela/wasm/wasm_ta_framework.c
 
 ASRCS := $(wildcard $(ASRCS))
 CSRCS := $(wildcard $(CSRCS))
