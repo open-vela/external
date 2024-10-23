@@ -457,7 +457,7 @@ static void* ffs_transport_thread_usb_control(void* arg)
         status = read(g_usb_ep0, &event, sizeof(event));
         if (status < 0) {
             ERR("read from ep0 failed: %d", errno);
-            continue;
+            break;
         }
 
         ERR("SETUP: type:%d request:%d value:%d index:%d length:%d\n",
