@@ -192,8 +192,8 @@ static void* ffs_transport_thread_usb_write(void* arg)
                     continue;
                 }
 
-                if ((fds[0].revents & POLLOUT) == 0) {
-                    continue;
+                if ((fds[0].revents & POLLHUP) == POLLHUP) {
+                    break;
                 }
 
                 status = write(g_usb_ep_in, mtp_buf + written, len - written);
