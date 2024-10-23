@@ -362,10 +362,12 @@ static void __handle_control_request(mtp_int32 request)
             sent_busy = FALSE;
         }
 
-        status = write(g_usb_ep0, &statusreq_data, sizeof(statusreq_data));
-        if (status < 0) {
-            ERR("IOCTL MTP_SEND_STATUS_ACK Failed [%d]\n",
-                errno);
+        if (_transport_get_mtp_operation_state() == MTP_STATE_ONSERVICE) {
+            status = write(g_usb_ep0, &statusreq_data, sizeof(statusreq_data));
+            if (status < 0) {
+                ERR("IOCTL MTP_SEND_STATUS_ACK Failed [%d]\n",
+                    errno);
+            }
         }
         break;
 
@@ -457,7 +459,7 @@ static void* ffs_transport_thread_usb_control(void* arg)
         status = read(g_usb_ep0, &event, sizeof(event));
         if (status < 0) {
             ERR("read from ep0 failed: %d", errno);
-            break;
+            continue;
         }
 
         ERR("SETUP: type:%d request:%d value:%d index:%d length:%d\n",
