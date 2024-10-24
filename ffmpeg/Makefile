@@ -246,7 +246,7 @@ CFLAGS += -Wno-error
 endif
 
 CFLAGS += -Wno-shift-count-overflow -Wno-implicit-int-float-conversion -Wno-shadow
-CFLAGS += -Wno-missing-braces -Wno-disabled-optimization
+CFLAGS += -Wno-missing-braces -Wno-disabled-optimization -Wno-missing-prototypes
 CFLAGS += $(CFLAGS_HEADERS) -DHAVE_AV_CONFIG_H -DZLIB_CONST
 
 ifneq ($(CONFIG_LIB_FFMPEG_DISABLE_KASAN),)
