@@ -30,7 +30,7 @@ config UTILS_IPERF2_PRIORITY
 
 config UTILS_IPERF2_STACKSIZE
 	int "iperf2 stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 4096
 
 config UTILS_IPERF2_TCP_BUFSIZE
 	int "iperf2 default TCP buffer size"
