@@ -362,7 +362,8 @@ static void __handle_control_request(mtp_int32 request)
             sent_busy = FALSE;
         }
 
-        if (_transport_get_mtp_operation_state() == MTP_STATE_ONSERVICE) {
+        if (_transport_get_mtp_operation_state() == MTP_STATE_ONSERVICE ||
+            _transport_get_mtp_operation_state() == MTP_STATE_DATA_TRANSFER_DL) {
             status = write(g_usb_ep0, &statusreq_data, sizeof(statusreq_data));
             if (status < 0) {
                 ERR("IOCTL MTP_SEND_STATUS_ACK Failed [%d]\n",
