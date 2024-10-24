@@ -200,13 +200,12 @@ static void* ffs_transport_thread_usb_write(void* arg)
             while (written != len) {
                 status = poll(fds, 1, -1);
                 if (status < 0) {
-                    if (errno != EINTR) {
-                        ERR("USB poll fail : %d\n", errno);
-                    }
+                    ERR("USB poll fail : %d\n", errno);
                     continue;
                 }
 
                 if ((fds[0].revents & POLLOUT) == 0) {
+                    ERR("USB hang up\n");
                     continue;
                 }
 
