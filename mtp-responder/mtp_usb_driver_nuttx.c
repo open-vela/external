@@ -195,7 +195,10 @@ static void* ffs_transport_thread_usb_write(void* arg)
          * so test for it explicitly.
          */
         pthread_testcancel();
-        _util_rcv_msg_from_mq(*mqid, &mtp_buf, &len, &mtype);
+        if (_util_rcv_msg_from_mq(*mqid, &mtp_buf, &len, &mtype) == FALSE) {
+            break;
+        }
+
         if (mtype == MTP_BULK_PACKET || mtype == MTP_DATA_PACKET) {
             while (written != len) {
                 status = poll(fds, 1, -1);
@@ -206,7 +209,8 @@ static void* ffs_transport_thread_usb_write(void* arg)
 
                 if ((fds[0].revents & POLLHUP) == POLLHUP) {
                     ERR("USB hang up\n");
-                    continue;
+                    status = -ENOTCONN;
+                    break;
                 }
 
                 status = write(g_usb_ep_in, mtp_buf + written, len - written);
@@ -243,7 +247,7 @@ static void* ffs_transport_thread_usb_write(void* arg)
             break;
         }
     } while (status >= 0);
-    DBG("exited Source thread with status %d\n", status);
+    ERR("exited Source thread with status %d\n", status);
     pthread_cleanup_pop(1);
     g_free(mtp_buf);
     return NULL;
@@ -277,7 +281,7 @@ static void* ffs_transport_thread_usb_read(void* arg)
             g_free(pkt.buffer);
         }
     } while (status > 0);
-    DBG("status[%d] errno[%d]\n", status, errno);
+    ERR("status[%d] errno[%d]\n", status, errno);
     pthread_cleanup_pop(1);
     return NULL;
 }
