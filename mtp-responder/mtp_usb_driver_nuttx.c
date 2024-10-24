@@ -204,7 +204,7 @@ static void* ffs_transport_thread_usb_write(void* arg)
                     continue;
                 }
 
-                if ((fds[0].revents & POLLOUT) == 0) {
+                if ((fds[0].revents & POLLHUP) == POLLHUP) {
                     ERR("USB hang up\n");
                     continue;
                 }
