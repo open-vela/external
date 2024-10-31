@@ -21,7 +21,27 @@ if(CONFIG_LIB_OPUS)
   # ############################################################################
 
   # ADD_SUBDIRECTORY: celt
-  file(GLOB CELT_SOURCES opus/celt/*.c)
+  list(
+    APPEND
+    CELT_SOURCES
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/bands.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/celt.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/celt_encoder.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/celt_decoder.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/cwrs.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/entcode.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/entdec.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/entenc.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/kiss_fft.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/laplace.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/mathops.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/mdct.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/modes.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/pitch.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/celt_lpc.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/quant_bands.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/rate.c
+    ${CMAKE_CURRENT_LIST_DIR}/opus/celt/vq.c)
   set(CELT_SOURCES_X86_RTCD
       ${CMAKE_CURRENT_LIST_DIR}/opus/celt/x86/x86cpu.c
       ${CMAKE_CURRENT_LIST_DIR}/opus/celt/x86/x86_celt_map.c)
