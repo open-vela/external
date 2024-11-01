@@ -23,6 +23,7 @@ CFLAGS += ${INCDIR_PREFIX}libtar/lib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 
 CFLAGS += -DMAXPATHLEN=PATH_MAX
+CFLAGS += -Wno-format-truncation
 
 CSRCS  = $(wildcard libtar/lib/*.c)
 CSRCS += $(wildcard libtar/listhash/*.c)
