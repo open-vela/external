@@ -61,7 +61,7 @@ static int kthread_work(int argc, FAR char *argv[])
   int ret;
 
   ret = t->threadfn(t->data);
-  nxnxsem_post(&t->semexit);
+  nxsem_post(&t->semexit);
 
   return ret;
 }
@@ -109,7 +109,7 @@ FAR struct task_struct *kthread_run(CODE int (*threadfn)(FAR void *data),
 void kthread_stop(FAR struct task_struct *t)
 {
   t->running = false;
-  nxnxsem_wait(&t->semexit);
+  nxsem_wait(&t->semexit);
   free(t);
 }
 

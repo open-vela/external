@@ -22,6 +22,8 @@ CFLAGS += -Wno-discarded-qualifiers
 CFLAGS += -Wno-pointer-sign
 CFLAGS += -Wno-stringop-truncation
 CFLAGS += -Wno-implicit-function-declaration
+CFLAGS += -Wno-format
+CFLAGS += ${DEFINE_PREFIX}__KERNEL__
 CFLAGS += ${DEFINE_PREFIX}VERSION='"${VERSION}"'
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ethercat

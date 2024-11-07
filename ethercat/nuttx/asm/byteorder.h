@@ -1,5 +1,5 @@
 /****************************************************************************
- * external/ethercat/nuttx/linux/ioctl.h
+ * external/ethercat/nuttx/asm/byteorder.h
  *
  *   Copyright (C) 2024 Xiaomi InC. All rights reserved.
  *
@@ -32,22 +32,13 @@
  *
  ****************************************************************************/
 
-#ifndef __LINUX_IOCTL_H
-#define __LINUX_IOCTL_H
+#ifndef __ASM_BYTEORDER_H
+#define __ASM_BYTEORDER_H
 
 /****************************************************************************
  * Included Files
  ****************************************************************************/
 
-#include <nuttx/fs/ioctl.h>
+#include <sys/endian.h>
 
-/****************************************************************************
- * Pre-processor Definitions
- ****************************************************************************/
-
-#define _IO(ect, nr)         _IOC((ect) << 8, nr)
-#define _IOR(ect, nr, type)  _IOC((ect) << 8, nr)
-#define _IOW(ect, nr, type)  _IOC((ect) << 8, nr)
-#define _IOWR(ect, nr, type) _IOC((ect) << 8, nr)
-
-#endif /* __LINUX_IOCTL_H */
+#endif /* __ASM_BYTEORDER_H */

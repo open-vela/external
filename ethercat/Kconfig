@@ -55,7 +55,7 @@ config ETHERCAT_MASTER_DEVICE_COUNT
 
 config ETHERCAT_MASTER_DEVICE_LIST
 	string "EtherCAT master device MAC address list"
-	default "\"02:02:03:04:05:06\", \"\""
+	default "02:02:03:04:05:06\", \""
 	---help---
 	  This is the devices MAC address list of etherCAT master.
 
