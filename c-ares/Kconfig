@@ -35,7 +35,7 @@ config LIB_CARES_TIMEOUT
 config LIB_CARES_MAXTIMEOUT
 	int "Maximum DNS receive timeout"
 	default 2000
-	--help--
+	---help---
 		Maximum DNS receive timeout, unit: milliseconds.
 
 config LIB_CARES_TRIES
