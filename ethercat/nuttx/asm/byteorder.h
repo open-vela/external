@@ -41,4 +41,20 @@
 
 #include <sys/endian.h>
 
+/****************************************************************************
+ * Pre-processor Definitions
+ ****************************************************************************/
+
+#define le16_to_cpu(x)  letoh16(x)
+#define le32_to_cpu(x)  letoh32(x)
+#define le64_to_cpu(x)  letoh64(x)
+
+#define cpu_to_le16(x)  htole16(x)
+#define cpu_to_le32(x)  htole32(x)
+#define cpu_to_le64(x)  htole64(x)
+
+#define le16_to_cpup(x) le16_to_cpu(*((FAR uint16_t *)(x)))
+#define le32_to_cpup(x) le32_to_cpu(*((FAR uint32_t *)(x)))
+#define le64_to_cpup(x) le64_to_cpu(*((FAR uint64_t *)(x)))
+
 #endif /* __ASM_BYTEORDER_H */

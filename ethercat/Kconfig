@@ -28,14 +28,6 @@ config ETHERCAT_MASTER
 
 if ETHERCAT_MASTER
 
-config ETHERCAT_MASTER_PRIORITY
-	int "EtherCAT master task priority"
-	default 100
-
-config ETHERCAT_MASTER_STACKSIZE
-	int "EtherCAT master stack size"
-	default DEFAULT_TASK_STACKSIZE
-
 config ETHERCAT_MASTER_IFNAME
 	string "The name of the network card used for EtherCAT transmission"
 	default "eth0"
@@ -61,6 +53,28 @@ config ETHERCAT_MASTER_DEVICE_LIST
 
 endif
 
+config ETHERCAT_MASTER_EXAMMPLE
+	bool "EtherCAT master example lighting"
+	default n
+
+if ETHERCAT_MASTER_EXAMMPLE
+
+config ETHERCAT_MASTER_PROGNAME
+	string "EtherCAT master program name"
+	default "ethercat_master_lighting"
+	---help---
+	  This is the name of the etherCAT master.
+
+config ETHERCAT_MASTER_PRIORITY
+	int "EtherCAT master task priority"
+	default 100
+
+config ETHERCAT_MASTER_STACKSIZE
+	int "EtherCAT master stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif
+
 config ETHERCAT_SLAVE
 	bool "Enable etherCAT slave"
 	default n
@@ -70,6 +84,8 @@ if ETHERCAT_SLAVE
 config ETHERCAT_SLAVE_EXAMMPLE
 	tristate "EtherCAT slave example"
 	default n
+
+if ETHERCAT_SLAVE_EXAMMPLE
 
 config ETHERCAT_SLAVE_PROGNAME
 	string "EtherCAT slave program name"
@@ -84,6 +100,8 @@ config ETHERCAT_SLAVE_PRIORITY
 config ETHERCAT_SLAVE_STACKSIZE
 	int "EtherCAT slave stack size"
 	default DEFAULT_TASK_STACKSIZE
+
+endif
 
 endif
 

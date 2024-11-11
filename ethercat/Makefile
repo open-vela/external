@@ -72,6 +72,15 @@ CSRCS += \
     nuttx/linux/skbuff.c \
     nuttx/ec_cdev.c \
     nuttx/ethercat.c
+
+ifeq ($(CONFIG_ETHERCAT_MASTER_EXAMMPLE),y)
+    MAINSRC += ethercat/examples/master.c
+    PROGNAME  += $(CONFIG_ETHERCAT_MASTER_PROGNAME)
+    PRIORITY  += $(CONFIG_ETHERCAT_MASTER_PRIORITY)
+    STACKSIZE += $(CONFIG_ETHERCAT_MASTER_STACKSIZE)
+    MODULE    += $(CONFIG_ETHERCAT_MASTER)
+endif
+
 endif
 
 ifeq ($(CONFIG_ETHERCAT_SLAVE),y)
