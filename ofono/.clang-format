@@ -6,7 +6,7 @@ AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
 AllowShortFunctionsOnASingleLine: None
 BreakBeforeBraces: Linux
-ColumnLimit: 80
+ColumnLimit: 100
 ConstructorInitializerIndentWidth: 8
 ContinuationIndentWidth: 8
 Cpp11BracedListStyle: false
