@@ -220,10 +220,8 @@
 /* Define to 1 if you have the <ntstatus.h> header file. */
 /* #undef HAVE_NTSTATUS_H */
 
-#ifdef CONFIG_NET_IPv6
 /* Define to 1 if you have PF_INET6 */
 #define HAVE_PF_INET6 1
-#endif
 
 /* Define to 1 if you have `pipe` */
 #define HAVE_PIPE 1
