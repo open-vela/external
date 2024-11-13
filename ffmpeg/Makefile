@@ -111,9 +111,9 @@ else
 endif
 
 NASUFFIX = $(subst $(DELIM),.,$(CURDIR))
-EXTOBJS  = $(NASRCS:=$(NASUFFIX)$(OBJEXT))
+EXTOBJS  = $(NASRCS:%=$(PREFIX)%$(NASUFFIX)$(OBJEXT))
 
-$(EXTOBJS): %.asm$(NASUFFIX)$(OBJEXT): %.asm
+$(EXTOBJS): $(PREFIX)%.asm$(NASUFFIX)$(OBJEXT): %.asm
 	$(Q) nasm $(NAFLAGS) $< -o $@
 	$(Q) strip -x $@
 endif
