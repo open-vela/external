@@ -15,10 +15,5 @@
 #
 
 ifneq ($(CONFIG_BT),)
-ifeq ($(CONFIG_ZEPHYR_WORK_QUEUE),y)
-    CONFIGURED_APPS += $(APPDIR)/external/zblue/zblue
-    CLEANDIRS += $(APPDIR)/external/zblue/zblue
-else
     CONFIGURED_APPS += $(APPDIR)/external/zblue
-endif
 endif

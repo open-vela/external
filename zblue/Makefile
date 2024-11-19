@@ -1,5 +1,5 @@
 #
-# Copyright (C) 2020 Xiaomi Corporation
+# Copyright (C) 2024 Xiaomi Corporation
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,287 +16,744 @@
 
 include $(APPDIR)/Make.defs
 
-SUBDIR = zblue/subsys/bluetooth
+BTDIR = zblue/subsys/bluetooth
 
-ifeq ($(CONFIG_BT_HCI_RAW),y)
-  CSRCS += $(SUBDIR)/host/hci_raw.c
-endif
-ifeq ($(CONFIG_BT_DEBUG_MONITOR),y)
-  CSRCS += $(SUBDIR)/host/monitor.c
-endif
-ifeq ($(CONFIG_BT_TINYCRYPT_ECC),y)
-  CSRCS += $(SUBDIR)/host/hci_ecc.c
-endif
-ifeq ($(CONFIG_BT_A2DP),y)
-  CSRCS += $(SUBDIR)/host/a2dp.c
-endif
-ifeq ($(CONFIG_BT_AVDTP),y)
-  CSRCS += $(SUBDIR)/host/avdtp.c
-endif
-ifeq ($(CONFIG_BT_RFCOMM),y)
-  CSRCS += $(SUBDIR)/host/rfcomm.c
-endif
-ifeq ($(CONFIG_BT_TESTING),y)
-  CSRCS += $(SUBDIR)/host/testing.c
-endif
-ifeq ($(CONFIG_BT_SETTINGS),y)
-  CSRCS += $(SUBDIR)/host/settings.c
-endif
-ifeq ($(CONFIG_BT_HOST_CCM),y)
-  CSRCS += $(SUBDIR)/host/aes_ccm.c
+CSRCS += $(BTDIR)/common/addr.c
+CSRCS += $(BTDIR)/common/dummy.c
+CSRCS += $(BTDIR)/common/bt_str.c
+
+ifeq ($(CONFIG_BT_RPA),y)
+  CSRCS += $(BTDIR)/common/rpa.c
+endif # CONFIG_BT_RPA
+
+ifeq ($(CONFIG_BT_EAD),y)
+  CSRCS += $(BTDIR)/lib/ead.c
 endif
 
-ifeq ($(CONFIG_BT_BREDR),y)
-  CSRCS += $(SUBDIR)/host/keys_br.c
-  CSRCS += $(SUBDIR)/host/l2cap_br.c
-  CSRCS += $(SUBDIR)/host/sdp.c
-  CSRCS += $(SUBDIR)/host/ssp.c
-endif
+ifeq ($(CONFIG_BT_HCI),y)
+  HOSTDIR = $(BTDIR)/host
 
-ifeq ($(CONFIG_BT_HFP_HF),y)
-  CSRCS += $(SUBDIR)/host/hfp_hf.c
-  CSRCS += $(SUBDIR)/host/at.c
-endif
-
-ifeq ($(CONFIG_BT_AUDIO),y)
-  ifeq ($(CONFIG_BT_ISO),y)
-    CSRCS += $(SUBDIR)/host/audio/iso.c
+  ifeq ($(CONFIG_BT_HCI_RAW),y)
+    CSRCS += $(HOSTDIR)/hci_raw.c $(HOSTDIR)/hci_common.c
   endif
-endif
-
-ifeq ($(CONFIG_BT_HCI_HOST),y)
-  CSRCS += $(SUBDIR)/host/uuid.c
-  CSRCS += $(SUBDIR)/host/hci_core.c
-
-  ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
-    CSRCS += $(SUBDIR)/host/crypto.c
+  ifeq ($(CONFIG_BT_MONITOR),y)
+    CSRCS += $(HOSTDIR)/monitor.c
+  endif
+  ifeq ($(CONFIG_BT_TINYCRYPT_ECC),y)
+    CSRCS += $(HOSTDIR)/hci_ecc.c
+  endif
+  ifeq ($(CONFIG_BT_SETTINGS),y)
+    CSRCS += $(HOSTDIR)/settings.c
+  endif
+  ifeq ($(CONFIG_BT_HOST_CCM),y)
+    CSRCS += $(HOSTDIR)/aes_ccm.c
+  endif
+  ifeq ($(CONFIG_BT_LONG_WQ),y)
+    CSRCS += $(HOSTDIR)/long_wq.c
   endif
 
-  ifeq ($(CONFIG_BT_CONN),y)
-    CSRCS += $(SUBDIR)/host/conn.c
-    CSRCS += $(SUBDIR)/host/l2cap.c
-    CSRCS += $(SUBDIR)/host/att.c
-    CSRCS += $(SUBDIR)/host/gatt.c
+  ifeq ($(CONFIG_BT_HCI_HOST),y)
+    CSRCS += $(HOSTDIR)/uuid.c $(HOSTDIR)/addr.c \
+            $(HOSTDIR)/buf.c $(HOSTDIR)/data.c  \
+            $(HOSTDIR)/hci_core.c $(HOSTDIR)/hci_common.c \
+            $(HOSTDIR)/id.c
+
+    ifeq ($(CONFIG_BT_BROADCASTER),y)
+      CSRCS += $(HOSTDIR)/adv.c
+    endif
+    ifeq ($(CONFIG_BT_OBSERVER),y)
+      CSRCS += $(HOSTDIR)/scan.c
+    endif
+
+    ifeq ($(CONFIG_BT_USE_PSA_API),y)
+      ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
+        CSRCS += $(HOSTDIR)/crypto_psa.c
+      endif
+    else
+      ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
+        CSRCS += $(HOSTDIR)/crypto_tc.c
+      endif
+    endif
+
+    ifeq ($(CONFIG_BT_ECC),y)
+      CSRCS += $(HOSTDIR)/ecc.c
+    endif
+
+    ifeq ($(CONFIG_BT_CONN),y)
+      CSRCS += $(HOSTDIR)/conn.c $(HOSTDIR)/l2cap.c
+      CSRCS += $(HOSTDIR)/att.c $(HOSTDIR)/gatt.c
+
+      ifeq ($(CONFIG_BT_SMP),y)
+        CSRCS += $(HOSTDIR)/smp.c $(HOSTDIR)/keys.c
+      else
+        CSRCS += $(HOSTDIR)/smp_null.c
+      endif
+    endif
+
+    ifeq ($(CONFIG_BT_ISO),y)
+      CSRCS += $(HOSTDIR)/iso.c $(HOSTDIR)/conn.c
+    endif
+    ifeq ($(CONFIG_BT_CHANNEL_SOUNDING),y)
+      CSRCS += $(HOSTDIR)/cs.c
+    endif
+    ifeq ($(CONFIG_BT_DF),y)
+      CSRCS += $(HOSTDIR)/direction.c
+    endif
+  endif # CONFIG_BT_HCI_HOST
+
+  ifeq ($(CONFIG_BT_CLASSIC),y)
+    CLASSICDIR = $(HOSTDIR)/classic
+
+    ifeq ($(CONFIG_BT_A2DP),y)
+      CSRCS += $(CLASSICDIR)/a2dp.c $(CLASSICDIR)/a2dp_codec_sbc.c
+    endif
+    ifeq ($(CONFIG_BT_AVDTP),y)
+      CSRCS += $(CLASSICDIR)/avdtp.c
+    endif
+    ifeq ($(CONFIG_BT_AVRCP), y)
+      CSRCS += $(CLASSICDIR)/avrcp.c
+    endif
+    ifeq ($(CONFIG_BT_AVCTP), y)
+      CSRCS += $(CLASSICDIR)/avctp.c
+    endif
+    ifeq ($(CONFIG_BT_RFCOMM),y)
+      CSRCS += $(CLASSICDIR)/rfcomm.c
+    endif
+
+    ifeq ($(CONFIG_BT_CLASSIC),y)
+      CSRCS += $(CLASSICDIR)/br.c \
+              $(CLASSICDIR)/keys_br.c \
+              $(CLASSICDIR)/l2cap_br.c \
+              $(CLASSICDIR)/sdp.c \
+              $(CLASSICDIR)/ssp.c \
+              $(CLASSICDIR)/sco.c
+    endif
+
+    ifeq ($(CONFIG_BT_HFP_HF),y)
+      CSRCS += $(CLASSICDIR)/hfp_hf.c \
+              $(CLASSICDIR)/at.c
+    endif
+    ifeq ($(CONFIG_BT_HFP_AG),y)
+      CSRCS += $(CLASSICDIR)/hfp_ag.c
+    endif
+
+    ifeq ($(CONFIG_BT_SHELL),y)
+      CSRCS += $(CLASSICDIR)/shell/bredr.c
+
+      ifeq ($(CONFIG_BT_RFCOMM),y)
+        CSRCS += $(CLASSICDIR)/shell/rfcomm.c
+      endif
+      ifeq ($(CONFIG_BT_A2DP),y)
+        CSRCS += $(CLASSICDIR)/shell/a2dp.c
+      endif
+      ifeq ($(CONFIG_BT_AVRCP),y)
+        CSRCS += $(CLASSICDIR)/shell/avrcp.c
+      endif
+    endif # CONFIG_BT_SHELL
+  endif # CONFIG_BT_CLASSIC
+
+  ifeq ($(CONFIG_BT_SHELL),y)
+    CSRCS += $(HOSTDIR)/shell/bt.c
+
+    ifeq ($(CONFIG_BT_CONN),y)
+      CSRCS += $(HOSTDIR)/shell/gatt.c
+    endif
+    ifeq ($(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL),y)
+      CSRCS += $(HOSTDIR)/shell/l2cap.c
+    endif
+    ifeq ($(CONFIG_BT_ISO),y)
+      CSRCS += $(HOSTDIR)/shell/iso.c
+    endif
+    ifeq ($(CONFIG_BT_CHANNEL_SOUNDING),y)
+      CSRCS += $(HOSTDIR)/shell/cs.c
+    endif
+  endif # CONFIG_BT_SHELL
+endif # CONFIG_BT_HCI
+
+ifeq ($(CONFIG_BT_CONN),y)
+  SVRSDIR = $(BTDIR)/services
+
+  ifeq ($(CONFIG_BT_DIS),y)
+    CSRCS += $(SVRSDIR)/dis.c
+  endif
+  ifeq ($(CONFIG_BT_CTS),y)
+    CSRCS += $(SVRSDIR)/cts.c
+  endif
+  ifeq ($(CONFIG_BT_HRS),y)
+    CSRCS += $(SVRSDIR)/hrs.c
+  endif
+  ifeq ($(CONFIG_BT_TPS),y)
+    CSRCS += $(SVRSDIR)/tps.c
   endif
 
-  ifeq ($(CONFIG_BT_SMP),y)
-    CSRCS += $(SUBDIR)/host/smp.c
-    CSRCS += $(SUBDIR)/host/keys.c
-  else
-    CSRCS += $(SUBDIR)/host/smp_null.c
+  ifeq ($(CONFIG_BT_BAS),y)
+    CSRCS += $(SVRSDIR)/bas/bas.c
+    ifeq ($(CONFIG_BT_BAS_BLS),y)
+      CSRCS += $(SVRSDIR)/bas/bas_bls.c
+    endif
+    ifeq ($(CONFIG_BT_BAS_BCS),y)
+      CSRCS += $(SVRSDIR)/bas/bas_bcs.c
+    endif
   endif
-endif
 
-ifeq ($(CONFIG_BT_DIS),y)
-  CSRCS += $(SUBDIR)/services/dis.c
-endif
+  ifeq ($(CONFIG_BT_OTS),y)
+    CSRCS += $(SVRSDIR)/ots/ots.c \
+             $(SVRSDIR)/ots/ots_l2cap.c \
+             $(SVRSDIR)/ots/ots_obj_manager.c \
+             $(SVRSDIR)/ots/ots_oacp.c \
+             $(SVRSDIR)/ots/ots_olcp.c
+  endif
 
-ifeq ($(CONFIG_BT_BAS),y)
-  CSRCS += $(SUBDIR)/services/bas.c
-endif
+  ifeq ($(CONFIG_BT_OTS_DIR_LIST_OBJ),y)
+    CSRCS += $(SVRSDIR)/ots/ots_dir_list.c
+  endif
+  ifeq ($(CONFIG_BT_OTS_CLIENT),y)
+    CSRCS += $(SVRSDIR)/ots/ots_client.c \
+             $(SVRSDIR)/ots/ots_l2cap.c
+  endif
 
-ifeq ($(CONFIG_BT_HRS),y)
-  CSRCS += $(SUBDIR)/services/hrs.c
-endif
+  ifeq ($(CONFIG_BT_IAS),y)
+    CSRCS += $(SVRSDIR)/ias/ias.c
+    ifeq ($(CONFIG_BT_SHELL),y)
+      CSRCS += $(SVRSDIR)/ias/shell/ias.c
+    endif
+  endif
+
+  ifeq ($(CONFIG_BT_IAS_CLIENT),y)
+    CSRCS += $(SVRSDIR)/ias/ias_client.c
+    ifeq ($(CONFIG_BT_SHELL),y)
+      CSRCS += $(SVRSDIR)/ias/shell/ias_client.c
+    endif
+  endif
+
+  ifeq ($(CONFIG_BT_ZEPHYR_NUS),y)
+    CSRCS += $(SVRSDIR)/nus/nus.c \
+             $(SVRSDIR)/nus/nus_inst.c
+
+    ifeq ($(CONFIG_BT_ZEPHYR_NUS_AUTO_START_BLUETOOTH),y)
+      CSRCS += $(SVRSDIR)/nus/bt_nus_auto_start_bt.c
+    endif
+  endif # CONFIG_BT_ZEPHYR_NUS
+endif # CONFIG_BT_CONN
 
 ifeq ($(CONFIG_BT_MESH),y)
-  CSRCS += $(SUBDIR)/mesh/main.c
-  CSRCS += $(SUBDIR)/mesh/adv.c
-  CSRCS += $(SUBDIR)/mesh/beacon.c
-  CSRCS += $(SUBDIR)/mesh/net.c
-  CSRCS += $(SUBDIR)/mesh/transport.c
-  CSRCS += $(SUBDIR)/mesh/crypto.c
-  CSRCS += $(SUBDIR)/mesh/access.c
-  CSRCS += $(SUBDIR)/mesh/cfg_srv.c
-  CSRCS += $(SUBDIR)/mesh/health_srv.c
-  ifeq ($(CONFIG_BT_SETTINGS),y)
-    CSRCS += $(SUBDIR)/mesh/settings.c
+  MESHDIR = $(BTDIR)/mesh
+
+  CSRCS += $(MESHDIR)/main.c \
+           $(MESHDIR)/cfg.c \
+           $(MESHDIR)/adv.c \
+           $(MESHDIR)/beacon.c \
+           $(MESHDIR)/net.c \
+           $(MESHDIR)/subnet.c \
+           $(MESHDIR)/app_keys.c \
+           $(MESHDIR)/heartbeat.c \
+           $(MESHDIR)/crypto.c \
+           $(MESHDIR)/access.c \
+           $(MESHDIR)/msg.c \
+           $(MESHDIR)/cfg_srv.c \
+           $(MESHDIR)/health_srv.c \
+           $(MESHDIR)/va.c \
+           $(MESHDIR)/transport.c
+
+  ifeq ($(CONFIG_BT_MESH_ADV_LEGACY),y)
+    CSRCS += $(MESHDIR)/adv_legacy.c
   endif
-endif
+  ifeq ($(CONFIG_BT_MESH_ADV_EXT),y)
+    CSRCS += $(MESHDIR)/adv_ext.c
+  endif
+  ifeq ($(CONFIG_BT_SETTINGS),y)
+    CSRCS += $(MESHDIR)/settings.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_RPL_STORAGE_MODE_SETTINGS),y)
+    CSRCS += $(MESHDIR)/rpl.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_LOW_POWER),y)
+    CSRCS += $(MESHDIR)/lpn.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_FRIEND),y)
+    CSRCS += $(MESHDIR)/friend.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PROV),y)
+    CSRCS += $(MESHDIR)/prov.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PROVISIONEE),y)
+    CSRCS += $(MESHDIR)/provisionee.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PROVISIONER),y)
+    CSRCS += $(MESHDIR)/provisioner.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PB_ADV),y)
+    CSRCS += $(MESHDIR)/pb_adv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PB_GATT_COMMON),y)
+    CSRCS += $(MESHDIR)/pb_gatt.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PB_GATT),y)
+    CSRCS += $(MESHDIR)/pb_gatt_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PB_GATT_CLIENT),y)
+    CSRCS += $(MESHDIR)/pb_gatt_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_GATT_CLIENT),y)
+    CSRCS += $(MESHDIR)/gatt_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PROXY_CLIENT),y)
+    CSRCS += $(MESHDIR)/proxy_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_GATT_PROXY),y)
+    CSRCS += $(MESHDIR)/proxy_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_GATT),y)
+    CSRCS += $(MESHDIR)/proxy_msg.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_CFG_CLI),y)
+    CSRCS += $(MESHDIR)/cfg_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_HEALTH_CLI),y)
+    CSRCS += $(MESHDIR)/health_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SAR_CFG_CLI),y)
+    CSRCS += $(MESHDIR)/sar_cfg_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SAR_CFG_SRV),y)
+    CSRCS += $(MESHDIR)/sar_cfg_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SAR_CFG),y)
+    CSRCS += $(MESHDIR)/sar_cfg.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_OP_AGG_SRV),y)
+    CSRCS += $(MESHDIR)/op_agg_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_OP_AGG_CLI),y)
+    CSRCS += $(MESHDIR)/op_agg_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_OP_AGG),y)
+    CSRCS += $(MESHDIR)/op_agg.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_LARGE_COMP_DATA_SRV),y)
+    CSRCS += $(MESHDIR)/large_comp_data_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_LARGE_COMP_DATA_CLI),y)
+    CSRCS += $(MESHDIR)/large_comp_data_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PRIV_BEACON_SRV),y)
+    CSRCS += $(MESHDIR)/priv_beacon_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_PRIV_BEACON_CLI),y)
+    CSRCS += $(MESHDIR)/priv_beacon_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SELF_TEST),y)
+    CSRCS += $(MESHDIR)/test.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_CDB),y)
+    CSRCS += $(MESHDIR)/cdb.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_BLOB_SRV),y)
+    CSRCS += $(MESHDIR)/blob_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_BLOB_CLI),y)
+    CSRCS += $(MESHDIR)/blob_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_BLOB_IO_FLASH),y)
+    CSRCS += $(MESHDIR)/blob_io_flash.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_DFU_CLI),y)
+    CSRCS += $(MESHDIR)/dfu_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_DFU_SRV),y)
+    CSRCS += $(MESHDIR)/dfu_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_DFD_SRV),y)
+    CSRCS += $(MESHDIR)/dfd_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_DFU_SLOTS),y)
+    CSRCS += $(MESHDIR)/dfu_slot.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_DFU_METADATA),y)
+    CSRCS += $(MESHDIR)/dfu_metadata.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_RPR_CLI),y)
+    CSRCS += $(MESHDIR)/rpr_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_RPR_SRV),y)
+    CSRCS += $(MESHDIR)/rpr_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI),y)
+    CSRCS += $(MESHDIR)/od_priv_proxy_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_OD_PRIV_PROXY_SRV),y)
+    CSRCS += $(MESHDIR)/od_priv_proxy_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SOL_PDU_RPL_CLI),y)
+    CSRCS += $(MESHDIR)/sol_pdu_rpl_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SOL_PDU_RPL_SRV),y)
+    CSRCS += $(MESHDIR)/sol_pdu_rpl_srv.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_BRG_CFG_CLI),y)
+    CSRCS += $(MESHDIR)/brg_cfg_cli.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_BRG_CFG_SRV),y)
+    CSRCS += $(MESHDIR)/brg_cfg_srv.c $(MESHDIR)/brg_cfg.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_SOLICITATION),y)
+    CSRCS += $(MESHDIR)/solicitation.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_STATISTIC),y)
+    CSRCS += $(MESHDIR)/statistic.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_ACCESS_DELAYABLE_MSG),y)
+    CSRCS += $(MESHDIR)/delayable_msg.c
+  endif
+  ifeq ($(CONFIG_BT_MESH_USES_TINYCRYPT),y)
+    CSRCS += $(MESHDIR)/crypto_tc.c
+  else
+    CSRCS += $(MESHDIR)/crypto_psa.c
+  endif
+  ifeq ($(CONFIG_BT_TESTING),y)
+    CSRCS += $(MESHDIR)/testing.c
+  endif
 
-ifeq ($(CONFIG_BT_MESH_LOW_POWER),y)
-  CSRCS += $(SUBDIR)/mesh/lpn.c
-endif
-ifeq ($(CONFIG_BT_MESH_FRIEND),y)
-  CSRCS += $(SUBDIR)/mesh/friend.c
-endif
-ifeq ($(CONFIG_BT_MESH_PROV),y)
-  CSRCS += $(SUBDIR)/mesh/prov.c
-endif
-ifeq ($(CONFIG_BT_MESH_PB_ADV),y)
-  CSRCS += $(SUBDIR)/mesh/pb_adv.c
-endif
-ifeq ($(CONFIG_BT_MESH_PB_GATT),y)
-  CSRCS += $(SUBDIR)/mesh/pb_gatt.c
-endif
-ifeq ($(CONFIG_BT_MESH_PROXY),y)
-  CSRCS += $(SUBDIR)/mesh/proxy.c
-endif
-ifeq ($(CONFIG_BT_MESH_CFG_CLI),y)
-  CSRCS += $(SUBDIR)/mesh/cfg_cli.c
-endif
-ifeq ($(CONFIG_BT_MESH_HEALTH_CLI),y)
-  CSRCS += $(SUBDIR)/mesh/health_cli.c
-endif
-ifeq ($(CONFIG_BT_MESH_SELF_TEST),y)
-  CSRCS += $(SUBDIR)/mesh/test.c
-endif
-ifeq ($(CONFIG_BT_MESH_CDB),y)
-  CSRCS += $(SUBDIR)/mesh/cdb.c
-endif
+  ifeq ($(CONFIG_BT_MESH_SHELL),y)
+    CSRCS += $(MESHDIR)/shell/shell.c \
+             $(MESHDIR)/shell/utils.c
 
-CSRCS += $(wildcard $(SUBDIR)/common/*.c)
+    ifeq ($(CONFIG_BT_MESH_SHELL_HEALTH_CLI),y)
+      CSRCS += $(MESHDIR)/shell/health.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_CFG_CLI),y)
+      CSRCS += $(MESHDIR)/shell/cfg.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_LARGE_COMP_DATA_CLI),y)
+      CSRCS += $(MESHDIR)/shell/large_comp_data.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_OP_AGG_CLI),y)
+      CSRCS += $(MESHDIR)/shell/op_agg.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_PRIV_BEACON_CLI),y)
+      CSRCS += $(MESHDIR)/shell/priv_beacon.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_RPR_CLI),y)
+      CSRCS += $(MESHDIR)/shell/rpr.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_SAR_CFG_CLI),y)
+      CSRCS += $(MESHDIR)/shell/sar.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_BLOB_CLI),y)
+      CSRCS += $(MESHDIR)/shell/blob.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_BLOB_SRV),y)
+      CSRCS += $(MESHDIR)/shell/blob.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_BLOB_IO_FLASH),y)
+      CSRCS += $(MESHDIR)/shell/blob.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_DFU_SLOT),y)
+      CSRCS += $(MESHDIR)/shell/dfu.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_DFU_METADATA),y)
+      CSRCS += $(MESHDIR)/shell/dfu.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_DFU_CLI),y)
+      CSRCS += $(MESHDIR)/shell/dfu.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_DFU_SRV),y)
+      CSRCS += $(MESHDIR)/shell/dfu.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_DFD_SRV),y)
+      CSRCS += $(MESHDIR)/shell/dfd.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_OD_PRIV_PROXY_CLI),y)
+      CSRCS += $(MESHDIR)/shell/od_priv_proxy.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SOL_PDU_RPL_CLI),y)
+      CSRCS += $(MESHDIR)/shell/sol_pdu_rpl.c
+    endif
+    ifeq ($(CONFIG_BT_MESH_SHELL_BRG_CFG_CLI),y)
+      CSRCS += $(MESHDIR)/shell/brg_cfg.c
+    endif
+    ifeq ($(CONFIG_BT_HCI_MESH_EXT),y)
+      CSRCS += $(MESHDIR)/shell/hci.c
+    endif
+  endif # CONFIG_BT_MESH_SHELL
+endif # CONFIG_BT_MESH
+
+ifeq ($(CONFIG_BT_AUDIO),y)
+  AUDIODIR = $(BTDIR)/audio
+  CSRCS += $(AUDIODIR)/audio.c
+
+  ifeq ($(CONFIG_BT_VOCS),y)
+    CSRCS += $(AUDIODIR)/vocs.c
+  endif
+  ifeq ($(CONFIG_BT_VOCS_CLIENT),y)
+    CSRCS += $(AUDIODIR)/vocs_client.c
+  endif
+  ifeq ($(CONFIG_BT_AICS),y)
+    CSRCS += $(AUDIODIR)/aics.c
+  endif
+  ifeq ($(CONFIG_BT_AICS_CLIENT),y)
+    CSRCS += $(AUDIODIR)/aics_client.c
+  endif
+  ifeq ($(CONFIG_BT_VCP_VOL_REND),y)
+    CSRCS += $(AUDIODIR)/vcp_vol_rend.c
+  endif
+  ifeq ($(CONFIG_BT_VCP_VOL_CTLR),y)
+    CSRCS += $(AUDIODIR)/vcp_vol_ctlr.c
+  endif
+  ifeq ($(CONFIG_BT_MICP_MIC_DEV),y)
+    CSRCS += $(AUDIODIR)/micp_mic_dev.c
+  endif
+  ifeq ($(CONFIG_BT_MICP_MIC_CTLR),y)
+    CSRCS += $(AUDIODIR)/micp_mic_ctlr.c
+  endif
+  ifeq ($(CONFIG_BT_CONN),y)
+    CSRCS += $(AUDIODIR)/ccid.c
+  endif
+  ifeq ($(CONFIG_BT_CSIP_SET_MEMBER),y)
+    CSRCS += $(AUDIODIR)/csip_set_member.c
+  endif
+  ifeq ($(CONFIG_BT_CSIP_SET_COORDINATOR),y)
+    CSRCS += $(AUDIODIR)/csip_set_coordinator.c
+  endif
+  ifeq ($(CONFIG_BT_CSIP_SET_MEMBER)$(CONFIG_BT_CSIP_SET_COORDINATOR),yy)
+    CSRCS += $(AUDIODIR)/csip_crypto.c
+  endif
+  ifeq ($(CONFIG_BT_TBS),y)
+    CSRCS += $(AUDIODIR)/tbs.c
+  endif
+  ifeq ($(CONFIG_BT_TBS_CLIENT),y)
+    CSRCS += $(AUDIODIR)/tbs_client.c
+  endif
+  ifeq ($(CONFIG_BT_MCC),y)
+    CSRCS += $(AUDIODIR)/mcc.c
+  endif
+  ifeq ($(CONFIG_BT_MCS),y)
+    CSRCS += $(AUDIODIR)/mcs.c
+  endif
+  ifeq ($(CONFIG_BT_MPL),y)
+    CSRCS += $(AUDIODIR)/mpl.c
+  endif
+  ifeq ($(CONFIG_MCTL),y)
+    CSRCS += $(AUDIODIR)/media_proxy.c
+  endif
+  ifeq ($(CONFIG_BT_ASCS),y)
+    CSRCS += $(AUDIODIR)/ascs.c
+  endif
+  ifeq ($(CONFIG_BT_PACS),y)
+    CSRCS += $(AUDIODIR)/pacs.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_STREAM),y)
+    CSRCS += $(AUDIODIR)/bap_stream.c $(AUDIODIR)/codec.c $(AUDIODIR)/bap_iso.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_BASE),y)
+    CSRCS += $(AUDIODIR)/bap_base.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_UNICAST_SERVER),y)
+    CSRCS += $(AUDIODIR)/bap_unicast_server.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_UNICAST_CLIENT),y)
+    CSRCS += $(AUDIODIR)/bap_unicast_client.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_BROADCAST_SOURCE),y)
+    CSRCS += $(AUDIODIR)/bap_broadcast_source.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_BROADCAST_SINK),y)
+    CSRCS += $(AUDIODIR)/bap_broadcast_sink.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_SCAN_DELEGATOR),y)
+    CSRCS += $(AUDIODIR)/bap_scan_delegator.c
+  endif
+  ifeq ($(CONFIG_BT_BAP_BROADCAST_ASSISTANT),y)
+    CSRCS += $(AUDIODIR)/bap_broadcast_assistant.c
+  endif
+  ifeq ($(CONFIG_BT_HAS),y)
+    CSRCS += $(AUDIODIR)/has.c
+  endif
+  ifeq ($(CONFIG_BT_HAS_CLIENT),y)
+    CSRCS += $(AUDIODIR)/has_client.c
+  endif
+  ifeq ($(CONFIG_BT_CAP),y)
+    CSRCS += $(AUDIODIR)/cap_stream.c
+  endif
+  ifeq ($(CONFIG_BT_CAP_ACCEPTOR),y)
+    CSRCS += $(AUDIODIR)/cap_acceptor.c
+  endif
+  ifeq ($(CONFIG_BT_CAP_INITIATOR),y)
+    CSRCS += $(AUDIODIR)/cap_initiator.c
+  endif
+  ifeq ($(CONFIG_BT_CAP_COMMANDER),y)
+    CSRCS += $(AUDIODIR)/cap_commander.c
+  endif
+  ifeq ($(CONFIG_BT_CAP_INITIATOR_UNICAST)$(CONFIG_BT_CAP_COMMANDER),yy)
+    CSRCS += $(AUDIODIR)/cap_common.c
+  endif
+  ifeq ($(CONFIG_BT_TMAP),y)
+    CSRCS += $(AUDIODIR)/tmap.c
+  endif
+  ifeq ($(CONFIG_BT_GMAP),y)
+    CSRCS += $(AUDIODIR)/gmap_client.c $(AUDIODIR)/gmap_server.c
+  endif
+  ifeq ($(CONFIG_BT_PBP),y)
+    CSRCS += $(AUDIODIR)/pbp.c
+  endif
+
+  ifeq ($(CONFIG_BT_SHELL),y)
+    ifeq ($(CONFIG_BT_VCP_VOL_REND),y)
+      CSRCS += $(AUDIODIR)/shell/vcp_vol_rend.c
+    endif
+    ifeq ($(CONFIG_BT_VCP_VOL_CTLR),y)
+      CSRCS += $(AUDIODIR)/shell/vcp_vol_ctlr.c
+    endif
+    ifeq ($(CONFIG_BT_MICP_MIC_DEV),y)
+      CSRCS += $(AUDIODIR)/shell/micp_mic_dev.c
+    endif
+    ifeq ($(CONFIG_BT_MICP_MIC_CTLR),y)
+      CSRCS += $(AUDIODIR)/shell/micp_mic_ctlr.c
+    endif
+    ifeq ($(CONFIG_BT_CSIP_SET_MEMBER),y)
+      CSRCS += $(AUDIODIR)/shell/csip_set_member.c
+    endif
+    ifeq ($(CONFIG_BT_CSIP_SET_COORDINATOR),y)
+      CSRCS += $(AUDIODIR)/shell/csip_set_coordinator.c
+    endif
+    ifeq ($(CONFIG_BT_TBS),y)
+      CSRCS += $(AUDIODIR)/shell/tbs.c
+    endif
+    ifeq ($(CONFIG_BT_TBS_CLIENT),y)
+      CSRCS += $(AUDIODIR)/shell/tbs_client.c
+    endif
+    ifeq ($(CONFIG_BT_MPL),y)
+      CSRCS += $(AUDIODIR)/shell/mpl.c
+    endif
+    ifeq ($(CONFIG_BT_MCC),y)
+      CSRCS += $(AUDIODIR)/shell/mcc.c
+    endif
+    ifeq ($(CONFIG_BT_MCS),y)
+      CSRCS += $(AUDIODIR)/shell/media_controller.c
+    endif
+    ifeq ($(CONFIG_BT_HAS_PRESET_SUPPORT),y)
+      CSRCS += $(AUDIODIR)/shell/has.c
+    endif
+    ifeq ($(CONFIG_BT_CAP_ACCEPTOR),y)
+      CSRCS += $(AUDIODIR)/shell/cap_acceptor.c
+    endif
+    ifeq ($(CONFIG_BT_CAP_INITIATOR),y)
+      CSRCS += $(AUDIODIR)/shell/cap_initiator.c
+    endif
+    ifeq ($(CONFIG_BT_CAP_COMMANDER),y)
+      CSRCS += $(AUDIODIR)/shell/cap_commander.c
+    endif
+    ifeq ($(CONFIG_BT_HAS_CLIENT),y)
+      CSRCS += $(AUDIODIR)/shell/has_client.c
+    endif
+    ifeq ($(CONFIG_BT_TMAP),y)
+      CSRCS += $(AUDIODIR)/shell/tmap.c
+    endif
+    ifeq ($(CONFIG_BT_GMAP),y)
+      CSRCS += $(AUDIODIR)/shell/gmap.c
+    endif
+    ifeq ($(CONFIG_BT_BAP_STREAM),y)
+      CSRCS += $(AUDIODIR)/shell/bap.c
+    endif
+    ifeq ($(CONFIG_LIBLC3)$(CONFIG_USB_DEVICE_AUDIO),yy)
+      CSRCS += $(AUDIODIR)/shell/bap_usb.c
+    endif
+    ifeq ($(CONFIG_BT_BAP_SCAN_DELEGATOR),y)
+      CSRCS += $(AUDIODIR)/shell/bap_scan_delegator.c
+    endif
+    ifeq ($(CONFIG_BT_BAP_BROADCAST_ASSISTANT),y)
+      CSRCS += $(AUDIODIR)/shell/bap_broadcast_assistant.c
+    endif
+    ifeq ($(CONFIG_BT_PBP),y)
+      CSRCS += $(AUDIODIR)/shell/pbp.c
+    endif
+  endif # CONFIG_BT_SHELL
+endif # CONFIG_BT_AUDIO
+
+ifeq ($(CONFIG_BT_CRYPTO),y)
+  CSRCS += $(BTDIR)/crypto/bt_crypto.c
+
+  ifeq ($(CONFIG_BT_USE_PSA_API),y)
+    CSRCS += $(BTDIR)/crypto/bt_crypto_psa.c
+  else
+    CSRCS += $(BTDIR)/crypto/bt_crypto_tc.c
+  endif
+endif # CONFIG_BT_CRYPTO
 
 ifeq ($(CONFIG_SETTINGS),y)
-  CSRCS += zblue/subsys/settings/src/settings.c
-  CSRCS += zblue/subsys/settings/src/settings_store.c
-  CSRCS += zblue/subsys/settings/src/settings_init.c
-  CSRCS += zblue/subsys/settings/src/settings_line.c
-  ifeq ($(CONFIG_SETTINGS_FS),y)
-    CSRCS += zblue/subsys/settings/src/settings_file.c
-  else ifeq ($(CONFIG_SETTINGS_NONE),y)
-    CSRCS += zblue/subsys/settings/src/settings_none.c
+  SETTINGS_DIR = zblue/subsys/settings/src/
+
+  CSRCS += $(SETTINGS_DIR)/settings_store.c
+  CSRCS += $(SETTINGS_DIR)/settings.c
+  CSRCS += $(SETTINGS_DIR)/settings_init.c
+  CSRCS += $(SETTINGS_DIR)/settings_line.c
+
+  ifeq ($(CONFIG_SETTINGS_FILE),y)
+    CSRCS += $(SETTINGS_DIR)/settings_file.c
   endif
-  CFLAGS += ${INCDIR_PREFIX}zblue/subsys/settings/include
-endif
-
-ifeq ($(CONFIG_FILE_SYSTEM),y)
-  CSRCS += zblue/port/subsys/fs/fs.c
-endif
-
-ifeq ($(CONFIG_BT_SHELL),y)
-  CSRCS += zblue/port/subsys/shell/shell.c
-
-  CSRCS    += $(SUBDIR)/shell/bt.c
-  CSRCS    += $(SUBDIR)/shell/hci.c
-  MAINSRC  += zblue/port/subsys/bluetooth/shell/bt.c
-  PROGNAME += bt
-  zblue/port/subsys/bluetooth/shell/bt.c_CFLAGS    += -DCONFIG_BT_BT_SHELL
-  zblue/port/subsys/bluetooth/shell/bt.c_CELFFLAGS += -DCONFIG_BT_BT_SHELL
-
-  ifeq ($(CONFIG_BT_CONN),y)
-    CSRCS    += $(SUBDIR)/shell/gatt.c
-    MAINSRC  += zblue/port/subsys/bluetooth/shell/gatt.c
-    PROGNAME += gatt
-    zblue/port/subsys/bluetooth/shell/gatt.c_CFLAGS    += -DCONFIG_BT_GATT_SHELL
-    zblue/port/subsys/bluetooth/shell/gatt.c_CELFFLAGS += -DCONFIG_BT_GATT_SHELL
+  ifeq ($(CONFIG_SETTINGS_NVS),y)
+    CSRCS += $(SETTINGS_DIR)/settings_nvs.c
   endif
-  ifeq ($(CONFIG_BT_BREDR),y)
-    CSRCS    += $(SUBDIR)/shell/bredr.c
-    MAINSRC  += zblue/port/subsys/bluetooth/shell/bredr.c
-    PROGNAME += bredr
-    zblue/port/subsys/bluetooth/shell/bredr.c_CFLAGS    += -DCONFIG_BT_BREDR_SHELL
-    zblue/port/subsys/bluetooth/shell/bredr.c_CELFFLAGS += -DCONFIG_BT_BREDR_SHELL
+  ifeq ($(CONFIG_SETTINGS_NONE),y)
+    CSRCS += $(SETTINGS_DIR)/settings_none.c
   endif
-  ifeq ($(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL),y)
-    CSRCS    += $(SUBDIR)/shell/l2cap.c
-    MAINSRC  += zblue/port/subsys/bluetooth/shell/l2cap.c
-    PROGNAME += l2cap
-    zblue/port/subsys/bluetooth/shell/l2cap.c_CFLAGS    += -DCONFIG_BT_L2CAP_SHELL
-    zblue/port/subsys/bluetooth/shell/l2cap.c_CELFFLAGS += -DCONFIG_BT_L2CAP_SHELL
+  ifeq ($(CONFIG_SETTINGS_SHELL),y)
+    CSRCS += $(SETTINGS_DIR)/settings_shell.c
   endif
-  ifeq ($(CONFIG_BT_RFCOMM),y)
-    CSRCS    += $(SUBDIR)/shell/rfcomm.c
-    MAINSRC  += zblue/port/subsys/bluetooth/shell/rfcomm.c
-    PROGNAME += rfcomm
-    zblue/port/subsys/bluetooth/shell/rfcomm.c_CFLAGS    += -DCONFIG_BT_RFCOMM_SHELL
-    zblue/port/subsys/bluetooth/shell/rfcomm.c_CELFFLAGS += -DCONFIG_BT_RFCOMM_SHELL
-  endif
+endif # CONFIG_SETTINGS
 
-  ifeq ($(CONFIG_BT_AUDIO),y)
-    ifeq ($(CONFIG_BT_ISO),y)
-      CSRCS    += $(SUBDIR)/shell/iso.c
-      MAINSRC  += zblue/port/subsys/bluetooth/shell/iso.c
-      PROGNAME += iso
-      zblue/port/subsys/bluetooth/shell/iso.c_CFLAGS    += -DCONFIG_BT_ISO_SHELL
-      zblue/port/subsys/bluetooth/shell/iso.c_CELFFLAGS += -DCONFIG_BT_ISO_SHELL
-    endif
-  endif
+CSRCS += zblue/kernel/system_work_q.c
+CSRCS += zblue/kernel/work.c
+CSRCS += zblue/lib/net_buf/buf_simple.c
+CSRCS += zblue/lib/utils/dec.c
+CSRCS += zblue/lib/utils/hex.c
 
-  ifeq ($(CONFIG_BT_MESH),y)
-    ifeq ($(CONFIG_BT_MESH_SHELL),y)
-      CSRCS    += $(SUBDIR)/mesh/shell.c
-      MAINSRC  += zblue/port/subsys/bluetooth/shell/mesh.c
-      PROGNAME += mesh
-    endif
-  endif
-
-endif
-
-ifeq ($(CONFIG_BT_TESTER),y)
-  CSRCS += zblue/tests/bluetooth/tester/src/bttester.c
-  CSRCS += zblue/tests/bluetooth/tester/src/gap.c
-  CSRCS += zblue/tests/bluetooth/tester/src/gatt.c
-  ifeq ($(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL),y)
-    CSRCS += zblue/tests/bluetooth/tester/src/l2cap.c
-  endif
-  ifeq ($(CONFIG_BT_MESH),y)
-    CSRCS += zblue/tests/bluetooth/tester/src/mesh.c
-  endif
-  CSRCS += zblue/port/drivers/console/uart_pipe.c
-  CSRCS += zblue/port/tests/bluetooth/tester/src/system.c
-
-  CSRCS += zblue/port/subsys/power/reboot.c
-
-  MAINSRC  += zblue/tests/bluetooth/tester/src/main.c
-  PROGNAME += bttester
-
-  CFLAGS += ${INCDIR_PREFIX}zblue/tests/bluetooth/tester/src
-endif
-
-CSRCS += zblue/port/kernel/sched.c
-CSRCS += zblue/port/kernel/timeout.c
-CSRCS += zblue/port/kernel/work_q.c
-CSRCS += zblue/port/kernel/poll.c
-CSRCS += zblue/port/kernel/mem_slab.c
 CSRCS += zblue/port/kernel/atomic_c.c
-CSRCS += zblue/port/kernel/sem.c
+CSRCS += zblue/port/kernel/device.c
+CSRCS += zblue/port/kernel/fatal.c
+CSRCS += zblue/port/kernel/init.c
+CSRCS += zblue/port/kernel/mem_slab.c
 CSRCS += zblue/port/kernel/mutex.c
+CSRCS += zblue/port/kernel/poll.c
 CSRCS += zblue/port/kernel/queue.c
+CSRCS += zblue/port/kernel/sched.c
+CSRCS += zblue/port/kernel/sem.c
 CSRCS += zblue/port/kernel/thread.c
-CSRCS += zblue/port/subsys/net/buf.c
-CSRCS += zblue/port/common/defines.c
-
-CSRCS += zblue/lib/os/dec.c
-CSRCS += zblue/lib/os/hex.c
-
-ifeq ($(CONFIG_ARCH_CHIP_R328),y)
-  CSRCS += zblue/port/chip/xr829/xr829.c
-  CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)/arch/arm/src/r328/include/drivers
-  CFLAGS += ${INCDIR_PREFIX}$(TOPDIR)/arch/arm/src/r328/include
-endif
-
-ifeq ($(CONFIG_BT_LIBUSB),y)
-  CSRCS += zblue/port/drivers/bluetooth/hci/libusb.c
-endif
+CSRCS += zblue/port/kernel/timeout.c
+CSRCS += zblue/port/lib/net_buf/buf.c
+CSRCS += zblue/port/lib/os/assert.c
+CSRCS += zblue/port/sections/defines.c
+CSRCS += zblue/port/subsys/fs/fs.c
 
 ifeq ($(CONFIG_BT_H4),y)
   CSRCS += zblue/port/drivers/bluetooth/hci/h4.c
 endif
 
-CFLAGS += -Wno-implicit-function-declaration -Wno-unused-but-set-variable
-CFLAGS += -Wno-unused-function -Wno-unused-variable -Wno-implicit-int -Wno-shadow
-CFLAGS += -Wno-stringop-overread
+CFLAGS += -Wno-format-zero-length -Wno-implicit-function-declaration
+CFLAGS += -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable
+CFLAGS += -Wno-format -Wno-pointer-sign -Wno-strict-prototypes -Wno-implicit-int -Wno-shadow
+CFLAGS += -Wno-int-to-pointer-cast -Wno-pointer-to-int-cast -Wno-undef
 
-CFLAGS += ${INCDIR_PREFIX}zblue/port/include
-CFLAGS += ${INCDIR_PREFIX}zblue/subsys/bluetooth
-CFLAGS += ${INCDIR_PREFIX}zblue/subsys/bluetooth/host
-CFLAGS += ${INCDIR_PREFIX}zblue/subsys/bluetooth/services
-CFLAGS += ${INCDIR_PREFIX}zblue/subsys/bluetooth/mesh
-CFLAGS += ${INCDIR_PREFIX}zblue/subsys/bluetooth/common
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/port/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/port/include/zephyr}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/port/kernel/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/audio}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/mesh}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/services}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/settings/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/crypto/tinycrypt/tinycrypt/lib/include}
 
-ifeq ($(CONFIG_ARCH_SIM),y)
-  CFLAGS += -O2 -fno-strict-aliasing
-  CFLAGS += -ffunction-sections -fdata-sections
+ifeq ($(CONFIG_BT_SHELL),y)
+  PROGNAME += zblue
+  MAINSRC += zblue/port/subsys/shell/shell.c
 endif
 
 ifneq ($(CONFIG_BT_SAMPLE),)
-
   ifneq ($(CONFIG_BT_SAMPLE_PERIPHERAL),)
     PROGNAME += peripheral
-    CSRCS += zblue/samples/bluetooth/peripheral/src/cts.c
     MAINSRC += zblue/samples/bluetooth/peripheral/src/main.c
-    CFLAGS += ${INCDIR_PREFIX}zblue/samples/bluetooth/peripheral/src
   endif
 
   ifneq ($(CONFIG_BT_SAMPLE_CENTRAL),)
@@ -304,21 +761,11 @@ ifneq ($(CONFIG_BT_SAMPLE),)
     MAINSRC += zblue/samples/bluetooth/central/src/main.c
   endif
 
-  ifneq ($(CONFIG_BT_SAMPLE_MESH),)
-    PROGNAME += btmesh
-    MAINSRC += zblue/samples/bluetooth/mesh/src/main.c
-    PROGNAME += mesh_demo
-    MAINSRC += zblue/samples/bluetooth/mesh_demo/src/main.c
-    ifneq ($(CONFIG_BT_MESH_PROVISIONER),)
-      PROGNAME += mesh_provisioner
-      MAINSRC += zblue/samples/bluetooth/mesh_provisioner/src/main.c
-    endif
+  ifneq ($(CONFIG_BT_SAMPLE_HFP_HF),)
+    PROGNAME += hfp_hf
+    MAINSRC += zblue/samples/bluetooth/handsfree/src/main.c
   endif
-
 endif
-
-PROGNAME += zblue
-MAINSRC  += zblue/port/drivers/bluetooth/hci/hci.c
 
 PRIORITY  = SCHED_PRIORITY_DEFAULT
 ifneq ($(CONFIG_BT_SAMPLE),)
@@ -329,37 +776,75 @@ else
   MODULE    = n
 endif
 
+ZINC = $(APPDIR)/external/zblue/zblue/include/zephyr
+PORTINC= zblue/port/include/zephyr
+
+SYMLINK_FILES = \
+    app_memory/mem_domain.h \
+    arch/arch_interface.h \
+    arch/common/ffs.h \
+    debug/stack.h \
+    devicetree/ordinals.h \
+    fatal.h \
+    fatal_types.h \
+    fs/fs.h \
+    fs/fs_interface.h \
+    irq.h \
+    irq_offload.h \
+    kernel_includes.h \
+    kernel/internal/smp.h \
+    kernel/obj_core.h \
+    kernel/stats.h \
+    kernel/thread_stack.h \
+    kernel_version.h \
+    linker/sections.h \
+    linker/section_tags.h \
+    spinlock.h \
+    shell/shell_types.h \
+    shell/shell_fprintf.h \
+    shell/shell_string_conv.h \
+    sys/__assert.h \
+    sys/atomic.h \
+    sys/atomic_c.h \
+    sys/atomic_types.h \
+    sys/byteorder.h \
+    sys/check.h \
+    sys/crc.h \
+    sys/dlist.h \
+    sys/list_gen.h \
+    sys/math_extras.h \
+    sys/math_extras_impl.h \
+    sys/mem_stats.h \
+    sys/rb.h \
+    sys/sflist.h \
+    sys/slist.h \
+    sys/sys_heap.h \
+    sys/time_units.h \
+    sys/util.h \
+    sys/util_macro.h \
+    sys/util_loops.h \
+    sys/util_listify.h \
+    tracing/tracing_macros.h \
+    types.h
+
 depend::
-	$(Q) ln -sf ../../include/bluetooth zblue/port/include/bluetooth
-	$(Q) ln -sf ../../include/drivers zblue/port/include/drivers
-	$(Q) ln -sf ../../include/fs zblue/port/include/fs
-	$(Q) ln -sf ../../include/settings zblue/port/include/settings
-	$(Q) ln -sf ../../include/power zblue/port/include/power
-	$(Q) ln -sf ../../include/random zblue/port/include/random
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/bredr.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/bt.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/gatt.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/l2cap.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/mesh.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/rfcomm.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/ticker.c
-	$(Q) ln -sf shell.c zblue/port/subsys/bluetooth/shell/iso.c
+	$(Q) ln -sf $(ZINC)/bluetooth $(PORTINC)/bluetooth
+	$(Q) ln -sf $(ZINC)/drivers $(PORTINC)/drivers
+	$(Q) ln -sf $(ZINC)/settings $(PORTINC)/settings
+	$(Q) mkdir -p $(PORTINC)/app_memory
+	$(Q) mkdir -p $(PORTINC)/debug
+	$(Q) mkdir -p $(PORTINC)/devicetree
+	$(Q) mkdir -p $(PORTINC)/fs
+	$(Q) mkdir -p $(PORTINC)/linker
+	$(Q) mkdir -p $(PORTINC)/arch/common
+	$(Q) mkdir -p $(PORTINC)/kernel/internal
+	$(foreach file,$(SYMLINK_FILES),ln -sf $(ZINC)/$(file) $(PORTINC)/$(file);)
 
 clean::
 	$(call DELFILE, .built)
-	$(call DELFILE, zblue/port/include/bluetooth)
-	$(call DELFILE, zblue/port/include/drivers)
-	$(call DELFILE, zblue/port/include/fs)
-	$(call DELFILE, zblue/port/include/settings)
-	$(call DELFILE, zblue/port/include/power)
-	$(call DELFILE, zblue/port/include/random)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/bredr.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/bt.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/gatt.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/l2cap.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/mesh.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/rfcomm.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/ticker.c)
-	$(call DELFILE, zblue/port/subsys/bluetooth/shell/iso.c)
+	$(call DELFILE, $(PORTINC)/bluetooth)
+	$(call DELFILE, $(PORTINC)/drivers)
+	$(call DELFILE, $(PORTINC)/settings)
+	$(foreach file,$(SYMLINK_FILES),$(call DELFILE, $(PORTINC)/$(file)))
 
 include $(APPDIR)/Application.mk
