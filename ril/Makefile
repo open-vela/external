@@ -33,4 +33,14 @@ STACKSIZE += $(CONFIG_RILD_STACKSIZE)
 PROGNAME  += rild
 MAINSRC   += ril/rild/rild.c
 
+ifneq ($(CONFIG_RIL_TEST),)
+CXXEXT:= .cpp
+CXXSRCS += ril/riltest/ril_parcel_ctor_verifier.cpp
+
+PRIORITY  += $(CONFIG_RIL_TEST_PRIORITY)
+STACKSIZE += $(CONFIG_RIL_TEST_STACKSIZE)
+PROGNAME  += rilreq_tool
+MAINSRC   += ril/riltest/rilreq_tool.cpp
+endif
+
 include $(APPDIR)/Application.mk

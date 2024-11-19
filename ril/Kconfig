@@ -26,3 +26,22 @@ config GOLDFISH_RIL
 		Enable goldfish ril
 
 endif
+
+config RIL_TEST
+	bool "Enable ril test"
+	default n
+	depends on RILD
+	---help---
+		Enable ril test
+
+if RIL_TEST
+
+config RIL_TEST_PRIORITY
+	int "riltest task priority"
+	default 100
+
+config RIL_TEST_STACKSIZE
+	int "riltest stack size"
+	default DEFAULT_TASK_STACKSIZE
+
+endif

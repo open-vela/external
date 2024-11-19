@@ -60,4 +60,24 @@ if(CONFIG_RILD)
     INCLUDE_DIRECTORIES
     ${RILD_INC}
   )
+
+  if(CONFIG_RIL_TEST)
+    file(GLOB APPEND_FILES ${CMAKE_CURRENT_LIST_DIR}/ril/riltest/ril_parcel_ctor_verifier.cpp)
+    list(APPEND RILD_SRCS ${APPEND_FILES})
+
+    nuttx_add_application(
+      MODULE
+      ${CONFIG_RIL_TEST}
+      NAME
+      rilreq_tool
+      STACKSIZE
+      ${CONFIG_RIL_TEST_STACKSIZE}
+      PRIORITY
+      ${CONFIG_RIL_TEST_PRIORITY}
+      SRCS
+      ril/riltest/rilreq_tool.cpp ${RILD_SRCS}
+      INCLUDE_DIRECTORIES
+      ${RILD_INC}
+    )
+  endif()
 endif()
