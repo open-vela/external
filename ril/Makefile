@@ -11,6 +11,7 @@ CXXFLAGS += ${INCDIR_PREFIX}ril/libril
 CXXFLAGS += ${INCDIR_PREFIX}ril/librilutils
 
 CXXSRCS += ril/libril/ril.cpp
+CXXSRCS += ril/libril/parcel.cpp
 CXXSRCS += ril/libril/ril_event.cpp
 
 CSRCS += $(wildcard ril/librilutils/*.c)
