@@ -72,6 +72,38 @@ CSRCS += \
     nuttx/ethercat.c
 endif
 
+ifeq ($(CONFIG_ETHERCAT_SLAVE),y)
+
+CFLAGS += -I$(APPDIR)/external/ethercat/ethercat/slave/app
+CFLAGS += -I$(APPDIR)/external/ethercat/ethercat/slave/driver
+CFLAGS += -I$(APPDIR)/external/ethercat/ethercat/slave/stack
+CFLAGS += -I$(APPDIR)/external/ethercat/ethercat/slave
+
+CSRCS += \
+    ethercat/slave/driver/drv_lan9253.c \
+    ethercat/slave/driver/drv_lan9253_ecat_util.c \
+    ethercat/slave/driver/lan9253_base.c \
+    ethercat/slave/stack/bootmode.c \
+    ethercat/slave/stack/coeappl.c \
+    ethercat/slave/stack/ecatappl.c \
+    ethercat/slave/stack/ecatcoe.c \
+    ethercat/slave/stack/ecatfoe.c \
+    ethercat/slave/stack/ecatslv.c \
+    ethercat/slave/stack/emcy.c \
+    ethercat/slave/stack/foeappl.c \
+    ethercat/slave/stack/mailbox.c \
+    ethercat/slave/stack/objdef.c \
+    ethercat/slave/stack/sdoserv.c \
+    ethercat/slave/app/app_lan9253.c \
+    ethercat/slave/stack/sample_app.c \
+
+MAINSRC += ethercat/slave/app/main.c
+PROGNAME  += $(CONFIG_ETHERCAT_SLAVE_PROGNAME)
+PRIORITY  += $(CONFIG_ETHERCAT_SLAVE_PRIORITY)
+STACKSIZE += $(CONFIG_ETHERCAT_SLAVE_STACKSIZE)
+MODULE    += $(CONFIG_ETHERCAT_SLAVE)
+endif
+
 ifeq ($(CONFIG_ETHERCAT_TOOL),y)
 CXXEXT := .cpp
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ethercat/ethercat/master
