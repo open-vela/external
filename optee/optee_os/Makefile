@@ -33,6 +33,8 @@ ifeq ($(CONFIG_ARCH_ARM64),y)
 CFLAGS += -DARM64
 else ifeq ($(CONFIG_ARCH_ARM),y)
 CFLAGS += -DARM32
+else ifeq ($(CONFIG_ARCH_SIM),y)
+CFLAGS += -DARM32
 endif
 
 CFLAGS += -D__text_start=_stext
