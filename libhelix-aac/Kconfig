@@ -24,6 +24,12 @@ config LIB_HELIX_AAC
 
 if LIB_HELIX_AAC
 
+config LIB_HELIX_AAC_PNS
+	bool "AAC-Perceptual Noise Substitution"
+	default y
+	---help---
+		Enable support for the MPEG4-AAC
+
 config LIB_HELIX_AAC_SBR
 	bool "AAC-Spectral Band Replication"
 	default n
