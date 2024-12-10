@@ -21,7 +21,7 @@ if(CONFIG_OPTEE_OS)
   # ############################################################################
 
   set(CFLAGS
-      -DARM32
+      -D__text_start=_stext
       -DCFG_COMPAT_GP10_DES
       -DCFG_CORE_BIGNUM_MAX_BITS=4096
       -DCFG_CORE_DYN_SHM
@@ -58,6 +58,14 @@ if(CONFIG_OPTEE_OS)
       -DTRACE_LEVEL=3
       -DTRACE_PERF
       -D__KERNEL__)
+
+  if(CONFIG_ARCH_ARM64)
+    list(APPEND CFLAGS -DARM64)
+  elseif(CONFIG_ARCH_ARM)
+    list(APPEND CFLAGS -DARM32)
+  elseif(CONFIG_ARCH_SIM)
+    list(APPEND CFLAGS -DARM32)
+  endif()
 
   if(CONFIG_TEE_CORE_DEBUG)
     list(APPEND CFLAGS -DCFG_TEE_CORE_DEBUG)
