@@ -646,7 +646,6 @@ if(CONFIG_BT AND CONFIG_ZEPHYR_WORK_QUEUE)
     zblue_app(test_memslab ${ZBLUE_DIR}/port/tests/kernel/test_mem_slab.c)
   endif()
 
-  list(APPEND ZBLUE_CSRCS ${ZBLUE_DIR}/port/kernel/atomic_c.c)
   list(APPEND ZBLUE_CSRCS ${ZBLUE_DIR}/port/kernel/sem.c)
   list(APPEND ZBLUE_CSRCS ${ZBLUE_DIR}/port/kernel/mutex.c)
   list(APPEND ZBLUE_CSRCS ${ZBLUE_DIR}/port/kernel/queue.c)

@@ -249,7 +249,6 @@ CSRCS += zblue/port/kernel/timeout.c
 CSRCS += zblue/port/kernel/work_q.c
 CSRCS += zblue/port/kernel/poll.c
 CSRCS += zblue/port/kernel/mem_slab.c
-CSRCS += zblue/port/kernel/atomic_c.c
 CSRCS += zblue/port/kernel/sem.c
 CSRCS += zblue/port/kernel/mutex.c
 CSRCS += zblue/port/kernel/queue.c
