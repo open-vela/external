@@ -210,6 +210,10 @@ ifeq ($(CONFIG_VIDEOUTILS_LIBX264),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/videoutils/x264/x264
 endif
 
+ifeq ($(CONFIG_LIBSPEEXDSP),yes)
+CFLAGS += -DOUTSIDE_SPEEX -DRANDOM_PREFIX=nuttx
+endif
+
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/bes/framework/services_hifi4/services/multimedia/audio/smf/core/inc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/xiaomi_enc
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/vendor/xiaomi/miwear/bes_aec
