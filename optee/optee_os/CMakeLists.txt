@@ -184,7 +184,8 @@ if(CONFIG_OPTEE_OS)
   set(INCDIR ${NUTTX_APPS_DIR}/crypto/mbedtls/mbedtls/library
              ${NUTTX_APPS_DIR}/frameworks/security/optee_vela/include)
   if(CONFIG_OPTEE_COMPAT_MITEE_FS)
-    list(APPEND INCDIR ${CMAKE_CURRENT_LIST_DIR}/optee_os/include/mitee_compat)
+    list(APPEND INCDIR
+         ${NUTTX_APPS_DIR}/frameworks/security/optee_vela/include/mitee_compat)
   endif()
 
   list(
