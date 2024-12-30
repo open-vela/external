@@ -81,6 +81,13 @@ config BNEP
   help
     Bluetooth Network Encapsulation Protocol
 
+config GATT_OVER_BREDR
+  bool "Bluetooth GATT Over BR Feature"
+  default n
+  depends on BREDR
+  help
+    Bluetooth GATT Over BR Feature
+
 config LE
   bool "BLE supported"
   default n
