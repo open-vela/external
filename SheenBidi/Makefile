@@ -20,7 +20,7 @@ CXXEXT := .cc
 
 SHEENBIDI_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi
 
-CFLAGS += -Wno-shadow -Wno-maybe-uninitialized -Wstringop-overflow=0
+CFLAGS += -Wno-shadow -Wno-maybe-uninitialized -Wstringop-overflow=0 -Wno-unused-variable -Wno-unused-function
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
 CSRCS += $(wildcard $(SHEENBIDI_DIR)/Source/SheenBidi.c)
