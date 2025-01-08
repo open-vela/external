@@ -22,7 +22,12 @@ SHEENBIDI_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi
 
 CFLAGS += -Wno-shadow -Wno-maybe-uninitialized -Wstringop-overflow=0
 
-CSRCS += $(wildcard $(SHEENBIDI_DIR)/Source/*.c)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
+CSRCS += $(wildcard $(SHEENBIDI_DIR)/Source/SheenBidi.c)
+
+CFLAGS += -Os
+CFLAGS += "-DSB_CONFIG_UNITY=1"
+CFLAGS += "-DNDEBUG=1"
+CFLAGS += "-DRELEASE=1"
 
 include $(APPDIR)/Application.mk

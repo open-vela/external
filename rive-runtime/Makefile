@@ -30,5 +30,5 @@ CXXFLAGS += -DWITH_RIVE_TEXT=1
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
 CXXFLAGS +=  ${INCDIR_PREFIX}$(APPDIR)/external/harfbuzz/harfbuzz/src
 endif
-
+CXXFLAGS += -Os
 include $(APPDIR)/Application.mk
