@@ -160,7 +160,9 @@ ifneq ($(NOEXPORTSRCS),)
 BIN := $(APPDIR)/staging/libtelephony.a
 endif
 
+ifneq ($(CONFIG_DBUS_WASM),)
 WASM_INITIAL_MEMORY = 131072
 WASM_BUILD = both
+endif
 
 include $(APPDIR)/Application.mk

@@ -77,4 +77,11 @@ config DBUS_TEST
 	---help---
 		Integration testcases for D-Bus
 
+config DBUS_WASM
+	bool "Compile to Wasm"
+	default n
+	---help---
+		Compile dbus to Wasm module instead of builitn app,
+		only available if any wasm runtime eanbled.
+
 endif

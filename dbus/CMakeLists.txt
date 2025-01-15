@@ -15,7 +15,9 @@
 #
 if(CONFIG_LIB_DBUS)
 
-  nuttx_add_library(dbus STATIC)
+  if(NOT CONFIG_DBUS_WASM)
+    nuttx_add_library(dbus STATIC)
+  endif()
 
   set(CFLAGS -DDBUS_COMPILATION -D__linux__ -DLOG_DAEMON=0 -DLOG_AUTH=0
              -Dprint_message=dbus_print_message)
@@ -132,23 +134,42 @@ if(CONFIG_LIB_DBUS)
       dbus/bus/dir-watch-default.c
       dbus/bus/stats.c)
 
-    nuttx_add_application(
-      MODULE
-      ${CONFIG_LIB_DBUS}
-      NAME
-      dbusdaemon
-      STACKSIZE
-      ${CONFIG_DBUS_STACKSIZE}
-      PRIORITY
-      ${CONFIG_DBUS_PRIORITY}
-      SRCS
-      dbus/bus/main.c
-      INCLUDE_DIRECTORIES
-      ${INCDIR}
-      COMPILE_FLAGS
-      ${CFLAGS}
-      DEPENDS
-      dbus)
+    if(CONFIG_DBUS_WASM)
+      wasm_add_application(
+        NAME
+        dbusdaemon
+        SRCS
+        dbus/bus/main.c
+        STACK_SIZE
+        ${CONFIG_DBUS_STACKSIZE}
+        INITIAL_MEMORY_SIZE
+        131072
+        WINCLUDES
+        ${INCDIR}
+        WCFLAGS
+        ${CFLAGS}
+        INSTALL_NAME
+        ${CMAKE_BINARY_DIR}/bin/wasm/dbusdaemon.wasm
+        )
+    else()
+      nuttx_add_application(
+        MODULE
+        ${CONFIG_LIB_DBUS}
+        NAME
+        dbusdaemon
+        STACKSIZE
+        ${CONFIG_DBUS_STACKSIZE}
+        PRIORITY
+        ${CONFIG_DBUS_PRIORITY}
+        SRCS
+        dbus/bus/main.c
+        INCLUDE_DIRECTORIES
+        ${INCDIR}
+        COMPILE_FLAGS
+        ${CFLAGS}
+        DEPENDS
+        dbus)
+      endif()
   endif()
 
   if(CONFIG_DBUS_SEND)
@@ -314,8 +335,20 @@ if(CONFIG_LIB_DBUS)
     endforeach()
   endif()
 
-  target_sources(dbus PRIVATE ${CSRCS})
-  target_include_directories(dbus PRIVATE ${INCDIR})
-  target_compile_options(dbus PRIVATE ${CFLAGS})
+  if(CONFIG_DBUS_WASM)
+    wasm_add_library(
+    NAME
+    dbus
+    SRCS
+    ${CSRCS}
+    WINCLUDES
+    ${INCDIR}
+    WCFLAGS
+    ${CFLAGS})
+  else()
+    target_sources(dbus PRIVATE ${CSRCS})
+    target_include_directories(dbus PRIVATE ${INCDIR})
+    target_compile_options(dbus PRIVATE ${CFLAGS})
+  endif()
 
 endif()
