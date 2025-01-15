@@ -15,6 +15,7 @@
 #
 
 menu "Bluetooth Stack: Zephyr Bluetooth Stack"
+osource "$APPSDIR/external/zblue/zblue/Kconfig.constants"
 osource "$APPSDIR/external/zblue/zblue/subsys/bluetooth/Kconfig"
 osource "$APPSDIR/external/zblue/zblue/subsys/settings/Kconfig"
 osource "$APPSDIR/external/zblue/zblue/port/Kconfig"
