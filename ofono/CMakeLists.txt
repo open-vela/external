@@ -79,7 +79,9 @@ if(CONFIG_OFONO)
   string(REPLACE ";" " " BUILTIN_PLUGIN_LIST "${BUILTIN_PLUGIN}")
   string(REPLACE "$" "$$" ESCAPED_BUILTIN_PLUGIN_LIST "${BUILTIN_PLUGIN_LIST}")
 
-  nuttx_add_library(ofono)
+  if(NOT CONFIG_OFONO_WASM)
+    nuttx_add_library(ofono)
+  endif()
 
   add_custom_command(
     OUTPUT ${BUILTIN_H}
@@ -269,27 +271,59 @@ if(CONFIG_OFONO)
     list(APPEND CSRCS ${APPEND_FILES})
     list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/ofono/src/main.c)
 
-    nuttx_add_application(
-      MODULE
-      ${CONFIG_OFONO}
-      NAME
-      ofonod
-      STACKSIZE
-      ${CONFIG_OFONO_STACKSIZE}
-      PRIORITY
-      ${CONFIG_OFONO_PRIORITY}
-      SRCS
-      ofono/src/main.c
-      INCLUDE_DIRECTORIES
-      ${INCDIR}
-      COMPILE_FLAGS
-      ${CFLAGS}
-      DEPENDS
-      ofono
-    )
+    if(CONFIG_OFONO_WASM)
+      wasm_add_application(
+        NAME
+        ofonod
+        SRCS
+        ofono/src/main.c
+        STACK_SIZE
+        ${CONFIG_OFONO_STACKSIZE}
+        INITIAL_MEMORY_SIZE
+        327680
+        WINCLUDES
+        ${INCDIR}
+        WCFLAGS
+        ${CFLAGS}
+        INSTALL_NAME
+        ${CMAKE_BINARY_DIR}/bin/wasm/ofonod.wasm
+        )
+    else()
+      nuttx_add_application(
+        MODULE
+        ${CONFIG_OFONO}
+        NAME
+        ofonod
+        STACKSIZE
+        ${CONFIG_OFONO_STACKSIZE}
+        PRIORITY
+        ${CONFIG_OFONO_PRIORITY}
+        SRCS
+        ofono/src/main.c
+        INCLUDE_DIRECTORIES
+        ${INCDIR}
+        COMPILE_FLAGS
+        ${CFLAGS}
+        DEPENDS
+        ofono
+      )
+    endif()
   endif()
 
-  target_include_directories(ofono PRIVATE ${INCDIR})
-  target_compile_options(ofono PRIVATE ${CFLAGS})
-  target_sources(ofono PRIVATE ${CSRCS} ${ELL_SRCS})
+  if(CONFIG_OFONO_WASM)
+    wasm_add_library(
+    NAME
+    ofono
+    SRCS
+    ${CSRCS} ${ELL_SRCS}
+    WINCLUDES
+    ${INCDIR}
+    WCFLAGS
+    ${CFLAGS})
+  else()
+    target_include_directories(ofono PRIVATE ${INCDIR})
+    target_compile_options(ofono PRIVATE ${CFLAGS})
+    target_sources(ofono PRIVATE ${CSRCS} ${ELL_SRCS})
+  endif()
+
 endif()
