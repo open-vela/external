@@ -78,6 +78,11 @@ ifeq ($(CHRE_WWAN_SUPPORT_ENABLED), true)
 COMMON_CFLAGS += -DCHRE_WWAN_SUPPORT_ENABLED
 endif
 
+# Optional WASM support.
+ifeq ($(CONFIG_CHRE_WASM), y)
+COMMON_CFLAGS += -DCHRE_WASM
+endif
+
 # Determine the CHRE_HOST_OS to resolve build discrepancies across Darwin and
 # Linux.
 CHRE_HOST_OS := $(shell uname)
