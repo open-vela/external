@@ -223,7 +223,7 @@ if(CONFIG_LIB_BLUELET)
     list(APPEND CFLAGS -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int)
     list(APPEND CFLAGS -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow)
 
-    nuttx_add_library(libbluelet STATIC)
+    nuttx_add_library(bluelet STATIC)
 
     if(CONFIG_BLUELET_EXAMPLES)
       list(APPEND CSRCS ${STACKDIR}/portings/btunix/a2dputil_dep.c)
@@ -242,7 +242,7 @@ if(CONFIG_LIB_BLUELET)
         COMPILE_FLAGS
         ${CFLAGS}
         DEPENDS
-        libbluelet)
+        bluelet)
 
       nuttx_add_application(
         NAME
@@ -258,7 +258,7 @@ if(CONFIG_LIB_BLUELET)
         COMPILE_FLAGS
         ${CFLAGS}
         DEPENDS
-        libbluelet)
+        bluelet)
 
     else()
       list(APPEND CSRCS ${STACKDIR}/portings/btunix/a2dputil_dep.c)
@@ -266,12 +266,12 @@ if(CONFIG_LIB_BLUELET)
     endif()
 
     # Export Headers
-    nuttx_export_header(TARGET libbluelet INCLUDE_DIRECTORIES ${SUBDIR}/${SUBDIR_NAME}/src/samples/stack_adapter/inc)
+    nuttx_export_header(TARGET bluelet INCLUDE_DIRECTORIES ${SUBDIR}/${SUBDIR_NAME}/src/samples/stack_adapter/inc)
 
     # Library Configuration
-    target_compile_options(libbluelet PRIVATE ${CFLAGS})
-    target_sources(libbluelet PRIVATE ${CSRCS})
-    target_include_directories(libbluelet PRIVATE ${INCDIR})
+    target_compile_options(bluelet PRIVATE ${CFLAGS})
+    target_sources(bluelet PRIVATE ${CSRCS})
+    target_include_directories(bluelet PRIVATE ${INCDIR})
 
   endif()
 
