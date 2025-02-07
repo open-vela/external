@@ -30,7 +30,12 @@ config UTILS_SSH
 	---help---
 		Enable ssh utility
 
-if UTILS_SSH
+config TEST_SSH
+	tristate "Enable ssh test"
+	depends on LIB_SSH
+	depends on TESTING_CMOCKA
+
+if UTILS_SSH || TEST_SSH
 config UTILS_SSH_PRIORITY
 	int "ssh utility priority"
 	default 100

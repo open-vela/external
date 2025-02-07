@@ -40,8 +40,7 @@ if(CONFIG_LIB_SSH)
   set_property(
     TARGET nuttx
     APPEND
-    PROPERTY NUTTX_INCLUDE_DIRECTORIES
-             ${CMAKE_CURRENT_LIST_DIR}/libssh/include)
+    PROPERTY NUTTX_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/libssh/include)
 
   nuttx_add_library(libssh)
 
@@ -120,4 +119,71 @@ if(CONFIG_LIB_SSH)
 
   endif()
 
+  if(CONFIG_TEST_SSH)
+    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c)
+
+    execute_process(
+      COMMAND sh -c "touch ${CMAKE_CURRENT_BINARY_DIR}/tests_config.h"
+      WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
+
+    set(INCDIR
+        ${NUTTX_APPS_DIR}/testing/cmocka/cmocka/include
+        ${CMAKE_CURRENT_LIST_DIR} ${CMAKE_CURRENT_LIST_DIR}/libssh/tests
+        ${CMAKE_CURRENT_BINARY_DIR} ${CMAKE_CURRENT_LIST_DIR}/libssh/src)
+    set(DSRCS
+        ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture_cmocka.c
+        ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture_key.c
+        ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture.c)
+    set(LIBSSH_TESTDIR ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/unittests)
+    set(MAIN_FUN
+        [=[
+        #ifndef HAVE_MAIN
+        #define torture_run_tests(_) main(int argc, char **argv)
+        #endif
+      ]=])
+
+    file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/def_mainfun.h ${MAIN_FUN})
+
+    set(TEST_FLAG "-include ${CMAKE_CURRENT_BINARY_DIR}/def_mainfun.h")
+
+    set_source_files_properties(
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture.c
+      PROPERTIES COMPILE_FLAGS "-Dmain=unused_main -DTORTURE_SHARED")
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_buffer.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_buffer
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_buffer.c
+      ${DSRCS}
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_bytearray.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_bytearray
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_bytearray.c
+      ${DSRCS}
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+  endif()
 endif()

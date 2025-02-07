@@ -34,6 +34,9 @@ SKIP += libssh/src/getrandom_gcrypt.c libssh/src/gssapi.c libssh/src/libcrypto.c
 SKIP += libssh/src/libcrypto-compat.c libssh/src/libgcrypt.c libssh/src/md_crypto.c
 SKIP += libssh/src/md_gcrypt.c libssh/src/pki_crypto.c libssh/src/pki_gcrypt.c
 SKIP += libssh/src/threads/libcrypto.c libssh/src/threads/libgcrypt.c libssh/src/threads/winlocks.c
+ifneq ($(CONFIG_TEST_SSH),)
+SKIP += libssh/src/buffer.c
+endif
 CSRCS = $(filter-out $(SKIP), $(wildcard libssh/src/*.c libssh/src/external/*.c libssh/src/threads/*.c))
 
 ifneq ($(CONFIG_UTILS_SSH),)
@@ -44,6 +47,30 @@ CSRCS += libssh/examples/authentication.c libssh/examples/connect_ssh.c libssh/e
 PRIORITY = $(CONFIG_UTILS_SSH_PRIORITY)
 STACKSIZE = $(CONFIG_UTILS_SSH_STACKSIZE)
 MODULE = $(CONFIG_UTILS_SSH)
+endif
+
+ifneq ($(CONFIG_TEST_SSH),)
+LIBSSH_TEST_CONFIG = $(APPDIR)/external/libssh/libssh/tests/tests_config.h
+context::
+	@touch $(LIBSSH_TEST_CONFIG)
+distclean::
+	$(call DELFILE, $(LIBSSH_TEST_CONFIG))
+
+PRIORITY = $(CONFIG_UTILS_SSH_PRIORITY)
+STACKSIZE = $(CONFIG_UTILS_SSH_STACKSIZE)
+MODULE += $(CONFIG_TEST_SSH)
+
+CSRCS += libssh/tests/torture_cmocka.c libssh/tests/torture_key.c libssh/tests/torture.c
+libssh/tests/torture.c_CFLAGS += -Dmain=unused_main -DTORTURE_SHARED
+CFLAGS += -I $(APPDIR)/external/libssh/libssh/tests -I $(APPDIR)/external/libssh/libssh/src
+
+PROGNAME += cmocka_libssh_buffer
+MAINSRC += libssh/tests/unittests/torture_buffer.c
+libssh/tests/unittests/torture_buffer.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_bytearray
+MAINSRC += libssh/tests/unittests/torture_bytearray.c
+libssh/tests/unittests/torture_bytearray.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
 endif
 
 include $(APPDIR)/Application.mk
