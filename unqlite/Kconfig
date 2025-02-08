@@ -16,7 +16,7 @@
 
 config UNQLITE
 	bool "UnQLite Database"
-	depends on TLS_TASK_NELEM > 0
+	depends on TLS_TASK_NELEM > 0 || BUILD_KERNEL
 	depends on FS_LOCK_BUCKET_SIZE > 0
 	default n
 
