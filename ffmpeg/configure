@@ -1,0 +1,58 @@
+#!/bin/sh
+
+private_path="private"
+private_tmp_dir=".temp"
+source_path=$(dirname "$(realpath "$0")")/ffmpeg
+host_cc=gcc
+
+create_private_temp_files() {
+  dst_dir=$(dirname "$2")
+  mkdir -p $dst_dir/libavutil
+  mkdir -p $dst_dir/libavformat
+  mkdir -p $dst_dir/libavcodec
+  mkdir -p $dst_dir/libavdevice
+  mkdir -p $dst_dir/libavfilter
+  touch $dst_dir/config.h
+  touch $dst_dir/config_components.h
+  touch $dst_dir/libavcodec/codec_list.c
+  touch $dst_dir/libavcodec/parser_list.c
+  touch $dst_dir/libavutil/avconfig.h
+  touch $dst_dir/libavfilter/filter_list.c
+  $host_cc -E -I$dst_dir -I$source_path "$1" -o "$2"
+}
+
+find_things_extern(){
+  thing=$1
+  pattern=$2
+  src_file="$3"
+  dst_file="$5/$(basename $3)"
+  if [ "$4" = "null" ]; then
+    out="$thing"
+  else
+    out="$4"
+  fi
+  create_private_temp_files $src_file $dst_file
+  sed -n "s/^[^#]*extern.*$pattern *ff_\([^ ]*\)_$thing;/\1_$out/p" "$dst_file"
+}
+
+find_filters_extern(){
+  src_file="$1"
+  dst_file=$2/$(basename $1)
+  create_private_temp_files $src_file $dst_file
+  sed -n 's/^extern const AVFilter ff_[avfsinkrc]\{2,5\}_\([[:alnum:]_]\{1,\}\);/\1_filter/p' "$dst_file"
+}
+
+if [ -e "$source_path/$private_path" ];then
+  src_file_path="$source_path/$private_path"
+  dst_file_path="$source_path/$private_path/$private_tmp_dir"
+  FILTER_LIST=$(find_filters_extern $src_file_path/libavfilter/allfilters.c $dst_file_path)
+  ENCODER_LIST=$(find_things_extern encoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
+  DECODER_LIST=$(find_things_extern decoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
+  eval "$(sed -n "s/^extern const AVFilter ff_\([avfsinkrc]\{2,5\}\)_\(.*\);/full_filter_name_\2=\1_\2/p" $dst_file_path/allfilters.c)"
+fi
+
+. $source_path/configure $@
+
+if [ -e "$source_path/$private_path/$private_tmp_dir" ];then
+  rm -r "$source_path/$private_path/$private_tmp_dir"
+fi

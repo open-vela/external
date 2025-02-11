@@ -27,7 +27,7 @@ else
   PREFIX := $(DST_PATH)$(DELIM)
 endif
 
-FFMPEG_CONFIG_SCRIPT := $(CURDIR)$(DELIM)ffmpeg$(DELIM)configure
+FFMPEG_CONFIG_SCRIPT := $(CURDIR)$(DELIM)configure
 FFMPEG_VERSION_SCRIPT := $(CURDIR)$(DELIM)ffmpeg$(DELIM)ffbuild$(DELIM)version.sh
 
 SBINDIR   := $(BINDIR)
@@ -95,7 +95,16 @@ define DOSUBDIR
   NASRCS += $$(wildcard $$(patsubst %.o,%.asm, $$(SOBJS)))
 endef
 
-$(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
+ifneq ($(wildcard $(SRC_PATH)/private),)
+    RMOBJ = allfilters.o allcodecs.o
+    SHLIBOBJS += $(RMOBJ)
+    $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
+    SHLIBOBJS :=
+    $(eval $(call DOSUBDIR,private/libavcodec))
+    $(eval $(call DOSUBDIR,private/libavfilter))
+else
+    $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
+endif
 
 ifneq ($(NASRCS),)
 NAFLAGS = -g -F dwarf -DPIC -Wl,-mcmodel=large -P$(DST_PATH)/config.asm
