@@ -16,6 +16,9 @@
 
 if(CONFIG_LIB_BLUELET)
 
+  nuttx_add_prebuilt(BIN_TARGETS bluelet EXPORT_FILES
+                     bluelet/src/samples/stack_adapter/inc)
+
   # Source Directories
   set(SUBDIR ${CMAKE_CURRENT_SOURCE_DIR})
   get_filename_component(SUBDIR_NAME ${SUBDIR} NAME)
@@ -132,7 +135,7 @@ if(CONFIG_LIB_BLUELET)
     if(CONFIG_BNEP)
       file(GLOB APPEND_FILES ${STACKDIR}/bnep/*.c)
       list(APPEND CSRCS ${APPEND_FILES})
-  endif()
+    endif()
 
     if(CONFIG_PAN)
       file(GLOB APPEND_FILES ${STACKDIR}/pan/*.c)
@@ -217,13 +220,15 @@ if(CONFIG_LIB_BLUELET)
 
     list(APPEND INCDIR ${ADAPTERDIR}/inc)
 
-    list(APPEND CFLAGS -Wno-pointer-sign -Wno-format -Wno-unused-variable -Wno-return-type)
-    list(APPEND CFLAGS -Wno-unused-value -Wno-unused-but-set-variable -Wno-strict-prototypes)
-    list(APPEND CFLAGS -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses -Wno-unused-function)
-    list(APPEND CFLAGS -Wno-incompatible-pointer-types -Wno-trigraphs -Wno-undef -Wno-implicit-int)
+    list(APPEND CFLAGS -Wno-pointer-sign -Wno-format -Wno-unused-variable
+         -Wno-return-type)
+    list(APPEND CFLAGS -Wno-unused-value -Wno-unused-but-set-variable
+         -Wno-strict-prototypes)
+    list(APPEND CFLAGS -Wno-int-to-pointer-cast -Wno-comment -Wno-parentheses
+         -Wno-unused-function)
+    list(APPEND CFLAGS -Wno-incompatible-pointer-types -Wno-trigraphs
+         -Wno-undef -Wno-implicit-int)
     list(APPEND CFLAGS -Wno-shadow -Wno-sequence-point -Wno-stringop-overflow)
-
-    nuttx_add_library(bluelet STATIC)
 
     if(CONFIG_BLUELET_EXAMPLES)
       list(APPEND CSRCS ${STACKDIR}/portings/btunix/a2dputil_dep.c)
@@ -266,12 +271,15 @@ if(CONFIG_LIB_BLUELET)
     endif()
 
     # Export Headers
-    nuttx_export_header(TARGET bluelet INCLUDE_DIRECTORIES ${SUBDIR}/${SUBDIR_NAME}/src/samples/stack_adapter/inc)
+    nuttx_export_header(TARGET bluelet INCLUDE_DIRECTORIES
+                        ${SUBDIR}/${SUBDIR_NAME}/src/samples/stack_adapter/inc)
+
+    nuttx_library_ifndef(SKIP_PREBUILT bluelet)
 
     # Library Configuration
-    target_compile_options(bluelet PRIVATE ${CFLAGS})
-    target_sources(bluelet PRIVATE ${CSRCS})
-    target_include_directories(bluelet PRIVATE ${INCDIR})
+    nuttx_compile_options(${CFLAGS})
+    nuttx_sources(${CSRCS})
+    nuttx_include_directories(${INCDIR})
 
   endif()
 
