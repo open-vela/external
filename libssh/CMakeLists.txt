@@ -66,6 +66,10 @@ if(CONFIG_LIB_SSH)
     ${CMAKE_CURRENT_LIST_DIR}/libssh/src/threads/libgcrypt.c
     ${CMAKE_CURRENT_LIST_DIR}/libssh/src/threads/winlocks.c)
 
+  if(CONFIG_TEST_SSH)
+    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c)
+  endif()
+
   target_sources(libssh PRIVATE ${CSRCS})
 
   target_include_directories(libssh PRIVATE ${LIBSSH_INCDIR})
@@ -120,8 +124,6 @@ if(CONFIG_LIB_SSH)
   endif()
 
   if(CONFIG_TEST_SSH)
-    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c)
-
     execute_process(
       COMMAND sh -c "touch ${CMAKE_CURRENT_BINARY_DIR}/tests_config.h"
       WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR})
@@ -176,7 +178,6 @@ if(CONFIG_LIB_SSH)
       cmocka_libssh_bytearray
       SRCS
       ${LIBSSH_TESTDIR}/torture_bytearray.c
-      ${DSRCS}
       INCLUDE_DIRECTORIES
       ${INCDIR}
       DEPENDS
