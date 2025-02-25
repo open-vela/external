@@ -33,8 +33,9 @@ if(CONFIG_LIB_JPEG_TURBO)
     ${CMAKE_CURRENT_LIST_DIR}/libjpeg-turbo/jdmrgext.c
     ${CMAKE_CURRENT_LIST_DIR}/libjpeg-turbo/jstdhuff.c)
   target_sources(turbojpeg-static PRIVATE ${CSRCS})
-  target_compile_options(turbojpeg-static
-                         PRIVATE -Dread_stdin=libjpeg_read_stdin)
+  target_compile_options(
+    turbojpeg-static PRIVATE -Dread_stdin=libjpeg_read_stdin
+                             -Dmain=libjpeg_main)
 
   nuttx_export_header(TARGET turbojpeg-static INCLUDE_DIRECTORIES
                       ${CMAKE_CURRENT_SOURCE_DIR}/libjpeg-turbo)
