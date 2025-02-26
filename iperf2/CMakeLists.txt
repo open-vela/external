@@ -83,7 +83,7 @@ if(CONFIG_UTILS_IPERF2)
             iperf2/src/Server.cpp
             iperf2/src/Settings.cpp)
 
-  target_include_directories(iperf2 PRIVATE ${IPERF2_INCDIR})
+  target_include_directories(iperf2 BEFORE PRIVATE ${IPERF2_INCDIR})
   target_compile_options(iperf2 PRIVATE ${IPERF2_FLAGS})
 
 endif()
