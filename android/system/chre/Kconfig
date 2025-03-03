@@ -24,6 +24,10 @@ config CHRE
 
 if CHRE
 
+config CHRE_SYMTAB_PREFIX
+	string "Prefix of symbols table"
+	default "g_chre_core"
+
 config CHRE_CLIENT_COUNT
 	int "CHRE client count"
 	default 2
