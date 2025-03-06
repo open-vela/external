@@ -89,7 +89,6 @@ if(CONFIG_OPTEE_OS)
       optee_os/core/crypto/sm2-kdf.c
       optee_os/core/kernel/initcall.c
       optee_os/core/kernel/mutex.c
-      optee_os/core/kernel/otp_stubs.c
       optee_os/core/kernel/pseudo_ta.c
       optee_os/core/kernel/refcount.c
       optee_os/core/kernel/scattered_array.c
