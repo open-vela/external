@@ -1,34 +1,35 @@
 #!/bin/bash
-# This script is for building ACRN
+# This script is for building ACRN Hyervisor, ACRN Service VM kernel and RAMDisk
+
 # Usage:
 # ./build_acrn.sh $1 [$2] [$3]
 # $1 is configuration directory path
 # $2 [y] skips ACRN Service VM kernel compile
-# $3 [y] skips RAMDisk compile
 # For example:
 # ./build_acrn.sh acrn-config/rk-479/defconfig
+# Skip ACRN Kernel compile:
+# ./build_acrn.sh acrn-config/rk-479/defconfig y
 
 config_path=$1
 no_kernel=$2
-no_ramdisk=$3
 
 board_config_path=${config_path%/*}
 
-echo "--------Cleaning the directory--------"
+echo -e "\n--------Cleaning the directory--------\n"
 ./clean_acrn.sh
 
-echo "--------Compiling ACRN Hypervisor--------"
+echo -e "\n--------Compiling ACRN Hypervisor--------\n"
 cd ./acrn-hypervisor
 if [ ! -n "${config_path}" ]; then
     # Only Compile ACRN Board Configurator if no config directory is given.
-    echo "--------Only Compile ACRN Board Configurator--------"
+    echo -e "\n--------Only Compile ACRN Board Configurator--------\n"
     debian/debian_build.sh clean && debian/debian_build.sh board_inspector
 else
     debian/debian_build.sh clean && debian/debian_build.sh -c ../${config_path}
 fi
 cd ..
 
-echo "--------Compiling ACRN Kernel--------"
+echo -e "\n--------Compiling ACRN Service VM Kernel--------\n"
 if [ ! "${no_kernel}" = "y" ]; then
     cd ./acrn-kernel
     cp kernel_config_service_vm .config
@@ -37,23 +38,23 @@ if [ ! "${no_kernel}" = "y" ]; then
     cd ..
 fi
 
-# Packing RAMDisk
-if [ ! "${no_ramdisk}" = "y" ]; then
-    echo "--------Generating RAMDisk--------"
+# Packing RAMDisk only when ramdisk directory exists.
+if [ -d "${config_path}/ramdisk" ]; then
+    echo -e "\n--------Start generating RAMDisk--------\n"
 
     chmod +x ${config_path}/*.sh
 
-    echo "--------Copy launch scripts, Vela ISO and OVMF BIOS to RAMDisk--------"
+    echo -e "\n--------Copy launch scripts, Vela ISO and OVMF BIOS to RAMDisk--------\n"
     cp ${config_path}/*.sh service_ramdisk/jammy-base-amd64/home/mi
     cp ../../nuttx/boot.iso service_ramdisk/jammy-base-amd64/home/mi
     cp ${board_config_path}/*.fd service_ramdisk/jammy-base-amd64/usr/share/acrn/bios/
 
-    echo "--------Copy interfaces and rc.local to RAMDisk--------"
+    echo -e "\n--------Copy interfaces and rc.local to RAMDisk--------\n"
     cp ${config_path}/ramdisk/interfaces service_ramdisk/jammy-base-amd64/etc/network/interfaces
     cp ${config_path}/ramdisk/rc.local service_ramdisk/jammy-base-amd64/etc/rc.local
     chmod +x service_ramdisk/jammy-base-amd64/etc/rc.local
 
-    echo "--------Packing RAMDisk--------"
+    echo -e "\n--------Packing RAMDisk--------\n"
     cd service_ramdisk/jammy-base-amd64
     find . | cpio -o -H newc > ../../service_ramdisk.cpio
 fi
