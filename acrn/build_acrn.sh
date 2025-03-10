@@ -15,6 +15,9 @@ no_kernel=$2
 
 board_config_path=${config_path%/*}
 
+output_path=build/${config_path#*/}
+mkdir -p ${output_path}
+
 echo -e "\n--------Cleaning the directory--------\n"
 ./clean_acrn.sh
 
@@ -28,6 +31,9 @@ else
     debian/debian_build.sh clean && debian/debian_build.sh -c ../${config_path}
 fi
 cd ..
+mv ./acrn*.deb ./grub*.deb ./*acrn-board-inspector*.deb ${output_path}
+cp ${config_path}/*.sh ${output_path}
+cp ${board_config_path}/*.fd ${output_path}
 
 echo -e "\n--------Compiling ACRN Service VM Kernel--------\n"
 if [ ! "${no_kernel}" = "y" ]; then
@@ -36,6 +42,7 @@ if [ ! "${no_kernel}" = "y" ]; then
     make olddefconfig
     make -j $(nproc) deb-pkg
     cd ..
+    mv *acrn-service-vm*.deb ${output_path}
 fi
 
 # Packing RAMDisk only when ramdisk directory exists.
@@ -57,4 +64,7 @@ if [ -d "${config_path}/ramdisk" ]; then
     echo -e "\n--------Packing RAMDisk--------\n"
     cd service_ramdisk/jammy-base-amd64
     find . | cpio -o -H newc > ../../service_ramdisk.cpio
+    cd ../../
+
+    mv service_ramdisk.cpio ${output_path}
 fi

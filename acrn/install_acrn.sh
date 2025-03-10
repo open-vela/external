@@ -23,9 +23,11 @@ config_path=$4
 ssh_ip=`echo $ssh_address | cut -d@ -f2`
 board_config_path=${config_path%/*}
 
-kernel_pack=`ls *acrn-service-vm*.deb`
+output_path=build/${config_path#*/}
+
+kernel_pack=`ls ${output_path}/*acrn-service-vm*.deb`
 kernel_version=`echo ${kernel_pack} | grep -oP '(?<=linux-image-).*?(?=_)'`
-ramdisk_pack=`ls ${ramdisk_name}`
+ramdisk_pack=`ls ${output_path}/${ramdisk_name}`
 
 ssh_pass="sshpass -p ${ssh_password}"
 ssh_rexec="${ssh_pass} ssh ${ssh_address} -p${ssh_port}"
@@ -37,12 +39,12 @@ ssh-keygen -R "${ssh_ip}"
 ${ssh_rexec} "echo Target: if you see this, it means ssh connection is successful"
 
 echo -e "\n--------Copying ACRN Hypervisor packages to target...--------\n"
-${scp} ./acrn*.deb ./grub*.deb ./*acrn-board-inspector*.deb ${ssh_address}:/tmp/
+${scp} ${output_path}/acrn*.deb ${output_path}/grub*.deb ${output_path}/*acrn-board-inspector*.deb ${ssh_address}:/tmp/
 
 if [ -n "${kernel_pack}" ]; then
     echo -e "\n--------Copying ACRN Service VM Kernel packages to target...--------\n"
     echo -e "\n--------ACRN Service VM Version ${kernel_version}--------\n"
-    ${scp} ./*acrn-service-vm*.deb ${ssh_address}:/tmp/
+    ${scp} ${output_path}/*acrn-service-vm*.deb ${ssh_address}:/tmp/
 fi
 
 echo -e "\n--------Installing ACRN Packages to target...--------\n"
@@ -52,7 +54,7 @@ ${ssh_rexec} "${remote_sudo} apt install -y /tmp/*.deb --allow-downgrades"
 if [ -n "${ramdisk_pack}" ]; then
     # Install RAMDisk to target and update GRUB
     echo -e "\n--------Installing RAMDisk to target...--------\n"
-    ${scp} ./${ramdisk_name} ${ssh_address}:/tmp/
+    ${scp} ${output_path}/${ramdisk_name} ${ssh_address}:/tmp/
     ${ssh_rexec} "${remote_sudo} cp /tmp/${ramdisk_name} /boot/initrd.img-${kernel_version}"
 
     echo -e "\n--------Modifying GRUB on target...--------\n"
@@ -62,13 +64,13 @@ if [ -n "${ramdisk_pack}" ]; then
 else
     # Directly Install to target rootfs.
     echo -e "\n--------Copying ACRN Launch Scripts to target...--------\n"
-    ${scp} ./${config_path}/*.sh ${ssh_address}:~
+    ${scp} ${output_path}/*.sh ${ssh_address}:~
 
     echo -e "\n--------Copying NuttX to target...--------\n"
     ${scp} ../../nuttx/boot.iso ${ssh_address}:~
 
     echo -e "\n--------Copying ACRN OVMF BIOS to target...--------\n"
-    ${scp} ./${board_config_path}/*.fd ${ssh_address}:/tmp/
+    ${scp} ${output_path}/*.fd ${ssh_address}:/tmp/
 
     echo -e "\n--------Installing Launch Scripts and OVMF BIOS to target...--------\n"
     ${ssh_rexec} "chmod +x ~/*.sh"
