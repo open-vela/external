@@ -37,7 +37,7 @@ ssh-keygen -R "${ssh_ip}"
 ${ssh_rexec} "echo Target: if you see this, it means ssh connection is successful"
 
 echo -e "\n--------Copying ACRN Hypervisor packages to target...--------\n"
-${scp} ./acrn*.deb ./grub*.deb ./*acrn-service-vm*.deb ${ssh_address}:/tmp/
+${scp} ./acrn*.deb ./grub*.deb ./*acrn-board-inspector*.deb ${ssh_address}:/tmp/
 
 if [ -n "${kernel_pack}" ]; then
     echo -e "\n--------Copying ACRN Service VM Kernel packages to target...--------\n"
