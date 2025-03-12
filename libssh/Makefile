@@ -35,7 +35,7 @@ SKIP += libssh/src/libcrypto-compat.c libssh/src/libgcrypt.c libssh/src/md_crypt
 SKIP += libssh/src/md_gcrypt.c libssh/src/pki_crypto.c libssh/src/pki_gcrypt.c
 SKIP += libssh/src/threads/libcrypto.c libssh/src/threads/libgcrypt.c libssh/src/threads/winlocks.c
 ifneq ($(CONFIG_TEST_SSH),)
-SKIP += libssh/src/buffer.c
+SKIP += libssh/src/buffer.c libssh/src/socket.c libssh/src/packet.c
 endif
 CSRCS = $(filter-out $(SKIP), $(wildcard libssh/src/*.c libssh/src/external/*.c libssh/src/threads/*.c))
 
@@ -71,6 +71,19 @@ libssh/tests/unittests/torture_buffer.c_CFLAGS += -D"torture_run_tests(_)=main(i
 PROGNAME += cmocka_libssh_bytearray
 MAINSRC += libssh/tests/unittests/torture_bytearray.c
 libssh/tests/unittests/torture_bytearray.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_options
+MAINSRC += libssh/tests/unittests/torture_options.c
+libssh/tests/unittests/torture_options.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_packet_filter
+MAINSRC += libssh/tests/unittests/torture_packet_filter.c
+libssh/tests/unittests/torture_packet_filter.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_packet
+MAINSRC += libssh/tests/unittests/torture_packet.c
+libssh/tests/unittests/torture_packet.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_packet.c_CFLAGS += -Dkey=torture_packet_key -Div=torture_packet_iv
 endif
 
 include $(APPDIR)/Application.mk

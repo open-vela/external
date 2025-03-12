@@ -67,7 +67,9 @@ if(CONFIG_LIB_SSH)
     ${CMAKE_CURRENT_LIST_DIR}/libssh/src/threads/winlocks.c)
 
   if(CONFIG_TEST_SSH)
-    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c)
+    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c
+         ${CMAKE_CURRENT_LIST_DIR}/libssh/src/packet.c
+         ${CMAKE_CURRENT_LIST_DIR}/libssh/src/socket.c)
   endif()
 
   target_sources(libssh PRIVATE ${CSRCS})
@@ -165,6 +167,8 @@ if(CONFIG_LIB_SSH)
       ${INCDIR}
       DEPENDS
       cmocka
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
       STACKSIZE
       ${CONFIG_UTILS_SSH_STACKSIZE}
       PRIORITY
@@ -182,6 +186,71 @@ if(CONFIG_LIB_SSH)
       ${INCDIR}
       DEPENDS
       cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_options.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_options
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_options.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_packet_filter.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_packet_filter
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_packet_filter.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_packet.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dkey=torture_packet_key -Div=torture_packet_iv")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_packet
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_packet.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
       STACKSIZE
       ${CONFIG_UTILS_SSH_STACKSIZE}
       PRIORITY
