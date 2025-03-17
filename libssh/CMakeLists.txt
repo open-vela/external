@@ -67,9 +67,19 @@ if(CONFIG_LIB_SSH)
     ${CMAKE_CURRENT_LIST_DIR}/libssh/src/threads/winlocks.c)
 
   if(CONFIG_TEST_SSH)
-    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c
-         ${CMAKE_CURRENT_LIST_DIR}/libssh/src/packet.c
-         ${CMAKE_CURRENT_LIST_DIR}/libssh/src/socket.c)
+    list(
+      REMOVE_ITEM
+      CSRCS
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/buffer.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/packet.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/socket.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/error.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/match.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/dh.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/dh-gex.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/legacy.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/misc.c
+      ${CMAKE_CURRENT_LIST_DIR}/libssh/src/config.c)
   endif()
 
   target_sources(libssh PRIVATE ${CSRCS})
@@ -137,6 +147,7 @@ if(CONFIG_LIB_SSH)
     set(DSRCS
         ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture_cmocka.c
         ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture_key.c
+        ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture_pki.c
         ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/torture.c)
     set(LIBSSH_TESTDIR ${CMAKE_CURRENT_LIST_DIR}/libssh/tests/unittests)
     set(MAIN_FUN
@@ -194,8 +205,10 @@ if(CONFIG_LIB_SSH)
       PRIORITY
       ${CONFIG_UTILS_SSH_PRIORITY})
 
-    set_source_files_properties(${LIBSSH_TESTDIR}/torture_options.c
-                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_options.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dtemplate=tortur_options_template")
 
     nuttx_add_application(
       NAME
@@ -244,6 +257,257 @@ if(CONFIG_LIB_SSH)
       cmocka_libssh_packet
       SRCS
       ${LIBSSH_TESTDIR}/torture_packet.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_bind_config.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dtemplate=torture_bind_config_template")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_bind_config
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_bind_config.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_config.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_config
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_config.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_callbacks.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_callbacks
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_callbacks.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_crypto.c
+      PROPERTIES COMPILE_FLAGS "${TEST_FLAG} -Dkey=key_crypto")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_crypto
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_crypto.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_hashes.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_hashes
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_hashes.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_init.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_init
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_init.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(${LIBSSH_TESTDIR}/torture_moduli.c
+                                PROPERTIES COMPILE_FLAGS ${TEST_FLAG})
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_moduli
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_moduli.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_temp_dir.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dtemplate=tortur_temp_dir_template")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_temp_dir
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_temp_dir.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_temp_file.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dtemplate=torture_temp_file_template")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_temp_file
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_temp_file.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_threads_crypto.c
+      PROPERTIES COMPILE_FLAGS "${TEST_FLAG} -Dkey=torture_threads_crypto_key")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_threads_crypto
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_threads_crypto.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_misc.c
+      PROPERTIES COMPILE_FLAGS "${TEST_FLAG} -Dtemplate=torture_misc_template")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_misc
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_misc.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      DEPENDS
+      cmocka
+      libssh
+      COMPILE_FLAGS
+      ${LIBSSH_FLAGS}
+      STACKSIZE
+      ${CONFIG_UTILS_SSH_STACKSIZE}
+      PRIORITY
+      ${CONFIG_UTILS_SSH_PRIORITY})
+
+    set_source_files_properties(
+      ${LIBSSH_TESTDIR}/torture_push_pop_dir.c
+      PROPERTIES COMPILE_FLAGS
+                 "${TEST_FLAG} -Dtemplate=torture_push_pop_dir_template")
+
+    nuttx_add_application(
+      NAME
+      cmocka_libssh_push_pop_dir
+      SRCS
+      ${LIBSSH_TESTDIR}/torture_push_pop_dir.c
       INCLUDE_DIRECTORIES
       ${INCDIR}
       DEPENDS

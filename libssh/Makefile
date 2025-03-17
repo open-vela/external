@@ -35,7 +35,9 @@ SKIP += libssh/src/libcrypto-compat.c libssh/src/libgcrypt.c libssh/src/md_crypt
 SKIP += libssh/src/md_gcrypt.c libssh/src/pki_crypto.c libssh/src/pki_gcrypt.c
 SKIP += libssh/src/threads/libcrypto.c libssh/src/threads/libgcrypt.c libssh/src/threads/winlocks.c
 ifneq ($(CONFIG_TEST_SSH),)
-SKIP += libssh/src/buffer.c libssh/src/socket.c libssh/src/packet.c
+SKIP += libssh/src/buffer.c libssh/src/socket.c libssh/src/packet.c libssh/src/error.c
+SKIP += libssh/src/match.c libssh/src/dh.c libssh/src/dh-gex.c libssh/src/legacy.c
+SKIP += libssh/src/misc.c libssh/src/config.c
 endif
 CSRCS = $(filter-out $(SKIP), $(wildcard libssh/src/*.c libssh/src/external/*.c libssh/src/threads/*.c))
 
@@ -61,6 +63,7 @@ STACKSIZE = $(CONFIG_UTILS_SSH_STACKSIZE)
 MODULE += $(CONFIG_TEST_SSH)
 
 CSRCS += libssh/tests/torture_cmocka.c libssh/tests/torture_key.c libssh/tests/torture.c
+CSRCS += libssh/tests/torture_pki.c
 libssh/tests/torture.c_CFLAGS += -Dmain=unused_main -DTORTURE_SHARED
 CFLAGS += -I $(APPDIR)/external/libssh/libssh/tests -I $(APPDIR)/external/libssh/libssh/src
 
@@ -84,6 +87,61 @@ PROGNAME += cmocka_libssh_packet
 MAINSRC += libssh/tests/unittests/torture_packet.c
 libssh/tests/unittests/torture_packet.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
 libssh/tests/unittests/torture_packet.c_CFLAGS += -Dkey=torture_packet_key -Div=torture_packet_iv
+
+PROGNAME += cmocka_libssh_bind_config
+MAINSRC += libssh/tests/unittests/torture_bind_config.c
+libssh/tests/unittests/torture_bind_config.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_bind_config.c_CFLAGS += -Dtemplate=torture_bind_config_template
+
+PROGNAME += cmocka_libssh_config
+MAINSRC += libssh/tests/unittests/torture_config.c
+libssh/tests/unittests/torture_config.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_callbacks
+MAINSRC += libssh/tests/unittests/torture_callbacks.c
+libssh/tests/unittests/torture_callbacks.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_crypto
+MAINSRC += libssh/tests/unittests/torture_crypto.c
+libssh/tests/unittests/torture_crypto.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_crypto.c_CFLAGS += -Dkey=torture_crypto_key
+
+PROGNAME += cmocka_libssh_hashes
+MAINSRC += libssh/tests/unittests/torture_hashes.c
+libssh/tests/unittests/torture_hashes.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_init
+MAINSRC += libssh/tests/unittests/torture_init.c
+libssh/tests/unittests/torture_init.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_moduli
+MAINSRC += libssh/tests/unittests/torture_moduli.c
+libssh/tests/unittests/torture_moduli.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+
+PROGNAME += cmocka_libssh_temp_dir
+MAINSRC += libssh/tests/unittests/torture_temp_dir.c
+libssh/tests/unittests/torture_temp_dir.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_temp_dir.c_CFLAGS += -Dtemplate=torture_temp_dir_template
+
+PROGNAME += cmocka_libssh_temp_file
+MAINSRC += libssh/tests/unittests/torture_temp_file.c
+libssh/tests/unittests/torture_temp_file.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_temp_file.c_CFLAGS += -Dtemplate=torture_temp_file_template
+
+PROGNAME += cmocka_libssh_threads_crypto
+MAINSRC += libssh/tests/unittests/torture_threads_crypto.c
+libssh/tests/unittests/torture_threads_crypto.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_threads_crypto.c_CFLAGS += -Dkey=torture_threads_crypto_key
+
+PROGNAME += cmocka_libssh_misc
+MAINSRC += libssh/tests/unittests/torture_misc.c
+libssh/tests/unittests/torture_misc.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_misc.c_CFLAGS += -Dtemplate=torture_misc_template
+
+PROGNAME += cmocka_libssh_push_pop_dir
+MAINSRC += libssh/tests/unittests/torture_push_pop_dir.c
+libssh/tests/unittests/torture_push_pop_dir.c_CFLAGS += -D"torture_run_tests(_)=main(int argc, char **argv)"
+libssh/tests/unittests/torture_push_pop_dir.c_CFLAGS += -Dtemplate=torture_push_pop_dir_template
 endif
 
 include $(APPDIR)/Application.mk
