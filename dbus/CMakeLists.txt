@@ -15,9 +15,7 @@
 #
 if(CONFIG_LIB_DBUS)
 
-  if(NOT CONFIG_DBUS_WASM)
-    nuttx_add_library(dbus STATIC)
-  endif()
+  nuttx_add_library(dbus STATIC)
 
   set(CFLAGS -DDBUS_COMPILATION -D__linux__ -DLOG_DAEMON=0 -DLOG_AUTH=0
              -Dprint_message=dbus_print_message)
@@ -148,8 +146,6 @@ if(CONFIG_LIB_DBUS)
         ${INCDIR}
         WCFLAGS
         ${CFLAGS}
-        INSTALL_NAME
-        ${CMAKE_BINARY_DIR}/bin/wasm/dbusdaemon.wasm
         )
     else()
       nuttx_add_application(
@@ -345,10 +341,10 @@ if(CONFIG_LIB_DBUS)
     ${INCDIR}
     WCFLAGS
     ${CFLAGS})
-  else()
-    target_sources(dbus PRIVATE ${CSRCS})
-    target_include_directories(dbus PRIVATE ${INCDIR})
-    target_compile_options(dbus PRIVATE ${CFLAGS})
   endif()
+
+  target_sources(dbus PRIVATE ${CSRCS})
+  target_include_directories(dbus PRIVATE ${INCDIR})
+  target_compile_options(dbus PRIVATE ${CFLAGS})
 
 endif()

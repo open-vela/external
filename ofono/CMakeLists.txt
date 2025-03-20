@@ -15,10 +15,13 @@
 #
 
 if(CONFIG_OFONO)
+
+if(NOT CONFIG_OFONO_WASM)
   set_property(
     TARGET nuttx
     APPEND
     PROPERTY NUTTX_INCLUDE_DIRECTORIES ${CMAKE_CURRENT_LIST_DIR}/include)
+endif()
 
   set(INCDIR ${CMAKE_CURRENT_LIST_DIR}
              ${CMAKE_CURRENT_BINARY_DIR}
@@ -31,7 +34,9 @@ if(CONFIG_OFONO)
              ${NUTTX_APPS_DIR}/external
              ${NUTTX_APPS_DIR}/external/glib/glib/glib
              ${NUTTX_APPS_DIR}/external/glib/glib
-             ${NUTTX_APPS_DIR}/external/dbus/dbus)
+             ${NUTTX_APPS_DIR}/external/dbus/dbus
+             ${NUTTX_APPS_DIR}/external/ofono/include
+             ${NUTTX_APPS_DIR}/frameworks/system/utils/include)
 
   set(CFLAGS
     -DHAVE_CONFIG_H
@@ -94,7 +99,12 @@ if(CONFIG_OFONO)
 
   add_custom_target(GenerateOfonoBuiltIn ALL
     DEPENDS ${BUILTIN_H})
-  add_dependencies(ofono GenerateOfonoBuiltIn)
+
+  if(NOT CONFIG_OFONO_WASM)
+    add_dependencies(ofono GenerateOfonoBuiltIn)
+  else()
+    add_dependencies(wasm_interface GenerateOfonoBuiltIn)
+  endif()
 
   if(CONFIG_OFONO_UNITTEST)
     file(GLOB APPEND_FILES ofono/gril/*.c)
@@ -283,10 +293,10 @@ if(CONFIG_OFONO)
         327680
         WINCLUDES
         ${INCDIR}
+        WAMR_MODE
+        AOT
         WCFLAGS
         ${CFLAGS}
-        INSTALL_NAME
-        ${CMAKE_BINARY_DIR}/bin/wasm/ofonod.wasm
         )
     else()
       nuttx_add_application(
