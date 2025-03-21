@@ -17,15 +17,22 @@ if(CONFIG_UTILS_EXFATPROGS)
 
   nuttx_add_library(exfatprogs STATIC)
 
+  set(EXFATPROGS_REDEFINES
+      [=[
+      #define __le16 uint16_t
+      #define __le32 unsigned int
+      #define __le64 uint64_t
+      #define __u8 uint8_t
+      #define __u16 uint16_t
+      #define __u32 unsigned int
+      #define __u64 uint64_t
+      #define show_version fschk_show_version
+    ]=])
+  file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/exfatprogs_build_redefines.h
+       ${EXFATPROGS_REDEFINES})
   set(CSRCS exfatprogs/lib/libexfat.c)
-  set(DEFINITIONS
-      __le16=uint16_t
-      __le32=uint32_t
-      __le64=uint64_t
-      __u8=uint8_t
-      __u16=uint16_t
-      __u32=uint32_t
-      __u64=uint64_t)
+  set(CFLAGS
+      "SHELL:-include ${CMAKE_CURRENT_BINARY_DIR}/exfatprogs_build_redefines.h")
 
   set(INCDIR ${CMAKE_CURRENT_LIST_DIR}
              ${CMAKE_CURRENT_LIST_DIR}/exfatprogs/include)
@@ -44,8 +51,8 @@ if(CONFIG_UTILS_EXFATPROGS)
       ${MAIN}
       INCLUDE_DIRECTORIES
       ${INCDIR}
-      DEFINITIONS
-      ${DEFINITIONS}
+      COMPILE_FLAGS
+      ${CFLAGS}
       DEPENDS
       exfatprogs)
   endmacro()
@@ -75,6 +82,6 @@ if(CONFIG_UTILS_EXFATPROGS)
   endif()
 
   target_sources(exfatprogs PRIVATE ${CSRCS})
-  target_compile_definitions(exfatprogs PRIVATE ${DEFINITIONS})
+  target_compile_options(exfatprogs PRIVATE ${CFLAGS})
   target_include_directories(exfatprogs PRIVATE ${INCDIR})
 endif()
