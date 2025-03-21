@@ -53,6 +53,7 @@ if(CONFIG_LIB_OPENCORE_AMR)
       ${NBDEC_SRC_DIR}/pvgsmamrdecoder.cpp
       ${WBDEC_SRC_DIR}/decoder_amr_wb.cpp
       ${NBENC_SRC_DIR}/gsmamr_encoder_wrapper.cpp
+      ${COMMON_SRC_DIR}/overflow_tbl.cpp
       ${COMMON_SRC_DIR}/bits2prm.cpp
       ${COMMON_SRC_DIR}/copy.cpp
       ${COMMON_SRC_DIR}/div_32.cpp
