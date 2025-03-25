@@ -21,7 +21,9 @@ if(CONFIG_LIB_CMARK_GFM)
   # ############################################################################
 
   nuttx_add_library(cmark-static)
-  set(CFLAGS -DCMARK_DEBUG_NODES=0)
+
+  set(CMARK_FLAGS -DCMARK_DEBUG_NODES=0)
+  target_compile_definitions(cmark-static PRIVATE ${CMARK_FLAGS})
 
   file(GLOB CSRCS cmark-gfm/src/*.c)
   file(GLOB ECSRCS cmark-gfm/extensions/*.c)
