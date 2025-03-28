@@ -28,8 +28,7 @@ if(CONFIG_LIB_YOGA)
   # Sources
   # ############################################################################
 
-  file(GLOB CXXSRCS ${LIBYOGA_DIR}/yoga/*.cpp ${LIBYOGA_DIR}/yoga/event/*.cpp
-       ${LIBYOGA_DIR}/yoga/internal/*.cpp)
+  file(GLOB CXXSRCS ${LIBYOGA_DIR}/yoga/*.cpp ${LIBYOGA_DIR}/yoga/event/*.cpp)
 
   # ############################################################################
   # Include Directory

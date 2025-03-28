@@ -21,7 +21,6 @@ CXXEXT  := .cpp
 
 CXXSRCS += $(wildcard yoga/yoga/*.cpp)
 CXXSRCS += $(wildcard yoga/yoga/event/*.cpp)
-CXXSRCS += $(wildcard yoga/yoga/internal/*.cpp)
 ASRCS := $(wildcard $(ASRCS))
 CSRCS := $(wildcard $(CSRCS))
 CXXSRCS := $(wildcard $(CXXSRCS))
