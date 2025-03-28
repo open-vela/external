@@ -20,9 +20,10 @@ config OPTEE_OS
 	---help---
 		"optee os"
 
+if OPTEE_OS
+
 config ENABLE_CRYPTO_SM3
 	bool "sm3 crypto"
-	depends on OPTEE_OS
 	default n
 
 choice
@@ -34,7 +35,7 @@ config OPTEE_REE_FS
 
 config OPTEE_RPMB_FS
 	bool "enable rpmb fs in optee os"
-	depends on OPTEE_OS && BLK_RPMSG
+	depends on BLK_RPMSG
 
 if OPTEE_RPMB_FS
 
@@ -72,10 +73,10 @@ endchoice
 
 config OPTEE_COMPAT_MITEE_FS
 	bool "to compat with mitee fs"
-	depends on OPTEE_OS
 	default n
 
 config TEE_CORE_DEBUG
 	bool "Enable tee core debug"
-	depends on OPTEE_OS
 	default n
+
+endif # OPTEE_OS
