@@ -126,6 +126,9 @@ if(CONFIG_LIB_OPUS)
     if(CONFIG_LIB_NE10)
       list(APPEND CSRCS ${CELT_SOURCES_ARM_NE10})
     endif()
+
+    set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/opus/src/analysis.c
+                                PROPERTIES COMPILE_FLAGS -fno-tree-vectorize)
   endif()
 
   # ############################################################################

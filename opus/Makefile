@@ -38,6 +38,7 @@ ifeq ($(CONFIG_ARCH_ARM),y)
   ifeq ($(CONFIG_LIB_NE10),y)
     CSRCS += $(CELT_SOURCES_ARM_NE10)
   endif
+  opus/src/analysis.c_CFLAGS += -fno-tree-vectorize
 endif
 
 MODULE    = $(CONFIG_LIB_OPUS)
