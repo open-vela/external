@@ -148,7 +148,21 @@ ifeq ($(CONFIG_BT_HCI),y)
       ifeq ($(CONFIG_BT_AVRCP),y)
         # CSRCS += $(CLASSICDIR)/shell/avrcp.c
       endif
+    else ifeq ($(CONFIG_BT_MC_SHELL),y)
+      PROT_CLASSICDIR = zblue/port/subsys/bluetooth/host/classic
+      CSRCS += $(PROT_CLASSICDIR)/shell/bredr.c
+
+      ifeq ($(CONFIG_BT_RFCOMM),y)
+        CSRCS += $(PROT_CLASSICDIR)/shell/rfcomm.c
+      endif
+      ifeq ($(CONFIG_BT_A2DP),y)
+        # CSRCS += $(PROT_CLASSICDIR)/shell/a2dp.c
+      endif
+      ifeq ($(CONFIG_BT_AVRCP),y)
+        # CSRCS += $(PROT_CLASSICDIR)/shell/avrcp.c
+      endif
     endif # CONFIG_BT_SHELL
+
   endif # CONFIG_BT_CLASSIC
 
   ifeq ($(CONFIG_BT_SHELL),y)
@@ -165,6 +179,22 @@ ifeq ($(CONFIG_BT_HCI),y)
     endif
     ifeq ($(CONFIG_BT_CHANNEL_SOUNDING),y)
       CSRCS += $(HOSTDIR)/shell/cs.c
+    endif
+  else ifeq ($(CONFIG_BT_MC_SHELL),y)
+    PROT_HOSTDIR = zblue/port/subsys/bluetooth/host
+    CSRCS += $(PROT_HOSTDIR)/shell/bt.c
+
+    ifeq ($(CONFIG_BT_CONN),y)
+      CSRCS += $(PROT_HOSTDIR)/shell/gatt.c
+    endif
+    ifeq ($(CONFIG_BT_L2CAP_DYNAMIC_CHANNEL),y)
+      CSRCS += $(PROT_HOSTDIR)/shell/l2cap.c
+    endif
+    ifeq ($(CONFIG_BT_ISO),y)
+      CSRCS += $(PROT_HOSTDIR)/shell/iso.c
+    endif
+    ifeq ($(CONFIG_BT_CHANNEL_SOUNDING),y)
+      CSRCS += $(PROT_HOSTDIR)/shell/cs.c
     endif
   endif # CONFIG_BT_SHELL
 endif # CONFIG_BT_HCI
@@ -746,6 +776,10 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/settings/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/crypto/tinycrypt/tinycrypt/lib/include}
 
 ifeq ($(CONFIG_BT_SHELL),y)
+  PROGNAME += zblue
+  MAINSRC += zblue/port/subsys/shell/shell.c
+endif
+ifeq ($(CONFIG_BT_MC_SHELL),y)
   PROGNAME += zblue
   MAINSRC += zblue/port/subsys/shell/shell.c
 endif
