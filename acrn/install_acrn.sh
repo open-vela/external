@@ -78,4 +78,8 @@ else
 
     echo -e "\n\e[36m--------Setting up ACRN Network configuration on target...--------\n\e[\0m"
     ${ssh_rexec} "${remote_sudo} cp /usr/share/doc/acrnd/examples/* /etc/systemd/network"
+
+    echo -e "\n\e[36m--------Modifying GRUB on target...--------\n\e[\0m"
+    ${ssh_rexec} "${remote_sudo} update-grub"
+    ${ssh_rexec} "${remote_sudo} sed -i '/Ubuntu with ACRN hypervisor, with Linux 6.1.80-acrn-*/a\        set next_entry=5\n\tsave_env next_entry' /boot/grub/grub.cfg"
 fi

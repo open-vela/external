@@ -24,6 +24,11 @@ mkdir -p ${output_path}
 ./clean_acrn.sh
 
 echo -e "\n\e[36m--------Compiling ACRN Hypervisor-------\n\e[\0m"
+
+# Overriding `50-eth.network`, the ACRN netbridge configuration file.
+cp ${config_path}/50-eth.network ./acrn-hypervisor/misc/packaging/50-eth.network
+
+# Compiling ACRN Hypervisor.
 cd ./acrn-hypervisor
 if [ ! -n "${config_path}" ]; then
     # Only Compile ACRN Board Configurator if no config directory is given.
