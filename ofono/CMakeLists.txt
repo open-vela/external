@@ -282,6 +282,15 @@ endif()
     list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/ofono/src/main.c)
 
     if(CONFIG_OFONO_WASM)
+      set(WRCFLAGS
+          --xip
+          --enable-builtin-intrinsics=i64.common,f32.common,f64xi32
+          --stack-bounds-checks=0
+          --disable-aux-stack-check)
+      if(CONFIG_WASM_LIBC_BYPASS)
+        list(APPEND WRCFLAGS --bounds-checks=0)
+      endif()
+
       wasm_add_application(
         NAME
         ofonod
@@ -295,8 +304,12 @@ endif()
         ${INCDIR}
         WAMR_MODE
         AOT
+        WRCFLAGS
+        ${WRCFLAGS}
         WCFLAGS
         ${CFLAGS}
+        INSTALL_NAME
+        /etc/ofonod.aot
         )
     else()
       nuttx_add_application(
