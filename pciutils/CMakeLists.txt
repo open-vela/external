@@ -58,6 +58,11 @@ if(CONFIG_PCIUTILS)
     pciutils/ls-tree.c
     pciutils/ls-vpd.c)
 
+  nuttx_library(pciutils)
+  nuttx_sources(${CMN_SRCS})
+  nuttx_include_directories(${PCIUTILS_INCDIR})
+  nuttx_compile_options(${PCIUTILS_FLAGS})
+
   # lspci command
 
   nuttx_add_application(
@@ -65,7 +70,6 @@ if(CONFIG_PCIUTILS)
     lspci
     SRCS
     pciutils/lspci.c
-    ${CMN_SRCS}
     INCLUDE_DIRECTORIES
     ${PCIUTILS_INCDIR}
     COMPILE_FLAGS
@@ -73,7 +77,9 @@ if(CONFIG_PCIUTILS)
     STACKSIZE
     ${CONFIG_PCIUTILS_STACKSIZE}
     PRIORITY
-    ${CONFIG_PCIUTILS_PRIORITY})
+    ${CONFIG_PCIUTILS_PRIORITY}
+    DEPENDS
+    pciutils)
 
   # setpci command
 
@@ -82,7 +88,6 @@ if(CONFIG_PCIUTILS)
     setpci
     SRCS
     pciutils/setpci.c
-    ${CMN_SRCS}
     INCLUDE_DIRECTORIES
     ${PCIUTILS_INCDIR}
     COMPILE_FLAGS
@@ -90,7 +95,9 @@ if(CONFIG_PCIUTILS)
     STACKSIZE
     ${CONFIG_PCIUTILS_STACKSIZE}
     PRIORITY
-    ${CONFIG_PCIUTILS_PRIORITY})
+    ${CONFIG_PCIUTILS_PRIORITY}
+    DEPENDS
+    pciutils)
 
   # pcilmr command
 
@@ -99,7 +106,6 @@ if(CONFIG_PCIUTILS)
     pcilmr
     SRCS
     pciutils/pcilmr.c
-    ${CMN_SRCS}
     INCLUDE_DIRECTORIES
     ${PCIUTILS_INCDIR}
     COMPILE_FLAGS
@@ -107,6 +113,8 @@ if(CONFIG_PCIUTILS)
     STACKSIZE
     ${CONFIG_PCIUTILS_STACKSIZE}
     PRIORITY
-    ${CONFIG_PCIUTILS_PRIORITY})
+    ${CONFIG_PCIUTILS_PRIORITY}
+    DEPENDS
+    pciutils)
 
 endif()
