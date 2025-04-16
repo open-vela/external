@@ -11,6 +11,10 @@ config LIB_GLIB
 		GLib is the low-level core library that forms the basis
 		for projects such as GTK and GNOME.
 
+config GLIB_WASM
+	bool "Compile to Wasm"
+	default n
+
 if LIB_GLIB
 
 endif

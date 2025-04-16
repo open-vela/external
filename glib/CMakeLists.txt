@@ -40,6 +40,18 @@ if(CONFIG_LIB_GLIB)
   list(REMOVE_ITEM GLIB_C_SRCS ${GLIB_FILTER_OUT})
   list(APPEND GLIB_C_SRCS glib/glib/libcharset/localcharset.c)
 
+  if(CONFIG_GLIB_WASM)
+    wasm_add_library(
+    NAME
+    glib
+    SRCS
+    ${GLIB_C_SRCS}
+    WINCLUDES
+    ${INCDIR}
+    WCFLAGS
+    ${CFLAGS})
+  endif()
+
   nuttx_add_library(glib STATIC)
   target_sources(glib PRIVATE ${GLIB_C_SRCS})
   target_include_directories(glib PRIVATE ${INCDIR})
