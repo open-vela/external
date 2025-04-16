@@ -132,6 +132,24 @@ if(CONFIG_LIB_DBUS)
       dbus/bus/dir-watch-default.c
       dbus/bus/stats.c)
 
+    nuttx_add_application(
+      MODULE
+      ${CONFIG_LIB_DBUS}
+      NAME
+      dbusdaemon
+      STACKSIZE
+      ${CONFIG_DBUS_STACKSIZE}
+      PRIORITY
+      ${CONFIG_DBUS_PRIORITY}
+      SRCS
+      dbus/bus/main.c
+      INCLUDE_DIRECTORIES
+      ${INCDIR}
+      COMPILE_FLAGS
+      ${CFLAGS}
+      DEPENDS
+      dbus)
+
     if(CONFIG_DBUS_WASM)
       wasm_add_application(
         NAME
@@ -147,25 +165,7 @@ if(CONFIG_LIB_DBUS)
         WCFLAGS
         ${CFLAGS}
         )
-    else()
-      nuttx_add_application(
-        MODULE
-        ${CONFIG_LIB_DBUS}
-        NAME
-        dbusdaemon
-        STACKSIZE
-        ${CONFIG_DBUS_STACKSIZE}
-        PRIORITY
-        ${CONFIG_DBUS_PRIORITY}
-        SRCS
-        dbus/bus/main.c
-        INCLUDE_DIRECTORIES
-        ${INCDIR}
-        COMPILE_FLAGS
-        ${CFLAGS}
-        DEPENDS
-        dbus)
-      endif()
+    endif()
   endif()
 
   if(CONFIG_DBUS_SEND)
