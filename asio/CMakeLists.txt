@@ -5,13 +5,13 @@ if(CONFIG_LIB_ASIO)
   set(CXXFLAGS -Wundef -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION)
 
   set(INCDIR
-      ${LIBASIO_DIR}/include
+      ${LIBASIO_DIR}/asio/include
       ${CMAKE_SOURCE_DIR}/include)
 
-  list(APPEND CSRCS ${LIBASIO_DIR}/src/asio.cpp)
+  list(APPEND CSRCS ${LIBASIO_DIR}/asio/src/asio.cpp)
 
   if(CONFIG_OPENSSL_MBEDTLS_WRAPPER)
-    list(APPEND CSRCS ${LIBASIO_DIR}/src/asio_ssl.cpp)
+    list(APPEND CSRCS ${LIBASIO_DIR}/asio/src/asio_ssl.cpp)
   endif()
 
   nuttx_add_library(asio STATIC)

@@ -16,6 +16,6 @@
 
 ifneq ($(CONFIG_LIB_ASIO),)
 CONFIGURED_APPS += $(APPDIR)/external/asio
-CXXFLAGS += ${INCDIR_PREFIX}asio/include
+CXXFLAGS += ${INCDIR_PREFIX}asio/asio/include
 
 endif

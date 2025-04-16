@@ -21,10 +21,10 @@ CXXEXT := .cpp
 CXXFLAGS += -Wundef
 CXXFLAGS += -DASIO_STANDALONE -DASIO_SEPARATE_COMPILATION
 
-CXXSRCS += asio/src/asio.cpp
+CXXSRCS += asio/asio/src/asio.cpp
 
 ifeq ($(CONFIG_OPENSSL_MBEDTLS_WRAPPER),y)
-    CXXSRCS += asio/src/asio_ssl.cpp
+    CXXSRCS += asio/asio/src/asio_ssl.cpp
 endif
 
 include $(APPDIR)/Application.mk
