@@ -779,9 +779,13 @@ endif
 ZINC = $(APPDIR)/external/zblue/zblue/include/zephyr
 PORTINC= zblue/port/include/zephyr
 
+SYMLINK_FOLDERS = \
+    bluetooth \
+    drivers \
+    settings
+
 SYMLINK_FILES = \
     app_memory/mem_domain.h \
-    arch/arch_interface.h \
     arch/common/ffs.h \
     debug/stack.h \
     devicetree/ordinals.h \
@@ -789,7 +793,6 @@ SYMLINK_FILES = \
     fatal_types.h \
     fs/fs.h \
     fs/fs_interface.h \
-    irq.h \
     irq_offload.h \
     kernel_includes.h \
     kernel/internal/smp.h \
@@ -799,7 +802,6 @@ SYMLINK_FILES = \
     kernel_version.h \
     linker/sections.h \
     linker/section_tags.h \
-    spinlock.h \
     shell/shell_types.h \
     shell/shell_fprintf.h \
     shell/shell_string_conv.h \
@@ -828,9 +830,11 @@ SYMLINK_FILES = \
     types.h
 
 depend::
-	$(Q) ln -sf $(ZINC)/bluetooth $(PORTINC)/bluetooth
-	$(Q) ln -sf $(ZINC)/drivers $(PORTINC)/drivers
-	$(Q) ln -sf $(ZINC)/settings $(PORTINC)/settings
+	$(foreach folder ,$(SYMLINK_FOLDERS), \
+		if [ ! -L $(PORTINC)/$(folder) ] || [ $(ZINC)/$(folder) -nt $(PORTINC)/$(folder) ]; then \
+			ln -sf $(ZINC)/$(folder) $(PORTINC)/$(folder); \
+		fi;	\
+	)
 	$(Q) mkdir -p $(PORTINC)/app_memory
 	$(Q) mkdir -p $(PORTINC)/debug
 	$(Q) mkdir -p $(PORTINC)/devicetree
