@@ -14,14 +14,20 @@
 # limitations under the License.
 #
 
+ifeq ($(CONFIG_USER_TA_WASM),y)
 WLDFLAGS += -Wl,--export=wasm_TA_CreateEntryPoint
 WLDFLAGS += -Wl,--export=wasm_TA_DestroyEntryPoint
 WLDFLAGS += -Wl,--export=wasm_TA_OpenSessionEntryPoint
 WLDFLAGS += -Wl,--export=wasm_TA_CloseSessionEntryPoint
 WLDFLAGS += -Wl,--export=wasm_TA_InvokeCommandEntryPoint
+endif
 
 CFLAGS += -DCFG_NUM_THREADS=1
+
+ifeq ($(CONFIG_USER_TA_WASM),y)
 CFLAGS += -DUSER_TA_WASM
+endif
+
 ifneq ($(CONFIG_DEBUG_INFO),)
 CFLAGS += -DTRACE_LEVEL=3
 else ifneq ($(CONFIG_DEBUG_WARN),)
@@ -38,7 +44,9 @@ CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/core/includ
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/optee/optee_os/optee_os/lib/libutils/ext/include
 
+ifeq ($(CONFIG_USER_TA_WASM),y)
 CSRCS += $(APPDIR)/frameworks/security/optee_vela/wasm/wasm_ta_framework.c
+endif
 
 ASRCS := $(wildcard $(ASRCS))
 CSRCS := $(wildcard $(CSRCS))
@@ -46,17 +54,28 @@ CXXSRCS := $(wildcard $(CXXSRCS))
 MAINSRC := $(wildcard $(MAINSRC))
 NOEXPORTSRCS = $(ASRCS)$(CSRCS)$(CXXSRCS)$(MAINSRC)
 
+ifeq ($(CONFIG_USER_TA_WASM),y)
 ifneq ($(NOEXPORTSRCS),)
 BIN := lib$(PROGNAME)$(LIBEXT)
+endif
 endif
 
 STACKSIZE ?= 4096
 PRIORITY  ?= SCHED_PRIORITY_DEFAULT
 
+ifeq ($(CONFIG_USER_TA_WASM),y)
 ifeq ($(MODULE),y)
 WASM_INITIAL_MEMORY = 65536
 WASM_BUILD = y
 WAMR_MODE = XIP
+endif
+endif
+
+ifeq ($(CONFIG_USER_TA_ELF),y)
+DYNLIB = y
+CFLAGS += -fno-lto
+LDMODULEFLAGS += -flinker-output=nolto-rel
+LDMODULEFLAGS += -fno-lto
 endif
 
 include $(APPDIR)/Application.mk
