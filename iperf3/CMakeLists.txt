@@ -52,6 +52,7 @@ if(CONFIG_UTILS_IPERF3)
       iperf3/src/iperf_sctp.c
       iperf3/src/iperf_util.c
       iperf3/src/iperf_time.c
+      iperf3/src/iperf_vsock.c
       iperf3/src/dscp.c
       iperf3/src/net.c
       iperf3/src/tcp_info.c

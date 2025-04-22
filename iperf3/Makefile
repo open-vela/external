@@ -24,7 +24,7 @@ MAINSRC   = iperf3/src/main.c
 
 CSRCS     = iperf3/src/iperf_api.c iperf3/src/iperf_error.c iperf3/src/iperf_auth.c
 CSRCS    += iperf3/src/iperf_client_api.c iperf3/src/iperf_locale.c iperf3/src/iperf_server_api.c
-CSRCS    += iperf3/src/iperf_tcp.c iperf3/src/iperf_udp.c iperf3/src/iperf_sctp.c
+CSRCS    += iperf3/src/iperf_tcp.c iperf3/src/iperf_udp.c iperf3/src/iperf_sctp.c iperf3/src/iperf_vsock.c
 CSRCS    += iperf3/src/iperf_util.c iperf3/src/iperf_time.c iperf3/src/dscp.c iperf3/src/net.c
 CSRCS    += iperf3/src/tcp_info.c iperf3/src/timer.c iperf3/src/units.c
 

@@ -55,6 +55,9 @@
 /* Have SCTP support. */
 /* #undef HAVE_SCTP_H */
 
+/* Have VSOCK support. */
+#define HAVE_VSOCK 1
+
 /* Define to 1 if you have the `sendfile' function. */
 #define HAVE_SENDFILE 1
 
