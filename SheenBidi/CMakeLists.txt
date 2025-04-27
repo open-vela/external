@@ -1,0 +1,47 @@
+#
+# Copyright (C) 2024 Xiaomi Corporation
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# Enable Config
+if(CONFIG_LIB_SHEENBIDI)
+
+  set(SHEENBIDI_DIR ${NUTTX_APPS_DIR}/external/SheenBidi/SheenBidi)
+
+  file(GLOB SHEENBIDI_SRCS
+    ${SHEENBIDI_DIR}/Source/SheenBidi.c
+  )
+
+  nuttx_add_library(sheenbidi STATIC)
+
+  target_include_directories(sheenbidi PRIVATE ${NUTTX_APPS_DIR}/external/SheenBidi/SheenBidi/Headers)
+
+  target_sources(sheenbidi PRIVATE ${SHEENBIDI_SRCS})
+
+  target_compile_definitions(sheenbidi PRIVATE
+    SB_CONFIG_UNITY=1
+    NDEBUG=1
+    RELEASE=1
+  )
+
+  target_compile_options(sheenbidi PRIVATE
+    -Wno-shadow
+    -Wno-maybe-uninitialized
+    -Wstringop-overflow=0
+    -Wno-unused-variable
+    -Wno-unused-function
+    -Os
+  )
+
+endif()
