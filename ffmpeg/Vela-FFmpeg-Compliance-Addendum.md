@@ -1,0 +1,1 @@
+openvela includes some files from FFmpeg, which are licensed under the LGPL v2.1+ license. For specific details, please refer to FFmpeg's licensing declaration[FFmpeg/LICENSE.md at master · FFmpeg/FFmpeg](https://github.com/FFmpeg/FFmpeg/blob/master/LICENSE.md)
