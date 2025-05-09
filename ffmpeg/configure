@@ -51,7 +51,7 @@ if [ -e "$source_path/$private_path" ];then
   eval "$(sed -n "s/^extern const AVFilter ff_\([avfsinkrc]\{2,5\}\)_\(.*\);/full_filter_name_\2=\1_\2/p" $dst_file_path/allfilters.c)"
 fi
 
-. $source_path/configure $@
+. $source_path/configure "$@"
 
 if [ -e "$source_path/$private_path/$private_tmp_dir" ];then
   rm -r "$source_path/$private_path/$private_tmp_dir"
