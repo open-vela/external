@@ -105,11 +105,11 @@ ifeq ($(CONFIG_BT_HCI),y)
     CLASSICDIR = $(HOSTDIR)/classic
 
     ifeq ($(CONFIG_BT_A2DP),y)
-      CSRCS += $(CLASSICDIR)/zephyr3/a2dp.c
+      CSRCS += $(CLASSICDIR)/a2dp.c
+      CSRCS += $(CLASSICDIR)/a2dp_codec_sbc.c
     endif
     ifeq ($(CONFIG_BT_AVDTP),y)
-      CSRCS += $(CLASSICDIR)/zephyr3/avdtp.c
-      CSRCS += $(CLASSICDIR)/zephyr3/avdtp_ep.c
+      CSRCS += $(CLASSICDIR)/avdtp.c
     endif
     ifeq ($(CONFIG_BT_AVRCP), y)
       CSRCS += $(CLASSICDIR)/zephyr3/avrcp.c
