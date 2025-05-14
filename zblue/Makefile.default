@@ -105,16 +105,15 @@ ifeq ($(CONFIG_BT_HCI),y)
     CLASSICDIR = $(HOSTDIR)/classic
 
     ifeq ($(CONFIG_BT_A2DP),y)
-      CSRCS += $(CLASSICDIR)/a2dp.c $(CLASSICDIR)/a2dp_codec_sbc.c
+      CSRCS += $(CLASSICDIR)/zephyr3/a2dp.c
     endif
     ifeq ($(CONFIG_BT_AVDTP),y)
-      CSRCS += $(CLASSICDIR)/avdtp.c
+      CSRCS += $(CLASSICDIR)/zephyr3/avdtp.c
+      CSRCS += $(CLASSICDIR)/zephyr3/avdtp_ep.c
     endif
     ifeq ($(CONFIG_BT_AVRCP), y)
-      CSRCS += $(CLASSICDIR)/avrcp.c
-    endif
-    ifeq ($(CONFIG_BT_AVCTP), y)
-      CSRCS += $(CLASSICDIR)/avctp.c
+      CSRCS += $(CLASSICDIR)/zephyr3/avrcp.c
+      CSRCS += $(CLASSICDIR)/zephyr3/avrcp_cttg.c
     endif
     ifeq ($(CONFIG_BT_RFCOMM),y)
       CSRCS += $(CLASSICDIR)/rfcomm.c
@@ -144,10 +143,10 @@ ifeq ($(CONFIG_BT_HCI),y)
         CSRCS += $(CLASSICDIR)/shell/rfcomm.c
       endif
       ifeq ($(CONFIG_BT_A2DP),y)
-        CSRCS += $(CLASSICDIR)/shell/a2dp.c
+        # CSRCS += $(CLASSICDIR)/shell/a2dp.c
       endif
       ifeq ($(CONFIG_BT_AVRCP),y)
-        CSRCS += $(CLASSICDIR)/shell/avrcp.c
+        # CSRCS += $(CLASSICDIR)/shell/avrcp.c
       endif
     endif # CONFIG_BT_SHELL
   endif # CONFIG_BT_CLASSIC
@@ -740,6 +739,7 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/port/kernel/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/audio}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host/classic/zephyr3}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/mesh}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/services}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/settings/include}
