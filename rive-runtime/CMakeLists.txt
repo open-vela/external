@@ -33,6 +33,7 @@ if(CONFIG_LIB_RIVE_RUNTIME)
 
   if(CONFIG_LIB_HARFBUZZ AND CONFIG_LIB_SHEENBIDI)
     nuttx_compile_options_for_all_apps(-DWITH_RIVE_TEXT=1)
+    nuttx_compile_options_for_all_apps(-D_RIVE_INTERNAL_=1)
 
     target_include_directories(rive-runtime PRIVATE
         ${NUTTX_APPS_DIR}/external/SheenBidi/SheenBidi/Headers
