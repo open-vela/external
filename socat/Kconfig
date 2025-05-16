@@ -36,12 +36,6 @@ config UTILS_SOCAT_STACKSIZE
 	---help---
 		The stack size allocated for the socat task.
 
-config UTILS_SOCAT_RPMSG_SOCKET
-	bool "socat support rpmsg socket"
-	default n
-	---help---
-		Enable socat support rpmsg socket.
-
 endif # UTILS_SOCAT
 
 endmenu # Tools: socat
