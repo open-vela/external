@@ -25,11 +25,14 @@ if(CONFIG_LIB_RIVE_RUNTIME)
 
   nuttx_add_library(rive-runtime STATIC)
 
+  target_include_directories(rive-runtime PUBLIC
+    ${RIVE_RUNTIME_DIR}/include
+  )
+
   if(CONFIG_LIB_HARFBUZZ AND CONFIG_LIB_SHEENBIDI)
     nuttx_compile_options_for_all_apps(-DWITH_RIVE_TEXT=1)
 
     target_include_directories(rive-runtime PRIVATE
-        ${RIVE_RUNTIME_DIR}/include
         ${NUTTX_APPS_DIR}/external/SheenBidi/SheenBidi/Headers
         ${NUTTX_APPS_DIR}/external/harfbuzz/harfbuzz/src
       )
