@@ -29,6 +29,8 @@ if(CONFIG_LIB_RIVE_RUNTIME)
     ${RIVE_RUNTIME_DIR}/include
   )
 
+  nuttx_compile_options_for_all_apps(-D_RIVE_INTERNAL_=1)
+
   if(CONFIG_LIB_HARFBUZZ AND CONFIG_LIB_SHEENBIDI)
     nuttx_compile_options_for_all_apps(-DWITH_RIVE_TEXT=1)
 
