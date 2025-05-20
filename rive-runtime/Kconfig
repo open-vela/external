@@ -19,3 +19,12 @@ menuconfig LIB_RIVE_RUNTIME
     bool "Enable rive runtime"
     default n
 
+if LIB_RIVE_RUNTIME
+config RIVE_RUNTIME_PROFILER
+    bool "Enable rive runtime profiler"
+    default n
+config RIVE_RUNTIME_PROFILER_INCLUDE
+    string "Profiler include path"
+    default "nuttx/sched_note.h"
+    depends on RIVE_RUNTIME_PROFILER
+endif

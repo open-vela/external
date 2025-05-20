@@ -38,6 +38,31 @@ if(CONFIG_LIB_RIVE_RUNTIME)
       )
   endif()
 
+  if(CONFIG_SCHED_INSTRUMENTATION AND CONFIG_RIVE_RUNTIME_PROFILER)
+  target_compile_definitions(
+    rive-runtime
+    PRIVATE
+      "RIVE_RUNTIME_PROFILER_BEGIN=sched_note_begin(NOTE_TAG_GRAPHICS)")
+  target_compile_definitions(
+    rive-runtime
+    PRIVATE "RIVE_RUNTIME_PROFILER_END=sched_note_end(NOTE_TAG_GRAPHICS)")
+
+  # ##########################################################################
+  set(RIVE_PROFILER_TAG_DEF
+      [=[
+#define RIVE_RUNTIME_PROFILER_BEGINEX(str) sched_note_beginex(NOTE_TAG_GRAPHICS, str)
+#define RIVE_RUNTIME_PROFILER_ENDEX(str) sched_note_endex(NOTE_TAG_GRAPHICS, str)
+    ]=])
+
+  file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/def_rive_profiler.h
+       "${RIVE_PROFILER_TAG_DEF}")
+  target_compile_options(
+    rive-runtime PRIVATE -include "${CMAKE_CURRENT_BINARY_DIR}/def_rive_profiler.h")
+  # ##########################################################################
+
+  endif()
+
+
   target_compile_options(rive-runtime PRIVATE
     -Wno-shadow
     -Wno-sign-compare
