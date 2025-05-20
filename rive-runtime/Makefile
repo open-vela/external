@@ -25,6 +25,8 @@ CXXFLAGS += -Wno-format-security -Wno-format -Wno-nonnull -Wno-maybe-uninitializ
 
 CXXSRCS += $(shell find -L rive-runtime/src -name *.cpp)
 
+CXXFLAGS += -D_RIVE_INTERNAL_=1
+
 ifeq ($(and $(CONFIG_LIB_HARFBUZZ),$(CONFIG_LIB_SHEENBIDI)),y)
 CXXFLAGS += -DWITH_RIVE_TEXT=1
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
