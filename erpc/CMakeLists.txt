@@ -20,7 +20,7 @@ if(CONFIG_LIB_ERPC)
   set_property(
     TARGET nuttx
     APPEND
-    PROPERTY NUTTX_CXX_INCLUDE_DIRECTORIES ${ERPC_DIR}/config ${ERPC_DIR}/infra
+    PROPERTY NUTTX_INCLUDE_DIRECTORIES ${ERPC_DIR}/config ${ERPC_DIR}/infra
              ${ERPC_DIR}/port ${ERPC_DIR}/setup ${ERPC_DIR}/transports)
 
   nuttx_add_library(erpc STATIC)
