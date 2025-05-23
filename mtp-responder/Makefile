@@ -17,7 +17,8 @@
 include $(APPDIR)/Make.defs
 
 OCSRCS += mtp-responder/src/mtp_init.c mtp-responder/src/mtp_util_media_info.c \
-          mtp-responder/src/mtp_usb_driver_ffs.c mtp-responder/src/mtp_descs_strings.c
+          mtp-responder/src/mtp_usb_driver_ffs.c mtp-responder/src/mtp_descs_strings.c \
+          mtp-responder/src/mtp_usb_driver_slp.c
 CSRCS  += $(filter-out $(OCSRCS), \
             $(wildcard mtp-responder/src/*.c))
 

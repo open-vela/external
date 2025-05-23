@@ -21,7 +21,8 @@ if(CONFIG_MTP_RESPONDER)
       ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_init.c
       ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_util_media_info.c
       ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_usb_driver_ffs.c
-      ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_descs_strings.c)
+      ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_descs_strings.c
+      ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_usb_driver_slp.c)
 
   file(GLOB MTP_CSRCS mtp-responder/src/*.c)
 
