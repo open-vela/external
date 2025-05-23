@@ -338,11 +338,6 @@ endif()
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/watch.c)
 
     if(CONFIG_OFONO_WASM)
-      set(WRCFLAGS
-          --xip
-          --enable-builtin-intrinsics=i64.common,f32.common,f64xi32
-          --stack-bounds-checks=0
-          --disable-aux-stack-check)
       if(CONFIG_WASM_LIBC_BYPASS)
         list(APPEND WRCFLAGS --bounds-checks=0)
       endif()

@@ -80,10 +80,12 @@ CSRCS += $(filter-out connman/src/shared/mnlg.c \
 CSRCS += $(filter-out connman/gdhcp/ipv4ll.c \
          , $(wildcard connman/gdhcp/*.c))
 
+ifeq ($(CONFIG_OFONO_WASM),)
 ifeq ($(CONFIG_OFONO),y)
 CSRCS += $(wildcard $(APPDIR)/external/ofono/ofono/gdbus/*.c)
 else
 CSRCS += $(wildcard connman/gdbus/*.c)
+endif
 endif
 
 CSRCS += $(wildcard connman/sdk/*.c)
@@ -125,5 +127,10 @@ clean::
 distclean:: clean
 	$(call DELFILE, Make.dep)
 	$(call DELFILE, .depend)
+
+ifneq ($(CONFIG_CONNMAN_WASM),)
+WASM_INITIAL_MEMORY = 196608
+WASM_BUILD          = y
+endif
 
 include $(APPDIR)/Application.mk

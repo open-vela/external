@@ -68,6 +68,13 @@ config CONNMAN_CTL
 	---help---
 		Connection Manager control client, is a command line tool
 
+config CONNMAN_WASM
+       bool "Compile to Wasm module"
+       default n
+       ---help---
+		Apply the same approach to compile connmand as a Wasm module
+		instead of a builtin app, only available if any Wasm runtime is enabled.
+
 endif
 
 endmenu

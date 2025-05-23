@@ -41,7 +41,9 @@ if(CONFIG_CONNMAN)
       ${NUTTX_APPS_DIR}/external/glib/glib/glib
       ${NUTTX_APPS_DIR}/external/glib/glib
       ${NUTTX_APPS_DIR}/external/glib
-      ${NUTTX_APPS_DIR}/external/dbus/dbus)
+      ${NUTTX_APPS_DIR}/external/dbus/dbus
+      ${NUTTX_APPS_DIR}/include
+      ${NUTTX_APPS_DIR}/external/ofono/include)
 
   if(TARGET nuttx)
     set_property(
@@ -60,19 +62,44 @@ if(CONFIG_CONNMAN)
     list(APPEND CONNMAN_INCDIR ${CMAKE_CURRENT_LIST_DIR}/connman/gdbus)
   endif()
 
-  nuttx_add_application(
-    NAME
-    connmand
-    SRCS
-    connman/src/main.c
-    INCLUDE_DIRECTORIES
-    ${CONNMAN_INCDIR}
-    COMPILE_FLAGS
-    ${CONNMAN_FLAGS}
-    STACKSIZE
-    ${CONFIG_CONNMAN_STACKSIZE}
-    PRIORITY
-    ${CONFIG_CONNMAN_PRIORITY})
+  if(CONFIG_CONNMAN_WASM)
+    list(APPEND WRCFLAGS --bounds-checks=0)
+
+  wasm_add_application(
+      NAME
+      connman
+      SRCS
+      connman/src/main.c
+      STACK_SIZE
+      ${CONFIG_CONNMAN_STACKSIZE}
+      INITIAL_MEMORY_SIZE
+      196608
+      WINCLUDES
+      ${CONNMAN_INCDIR}
+      WAMR_MODE
+      AOT
+      WRCFLAGS
+      ${WRCFLAGS}
+      WCFLAGS
+      ${CONNMAN_FLAGS}
+      INSTALL_NAME
+      etc/connman.aot
+    )
+  else()
+    nuttx_add_application(
+      NAME
+      connmand
+      SRCS
+      connman/src/main.c
+      INCLUDE_DIRECTORIES
+      ${CONNMAN_INCDIR}
+      COMPILE_FLAGS
+      ${CONNMAN_FLAGS}
+      STACKSIZE
+      ${CONFIG_CONNMAN_STACKSIZE}
+      PRIORITY
+      ${CONFIG_CONNMAN_PRIORITY})
+  endif()
 
   nuttx_add_library(connman)
 
@@ -149,7 +176,9 @@ if(CONFIG_CONNMAN)
       INCLUDE_DIRECTORIES
       ${CONNMAN_INCDIR}
       COMPILE_FLAGS
-      ${CONNMAN_FLAGS})
+      ${CONNMAN_FLAGS}
+      STACKSIZE
+      ${CONFIG_CONNMAN_CTL_STACKSIZE})
   endif()
 
   if(NOT EXISTS ${BINARY_CONNMAN_DIR}/connman)
@@ -170,8 +199,19 @@ if(CONFIG_CONNMAN)
     COMMAND ${CMAKE_CURRENT_LIST_DIR}/connman/src/genbuiltin ${PLUGIN_MODULES}
     OUTPUT_FILE ${BINARY_CONNMAN_DIR}/builtin.h)
 
-  target_sources(connman PRIVATE ${CONNMAN_CSRCS})
+  if(CONFIG_CONNMAN_WASM)
+    wasm_add_library(
+    NAME
+    connmanlib
+    SRCS
+    ${CONNMAN_CSRCS}
+    WINCLUDES
+    ${CONNMAN_INCDIR}
+    WCFLAGS
+    ${CONNMAN_FLAGS})
+  endif()
 
+  target_sources(connman PRIVATE ${CONNMAN_CSRCS})
   target_include_directories(connman PRIVATE ${CONNMAN_INCDIR})
   target_compile_options(connman PRIVATE ${CONNMAN_FLAGS})
 
