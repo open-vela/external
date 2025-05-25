@@ -95,13 +95,13 @@ define DOSUBDIR
   NASRCS += $$(wildcard $$(patsubst %.o,%.asm, $$(SOBJS)))
 endef
 
-ifneq ($(wildcard $(SRC_PATH)/private),)
+ifneq ($(wildcard $(SRC_PATH)/proprietary),)
     RMOBJ = allfilters.o allcodecs.o
     SHLIBOBJS += $(RMOBJ)
     $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
     SHLIBOBJS :=
-    $(eval $(call DOSUBDIR,private/libavcodec))
-    $(eval $(call DOSUBDIR,private/libavfilter))
+    $(eval $(call DOSUBDIR,proprietary/libavcodec))
+    $(eval $(call DOSUBDIR,proprietary/libavfilter))
 else
     $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
 endif
