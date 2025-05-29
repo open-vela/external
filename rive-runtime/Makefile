@@ -30,6 +30,7 @@ CXXFLAGS += -DWITH_RIVE_TEXT=1
 CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/SheenBidi/SheenBidi/Headers
 CXXFLAGS +=  ${INCDIR_PREFIX}$(APPDIR)/external/harfbuzz/harfbuzz/src
 endif
+
 ifeq ($(and $(CONFIG_SCHED_INSTRUMENTATION),$(CONFIG_RIVE_RUNTIME_PROFILER)),y)
 CXXFLAGS += "-DRIVE_RUNTIME_PROFILER_BEGIN=sched_note_begin(NOTE_TAG_GRAPHICS)"
 CXXFLAGS += "-DRIVE_RUNTIME_PROFILER_END=sched_note_end(NOTE_TAG_GRAPHICS)"
@@ -37,5 +38,11 @@ CXXFLAGS += "-DRIVE_RUNTIME_PROFILER_END=sched_note_end(NOTE_TAG_GRAPHICS)"
 CXXFLAGS += "-DRIVE_RUNTIME_PROFILER_BEGINEX(str)=sched_note_beginex(NOTE_TAG_GRAPHICS, str)"
 CXXFLAGS += "-DRIVE_RUNTIME_PROFILER_ENDEX(str)=sched_note_endex(NOTE_TAG_GRAPHICS, str)"
 endif
+
+ifeq ($(RIVE_RUNTIME_LAYOUT),)
+CXXFLAGS += -DWITH_RIVE_LAYOUT=1
+CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/yoga/yoga
+endif
+
 CXXFLAGS += -Os -ftree-vectorize
 include $(APPDIR)/Application.mk

@@ -27,4 +27,10 @@ config RIVE_RUNTIME_PROFILER_INCLUDE
     string "Profiler include path"
     default "nuttx/sched_note.h"
     depends on RIVE_RUNTIME_PROFILER
+
+config RIVE_RUNTIME_LAYOUT
+    bool "Support Layout capability"
+    depends on LIB_YOGA
+    default n
+
 endif
