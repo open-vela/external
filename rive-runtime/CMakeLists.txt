@@ -63,6 +63,12 @@ if(CONFIG_LIB_RIVE_RUNTIME)
   endif()
 
 
+if(CONFIG_RIVE_RUNTIME_LAYOUT)
+  nuttx_compile_options_for_all_apps(-DWITH_RIVE_LAYOUT=1)
+  target_include_directories(rive-runtime PRIVATE
+    ${NUTTX_APPS_DIR}/external/yoga/yoga)
+endif()
+
   target_compile_options(rive-runtime PRIVATE
     -Wno-shadow
     -Wno-sign-compare
