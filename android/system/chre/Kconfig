@@ -85,6 +85,7 @@ config CHRE_BLE_SUPPORT_ENABLED
 config CHRE_GNSS_SUPPORT_ENABLED
 	bool "GNSS support"
 	default n
+	depends on UORB_LOOP_MAX_EVENTS != 0
 	---help---
 		GNSS support
 
