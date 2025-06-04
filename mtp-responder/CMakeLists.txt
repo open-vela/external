@@ -15,7 +15,7 @@
 #
 if(CONFIG_MTP_RESPONDER)
 
-  set(CSRCS mtp-responder/src/mtp_init.c mtp_port.c mtp_usb_driver_nuttx.c)
+  set(CSRCS mtp-responder/src/mtp_init.c)
 
   set(FILT_OUT_SRCS
       ${CMAKE_CURRENT_LIST_DIR}/mtp-responder/src/mtp_init.c
