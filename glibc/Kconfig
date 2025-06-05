@@ -1,0 +1,28 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+menuconfig GLIBC_TESTS
+	tristate "libc tests from glibc"
+	default n
+	---help---
+		Enable testing of the standard C library (libc) functions.
+
+if GLIBC_TESTS
+
+config GLIBC_TESTS_STACKSIZE
+	int "Stack size"
+	default 4096
+
+config GLIBC_VERSION
+	string "glibc version"
+	default "2.41"
+	---help---
+		The version of glibc to download when local repository is not found
+
+config GLIBC_SERVER_URL
+	string "glibc download server url"
+	default "https://ftpmirror.gnu.org"
+
+endif # GLIBC_TESTS
