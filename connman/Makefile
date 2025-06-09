@@ -19,7 +19,14 @@ include $(APPDIR)/Make.defs
 CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += ${INCDIR_PREFIX}include
 CFLAGS += ${INCDIR_PREFIX}connman
+CFLAGS += ${INCDIR_PREFIX}connman/include
+
+# Select gdbus include directory based on CONFIG_OFONO
+ifeq ($(CONFIG_OFONO),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ofono/ofono/gdbus
+else
 CFLAGS += ${INCDIR_PREFIX}connman/gdbus
+endif
 
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib/glib
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/glib/glib
@@ -34,9 +41,9 @@ CFLAGS += -DVPN_STORAGEDIR=\"$(CONFIG_CONNMAN_VPN_STORAGEDIR)\"
 CFLAGS += -DCONFIGDIR=\"$(CONFIG_CONNMAN_CONFIGDIR)\"
 CFLAGS += -DSTATEDIR=\"$(CONFIG_CONNMAN_STATEDIR)\"
 
-CFLAGS += -Wno-shadow -Wno-strict-prototypes
+CFLAGS += -Wno-format -Wno-shadow -Wno-strict-prototypes
 
-ifneq ($(CONFIG_LIB_OFONO),)
+ifneq ($(CONFIG_OFONO),)
 PLUGIN_SRCS += connman/plugins/ofono.c
 PLUGIN_MODULES += ofono
 endif
@@ -67,7 +74,11 @@ CSRCS += $(filter-out connman/src/shared/mnlg.c \
 CSRCS += $(filter-out connman/gdhcp/ipv4ll.c \
          , $(wildcard connman/gdhcp/*.c))
 
+ifeq ($(CONFIG_OFONO),y)
+CSRCS += $(wildcard $(APPDIR)/external/ofono/ofono/gdbus/*.c)
+else
 CSRCS += $(wildcard connman/gdbus/*.c)
+endif
 
 CSRCS += $(PLUGIN_SRCS)
 

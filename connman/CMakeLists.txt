@@ -24,6 +24,7 @@ if(CONFIG_CONNMAN)
       -DVPN_STORAGEDIR="${CONFIG_CONNMAN_VPN_STORAGEDIR}"
       -DCONFIGDIR="${CONFIG_CONNMAN_CONFIGDIR}"
       -DSTATEDIR="${CONFIG_CONNMAN_STATEDIR}"
+      -Wno-format
       -Wno-shadow
       -Wno-strict-prototypes)
 
@@ -32,7 +33,7 @@ if(CONFIG_CONNMAN)
       ${CMAKE_CURRENT_LIST_DIR}
       ${CMAKE_CURRENT_LIST_DIR}/include
       ${CMAKE_CURRENT_LIST_DIR}/connman
-      ${CMAKE_CURRENT_LIST_DIR}/connman/gdbus
+      ${CMAKE_CURRENT_LIST_DIR}/connman/include
       ${BINARY_CONNMAN_DIR}/
       ${BINARY_CONNMAN_DIR}/connman
       ${NUTTX_APPS_DIR}/external/glib/glib/glib
@@ -40,9 +41,26 @@ if(CONFIG_CONNMAN)
       ${NUTTX_APPS_DIR}/external/glib
       ${NUTTX_APPS_DIR}/external/dbus/dbus)
 
+  if(TARGET nuttx)
+    set_property(
+      TARGET nuttx
+      APPEND
+      PROPERTY NUTTX_INCLUDE_DIRECTORIES ${BINARY_CONNMAN_DIR}/connman)
+  endif()
+
+  # Prefer a single gdbus implementation to avoid duplicate symbols between ofono and connman.
+  # CONFIG_OFONO determines which gdbus implementation to use:
+  # - If CONFIG_OFONO is enabled, expose ofono's gdbus headers
+  # - Otherwise, expose connman's gdbus headers
+  if(CONFIG_OFONO)
+    list(APPEND CONNMAN_INCDIR ${NUTTX_APPS_DIR}/external/ofono/ofono/gdbus)
+  else()
+    list(APPEND CONNMAN_INCDIR ${CMAKE_CURRENT_LIST_DIR}/connman/gdbus)
+  endif()
+
   nuttx_add_application(
     NAME
-    connman
+    connmand
     SRCS
     connman/src/main.c
     INCLUDE_DIRECTORIES
@@ -84,12 +102,19 @@ if(CONFIG_CONNMAN)
   list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/connman/gdhcp/ipv4ll.c)
   list(APPEND CONNMAN_CSRCS ${CSRCS})
 
-  file(GLOB CSRCS connman/gdbus/*.c)
+  # Select gdbus source files based on CONFIG_OFONO
+  if(NOT CONFIG_OFONO)
+    # Use connman's own gdbus implementation
+    file(GLOB CSRCS connman/gdbus/*.c)
+  else()
+    # Use ofono's gdbus implementation
+    file(GLOB CSRCS ${NUTTX_APPS_DIR}/external/ofono/ofono/gdbus/*.c)
+  endif()
   list(APPEND CONNMAN_CSRCS ${CSRCS})
 
   set(PLUGIN_MODULES)
 
-  if(CONFIG_LIB_OFONO)
+  if(CONFIG_OFONO)
     list(APPEND CONNMAN_CSRCS connman/plugins/ofono.c)
     list(APPEND PLUGIN_MODULES ofono)
   endif()
@@ -127,8 +152,8 @@ if(CONFIG_CONNMAN)
   nuttx_create_symlink(${CMAKE_CURRENT_LIST_DIR}/connman/include
                        ${BINARY_CONNMAN_DIR}/connman/connman)
 
-  if(NOT EXISTS ${BINARY_CONNMAN_DIR}/connman/version.h)
-    file(WRITE ${BINARY_CONNMAN_DIR}/connman/version.h )
+  if(NOT EXISTS ${BINARY_CONNMAN_DIR}/connman/connman/version.h)
+    file(WRITE ${BINARY_CONNMAN_DIR}/connman/connman/version.h)
   endif()
 
   execute_process(
