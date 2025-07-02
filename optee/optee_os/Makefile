@@ -29,12 +29,10 @@ CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libmbedtls/core
 CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutee/include
 CFLAGS += ${INCDIR_PREFIX}optee_os/lib/libutils/ext/include
 
-ifeq (y, $(filter y, $(CONFIG_ARCH_ARM) $(CONFIG_ARCH_SIM)))
-CFLAGS += -DARM32
-endif
-
-ifeq (y, $(filter y, $(CONFIG_ARCH_ARM64) $(CONFIG_ARCH_X86_64)))
+ifeq ($(CONFIG_ARCH_64BIT),y)
 CFLAGS += -DARM64
+else
+CFLAGS += -DARM32
 endif
 
 CFLAGS += -D__text_start=_stext
