@@ -79,32 +79,35 @@ define DOSUBDIR
   OBJS            :=
   OBJS-yes        :=
   X86ASM-OBJS-yes :=
-  include $(SRC_PATH)/$(1)/Makefile
-  -include $(SRC_PATH)/$(1)/$$(ARCH)/Makefile
+  include $(1)/Makefile
+  -include $(1)/$$(ARCH)/Makefile
   ifeq ($(CONFIG_ARM_HAVE_NEON),y)
-    -include $(SRC_PATH)/$(1)/neon/Makefile
+    -include $(1)/neon/Makefile
   endif
   ifeq ($(CONFIG_ARM64_HAVE_NEON),y)
-    -include $(SRC_PATH)/$(1)/neon/Makefile
+    -include $(1)/neon/Makefile
   endif
   include $(SRC_PATH)/ffbuild/arch.mak
   SOBJS := $$(filter-out $$(SHLIBOBJS), $$(OBJS) $$(OBJS-yes) $$(X86ASM-OBJS-yes))
-  SOBJS := $$(sort $$(addprefix $(SRC_PATH)/$(1)/, $$(SOBJS)))
+  SOBJS := $$(sort $$(addprefix $(1)/, $$(SOBJS)))
   CSRCS += $$(wildcard $$(patsubst %.o,%.c, $$(SOBJS)))
   ASRCS += $$(wildcard $$(patsubst %.o,%.S, $$(SOBJS)))
   NASRCS += $$(wildcard $$(patsubst %.o,%.asm, $$(SOBJS)))
 endef
 
-ifneq ($(wildcard $(SRC_PATH)/proprietary),)
-    RMOBJ = allfilters.o allcodecs.o
-    SHLIBOBJS += $(RMOBJ)
-    $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
-    SHLIBOBJS :=
-    $(eval $(call DOSUBDIR,proprietary/libavcodec))
-    $(eval $(call DOSUBDIR,proprietary/libavfilter))
-else
-    $(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,lib$(D))))
-endif
+define ADDEXTERNAL
+    ifneq ($$(wildcard $(APPDIR)/$(strip $(1))/libavfilter),)
+        $$(eval $$(call DOSUBDIR, $(APPDIR)/$(strip $(1))/libavfilter))
+    endif
+    ifneq ($$(wildcard $(APPDIR)/$(strip $(1))/libavcodec),)
+        $$(eval $$(call DOSUBDIR, $(APPDIR)/$(strip $(1))/libavcodec))
+    endif
+endef
+
+EXTERNAL_PATHS := $(subst ",,$(CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES))
+$(foreach path,$(subst :, ,$(EXTERNAL_PATHS)),$(eval $(call ADDEXTERNAL,$(path))))
+
+$(foreach D,$(FFLIBS-yes),$(eval $(call DOSUBDIR,$(SRC_PATH)/lib$(D))))
 
 ifneq ($(NASRCS),)
 NAFLAGS = -g -F dwarf -DPIC -Wl,-mcmodel=large -P$(DST_PATH)/config.asm
@@ -261,29 +264,29 @@ endif
 
 $(DST_PATH)/libavutil/ffversion.h:
 	$(Q)cd $(DST_PATH) && $(FFMPEG_VERSION_SCRIPT) . libavutil/ffversion.h $(EXTRA_VERSION)
-
 $(DST_PATH)/ffbuild/config.mak:
 	$(Q) echo "FFMPEG configure... $(CONFIG_ARCH)"
-	$(Q)cd $(DST_PATH) &&                              \
-		$(FFMPEG_CONFIG_SCRIPT) --disable-all                    \
-		--disable-everything    --disable-autodetect             \
-		--disable-amf           --disable-audiotoolbox           \
-		--disable-cuda-llvm     --disable-cuvid                  \
-		--disable-d3d11va       --disable-doc                    \
-		--disable-dwt           --disable-dxva2                  \
-		--disable-dxva2         --disable-error-resilience       \
-		--disable-faan          --disable-ffnvcodec              \
-		--disable-htmlpages     --disable-iconv                  \
-		--disable-lsp                                            \
-		--disable-manpages      --disable-pic                    \
-		--disable-pixelutils    --disable-podpages               \
-		--disable-nvdec         --disable-nvenc                  \
-		--disable-txtpages      --disable-v4l2-m2m               \
-		--disable-vaapi         --disable-vdpau                  \
-		--disable-videotoolbox  --disable-xop                    \
-		--enable-version3       --enable-small                   \
-		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)" \
-		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)  \
+	$(Q)cd $(DST_PATH) && APPDIR=$(APPDIR)                                               \
+		CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES=$(CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES) \
+		$(FFMPEG_CONFIG_SCRIPT) --disable-all                                        \
+		--disable-everything    --disable-autodetect                                 \
+		--disable-amf           --disable-audiotoolbox                               \
+		--disable-cuda-llvm     --disable-cuvid                                      \
+		--disable-d3d11va       --disable-doc                                        \
+		--disable-dwt           --disable-dxva2                                      \
+		--disable-dxva2         --disable-error-resilience                           \
+		--disable-faan          --disable-ffnvcodec                                  \
+		--disable-htmlpages     --disable-iconv                                      \
+		--disable-lsp                                                                \
+		--disable-manpages      --disable-pic                                        \
+		--disable-pixelutils    --disable-podpages                                   \
+		--disable-nvdec         --disable-nvenc                                      \
+		--disable-txtpages      --disable-v4l2-m2m                                   \
+		--disable-vaapi         --disable-vdpau                                      \
+		--disable-videotoolbox  --disable-xop                                        \
+		--enable-version3       --enable-small                                       \
+		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)"                     \
+		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)                      \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
 context:: $(DST_PATH)/ffbuild/config.mak $(DST_PATH)/libavutil/ffversion.h
