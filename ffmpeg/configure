@@ -1,59 +1,73 @@
 #!/bin/sh
 
-proprietary_path="proprietary"
-proprietary_tmp_dir="$PWD/ffmpeg/$proprietary_path/.temp"
-
+private_path="private"
 source_path=$(dirname "$(realpath "$0")")/ffmpeg
-host_cc=gcc
-
-create_proprietary_temp_files() {
-  dst_dir=$(dirname "$2")
-  mkdir -p $dst_dir/libavutil
-  mkdir -p $dst_dir/libavformat
-  mkdir -p $dst_dir/libavcodec
-  mkdir -p $dst_dir/libavdevice
-  mkdir -p $dst_dir/libavfilter
-  touch $dst_dir/config.h
-  touch $dst_dir/config_components.h
-  touch $dst_dir/libavcodec/codec_list.c
-  touch $dst_dir/libavcodec/parser_list.c
-  touch $dst_dir/libavutil/avconfig.h
-  touch $dst_dir/libavfilter/filter_list.c
-  $host_cc -E -I$dst_dir -I$source_path "$1" -o "$2"
-}
 
 find_things_extern(){
   thing=$1
   pattern=$2
-  src_file="$3"
-  dst_file="$5/$(basename $3)"
-  if [ "$4" = "null" ]; then
-    out="$thing"
-  else
-    out="$4"
-  fi
-  create_proprietary_temp_files $src_file $dst_file
-  sed -n "s/^[^#]*extern.*$pattern *ff_\([^ ]*\)_$thing;/\1_$out/p" "$dst_file"
+  file=$3
+  out=${4:-$thing}
+  sed -n "s/^[^#]*extern.*$pattern *ff_\([^ ]*\)_$thing;/\1_$out/p" "$file"
 }
 
 find_filters_extern(){
   src_file="$1"
-  dst_file=$2/$(basename $1)
-  create_proprietary_temp_files $src_file $dst_file
-  sed -n 's/^extern const AVFilter ff_[avfsinkrc]\{2,5\}_\([[:alnum:]_]\{1,\}\);/\1_filter/p' "$dst_file"
+  sed -n 's/^extern const AVFilter ff_[avfsinkrc]\{2,5\}_\([[:alnum:]_]\{1,\}\);/\1_filter/p' "$src_file"
 }
 
-if [ -e "$source_path/$proprietary_path" ];then
-  src_file_path="$source_path/$proprietary_path"
-  dst_file_path="$proprietary_tmp_dir"
-  FILTER_LIST=$(find_filters_extern $src_file_path/libavfilter/allfilters.c $dst_file_path)
-  ENCODER_LIST=$(find_things_extern encoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
-  DECODER_LIST=$(find_things_extern decoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
-  eval "$(sed -n "s/^extern const AVFilter ff_\([avfsinkrc]\{2,5\}\)_\(.*\);/full_filter_name_\2=\1_\2/p" $dst_file_path/allfilters.c)"
+insert_filter() {
+    extra="extern const AVFilter ff_"
+    file=libavfilter/filter_list.c
+    echo "/* Auto insert filters */" > "$file.tmp"
+    for c in $1; do
+        eval c=\$full_filter_name_${c%_filter}
+        echo "$extra$c;" >> "$file.tmp"
+    done
+
+    cat "$file" >> "$file.tmp" && mv "$file.tmp" "$file"
+}
+
+insert_codec() {
+    extra="extern const FFCodec ff_"
+    file=libavcodec/codec_list.c
+    echo "$1" | awk -v p="$extra" '{for(i=1;i<=NF;i++) print p $i ";"}' > "$file.tmp" &&
+    cat "$file" >> "$file.tmp" && mv "$file.tmp" "$file"
+}
+
+FILTER_LIST=$(find_filters_extern $source_path/libavfilter/allfilters.c)
+ENCODER_LIST=$(find_things_extern encoder FFCodec $source_path/libavcodec/allcodecs.c)
+DECODER_LIST=$(find_things_extern decoder FFCodec $source_path/libavcodec/allcodecs.c)
+
+if [ -n "$CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES" ]; then
+    OLD_IFS="$IFS"
+    IFS=':'
+    for extern_path in $CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES; do
+        extern_path=$(echo "$extern_path" | xargs)
+        if [ -e "$APPDIR/$extern_path/libavfilter" ]; then
+            filter_path="$APPDIR/$extern_path/libavfilter"
+            eval "$(sed -n "s/^extern const AVFilter ff_\([avfsinkrc]\{2,5\}\)_\(.*\);/full_filter_name_\2=\1_\2/p" $filter_path/allfilters.c)"
+            EXT_FILTER_LIST=$(printf "%s\n%s" "$EXT_FILTER_LIST" "$(find_filters_extern $filter_path/allfilters.c)")
+        fi
+
+        if [ -e "$APPDIR/$extern_path/libavcodec" ]; then
+            codec_path="$APPDIR/$extern_path/libavcodec"
+            EXT_ENCODER_LIST=$(printf "%s\n%s" "$EXT_ENCODER_LIST" "$(find_things_extern encoder FFCodec $codec_path/allcodecs.c)")
+            EXT_DECODER_LIST=$(printf "%s\n%s" "$EXT_DECODER_LIST" "$(find_things_extern decoder FFCodec $codec_path/allcodecs.c)")
+        fi
+    done
+    IFS="$OLD_IFS"
 fi
+
+FILTER_LIST=$(printf "%s\n%s" "$FILTER_LIST" "$EXT_FILTER_LIST")
+ENCODER_LIST=$(printf "%s\n%s" "$ENCODER_LIST" "$EXT_ENCODER_LIST")
+DECODER_LIST=$(printf "%s\n%s" "$DECODER_LIST" "$EXT_DECODER_LIST")
 
 . $source_path/configure "$@"
+configure_status=$?
 
-if [ -e "$proprietary_tmp_dir" ];then
-  rm -r "$proprietary_tmp_dir"
-fi
+[ -n "$EXT_FILTER_LIST" ] && insert_filter "$EXT_FILTER_LIST"
+[ -n "$EXT_ENCODER_LIST" ] && insert_codec "$EXT_ENCODER_LIST"
+[ -n "$EXT_DECODER_LIST" ] && insert_codec "$EXT_DECODER_LIST"
+
+exit $configure_status

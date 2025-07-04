@@ -51,4 +51,10 @@ config LIB_FFMPEG_DISABLE_KASAN
 	---help---
 	    Use -fno-sanitize=all to disable kasan for ffmpeg module
 
+config LIB_FFMPEG_EXTERNAL_LIBRARIES
+	string "External ffmpeg libraries path"
+	default "/external/ffmpeg/ffmpeg/private:"
+	---help---
+		Use ':' symbol to separate multiple paths
+
 endif # LIB_FFMPEG
