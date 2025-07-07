@@ -23,9 +23,15 @@ RIVE_RUNTIME_DIR = ${INCDIR_PREFIX}$(APPDIR)/external/rive-runtime/rive-runtime
 CXXFLAGS += -Wno-shadow -Wno-sign-compare -Wno-class-memaccess -Wno-alloc-size-larger-than
 CXXFLAGS += -Wno-format-security -Wno-format -Wno-nonnull -Wno-maybe-uninitialized -Wno-stringop-overflow -Wno-array-bounds
 
-CXXSRCS += $(shell find -L rive-runtime/src -name *.cpp)
+CXXSRCS += $(shell find -L rive-runtime/src -path rive-runtime/src/audio -prune -o -name *.cpp -print)
 
 CXXFLAGS += -D_RIVE_INTERNAL_=1
+
+ifeq ($(CONFIG_VG_ANIMATION_VIEW_AUDIO),y)
+CXXFLAGS += -DWITH_RIVE_AUDIO=1
+CXXFLAGS += -DEXTERNAL_RIVE_AUDIO_ENGINE=1
+CXXFLAGS += -DWITH_CUSTOM_RIVE_AUDIO=1
+endif
 
 ifeq ($(and $(CONFIG_LIB_HARFBUZZ),$(CONFIG_LIB_SHEENBIDI)),y)
 CXXFLAGS += -DWITH_RIVE_TEXT=1
