@@ -65,7 +65,7 @@ if(CONFIG_LIB_AVB)
     endif()
   endif()
 
-  if(CONFIG_LIB_AVB_SCONFIG_LIB_AVB_RSA_VERIFY_CRYPTODEVHA512_CRYPTODEV)
+  if(CONFIG_LIB_AVB_RSA_VERIFY_CRYPTODEV)
     list(APPEND CSRCS avb/libavb/cryptodev/rsa_cryptodev.c)
   else()
     list(APPEND CSRCS avb/libavb/avb_rsa.c)
