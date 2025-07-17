@@ -65,6 +65,20 @@ config OFONO_PLUGIN_DIR
 	---help---
 		Directory for the loading plugins.
 
+config OFONO_RIL_STRIP_MF_ID
+	bool "Strip MF ID from SIM file path for SELECT command"
+	default n
+	depends on OFONO_RILMODEM
+	---help---
+		Some modems (e.g., MediaTek) strictly adhere to the ETSI
+		TS 102 221 standard. This standard forbids including the Master
+		File (MF) identifier in the path for a "select by path from MF"
+		command, and these modems will return an error if the MF is
+		present. Enable this option to remove the leading MF ID from the path
+		before sending the command. This ensures compatibility with modems
+		that require this stricter path format. If unsure, leave this
+		disabled (default), as other devices may require the MF ID to be present.
+
 config OFONO_WASM
 	bool "Compile to Wasm"
 	default n
