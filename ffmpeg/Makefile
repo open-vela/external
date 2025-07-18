@@ -152,7 +152,6 @@ ifeq ($(CONFIG_FFMPEG),yes)
   CSRCS    += $(SRC_PATH)/fftools/ffmpeg_sched.c
   CSRCS    += $(SRC_PATH)/fftools/sync_queue.c
   CSRCS    += $(SRC_PATH)/fftools/thread_queue.c
-  CSRCS    += $(SRC_PATH)/fftools/opt_common.c
   CSRCS    += $(SRC_PATH)/fftools/objpool.c
 endif
 
