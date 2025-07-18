@@ -38,7 +38,7 @@ config TEST_SSH
 if UTILS_SSH || TEST_SSH
 config UTILS_SSH_PRIORITY
 	int "ssh utility priority"
-	default 100
+	default 200
 
 config UTILS_SSH_STACKSIZE
 	int "ssh utility statcksize"
