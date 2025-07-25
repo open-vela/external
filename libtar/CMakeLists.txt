@@ -20,7 +20,7 @@ if(CONFIG_LIB_TAR)
   # Flags
   # ############################################################################
 
-  set(CFLAGS -DMAXPATHLEN=PATH_MAX)
+  set(CFLAGS -DMAXPATHLEN=PATH_MAX -Wno-format-truncation)
 
   # ############################################################################
   # Sources
