@@ -42,6 +42,7 @@ CFLAGS += -DCONFIGDIR=\"$(CONFIG_CONNMAN_CONFIGDIR)\"
 CFLAGS += -DSTATEDIR=\"$(CONFIG_CONNMAN_STATEDIR)\"
 
 CFLAGS += -Wno-format -Wno-shadow -Wno-strict-prototypes
+CFLAGS += -Dprint_backtrace=conn_print_backtrace
 
 ifneq ($(CONFIG_OFONO),)
 PLUGIN_SRCS += connman/plugins/ofono.c

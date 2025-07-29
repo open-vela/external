@@ -26,7 +26,8 @@ if(CONFIG_CONNMAN)
       -DSTATEDIR="${CONFIG_CONNMAN_STATEDIR}"
       -Wno-format
       -Wno-shadow
-      -Wno-strict-prototypes)
+      -Wno-strict-prototypes
+      -Dprint_backtrace=conn_print_backtrace)
 
   set(BINARY_CONNMAN_DIR ${CMAKE_BINARY_DIR}/apps/external/connman)
   set(CONNMAN_INCDIR
