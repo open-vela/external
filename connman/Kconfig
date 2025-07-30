@@ -33,6 +33,10 @@ config CONNMAN_STACKSIZE
 	int "CONNMAN stack size"
 	default 8192
 
+config CONNMAN_CTL_STACKSIZE
+	int "CONNMAN control client stack size"
+	default 8192
+
 config CONNMAN_STORAGEDIR
 	string "CONNMAN storage directory"
 	default "/data/connman"
