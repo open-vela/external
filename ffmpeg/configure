@@ -35,9 +35,25 @@ insert_codec() {
     cat "$file" >> "$file.tmp" && mv "$file.tmp" "$file"
 }
 
+insert_demuxer() {
+    extra="extern const FFInputFormat ff_"
+    file=libavformat/demuxer_list.c
+    echo "$1" | awk -v p="$extra" '{for(i=1;i<=NF;i++) print p $i ";"}' > "$file.tmp" &&
+    cat "$file" >> "$file.tmp" && mv "$file.tmp" "$file"
+}
+
+insert_muxer() {
+    extra="extern const FFOutputFormat ff_"
+    file=libavformat/muxer_list.c
+    echo "$1" | awk -v p="$extra" '{for(i=1;i<=NF;i++) print p $i ";"}' > "$file.tmp" &&
+    cat "$file" >> "$file.tmp" && mv "$file.tmp" "$file"
+}
+
 FILTER_LIST=$(find_filters_extern $source_path/libavfilter/allfilters.c)
 ENCODER_LIST=$(find_things_extern encoder FFCodec $source_path/libavcodec/allcodecs.c)
 DECODER_LIST=$(find_things_extern decoder FFCodec $source_path/libavcodec/allcodecs.c)
+DEMUXER_LIST=$(find_things_extern demuxer FFInputFormat $source_path/libavformat/allformats.c)
+MUXER_LIST=$(find_things_extern muxer FFOutputFormat $source_path/libavformat/allformats.c)
 
 if [ -n "$CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES" ]; then
     OLD_IFS="$IFS"
@@ -55,6 +71,12 @@ if [ -n "$CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES" ]; then
             EXT_ENCODER_LIST=$(printf "%s\n%s" "$EXT_ENCODER_LIST" "$(find_things_extern encoder FFCodec $codec_path/allcodecs.c)")
             EXT_DECODER_LIST=$(printf "%s\n%s" "$EXT_DECODER_LIST" "$(find_things_extern decoder FFCodec $codec_path/allcodecs.c)")
         fi
+
+        if [ -e "$APPDIR/$extern_path/libavformat" ]; then
+            format_path="$APPDIR/$extern_path/libavformat"
+            EXT_DEMUXER_LIST=$(printf "%s\n%s" "$EXT_DEMUXER_LIST" "$(find_things_extern demuxer FFInputFormat $format_path/allformats.c)")
+            EXT_MUXER_LIST=$(printf "%s\n%s" "$EXT_MUXER_LIST" "$(find_things_extern muxer FFOutputFormat $format_path/allformats.c)")
+        fi
     done
     IFS="$OLD_IFS"
 fi
@@ -62,6 +84,8 @@ fi
 FILTER_LIST=$(printf "%s\n%s" "$FILTER_LIST" "$EXT_FILTER_LIST")
 ENCODER_LIST=$(printf "%s\n%s" "$ENCODER_LIST" "$EXT_ENCODER_LIST")
 DECODER_LIST=$(printf "%s\n%s" "$DECODER_LIST" "$EXT_DECODER_LIST")
+DEMUXER_LIST=$(printf "%s\n%s" "$DEMUXER_LIST" "$EXT_DEMUXER_LIST")
+MUXER_LIST=$(printf "%s\n%s" "$MUXER_LIST" "$EXT_MUXER_LIST")
 
 . $source_path/configure "$@"
 configure_status=$?
@@ -69,5 +93,7 @@ configure_status=$?
 [ -n "$EXT_FILTER_LIST" ] && insert_filter "$EXT_FILTER_LIST"
 [ -n "$EXT_ENCODER_LIST" ] && insert_codec "$EXT_ENCODER_LIST"
 [ -n "$EXT_DECODER_LIST" ] && insert_codec "$EXT_DECODER_LIST"
+[ -n "$EXT_DEMUXER_LIST" ] && insert_demuxer "$EXT_DEMUXER_LIST"
+[ -n "$EXT_MUXER_LIST" ] && insert_muxer "$EXT_MUXER_LIST"
 
 exit $configure_status

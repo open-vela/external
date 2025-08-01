@@ -102,6 +102,9 @@ define ADDEXTERNAL
     ifneq ($$(wildcard $(APPDIR)/$(strip $(1))/libavcodec),)
         $$(eval $$(call DOSUBDIR, $(APPDIR)/$(strip $(1))/libavcodec))
     endif
+    ifneq ($$(wildcard $(APPDIR)/$(strip $(1))/libavformat),)
+        $$(eval $$(call DOSUBDIR, $(APPDIR)/$(strip $(1))/libavformat))
+    endif
 endef
 
 EXTERNAL_PATHS := $(subst ",,$(CONFIG_LIB_FFMPEG_EXTERNAL_LIBRARIES))
