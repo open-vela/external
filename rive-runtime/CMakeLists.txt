@@ -44,12 +44,17 @@ if(CONFIG_LIB_RIVE_RUNTIME)
     nuttx_compile_options_for_all_apps(-DWITH_RIVE_AUDIO=1)
     nuttx_compile_options_for_all_apps(-DEXTERNAL_RIVE_AUDIO_ENGINE=1)
     nuttx_compile_options_for_all_apps(-DWITH_CUSTOM_RIVE_AUDIO=1)
+
     set(AUDIO_SRCS
       ${RIVE_RUNTIME_DIR}/src/audio/audio_source.cpp
       ${RIVE_RUNTIME_DIR}/src/audio/audio_engine.cpp
       ${RIVE_RUNTIME_DIR}/src/audio/audio_sound.cpp
       ${RIVE_RUNTIME_DIR}/src/audio/audio_reader.cpp)
     list(REMOVE_ITEM RIVE_SRCS ${AUDIO_SRCS})
+
+    target_include_directories(rive-runtime PRIVATE
+    ${NUTTX_APPS_DIR}/frameworks/graphics/animengine/rive/audio
+    )
   endif()
 
   if(CONFIG_SCHED_INSTRUMENTATION AND CONFIG_RIVE_RUNTIME_PROFILER)
