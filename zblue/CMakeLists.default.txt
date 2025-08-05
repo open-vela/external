@@ -782,10 +782,6 @@ if(CONFIG_BT)
     zblue/port/subsys/fs/fs.c
   )
 
-  if(CONFIG_BT_H4)
-    list(APPEND CSRCS zblue/port/drivers/bluetooth/hci/h4.c)
-  endif()
-
   if(CONFIG_BT_SAMPLE)
     set(ZBLUE_STACKSIZE ${CONFIG_BT_SAMPLE_STACKSIZE})
   else()

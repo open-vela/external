@@ -724,10 +724,6 @@ CSRCS += zblue/port/lib/os/assert.c
 CSRCS += zblue/port/sections/defines.c
 CSRCS += zblue/port/subsys/fs/fs.c
 
-ifeq ($(CONFIG_BT_H4),y)
-  CSRCS += zblue/port/drivers/bluetooth/hci/h4.c
-endif
-
 CFLAGS += -Wno-format-zero-length -Wno-implicit-function-declaration
 CFLAGS += -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable
 CFLAGS += -Wno-format -Wno-pointer-sign -Wno-strict-prototypes -Wno-implicit-int -Wno-shadow
