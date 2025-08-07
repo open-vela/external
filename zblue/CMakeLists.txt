@@ -20,7 +20,7 @@
 
 if(CONFIG_BT)
 
-  set(ZBLUE_DIR ${CMAKE_CURRENT_LIST_DIR}/zblue/)
+  set(ZBLUE_DIR ${CMAKE_CURRENT_LIST_DIR}/zblue)
   set(BTDIR ${ZBLUE_DIR}/subsys/bluetooth)
   set(HOSTDIR ${BTDIR}/host)
   set(CLASSICDIR ${HOSTDIR}/classic)
@@ -36,18 +36,22 @@ if(CONFIG_BT)
     -Wno-unused-variable
     -Wno-implicit-int
     -Wno-shadow
-    -Wno-stringop-overread)
+    -Wno-stringop-overread
+    -Wno-format
+    -Wno-undef
+    -Wno-incompatible-pointer-types
+    -Wno-pointer-sign)
 
   list(APPEND INCDIR
-    ${ZBLUE_DIR}port/include
-    ${ZBLUE_DIR}port/include/zephyr
-    ${ZBLUE_DIR}port/kernel/include
-    ${ZBLUE_DIR}subsys/bluetooth
-    ${ZBLUE_DIR}subsys/bluetooth/audio
-    ${ZBLUE_DIR}subsys/bluetooth/host
-    ${ZBLUE_DIR}subsys/bluetooth/mesh
-    ${ZBLUE_DIR}subsys/bluetooth/services
-    ${ZBLUE_DIR}subsys/testsuite/ztest/include
+    ${ZBLUE_DIR}/port/include
+    ${ZBLUE_DIR}/port/include/zephyr
+    ${ZBLUE_DIR}/port/kernel/include
+    ${ZBLUE_DIR}/subsys/bluetooth
+    ${ZBLUE_DIR}/subsys/bluetooth/audio
+    ${ZBLUE_DIR}/subsys/bluetooth/host
+    ${ZBLUE_DIR}/subsys/bluetooth/mesh
+    ${ZBLUE_DIR}/subsys/bluetooth/services
+    ${ZBLUE_DIR}/subsys/testsuite/ztest/include
     ${NUTTX_APPS_DIR}/crypto/tinycrypt/tinycrypt/lib/include)
 
   set(CSRCS
@@ -785,7 +789,7 @@ if(CONFIG_BT)
     nuttx_add_application(
       NAME zblue
       STACKSIZE ${ZBLUE_STACKSIZE}
-      SRCS ${ZBLUE_DIR}port/subsys/shell/shell.c
+              SRCS ${ZBLUE_DIR}/port/subsys/shell/shell.c
       INCLUDE_DIRECTORIES ${INCDIR}
       COMPILE_FLAGS ${CFLAGS})
   endif()
@@ -795,7 +799,7 @@ if(CONFIG_BT)
       nuttx_add_application(
         NAME peripheral
         STACKSIZE ${ZBLUE_STACKSIZE}
-        SRCS ${ZBLUE_DIR}samples/bluetooth/peripheral/src/main.c
+        SRCS ${ZBLUE_DIR}/samples/bluetooth/peripheral/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
         COMPILE_FLAGS ${CFLAGS})
     endif()
@@ -804,7 +808,7 @@ if(CONFIG_BT)
       nuttx_add_application(
         NAME central
         STACKSIZE ${ZBLUE_STACKSIZE}
-        SRCS ${ZBLUE_DIR}samples/bluetooth/central/src/main.c
+        SRCS ${ZBLUE_DIR}/samples/bluetooth/central/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
         COMPILE_FLAGS ${CFLAGS})
     endif()
@@ -813,7 +817,7 @@ if(CONFIG_BT)
       nuttx_add_application(
         NAME hfp_hf
         STACKSIZE ${ZBLUE_STACKSIZE}
-        SRCS ${ZBLUE_DIR}samples/bluetooth/handsfree/src/main.c
+        SRCS ${ZBLUE_DIR}/samples/bluetooth/handsfree/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
         COMPILE_FLAGS ${CFLAGS})
     endif()
@@ -825,89 +829,62 @@ if(CONFIG_BT)
   target_include_directories(zblue PRIVATE ${INCDIR})
   target_compile_options(zblue PRIVATE ${CFLAGS})
 
-  set(ZINC ${APPDIR}/external/zblue/zblue/include/zephyr)
-  set(PORTINC ${ZBLUE_DIR}port/include/zephyr)
+  set(SRC_INC_ROOT    ${ZBLUE_DIR}/include)
+  set(BIN_INC_ROOT    ${CMAKE_CURRENT_BINARY_DIR}/include)
+  set(ZEPHYR_SRC_DIR  ${SRC_INC_ROOT}/zephyr)
+  set(ZEPHYR_BIN_DIR  ${BIN_INC_ROOT}/zephyr)
 
-  set(SYMLINK_FILES
-    app_memory/mem_domain.h
-    arch/arch_interface.h
-    arch/common/ffs.h
-    debug/stack.h
-    devicetree/ordinals.h
-    fatal.h
-    fatal_types.h
-    fs/fs.h
-    fs/fs_interface.h
-    irq.h
-    irq_offload.h
-    kernel_includes.h
-    kernel/internal/smp.h
-    kernel/obj_core.h
-    kernel/stats.h
-    kernel/thread_stack.h
-    kernel_version.h
-    linker/sections.h
-    linker/section_tags.h
-    spinlock.h
-    shell/shell_types.h
-    shell/shell_fprintf.h
-    shell/shell_string_conv.h
-    sys/__assert.h
-    sys/atomic.h
-    sys/atomic_c.h
-    sys/atomic_types.h
-    sys/byteorder.h
-    sys/check.h
-    sys/crc.h
-    sys/dlist.h
-    sys/list_gen.h
-    sys/math_extras.h
-    sys/math_extras_impl.h
-    sys/mem_stats.h
-    sys/rb.h
-    sys/sflist.h
-    sys/slist.h
-    sys/sys_heap.h
-    sys/time_units.h
-    sys/util.h
-    sys/util_macro.h
-    sys/util_loops.h
-    sys/util_listify.h
-    tracing/tracing_macros.h
-    types.h
+  file(MAKE_DIRECTORY "${BIN_INC_ROOT}")
+  file(COPY "${ZEPHYR_SRC_DIR}" DESTINATION "${BIN_INC_ROOT}")
+
+  add_library(zblue_headers INTERFACE)
+  target_include_directories(zblue_headers INTERFACE
+    ${ZBLUE_DIR}/port/include
+    ${ZBLUE_DIR}/port/kernel/include
+    ${BIN_INC_ROOT}
+    ${BIN_INC_ROOT}/zephyr/sys
+    ${BIN_INC_ROOT}/zephyr/kernel
+    ${BIN_INC_ROOT}/zephyr/arch
+    ${BIN_INC_ROOT}/zephyr/linker
+    ${BIN_INC_ROOT}/zephyr/devicetree
+    ${BIN_INC_ROOT}/zephyr/debug
+    ${BIN_INC_ROOT}/zephyr/fs
+    ${BIN_INC_ROOT}/zephyr/shell
+    ${BIN_INC_ROOT}/zephyr/tracing
+    ${BIN_INC_ROOT}/zephyr/app_memory
+    ${SRC_INC_ROOT}
+    ${ZBLUE_DIR}/subsys/bluetooth
   )
 
-  add_custom_target(create_symlinks ALL
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/app_memory
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/debug
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/devicetree
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/fs
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/linker
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/arch/common
-    COMMAND ${CMAKE_COMMAND} -E make_directory ${PORTINC}/kernel/internal
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${ZINC}/bluetooth ${PORTINC}/bluetooth
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${ZINC}/drivers ${PORTINC}/drivers
-    COMMAND ${CMAKE_COMMAND} -E create_symlink ${ZINC}/settings ${PORTINC}/settings
+  target_link_libraries(zblue PRIVATE zblue_headers)
+  target_include_directories(zblue BEFORE PRIVATE
+    ${ZBLUE_DIR}/port/include
+    ${ZBLUE_DIR}/port/kernel/include
+    ${BIN_INC_ROOT}
+    ${SRC_INC_ROOT}
   )
 
-  foreach(file ${SYMLINK_FILES})
-    add_custom_command(TARGET create_symlinks POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E create_symlink ${ZINC}/${file} ${PORTINC}/${file}
-    )
-  endforeach()
-  add_dependencies(zblue create_symlinks)
+  add_library(zblue::headers ALIAS zblue_headers)
+  # Note: Dependencies are handled through nuttx_add_application DEPENDS parameter
+  # No need to manually link to apps target
 
-  add_custom_target(clean_symlinks
-    COMMAND ${CMAKE_COMMAND} -E remove -f .built
-    COMMAND ${CMAKE_COMMAND} -E remove -f ${PORTINC}/bluetooth
-    COMMAND ${CMAKE_COMMAND} -E remove -f ${PORTINC}/drivers
-    COMMAND ${CMAKE_COMMAND} -E remove -f ${PORTINC}/settings
+  # Use nuttx_include_directories_for_all_apps to expose headers globally
+  nuttx_include_directories_for_all_apps(
+    ${ZBLUE_DIR}/port/include
+    ${ZBLUE_DIR}/port/kernel/include
+    ${BIN_INC_ROOT}
+    ${BIN_INC_ROOT}/zephyr/sys
+    ${BIN_INC_ROOT}/zephyr/kernel
+    ${BIN_INC_ROOT}/zephyr/arch
+    ${BIN_INC_ROOT}/zephyr/linker
+    ${BIN_INC_ROOT}/zephyr/devicetree
+    ${BIN_INC_ROOT}/zephyr/debug
+    ${BIN_INC_ROOT}/zephyr/fs
+    ${BIN_INC_ROOT}/zephyr/shell
+    ${BIN_INC_ROOT}/zephyr/tracing
+    ${BIN_INC_ROOT}/zephyr/app_memory
+    ${SRC_INC_ROOT}
+    ${ZBLUE_DIR}/subsys/bluetooth
   )
-
-  foreach(file ${SYMLINK_FILES})
-    add_custom_command(TARGET clean_symlinks POST_BUILD
-      COMMAND ${CMAKE_COMMAND} -E remove -f ${PORTINC}/${file}
-    )
-  endforeach()
 
 endif()
