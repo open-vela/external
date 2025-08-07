@@ -1,0 +1,29 @@
+#
+# For a description of the syntax of this configuration file,
+# see the file kconfig-language.txt in the NuttX tools repository.
+#
+
+config LIB_OPEN1722
+	bool "Enable open1722"
+	default n
+	---help---
+		Enable the the open1722, Audio Video Transport Protocol
+		(AVTP) specified in IEEE 1722-2016 spec.
+
+if LIB_OPEN1722
+
+config UTILS_OPEN1722_ACF_CAN
+	tristate "Enable ACF(CAN) talker and listener tools"
+	default n
+	---help---
+		Enable the ACF tool
+
+config UTILS_OPEN1722_PRIORITY
+        int "OPEN1722 task priority"
+        default 100
+
+config UTILS_OPEN1722_STACKSIZE
+        int "OPEN1722 stack size"
+        default DEFAULT_TASK_STACKSIZE
+
+endif
