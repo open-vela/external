@@ -77,4 +77,10 @@ config OFONO_DATA_LOG_OVER_MIWEAR
 	default n
 	---help---
 		Enable data log over miwear to onetrack
+
+config OFONO_CALL_STATE_CHANGE_WITH_DATA
+	bool "support call state change with data"
+	default y
+	---help---
+		Enable call state change with data.
 endif
