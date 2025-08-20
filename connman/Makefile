@@ -20,7 +20,7 @@ CFLAGS += ${INCDIR_PREFIX}.
 CFLAGS += ${INCDIR_PREFIX}include
 CFLAGS += ${INCDIR_PREFIX}connman
 CFLAGS += ${INCDIR_PREFIX}connman/include
-
+CFLAGS += ${INCDIR_PREFIX}connman/sdk
 # Select gdbus include directory based on CONFIG_OFONO
 ifeq ($(CONFIG_OFONO),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/ofono/ofono/gdbus
@@ -85,6 +85,8 @@ CSRCS += $(wildcard $(APPDIR)/external/ofono/ofono/gdbus/*.c)
 else
 CSRCS += $(wildcard connman/gdbus/*.c)
 endif
+
+CSRCS += $(wildcard connman/sdk/*.c)
 
 CSRCS += $(PLUGIN_SRCS)
 
