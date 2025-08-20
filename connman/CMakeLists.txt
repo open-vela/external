@@ -35,6 +35,7 @@ if(CONFIG_CONNMAN)
       ${CMAKE_CURRENT_LIST_DIR}/include
       ${CMAKE_CURRENT_LIST_DIR}/connman
       ${CMAKE_CURRENT_LIST_DIR}/connman/include
+      ${CMAKE_CURRENT_LIST_DIR}/connman/sdk
       ${BINARY_CONNMAN_DIR}/
       ${BINARY_CONNMAN_DIR}/connman
       ${NUTTX_APPS_DIR}/external/glib/glib/glib
@@ -111,6 +112,9 @@ if(CONFIG_CONNMAN)
     # Use ofono's gdbus implementation
     file(GLOB CSRCS ${NUTTX_APPS_DIR}/external/ofono/ofono/gdbus/*.c)
   endif()
+  list(APPEND CONNMAN_CSRCS ${CSRCS})
+
+  file(GLOB CSRCS connman/sdk/*.c)
   list(APPEND CONNMAN_CSRCS ${CSRCS})
 
   set(PLUGIN_MODULES)
