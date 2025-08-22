@@ -17,17 +17,17 @@
 include $(APPDIR)/Make.defs
 
 define add_benchmark
-  PROGNAME += $1
+  PROGNAME +=  ${CONFIG_BENCHMARK_LMBENCH_CMD_PREFIX}$1
   MAINSRC += lmbench/src/$1.c
   PRIORITY += $(CONFIG_BENCHMARK_LMBENCH_PRIORITY)
   STACKSIZE += $(CONFIG_BENCHMARK_LMBENCH_STACKSIZE)
 endef
 
 BENCHMARKS = busy bw_file_rd bw_mem bw_mmap_rd bw_pipe bw_tcp bw_udp bw_unix
-BENCHMARKS += disk hello
+BENCHMARKS += disk
 BENCHMARKS += lat_cmd lat_connect lat_ctx lat_dram_page lat_fcntl lat_fifo \
 lat_fs lat_mem_rd lat_mmap lat_ops lat_pagefault lat_pipe lat_pmake lat_proc \
-lat_rand lat_select lat_sig lat_syscall lat_tcp lat_udp lat_unix \
+lat_rand lat_sig lat_syscall lat_unix \
 lat_unix_connect lat_usleep
 BENCHMARKS += line lmdd loop_o memsize msleep par_mem par_ops stream timing_o tlb
 
@@ -37,10 +37,16 @@ lmbench/src/lib_debug.c \
 lmbench/src/lib_mem.c \
 lmbench/src/lib_sched.c \
 lmbench/src/lib_stats.c \
-lmbench/src/lib_tcp.c \
 lmbench/src/lib_timing.c \
-lmbench/src/lib_udp.c \
 lmbench/src/lib_unix.c
+
+ifeq ($(CONFIG_BENCHMARK_LMBENCH_NET),y)
+  BENCHMARKS += lat_select lat_tcp lat_udp
+
+  CSRCS += \
+  lmbench/src/lib_tcp.c \
+  lmbench/src/lib_udp.c
+endif
 
 $(foreach benchmark,$(BENCHMARKS),$(eval $(call add_benchmark,$(benchmark))))
 

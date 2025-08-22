@@ -21,9 +21,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lmbench/src/lib_mem.c
       lmbench/src/lib_sched.c
       lmbench/src/lib_stats.c
-      lmbench/src/lib_tcp.c
       lmbench/src/lib_timing.c
-      lmbench/src/lib_udp.c
       lmbench/src/lib_unix.c)
   set(CFLAGS
       -Wno-all
@@ -42,23 +40,15 @@ if(CONFIG_BENCHMARK_LMBENCH)
       -Dtcp_connect=lmbench_tcp_connect
       -Dudp_connect=lmbench_udp_connect
       -Ulinux)
-
-  target_sources(apps PRIVATE ${CSRCS})
-  target_compile_options(apps PRIVATE ${CFLAGS})
-
   set(PROG_LIST
       busy
       bw_file_rd
       bw_mem
       bw_mmap_rd
       bw_pipe
-      bw_tcp
-      bw_udp
       bw_unix
       disk
-      hello
       lat_cmd
-      lat_connect
       lat_ctx
       lat_dram_page
       lat_fcntl
@@ -72,11 +62,8 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lat_pmake
       lat_proc
       lat_rand
-      lat_select
       lat_sig
       lat_syscall
-      lat_tcp
-      lat_udp
       lat_unix
       lat_unix_connect
       lat_usleep
@@ -91,6 +78,19 @@ if(CONFIG_BENCHMARK_LMBENCH)
       timing_o
       tlb)
 
+  if(CONFIG_BENCHMARK_LMBENCH_NET)
+    list(APPEND CSRCS
+      lmbench/src/lib_tcp.c
+      lmbench/src/lib_udp.c)
+    list(APPEND PROG_LIST
+      lat_select
+      lat_tcp
+      lat_udp)
+  endif()
+
+  target_sources(apps PRIVATE ${CSRCS})
+  target_compile_options(apps PRIVATE ${CFLAGS})
+
   list(LENGTH PROG_LIST list_len)
   math(EXPR list_len "${list_len} - 1")
 
@@ -98,7 +98,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
     list(GET PROG_LIST ${idx} prog_name)
     nuttx_add_application(
       NAME
-      ${prog_name}
+      ${CONFIG_BENCHMARK_LMBENCH_CMD_PREFIX}${prog_name}
       STACKSIZE
       ${CONFIG_BENCHMARK_LMBENCH_STACKSIZE}
       PRIORITY

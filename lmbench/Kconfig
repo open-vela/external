@@ -17,6 +17,7 @@
 config BENCHMARK_LMBENCH
 	tristate "Lmbench tool benchmark"
 	default n
+	depends on SCHED_HAVE_PARENT && SCHED_WAITPID && PIPES && ARCH_HAVE_FORK && LIBC_EXECFUNCS
 	---help---
 		Enable lmbench utility
 
@@ -28,5 +29,14 @@ config BENCHMARK_LMBENCH_PRIORITY
 config BENCHMARK_LMBENCH_STACKSIZE
 	int "lmbench utility statcksize"
 	default DEFAULT_TASK_STACKSIZE
+
+config BENCHMARK_LMBENCH_NET
+	bool "enable tcp/udp relative case from lmbench"
+	default n
+	depends on NET
+
+config BENCHMARK_LMBENCH_CMD_PREFIX
+	string "lmbench cmd prefix"
+	default ""
 endif
 
