@@ -1,7 +1,8 @@
 #!/bin/sh
 
 proprietary_path="proprietary"
-proprietary_tmp_dir=".temp"
+proprietary_tmp_dir="$PWD/ffmpeg/$proprietary_path/.temp"
+
 source_path=$(dirname "$(realpath "$0")")/ffmpeg
 host_cc=gcc
 
@@ -44,7 +45,7 @@ find_filters_extern(){
 
 if [ -e "$source_path/$proprietary_path" ];then
   src_file_path="$source_path/$proprietary_path"
-  dst_file_path="$source_path/$proprietary_path/$proprietary_tmp_dir"
+  dst_file_path="$proprietary_tmp_dir"
   FILTER_LIST=$(find_filters_extern $src_file_path/libavfilter/allfilters.c $dst_file_path)
   ENCODER_LIST=$(find_things_extern encoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
   DECODER_LIST=$(find_things_extern decoder FFCodec $src_file_path/libavcodec/allcodecs.c null $dst_file_path)
@@ -53,6 +54,6 @@ fi
 
 . $source_path/configure "$@"
 
-if [ -e "$source_path/$proprietary_path/$proprietary_tmp_dir" ];then
-  rm -r "$source_path/$proprietary_path/$proprietary_tmp_dir"
+if [ -e "$proprietary_tmp_dir" ];then
+  rm -r "$proprietary_tmp_dir"
 fi
