@@ -138,4 +138,11 @@ WASM_INITIAL_MEMORY = 327680
 WASM_BUILD          = y
 endif
 
+ifneq ($(CONFIG_DFX),)
+  DFX_XML=$(APPDIR)/frameworks/system/dfx/onetrack/xml
+  TELEPHONY_XML=$(APPDIR)/external/ofono/event_telephony.xml
+context::
+	@cp $(TELEPHONY_XML) $(DFX_XML)
+endif
+
 include $(APPDIR)/Application.mk

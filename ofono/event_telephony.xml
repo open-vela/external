@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+
+<EventRoot version="">
+    <!--call_info-->
+    <Event id="961040001" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="call_type" type="int"/>
+        <Param id="1" name="call_direction" type="int"/>
+        <Param id="2" name="call_media" type="int"/>
+        <Param id="3" name="call_fail_scenario" type="int"/>
+        <Param id="4" name="call_fail_reason" type="string"/>
+    </Event>
+    <!--call_info-->
+    <!--ss_info-->
+    <Event id="961040401" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="ss_type" type="string"/>
+        <Param id="1" name="fail_reason" type="string"/>
+    </Event>
+    <!--ss_info-->
+    <!--record_call_time_info-->
+    <Event id="961040002" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="level0_time_value" type="int"/>
+        <Param id="1" name="level1_time_value" type="int"/>
+        <Param id="2" name="level2_time_value" type="int"/>
+        <Param id="3" name="level3_time_value" type="int"/>
+        <Param id="4" name="level4_time_value" type="int"/>
+        <Param id="5" name="level5_time_value" type="int"/>
+    </Event>
+    <!--record_call_time_info-->
+    <!--sms_info-->
+    <Event id="961040301" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="op_code" type="int"/>
+        <Param id="1" name="sms_type" type="int"/>
+        <Param id="2" name="direction" type="int"/>
+        <Param id="3" name="fail_flag" type="int"/>
+        <Param id="4" name="covered_plmn" type="string"/>
+    </Event>
+    <!--sms_info-->
+    <!--data_interruption_info-->
+    <Event id="961040201" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="data_interruption" type="int"/>
+    </Event>
+    <!--data_interruption_info-->
+    <!--data_active_fail_info-->
+    <Event id="961040202" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="cause" type="string"/>
+    </Event>
+    <!--data_active_fail_info-->
+    <!--data_active_duration_info-->
+    <Event id="961040203" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="data_active_time" type="int"/>
+    </Event>
+    <!--data_active_duration_info-->
+    <!--oos_count_info-->
+    <Event id="961040101" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="oosSubId" type="int"/>
+    </Event>
+    <!--oos_count_info-->
+    <!--oos_duration_info-->
+    <Event id="961040102" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="oos_time" type="int"/>
+    </Event>
+    <!--oos_duration_info-->
+    <!--roaming_info-->
+    <Event id="961040103" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="roaming_country_code" type="int"/>
+        <Param id="4" name="covered_plmn" type="string"/>
+    </Event>
+    <!--roaming_info-->
+    <!--band_info-->
+    <Event id="961040104" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="band_value" type="int"/>
+    </Event>
+    <!--band_info-->
+    <!--signal_duration_info-->
+    <Event id="961040105" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="level0_time" type="int"/>
+        <Param id="1" name="level1_time" type="int"/>
+        <Param id="2" name="level2_time" type="int"/>
+        <Param id="3" name="level3_time" type="int"/>
+        <Param id="4" name="level4_time" type="int"/>
+        <Param id="5" name="level5_time" type="int"/>
+    </Event>
+    <!--signal_duration_info-->
+    <!--rat_duration_info-->
+    <Event id="961040106" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="2g_time" type="int"/>
+        <Param id="1" name="3g_time" type="int"/>
+        <Param id="2" name="4g_time" type="int"/>
+    </Event>
+    <Event id="961040107" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="3" name="volte_time" type="int"/>
+    </Event>
+    <!--rat_duration_info-->
+    <!--model_info-->
+    <Event id="961040108" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="modem_on_time" type="int"/>
+        <Param id="1" name="modem_off_time" type="int"/>
+    </Event>
+    <!--model_info-->
+    <!--abnormal_event_info-->
+    <Event id="961040501" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="parm1" type="string"/>
+        <Param id="1" name="parm2" type="string"/>
+        <Param id="2" name="parm3" type="string"/>
+        <Param id="3" name="parm4" type="string"/>
+        <Param id="4" name="parm5" type="string"/>
+        <Param id="5" name="parm6" type="string"/>
+    </Event>
+    <!--abnormal_event_info-->
+    <!--modem common path-->
+    <Event id="961040502" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="parm1" type="string"/>
+        <Param id="1" name="parm2" type="uint"/>
+        <Param id="2" name="parm3" type="uint"/>
+        <Param id="3" name="parm4" type="uint"/>
+        <Param id="4" name="parm5" type="uint"/>
+        <Param id="5" name="parm6" type="uint"/>
+    </Event>
+    <!--modem common path-->
+    <Event id="961040109" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="signal_changed_count" type="int"/>
+        <Param id="1" name="network_state_changed_count" type="int"/>
+    </Event>
+    <Event id="961040110" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="ims_state_changed_count" type="int"/>
+    </Event>
+    <Event id="961040111" FaultType="FAULT" FaultLevel="CRITICAL" PrivacyLevel="L2">
+        <Param id="0" name="cellinfo_changed_count" type="int"/>
+    </Event>
+</EventRoot>
