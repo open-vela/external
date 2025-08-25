@@ -45,6 +45,13 @@ endif()
     XML_PATHS
     ${XML_PATHS})
 
+  set(XML_PATHS ${CMAKE_CURRENT_LIST_DIR}/event_telephony.xml)
+  nuttx_add_dfx_event(
+    TARGET
+    ${CONFIG_OFONO}
+    XML_PATHS
+    ${XML_PATHS})
+
   set(CFLAGS
     -DHAVE_CONFIG_H
     -DPLUGINDIR=CONFIG_OFONO_PLUGIN_DIR
