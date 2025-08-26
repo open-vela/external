@@ -28,6 +28,11 @@ config RIVE_RUNTIME_PROFILER_INCLUDE
     default "nuttx/sched_note.h"
     depends on RIVE_RUNTIME_PROFILER
 
+config RIVE_RUNTIME_PROFILER_WITH_PARAM
+    bool "Support for trace points with parameters"
+    depends on RIVE_RUNTIME_PROFILER
+    default n
+
 config RIVE_RUNTIME_LAYOUT
     bool "Support Layout capability"
     depends on LIB_YOGA
