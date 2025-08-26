@@ -65,7 +65,7 @@ config LIB_FREETYPE_FONT_MODULES_TYPE1
 
 config LIB_FREETYPE_FONT_MODULES_CFF
 	bool "CFF/OpenType font driver"
-	default y
+	default n
 	depends on LIB_FREETYPE_FONT_MODULES_SFNT
 	depends on LIB_FREETYPE_AUX_MODULES_PSAUX
 	depends on LIB_FREETYPE_AUX_MODULES_PSNAMES
@@ -133,7 +133,7 @@ config LIB_FREETYPE_HINTING_MODULES_AUTOFIT
 
 config LIB_FREETYPE_HINTING_MODULES_PSHINTER
 	bool "PostScript hinter"
-	default y
+	default n
 
 endmenu
 
@@ -189,7 +189,7 @@ config LIB_FREETYPE_AUX_MODULES_BZIP2
 
 config LIB_FREETYPE_AUX_MODULES_OTVALID
 	bool "OpenType table validation"
-	default y
+	default n
 	help
 		Needs `ftotval.c' below.
 
