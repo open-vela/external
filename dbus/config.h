@@ -289,6 +289,9 @@
 #define HAVE_DECL_LOG_PERROR 1
 #define HAVE_DECL_MSG_NOSIGNAL 1
 
+/* Use the monotonic clock to avoid problems when the system time changes */
+#define HAVE_MONOTONIC_CLOCK 1
+
 static inline int setsid(void)
 {
   return 0;
