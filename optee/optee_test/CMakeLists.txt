@@ -76,123 +76,14 @@ endif()
 
 if(CONFIG_OPTEE_TEST_TA)
 
-  set(INCDIR optee_test/ta/crypt/include optee_test/ta/include
-             optee_test/ta/storage2/include)
+  set(INCDIR
+      ${NUTTX_APPS_DIR}/external/optee/optee_test/optee_test/ta/crypt/include
+      ${NUTTX_APPS_DIR}/external/optee/optee_test/optee_test/ta/include
+      ${NUTTX_APPS_DIR}/external/optee/optee_test/optee_test/ta/storage2/include
+  )
 
-  if(CONFIG_DEBUG_INFO)
-    list(APPEND CFLAGS -DTRACE_LEVEL=3)
-  elseif(CONFIG_DEBUG_WARN)
-    list(APPEND CFLAGS -DTRACE_LEVEL=2)
-  elseif(CONFIG_DEBUG_ERROR)
-    list(APPEND CFLAGS -DTRACE_LEVEL=1)
-  else()
-    list(APPEND CFLAGS -DTRACE_LEVEL=1)
-  endif()
-
-  list(
-    APPEND
-    INCDIR
-    ${NUTTX_APPS_DIR}/frameworks/security/include
-    ${NUTTX_APPS_DIR}/frameworks/security/optee_vela/include
-    ${NUTTX_APPS_DIR}/external/optee/optee_os/optee_os/core/include
-    ${NUTTX_APPS_DIR}/external/optee/optee_os/optee_os/lib/libutee/include
-    ${NUTTX_APPS_DIR}/external/optee/optee_os/optee_os/lib/libutils/ext/include)
-
-  if(CONFIG_USER_TA_WASM)
-    set(WLDFLAGS
-        -Wl,--export=wasm_TA_CreateEntryPoint
-        -Wl,--export=wasm_TA_DestroyEntryPoint
-        -Wl,--export=wasm_TA_OpenSessionEntryPoint
-        -Wl,--export=wasm_TA_CloseSessionEntryPoint
-        -Wl,--export=wasm_TA_InvokeCommandEntryPoint)
-
-    list(APPEND CFLAGS -DUSER_TA_WASM)
-
-    wasm_add_application(
-      NAME
-      ta_crypt
-      SRCS
-      optee_test/ta/crypt/ta_crypt_entry.c
-      STACK_SIZE
-      4096
-      WINCLUDES
-      ${INCDIR}
-      WAMR_MODE
-      XIP
-      WLDFLAGS
-      ${WLDFLAGS}
-      WCFLAGS
-      ${CFLAGS}
-      INSTALL_NAME
-      etc/ta/A05B3ECBF1ADE011998B0002A5D5C51B)
-
-    wasm_add_application(
-      NAME
-      ta_storage
-      SRCS
-      optee_test/ta/storage/ta_storage_entry.c
-      STACK_SIZE
-      4096
-      WINCLUDES
-      ${INCDIR}
-      WAMR_MODE
-      XIP
-      WLDFLAGS
-      ${WLDFLAGS}
-      WCFLAGS
-      ${CFLAGS}
-      INSTALL_NAME
-      etc/ta/A7F289B6DF8A7A479F9932E90C0AD0A2)
-
-    wasm_add_application(
-      NAME
-      ta_storage2
-      SRCS
-      optee_test/ta/storage2/ta_storage2_entry.c
-      STACK_SIZE
-      4096
-      WINCLUDES
-      ${INCDIR}
-      WAMR_MODE
-      XIP
-      WLDFLAGS
-      ${WLDFLAGS}
-      WCFLAGS
-      ${CFLAGS}
-      INSTALL_NAME
-      etc/ta/9E271E73FBAA7545A77138CAA6F0CCA6)
-
-    set(CSRCS
-        optee_test/ta/crypt/aes_impl.c
-        optee_test/ta/crypt/aes_taf.c
-        optee_test/ta/crypt/arith_taf.c
-        optee_test/ta/crypt/cryp_taf.c
-        optee_test/ta/crypt/derive_key_taf.c
-        optee_test/ta/crypt/handle.c
-        optee_test/ta/crypt/seed_rng_taf.c
-        optee_test/ta/crypt/sha2_impl.c
-        optee_test/ta/crypt/sha2_taf.c
-        optee_test/ta/storage/storage.c)
-
-    wasm_add_library(
-      NAME
-      optee_test
-      SRCS
-      ${CSRCS}
-      WINCLUDES
-      ${INCDIR}
-      WCFLAGS
-      ${CFLAGS})
-  endif()
-
-  if(CONFIG_USER_TA_ELF)
-    list(APPEND CFLAGS -fno-lto -mlong-calls)
-
-    set(TA_LINK_FLAGS -fno-lto -flinker-output=nolto-rel)
-
-    nuttx_library(liboptee_test_elf)
-
-    nuttx_sources(optee_test/ta/crypt/aes_impl.c
+  set(CSRCS
+      optee_test/ta/crypt/aes_impl.c
       optee_test/ta/crypt/aes_taf.c
       optee_test/ta/crypt/arith_taf.c
       optee_test/ta/crypt/cryp_taf.c
@@ -203,64 +94,46 @@ if(CONFIG_OPTEE_TEST_TA)
       optee_test/ta/crypt/sha2_taf.c
       optee_test/ta/storage/storage.c)
 
-    nuttx_include_directories(${INCDIR})
-
-    nuttx_compile_options(${CFLAGS})
-
-    nuttx_add_application(
+    ta_add_library(
       NAME
-      ta_crypt
+      optee_test_ta
       SRCS
-      optee_test/ta/crypt/ta_crypt_entry.c
+      ${CSRCS}
+      INCLUDES
+      ${INCDIR})
+
+    ta_add_application(
+      NAME ta_crypt
+      SRCS optee_test/ta/crypt/ta_crypt_entry.c
       STACKSIZE
       4096
-      PRIORITY
-      100
-      INCLUDE_DIRECTORIES
+      INCLUDES
       ${INCDIR}
-      COMPILE_FLAGS
-      ${CFLAGS}
-      LINK_FLAGS
-      ${TA_LINK_FLAGS}
-      DYNLIB y
-    )
+      INSTALL_NAME
+      etc/ta/A05B3ECBF1ADE011998B0002A5D5C51B)
 
-    nuttx_add_application(
+    ta_add_application(
       NAME
       ta_storage
       SRCS
       optee_test/ta/storage/ta_storage_entry.c
       STACKSIZE
       4096
-      PRIORITY
-      100
-      INCLUDE_DIRECTORIES
+      INCLUDES
       ${INCDIR}
-      COMPILE_FLAGS
-      ${CFLAGS}
-      LINK_FLAGS
-      ${TA_LINK_FLAGS}
-      DYNLIB y
-    )
+      INSTALL_NAME
+      etc/ta/A7F289B6DF8A7A479F9932E90C0AD0A2)
 
-    nuttx_add_application(
+    ta_add_application(
       NAME
       ta_storage2
       SRCS
       optee_test/ta/storage2/ta_storage2_entry.c
       STACKSIZE
       4096
-      PRIORITY
-      100
-      INCLUDE_DIRECTORIES
+      INCLUDES
       ${INCDIR}
-      COMPILE_FLAGS
-      ${CFLAGS}
-      LINK_FLAGS
-      ${TA_LINK_FLAGS}
-      DYNLIB y
-    )
-
-  endif()
+      INSTALL_NAME
+      etc/ta/9E271E73FBAA7545A77138CAA6F0CCA6)
 
 endif()
