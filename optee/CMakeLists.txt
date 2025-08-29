@@ -14,6 +14,10 @@
 # the License.
 #
 
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
+include(TA)
+include(TA_lib)
+
 nuttx_add_subdirectory()
 
 nuttx_generate_kconfig(MENUDESC "OPTEE")
