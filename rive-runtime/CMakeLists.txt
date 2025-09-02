@@ -88,6 +88,25 @@ if(CONFIG_RIVE_RUNTIME_LAYOUT)
     ${NUTTX_APPS_DIR}/external/yoga/yoga)
 endif()
 
+
+set_source_files_properties(
+  ${RIVE_RUNTIME_DIR}/src/math/aabb.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/bezier_utils.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/bit_field_loc.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/contour_measure.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/hit_test.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/mat2d_find_max_scale.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/mat2d.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/n_slicer_helpers.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/path_measure.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/raw_path_utils.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/raw_path.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/rectangles_to_contour.cpp
+  ${RIVE_RUNTIME_DIR}/src/math/vec2d.cpp
+  ${RIVE_RUNTIME_DIR}/src/shapes/paint/color.cpp
+    PROPERTIES COMPILE_FLAGS "-O3"
+)
+
   target_compile_options(rive-runtime PRIVATE
     -Wno-shadow
     -Wno-sign-compare
