@@ -33,7 +33,7 @@ config BENCHMARK_LMBENCH_STACKSIZE
 config BENCHMARK_LMBENCH_NET
 	bool "enable tcp/udp relative case from lmbench"
 	default n
-	depends on NET
+	depends on NET && LIBC_NETDB
 
 config BENCHMARK_LMBENCH_CMD_PREFIX
 	string "lmbench cmd prefix"
