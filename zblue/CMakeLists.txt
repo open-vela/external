@@ -42,13 +42,19 @@ if(CONFIG_BT)
     -Wno-incompatible-pointer-types
     -Wno-pointer-sign)
 
+  # Create sys header mapping for zephyr3 compatibility first
+  set(SYS_COMPAT_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_compat")
+  file(MAKE_DIRECTORY "${SYS_COMPAT_DIR}/sys")
+
   list(APPEND INCDIR
-    ${ZBLUE_DIR}/port/include
+    ${SYS_COMPAT_DIR}
     ${ZBLUE_DIR}/port/include/zephyr
+    ${ZBLUE_DIR}/port/include
     ${ZBLUE_DIR}/port/kernel/include
     ${ZBLUE_DIR}/subsys/bluetooth
     ${ZBLUE_DIR}/subsys/bluetooth/audio
     ${ZBLUE_DIR}/subsys/bluetooth/host
+    ${ZBLUE_DIR}/subsys/bluetooth/host/classic/zephyr3
     ${ZBLUE_DIR}/subsys/bluetooth/mesh
     ${ZBLUE_DIR}/subsys/bluetooth/services
     ${ZBLUE_DIR}/subsys/testsuite/ztest/include
@@ -149,7 +155,8 @@ if(CONFIG_BT)
         list(APPEND CSRCS ${CLASSICDIR}/avdtp.c)
       endif()
       if(CONFIG_BT_AVRCP)
-        list(APPEND CSRCS ${CLASSICDIR}/avrcp.c)
+        list(APPEND CSRCS ${CLASSICDIR}/zephyr3/avrcp.c)
+        list(APPEND CSRCS ${CLASSICDIR}/zephyr3/avrcp_cttg.c)
       endif()
       if(CONFIG_BT_AVCTP)
         list(APPEND CSRCS ${CLASSICDIR}/avctp.c)
@@ -836,6 +843,12 @@ if(CONFIG_BT)
 
   file(MAKE_DIRECTORY "${BIN_INC_ROOT}")
   file(COPY "${ZEPHYR_SRC_DIR}" DESTINATION "${BIN_INC_ROOT}")
+  
+  # Create header content mapping for zephyr3 compatibility
+  file(WRITE "${SYS_COMPAT_DIR}/sys/atomic.h" "#include <zephyr/sys/atomic.h>\n")
+  file(WRITE "${SYS_COMPAT_DIR}/sys/byteorder.h" "#include <zephyr/sys/byteorder.h>\n")
+  file(WRITE "${SYS_COMPAT_DIR}/sys/util.h" "#include <zephyr/sys/util.h>\n")
+  file(WRITE "${SYS_COMPAT_DIR}/sys/printk.h" "#include <zephyr/sys/printk.h>\n")
 
   add_library(zblue_headers INTERFACE)
   target_include_directories(zblue_headers INTERFACE
