@@ -867,6 +867,7 @@ if(CONFIG_BT)
     ${BIN_INC_ROOT}/zephyr/app_memory
     ${SRC_INC_ROOT}
     ${ZBLUE_DIR}/subsys/bluetooth
+    ${ZBLUE_DIR}/subsys/bluetooth/host
   )
 
   target_link_libraries(zblue PRIVATE zblue_headers)
@@ -898,6 +899,7 @@ if(CONFIG_BT)
     ${BIN_INC_ROOT}/zephyr/app_memory
     ${SRC_INC_ROOT}
     ${ZBLUE_DIR}/subsys/bluetooth
+    ${ZBLUE_DIR}/subsys/bluetooth/host
   )
 
 endif()
