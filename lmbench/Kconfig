@@ -38,16 +38,5 @@ config BENCHMARK_LMBENCH_NET
 config BENCHMARK_LMBENCH_CMD_PREFIX
 	string "lmbench cmd prefix"
 	default ""
-
-config BENCHMARK_LMBENCH_NO_PORTMAPPER
-	bool "Disable portmapper support"
-	default y
-	depends on BENCHMARK_LMBENCH_NET
-	---help---
-		This option disables portmapper support in lmbench network tests.
-		When enabled, lmbench will not use portmapper for dynamic port
-		allocation, which can be useful in embedded systems where
-		portmapper service is not available or desired.
-		Select this if you want to disable portmapper functionality.
 endif
 
