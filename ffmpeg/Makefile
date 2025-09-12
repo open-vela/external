@@ -288,7 +288,7 @@ $(DST_PATH)/ffbuild/config.mak:
 		--disable-videotoolbox  --disable-xop                                        \
 		--enable-version3       --enable-small                                       \
 		--extra-cflags="$(FFEXTRA)" --extra-ldflags="$(FFEXTRA)"                     \
-		--ld=echo --pkg-config=false assert_level=3 $(CFG_CMDS)                      \
+		--ld=echo --pkg-config=: assert_level=3 $(CFG_CMDS)                          \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
 context:: $(DST_PATH)/ffbuild/config.mak $(DST_PATH)/libavutil/ffversion.h
