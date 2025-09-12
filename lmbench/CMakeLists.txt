@@ -36,6 +36,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       -DHAVE_socklen_t
       -DHAVE_DRAND48
       -DHAVE_SCHED_SETAFFINITY=1
+      -DMAX_MSIZE=2048
       -Wno-int-to-pointer-cast
       -Dtcp_connect=lmbench_tcp_connect
       -Dudp_connect=lmbench_udp_connect

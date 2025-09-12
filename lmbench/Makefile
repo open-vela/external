@@ -57,5 +57,6 @@ CFLAGS += -Wno-all -Wno-strict-prototypes -Wno-shadow \
 
 CFLAGS += -DHAVE_uint=1 -DHAVE_int64_t=1 -DHAVE_pmap_clnt_h \
 -DHAVE_socklen_t -DHAVE_DRAND48 -DHAVE_SCHED_SETAFFINITY=1 -Wno-int-to-pointer-cast
+CFLAGS += -DMAX_MSIZE=2048
 
 include $(APPDIR)/Application.mk
