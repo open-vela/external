@@ -40,7 +40,7 @@ config NGHTTP2_TEST_PRIORITY
 	default 100
 
 config NGHTTP2_TEST_STACKSIZE
-	string "NGHTTP2 test stack size"
+	int "NGHTTP2 test stack size"
 	default DEFAULT_TASK_STACKSIZE
 endif
 
