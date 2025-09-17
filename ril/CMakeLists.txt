@@ -62,8 +62,7 @@ if(CONFIG_RILD)
   )
 
   if(CONFIG_RIL_TEST)
-    file(GLOB APPEND_FILES ${CMAKE_CURRENT_LIST_DIR}/ril/riltest/ril_parcel_ctor_verifier.cpp)
-    list(APPEND RILD_SRCS ${APPEND_FILES})
+    set(RILD_TEST_SRCS ${CMAKE_CURRENT_LIST_DIR}/ril/riltest/ril_parcel_ctor_verifier.cpp)
 
     nuttx_add_application(
       MODULE
@@ -75,7 +74,7 @@ if(CONFIG_RILD)
       PRIORITY
       ${CONFIG_RIL_TEST_PRIORITY}
       SRCS
-      ril/riltest/rilreq_tool.cpp ${RILD_SRCS}
+      ril/riltest/rilreq_tool.cpp ${RILD_TEST_SRCS}
       INCLUDE_DIRECTORIES
       ${RILD_INC}
     )
