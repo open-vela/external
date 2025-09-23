@@ -80,7 +80,7 @@ config OFONO_DATA_LOG_OVER_MIWEAR
 
 config OFONO_CALL_STATE_CHANGE_WITH_DATA
 	bool "support call state change with data"
-	default y
+	default n
 	---help---
 		Enable call state change with data.
 endif
