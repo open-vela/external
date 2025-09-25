@@ -707,7 +707,7 @@ CSRCS += zblue/lib/net_buf/buf_simple.c
 CSRCS += zblue/lib/utils/dec.c
 CSRCS += zblue/lib/utils/hex.c
 
-CSRCS += zblue/port/kernel/atomic_c.c
+CSRCS += zblue/port/kernel/atomic_port.c
 CSRCS += zblue/port/kernel/device.c
 CSRCS += zblue/port/kernel/fatal.c
 CSRCS += zblue/port/kernel/init.c
@@ -805,7 +805,7 @@ SYMLINK_FILES = \
     shell/shell_string_conv.h \
     sys/__assert.h \
     sys/atomic.h \
-    sys/atomic_c.h \
+    sys/atomic_port.h \
     sys/atomic_types.h \
     sys/byteorder.h \
     sys/check.h \

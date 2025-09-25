@@ -764,7 +764,7 @@ if(CONFIG_BT)
     zblue/lib/net_buf/buf_simple.c
     zblue/lib/utils/dec.c
     zblue/lib/utils/hex.c
-    zblue/port/kernel/atomic_c.c
+    zblue/port/kernel/atomic_port.c
     zblue/port/kernel/device.c
     zblue/port/kernel/fatal.c
     zblue/port/kernel/init.c
@@ -843,9 +843,10 @@ if(CONFIG_BT)
 
   file(MAKE_DIRECTORY "${BIN_INC_ROOT}")
   file(COPY "${ZEPHYR_SRC_DIR}" DESTINATION "${BIN_INC_ROOT}")
-  
+
   # Create header content mapping for zephyr3 compatibility
   file(WRITE "${SYS_COMPAT_DIR}/sys/atomic.h" "#include <zephyr/sys/atomic.h>\n")
+  file(WRITE "${SYS_COMPAT_DIR}/sys/atomic_port.h" "#include <zephyr/sys/atomic_port.h>\n")
   file(WRITE "${SYS_COMPAT_DIR}/sys/byteorder.h" "#include <zephyr/sys/byteorder.h>\n")
   file(WRITE "${SYS_COMPAT_DIR}/sys/util.h" "#include <zephyr/sys/util.h>\n")
   file(WRITE "${SYS_COMPAT_DIR}/sys/printk.h" "#include <zephyr/sys/printk.h>\n")
