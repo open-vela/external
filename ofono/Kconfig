@@ -72,6 +72,13 @@ config OFONO_WASM
 		Compile ofono to Wasm module instead of builitn app,
 		only available if any wasm runtime eanbled.
 
+config OFONO_WASM_INSTALL_PATH
+	string "The path to install ofono wasm module"
+	default ""
+	depends on OFONO_WASM
+	---help---
+		The path to install ofono wasm module.
+
 config OFONO_DATA_LOG_OVER_MIWEAR
 	bool "support data log over miwear"
 	default n
