@@ -37,6 +37,7 @@ endif()
              ${NUTTX_APPS_DIR}/external/glib/glib
              ${NUTTX_APPS_DIR}/external/dbus/dbus
              ${NUTTX_APPS_DIR}/external/ofono/include
+             ${NUTTX_APPS_DIR}/external/ofono/ofono/include
              ${NUTTX_APPS_DIR}/frameworks/system/utils/include)
 
   set(XML_PATHS ${CMAKE_CURRENT_LIST_DIR}/event_telephony.xml)
@@ -360,7 +361,7 @@ endif()
         WCFLAGS
         ${CFLAGS}
         INSTALL_NAME
-        /etc/ofonod.aot
+        ${CONFIG_OFONO_WASM_INSTALL_PATH}
         )
     else()
       nuttx_add_application(
