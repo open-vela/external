@@ -798,7 +798,11 @@ if(CONFIG_BT)
       STACKSIZE ${ZBLUE_STACKSIZE}
               SRCS ${ZBLUE_DIR}/port/subsys/shell/shell.c
       INCLUDE_DIRECTORIES ${INCDIR}
-      COMPILE_FLAGS ${CFLAGS})
+      COMPILE_FLAGS ${CFLAGS}
+      DEPENDS zblue)
+    
+    # Link zblue headers to zblue application
+    target_link_libraries(zblue PRIVATE zblue_headers)
   endif()
 
   if(CONFIG_BT_SAMPLE)
@@ -808,7 +812,11 @@ if(CONFIG_BT)
         STACKSIZE ${ZBLUE_STACKSIZE}
         SRCS ${ZBLUE_DIR}/samples/bluetooth/peripheral/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
-        COMPILE_FLAGS ${CFLAGS})
+        COMPILE_FLAGS ${CFLAGS}
+        DEPENDS zblue)
+      
+      # Link zblue headers to peripheral application
+      target_link_libraries(apps_peripheral PRIVATE zblue_headers)
     endif()
 
     if(CONFIG_BT_SAMPLE_CENTRAL)
@@ -817,7 +825,11 @@ if(CONFIG_BT)
         STACKSIZE ${ZBLUE_STACKSIZE}
         SRCS ${ZBLUE_DIR}/samples/bluetooth/central/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
-        COMPILE_FLAGS ${CFLAGS})
+        COMPILE_FLAGS ${CFLAGS}
+        DEPENDS zblue)
+      
+      # Link zblue headers to central application
+      target_link_libraries(apps_central PRIVATE zblue_headers)
     endif()
 
     if(CONFIG_BT_SAMPLE_HFP_HF)
@@ -826,7 +838,11 @@ if(CONFIG_BT)
         STACKSIZE ${ZBLUE_STACKSIZE}
         SRCS ${ZBLUE_DIR}/samples/bluetooth/handsfree/src/main.c
         INCLUDE_DIRECTORIES ${INCDIR}
-        COMPILE_FLAGS ${CFLAGS})
+        COMPILE_FLAGS ${CFLAGS}
+        DEPENDS zblue)
+      
+      # Link zblue headers to hfp_hf application
+      target_link_libraries(apps_hfp_hf PRIVATE zblue_headers)
     endif()
   endif()
 
@@ -879,27 +895,5 @@ if(CONFIG_BT)
   )
 
   add_library(zblue::headers ALIAS zblue_headers)
-  # Note: Dependencies are handled through nuttx_add_application DEPENDS parameter
-  # No need to manually link to apps target
-
-  # Use nuttx_include_directories_for_all_apps to expose headers globally
-  nuttx_include_directories_for_all_apps(
-    ${ZBLUE_DIR}/port/include
-    ${ZBLUE_DIR}/port/kernel/include
-    ${BIN_INC_ROOT}
-    ${BIN_INC_ROOT}/zephyr/sys
-    ${BIN_INC_ROOT}/zephyr/kernel
-    ${BIN_INC_ROOT}/zephyr/arch
-    ${BIN_INC_ROOT}/zephyr/linker
-    ${BIN_INC_ROOT}/zephyr/devicetree
-    ${BIN_INC_ROOT}/zephyr/debug
-    ${BIN_INC_ROOT}/zephyr/fs
-    ${BIN_INC_ROOT}/zephyr/shell
-    ${BIN_INC_ROOT}/zephyr/tracing
-    ${BIN_INC_ROOT}/zephyr/app_memory
-    ${SRC_INC_ROOT}
-    ${ZBLUE_DIR}/subsys/bluetooth
-    ${ZBLUE_DIR}/subsys/bluetooth/host
-  )
 
 endif()
