@@ -217,6 +217,10 @@ ifeq ($(CONFIG_LIB_OPENCORE_AMR),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/libopencore-amr/libopencore-amr/include
 endif
 
+ifeq ($(CONFIG_LIB_SPEEX),y)
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/speex/speex/include
+endif
+
 ifeq ($(CONFIG_LIB_ZLIB),y)
 CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/system/zlib/zlib
 endif
