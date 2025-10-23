@@ -84,7 +84,14 @@ endif()
   if(CONFIG_OFONO_PHONESIM)
     file(GLOB APPEND_FILES ofono/drivers/hfpmodem/*.c)
     list(APPEND CSRCS ${APPEND_FILES})
-    list(APPEND CSRCS ofono/plugins/phonesim.c)
+    list(APPEND CSRCS ofono/plugins/phonesim.c
+                      ofono/src/call-meter.c
+                      ofono/src/ctm.c
+                      ofono/src/gnss.c
+                      ofono/src/gnssagent.c
+                      ofono/src/handsfree.c
+                      ofono/src/sim-auth.c
+                      ofono/src/siri.c)
     list(APPEND BUILTIN_PLUGIN hfpmodem phonesim)
   endif()
 
@@ -285,9 +292,50 @@ endif()
     list(APPEND CSRCS ofono/plugins/mbpi.c ofono/plugins/provision.c)
 
     # ofono core source file and compile flags
-    file(GLOB APPEND_FILES ofono/gdbus/*.c ofono/gril/*.c ofono/src/*.c)
+    file(GLOB APPEND_FILES ofono/gdbus/*.c ofono/gril/*.c)
     list(APPEND CSRCS ${APPEND_FILES})
-    list(REMOVE_ITEM CSRCS ${CMAKE_CURRENT_LIST_DIR}/ofono/src/main.c)
+    list(APPEND CSRCS ${CMAKE_CURRENT_LIST_DIR}/ofono/src/abnormal-event.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-barring.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-forwarding.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-settings.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-volume.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/carrier-config.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/cbs.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/common.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/dbus.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/emulator.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs-provision.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/handsfree-audio.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/history.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/ims.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/log.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/lte.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/manager.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/message-waiting.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/message.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/modem.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/netmon.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/netmonagent.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/nettime.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/network.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/phonebook.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/plugin.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/radio-settings.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/sim.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/simfs.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/simutil.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/sms.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/smsagent.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/smsutil.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/stk.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/stkagent.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/stkutil.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/storage.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/ussd.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/util.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/voicecall.c
+                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/watch.c)
 
     if(CONFIG_OFONO_WASM)
       set(WRCFLAGS
