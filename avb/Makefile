@@ -39,7 +39,10 @@ CSRCS += \
         avb/libavb/avb_sysdeps_posix.c \
         avb/libavb/avb_util.c \
         avb/libavb/avb_vbmeta_image.c \
-        avb/libavb/avb_version.c
+        avb/libavb/avb_version.c \
+        avb/libavb_user/avb_verify.c \
+        avb/libavb_user/avb_ops_user.c
+
 ifneq ($(CONFIG_LIB_AVB_CRC32),)
 CSRCS += avb/libavb/avb_crc32.c
 endif
