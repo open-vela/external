@@ -28,7 +28,7 @@ BENCHMARKS += disk
 BENCHMARKS += lat_cmd lat_connect lat_ctx lat_dram_page lat_fcntl lat_fifo \
 lat_fs lat_mem_rd lat_mmap lat_ops lat_pagefault lat_pipe lat_pmake lat_proc \
 lat_rand lat_sig lat_syscall lat_unix \
-lat_unix_connect lat_usleep
+lat_unix_connect lat_usleep lat_vsock
 BENCHMARKS += line lmdd loop_o memsize msleep par_mem par_ops stream timing_o tlb
 
 CSRCS += \

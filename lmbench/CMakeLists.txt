@@ -68,6 +68,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lat_unix
       lat_unix_connect
       lat_usleep
+      lat_vsock
       line
       lmdd
       loop_o
