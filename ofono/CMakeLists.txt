@@ -67,6 +67,7 @@ endif()
   # OFONO Modem
   if(CONFIG_OFONO_RILMODEM)
     file(GLOB APPEND_FILES ofono/drivers/rilmodem/*.c)
+    list(REMOVE_ITEM APPEND_FILES ${CMAKE_CURRENT_LIST_DIR}/ofono/drivers/rilmodem/call-volume.c)
     list(APPEND CSRCS ${APPEND_FILES})
     list(APPEND CSRCS ofono/plugins/rildev.c ofono/plugins/ril.c)
     list(APPEND BUILTIN_PLUGIN rildev ril rilmodem provision)
@@ -77,12 +78,14 @@ endif()
     list(APPEND ATCSRCS ${APPEND_FILES})
     list(REMOVE_ITEM ATCSRCS ${CMAKE_CURRENT_LIST_DIR}/ofono/gatchat/test-server.c
                              ${CMAKE_CURRENT_LIST_DIR}/ofono/gatchat/gsmdial.c
-                             ${CMAKE_CURRENT_LIST_DIR}/ofono/gatchat/test-qcdm.c)
+                             ${CMAKE_CURRENT_LIST_DIR}/ofono/gatchat/test-qcdm.c
+                             ${CMAKE_CURRENT_LIST_DIR}/ofono/drivers/atmodem/call-volume.c)
     list(APPEND BUILTIN_PLUGIN atmodem)
   endif()
 
   if(CONFIG_OFONO_PHONESIM)
     file(GLOB APPEND_FILES ofono/drivers/hfpmodem/*.c)
+    list(REMOVE_ITEM APPEND_FILES ${CMAKE_CURRENT_LIST_DIR}/ofono/drivers/hfpmodem/call-volume.c)
     list(APPEND CSRCS ${APPEND_FILES})
     list(APPEND CSRCS ofono/plugins/phonesim.c
                       ofono/src/call-meter.c
@@ -298,7 +301,6 @@ endif()
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-barring.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-forwarding.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-settings.c
-                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/call-volume.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/carrier-config.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/cbs.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/common.c
@@ -306,8 +308,6 @@ endif()
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/emulator.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs-provision.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs.c
-                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/handsfree-audio.c
-                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/history.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/ims.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/log.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/lte.c
