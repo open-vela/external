@@ -42,6 +42,6 @@ config RIL_TEST_PRIORITY
 
 config RIL_TEST_STACKSIZE
 	int "riltest stack size"
-	default DEFAULT_TASK_STACKSIZE
+	default 8192
 
 endif
