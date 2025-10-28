@@ -53,7 +53,7 @@ config LIB_FFMPEG_DISABLE_KASAN
 
 config LIB_FFMPEG_EXTERNAL_LIBRARIES
 	string "External ffmpeg libraries path"
-	default "/external/ffmpeg/ffmpeg/private:"
+	default "/external/ffmpeg/ffmpeg/proprietary:"
 	---help---
 		Use ':' symbol to separate multiple paths
 

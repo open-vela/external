@@ -1,6 +1,6 @@
 #!/bin/sh
 
-private_path="private"
+proprietary_path="proprietary"
 source_path=$(dirname "$(realpath "$0")")/ffmpeg
 
 find_things_extern(){
