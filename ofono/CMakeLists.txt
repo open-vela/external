@@ -90,6 +90,7 @@ endif()
     list(APPEND CSRCS ofono/plugins/phonesim.c
                       ofono/src/call-meter.c
                       ofono/src/ctm.c
+                      ofono/src/emulator.c
                       ofono/src/gnss.c
                       ofono/src/gnssagent.c
                       ofono/src/handsfree.c
@@ -305,7 +306,6 @@ endif()
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/cbs.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/common.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/dbus.c
-                      ${CMAKE_CURRENT_LIST_DIR}/ofono/src/emulator.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs-provision.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/gprs.c
                       ${CMAKE_CURRENT_LIST_DIR}/ofono/src/ims.c
