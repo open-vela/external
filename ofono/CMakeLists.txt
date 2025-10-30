@@ -59,10 +59,8 @@ endif()
   set(BUILTIN_PLUGIN)
 
   # ELL (Embedded Linux library)
-  set(ELL_SRCS ell/ell/util.c ell/ell/test.c ell/ell/strv.c ell/ell/utf8.c
-               ell/ell/queue.c ell/ell/timeout.c ell/ell/main.c ell/ell/idle.c
-               ell/ell/signal.c ell/ell/io.c ell/ell/checksum.c ell/ell/log.c
-               ell/ell/uuid.c ell/ell/file.c ell/ell/uintset.c ell/ell/string.c)
+  set(ELL_SRCS ell/ell/util.c ell/ell/utf8.c ell/ell/queue.c ell/ell/timeout.c
+               ell/ell/main.c ell/ell/log.c ell/ell/uintset.c ell/ell/string.c)
 
   # OFONO Modem
   if(CONFIG_OFONO_RILMODEM)
