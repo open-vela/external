@@ -17,7 +17,7 @@
 config LIB_TAR
 	bool "Tar library"
 	default n
-	select PSEUDOFS_SOFTLINKS
+	select FS_LINKS
 	---help---
 		Enable support for tar
 
