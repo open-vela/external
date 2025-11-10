@@ -22,7 +22,8 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lmbench/src/lib_sched.c
       lmbench/src/lib_stats.c
       lmbench/src/lib_timing.c
-      lmbench/src/lib_unix.c)
+      lmbench/src/lib_unix.c
+      lmbench/src/lib_vsock.c)
   set(CFLAGS
       -Wno-all
       -Wno-strict-prototypes

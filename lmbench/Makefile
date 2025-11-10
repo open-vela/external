@@ -38,7 +38,8 @@ lmbench/src/lib_mem.c \
 lmbench/src/lib_sched.c \
 lmbench/src/lib_stats.c \
 lmbench/src/lib_timing.c \
-lmbench/src/lib_unix.c
+lmbench/src/lib_unix.c \
+lmbench/src/lib_vsock.c
 
 ifeq ($(CONFIG_BENCHMARK_LMBENCH_NET),y)
   BENCHMARKS += lat_select lat_tcp lat_udp
