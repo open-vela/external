@@ -21,42 +21,42 @@
 include $(APPDIR)/Make.defs
 
 CSRCS += argp.c
-CSRCS += Open1722/src/avtp/Utils.c
-CSRCS += Open1722/src/avtp/acf/FlexRay.c
-CSRCS += Open1722/src/avtp/acf/SensorBrief.c
-CSRCS += Open1722/src/avtp/acf/custom/Vss.c
-CSRCS += Open1722/src/avtp/acf/custom/VssBrief.c
-CSRCS += Open1722/src/avtp/acf/Lin.c
-CSRCS += Open1722/src/avtp/acf/Sensor.c
-CSRCS += Open1722/src/avtp/acf/Gpc.c
-CSRCS += Open1722/src/avtp/acf/Tscf.c
-CSRCS += Open1722/src/avtp/acf/Can.c
-CSRCS += Open1722/src/avtp/acf/AcfCommon.c
-CSRCS += Open1722/src/avtp/acf/CanBrief.c
-CSRCS += Open1722/src/avtp/acf/Ntscf.c
-CSRCS += Open1722/src/avtp/acf/Most.c
-CSRCS += Open1722/src/avtp/CommonHeader.c
-CSRCS += Open1722/src/avtp/Udp.c
+CSRCS += open1722/src/avtp/Utils.c
+CSRCS += open1722/src/avtp/acf/FlexRay.c
+CSRCS += open1722/src/avtp/acf/SensorBrief.c
+CSRCS += open1722/src/avtp/acf/custom/Vss.c
+CSRCS += open1722/src/avtp/acf/custom/VssBrief.c
+CSRCS += open1722/src/avtp/acf/Lin.c
+CSRCS += open1722/src/avtp/acf/Sensor.c
+CSRCS += open1722/src/avtp/acf/Gpc.c
+CSRCS += open1722/src/avtp/acf/Tscf.c
+CSRCS += open1722/src/avtp/acf/Can.c
+CSRCS += open1722/src/avtp/acf/AcfCommon.c
+CSRCS += open1722/src/avtp/acf/CanBrief.c
+CSRCS += open1722/src/avtp/acf/Ntscf.c
+CSRCS += open1722/src/avtp/acf/Most.c
+CSRCS += open1722/src/avtp/CommonHeader.c
+CSRCS += open1722/src/avtp/Udp.c
 
 CFLAGS += ${INCDIR_PREFIX}nuttx
-CFLAGS += ${INCDIR_PREFIX}Open1722
+CFLAGS += ${INCDIR_PREFIX}open1722
 CFLAGS += -D__linux__
 CFLAGS += -Wno-unused-variable -Wno-shadow -Wno-unused-function
 
 ifneq ($(CONFIG_UTILS_OPEN1722_ACF_CAN),)
-  CSRCS     += Open1722/examples/common/common.c
-  CSRCS     += Open1722/examples/acf-can/acf-can-common.c
+  CSRCS     += open1722/examples/common/common.c
+  CSRCS     += open1722/examples/acf-can/acf-can-common.c
 
-  CFLAGS += ${INCDIR_PREFIX}Open1722/examples
-  CFLAGS += ${INCDIR_PREFIX}Open1722/examples/acf-can
+  CFLAGS += ${INCDIR_PREFIX}open1722/examples
+  CFLAGS += ${INCDIR_PREFIX}open1722/examples/acf-can
 
   PROGNAME  += acf_can_listener acf_can_talker
   PRIORITY  += $(CONFIG_UTILS_OPEN1722_PRIORITY) $(CONFIG_UTILS_OPEN1722_PRIORITY)
   STACKSIZE += $(CONFIG_UTILS_OPEN1722_STACKSIZE) $(CONFIG_UTILS_OPEN1722_STACKSIZE)
   MODULE    += $(CONFIG_UTILS_OPEN1722) $(CONFIG_UTILS_OPEN1722)
 
-  MAINSRC   += Open1722/examples/acf-can/linux/acf-can-listener.c
-  MAINSRC   += Open1722/examples/acf-can/linux/acf-can-talker.c
+  MAINSRC   += open1722/examples/acf-can/linux/acf-can-listener.c
+  MAINSRC   += open1722/examples/acf-can/linux/acf-can-talker.c
 endif
 
 include $(APPDIR)/Application.mk

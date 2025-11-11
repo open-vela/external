@@ -20,6 +20,6 @@
 
 ifneq ($(CONFIG_LIB_OPEN1722),)
   CONFIGURED_APPS += $(APPDIR)/external/open1722
-  CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/open1722/Open1722/include
-  CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/open1722/Open1722/include
+  CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/open1722/open1722/include
+  CXXFLAGS += ${INCDIR_PREFIX}$(APPDIR)/external/open1722/open1722/include
 endif
