@@ -23,7 +23,7 @@ define add_benchmark
   STACKSIZE += $(CONFIG_BENCHMARK_LMBENCH_STACKSIZE)
 endef
 
-BENCHMARKS = busy bw_file_rd bw_mem bw_mmap_rd bw_pipe bw_tcp bw_udp bw_unix
+BENCHMARKS = busy bw_file_rd bw_mem bw_mmap_rd bw_pipe bw_tcp bw_udp bw_unix bw_vsock
 BENCHMARKS += disk
 BENCHMARKS += lat_cmd lat_connect lat_ctx lat_dram_page lat_fcntl lat_fifo \
 lat_fs lat_mem_rd lat_mmap lat_ops lat_pagefault lat_pipe lat_pmake lat_proc \

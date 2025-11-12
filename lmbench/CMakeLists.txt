@@ -49,6 +49,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       bw_mmap_rd
       bw_pipe
       bw_unix
+      bw_vsock
       disk
       lat_cmd
       lat_ctx
