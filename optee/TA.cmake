@@ -25,11 +25,20 @@ include(${NUTTX_APPS_DIR}/../nuttx/cmake/nuttx_parse_function_args.cmake)
 function(ta_add_application)
   # parse args using NuttX helper (same style as nuttx_add_application)
   nuttx_parse_function_args(
-    FUNC ta_add_application
-    ONE_VALUE NAME STACKSIZE PRIORITY INSTALL_NAME LINK_FLAGS
-    MULTI_VALUE SRCS INCLUDES CFLAGS
-    ARGN ${ARGN}
-  )
+    FUNC
+    ta_add_application
+    ONE_VALUE
+    NAME
+    STACKSIZE
+    PRIORITY
+    INSTALL_NAME
+    LINK_FLAGS
+    MULTI_VALUE
+    SRCS
+    INCLUDES
+    CFLAGS
+    ARGN
+    ${ARGN})
 
   # basic validation
   if(NOT NAME)
@@ -89,7 +98,8 @@ function(ta_add_application)
   if("${TA_TYPE}" STREQUAL "wasm")
     list(APPEND LOCAL_CFLAGS -DUSER_TA_WASM)
 
-    list(APPEND MINCLUDES ${NUTTX_APPS_DIR}/interpreters/wamr/wamr/core/iwasm/include)
+    list(APPEND MINCLUDES
+         ${NUTTX_APPS_DIR}/interpreters/wamr/wamr/core/iwasm/include)
 
     set(LOCAL_WLDFLAGS
         -Wl,--export=wasm_TA_CreateEntryPoint
@@ -99,7 +109,8 @@ function(ta_add_application)
         -Wl,--export=wasm_TA_InvokeCommandEntryPoint)
 
     # call wasm_add_application (preserve original semantics)
-    message(STATUS "ta_add_application: adding WASM application target: ${NAME}")
+    message(
+      STATUS "ta_add_application: adding WASM application target: ${NAME}")
     wasm_add_application(
       NAME
       ${NAME}
@@ -150,6 +161,20 @@ function(ta_add_application)
       ${LINK_FLAGS}
       DYNLIB
       y)
+
+    if(INSTALL_NAME)
+      add_custom_command(
+        OUTPUT ${CMAKE_BINARY_DIR}/TA_elf/${INSTALL_NAME}
+        COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/TA_elf
+        COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_BINARY_DIR}/bin/${NAME}
+                ${CMAKE_BINARY_DIR}/TA_elf/${INSTALL_NAME}
+        DEPENDS ELF_${NAME})
+      add_custom_target(ta_elf_gen_${NAME}
+                        DEPENDS ${CMAKE_BINARY_DIR}/TA_elf/${INSTALL_NAME})
+
+      add_dynamic_rcraws(RAWS ${CMAKE_BINARY_DIR}/TA_elf/${INSTALL_NAME}
+                         DEPENDS ta_elf_gen_${NAME})
+    endif()
   endif()
 
 endfunction()
