@@ -23,7 +23,8 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lmbench/src/lib_stats.c
       lmbench/src/lib_timing.c
       lmbench/src/lib_unix.c
-      lmbench/src/lib_vsock.c)
+      lmbench/src/lib_vsock.c
+      lmbench/src/lib_rpmsg.c)
   set(CFLAGS
       -Wno-all
       -Wno-strict-prototypes
@@ -71,6 +72,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lat_unix_connect
       lat_usleep
       lat_vsock
+      lat_rpmsg
       line
       lmdd
       loop_o
