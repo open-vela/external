@@ -163,6 +163,9 @@ if(CONFIG_BT)
       if(CONFIG_BT_RFCOMM)
         list(APPEND CSRCS ${CLASSICDIR}/rfcomm.c)
       endif()
+      if(CONFIG_BT_HID_DEVICE)
+        list(APPEND CSRCS ${CLASSICDIR}/hid_device.c)
+      endif()
 
       list(APPEND CSRCS
         ${CLASSICDIR}/br.c
