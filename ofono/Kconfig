@@ -83,4 +83,88 @@ config OFONO_CALL_STATE_CHANGE_WITH_DATA
 	default n
 	---help---
 		Enable call state change with data.
+
+config OFONO_VOICE_CALL_MANAGER
+	bool "support voice call manager interface"
+	default y
+	---help---
+		Enable voice call manager interface
+
+config OFONO_CALL_BARRING
+	bool "support call barring interface"
+	depends on OFONO_VOICE_CALL_MANAGER
+	default n
+	---help---
+		Enable call barring interface
+
+config OFONO_CALL_FORWARDING
+	bool "support call forwarding interface"
+	depends on OFONO_VOICE_CALL_MANAGER
+	default y
+	---help---
+		Enable call forwarding interface
+
+config OFONO_SUPPLEMENTARY_SERVICES
+	bool "support supplementary services interface"
+	depends on OFONO_VOICE_CALL_MANAGER
+	default n
+        ---help---
+                Enable supplementary services interface
+
+config OFONO_CALL_SETTING
+	bool "support call setting interface"
+	depends on OFONO_VOICE_CALL_MANAGER
+        default y
+        ---help---
+                Enable call setting interface
+
+config OFONO_IMS
+	bool "support ims interface"
+	depends on OFONO_VOICE_CALL_MANAGER
+        default y
+        ---help---
+                Enable ims interface
+
+config OFONO_STK
+	bool "support stk interface"
+	default n
+	---help---
+                Enable stk interface
+
+config OFONO_SMS_MANAGER
+	bool "support message manager interface"
+	default y
+	---help---
+                Enable  message manager interface
+
+config OFONO_CELL_BROADCAST_SERVICE
+	bool "support cell broadcast service interface"
+	default n
+	---help---
+                Enable cell broadcast service interface
+
+config OFONO_PHONEBOOK
+	bool "support phonebook interface"
+	default n
+        ---help---
+                Enable phonebook interface
+
+config OFONO_RIL_NUM_SIM_SLOTS
+	int "support sim slots num"
+	default 1
+	range 1 2
+	---help---
+		Support sim slots num
+
+config OFONO_GPRS_CONTEXT_TYPE
+	string "gprs context type list"
+	default "internet,ims"
+	---help---
+		Gprs context type list
+
+config OFONO_FIVE_SIGNAL_LEVEL
+	bool "support five signal level"
+	default n
+        ---help---
+		Enable five signal level
 endif
