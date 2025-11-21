@@ -111,9 +111,11 @@ ifeq ($(CONFIG_BT_HCI),y)
     ifeq ($(CONFIG_BT_AVDTP),y)
       CSRCS += $(CLASSICDIR)/avdtp.c
     endif
+    ifeq ($(CONFIG_BT_AVCTP), y)
+      CSRCS += $(CLASSICDIR)/avctp.c
+    endif
     ifeq ($(CONFIG_BT_AVRCP), y)
-      CSRCS += $(CLASSICDIR)/zephyr3/avrcp.c
-      CSRCS += $(CLASSICDIR)/zephyr3/avrcp_cttg.c
+      CSRCS += $(CLASSICDIR)/avrcp.c
     endif
     ifeq ($(CONFIG_BT_RFCOMM),y)
       CSRCS += $(CLASSICDIR)/rfcomm.c
@@ -735,7 +737,6 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/port/kernel/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/audio}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host}
-CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host/classic/zephyr3}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/mesh}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/services}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/settings/include}
