@@ -18,7 +18,11 @@ include $(APPDIR)/Make.defs
 
 define add_benchmark
   PROGNAME +=  ${CONFIG_BENCHMARK_LMBENCH_CMD_PREFIX}$1
-  MAINSRC += lmbench/src/$1.c
+  ifeq (,$(wildcard lmbench/src/$1.cpp))
+    MAINSRC += lmbench/src/$1.c
+  else
+    MAINSRC += lmbench/src/$1.cpp
+  endif
   PRIORITY += $(CONFIG_BENCHMARK_LMBENCH_PRIORITY)
   STACKSIZE += $(CONFIG_BENCHMARK_LMBENCH_STACKSIZE)
 endef
@@ -30,6 +34,7 @@ lat_fs lat_mem_rd lat_mmap lat_ops lat_pagefault lat_pipe lat_pmake lat_proc \
 lat_rand lat_sig lat_syscall lat_unix \
 lat_unix_connect lat_usleep lat_vsock lat_rpmsg
 BENCHMARKS += line lmdd loop_o memsize msleep par_mem par_ops stream timing_o tlb
+BENCHMARKS += lat_binder bw_binder
 
 CSRCS += \
 lmbench/src/getopt.c \
@@ -52,13 +57,16 @@ endif
 
 $(foreach benchmark,$(BENCHMARKS),$(eval $(call add_benchmark,$(benchmark))))
 
+BENCH_FLAGS += -Wno-all -Wno-shadow -Wno-format
 CFLAGS += -Dtcp_connect=lmbench_tcp_connect
 CFLAGS += -Dudp_connect=lmbench_udp_connect -Ulinux
-CFLAGS += -Wno-all -Wno-strict-prototypes -Wno-shadow \
--Wno-format -Wno-pointer-to-int-cast -Wno-implicit-function-declaration
+CFLAGS += -Wno-strict-prototypes -Wno-pointer-to-int-cast -Wno-implicit-function-declaration
 
-CFLAGS += -DHAVE_uint=1 -DHAVE_int64_t=1 -DHAVE_pmap_clnt_h \
+BENCH_FLAGS += -DHAVE_uint=1 -DHAVE_int64_t=1 -DHAVE_pmap_clnt_h \
 -DHAVE_socklen_t -DHAVE_DRAND48 -DHAVE_SCHED_SETAFFINITY=1 -Wno-int-to-pointer-cast
 CFLAGS += -DMAX_MSIZE=2048
+
+CFLAGS += $(BENCH_FLAGS)
+CXXFLAGS += $(BENCH_FLAGS) -Wno-write-strings
 
 include $(APPDIR)/Application.mk
