@@ -27,11 +27,11 @@ if(CONFIG_BENCHMARK_LMBENCH)
       lmbench/src/lib_rpmsg.c)
   set(CFLAGS
       -Wno-all
-      -Wno-strict-prototypes
+      $<$<COMPILE_LANGUAGE:C>:-Wno-strict-prototypes>
       -Wno-shadow
       -Wno-format
-      -Wno-pointer-to-int-cast
-      -Wno-implicit-function-declaration
+      $<$<COMPILE_LANGUAGE:C>:-Wno-pointer-to-int-cast>
+      $<$<COMPILE_LANGUAGE:C>:-Wno-implicit-function-declaration>
       -DHAVE_uint=1
       -DHAVE_int64_t=1
       -DHAVE_pmap_clnt_h
@@ -42,7 +42,8 @@ if(CONFIG_BENCHMARK_LMBENCH)
       -Wno-int-to-pointer-cast
       -Dtcp_connect=lmbench_tcp_connect
       -Dudp_connect=lmbench_udp_connect
-      -Ulinux)
+      -Ulinux
+      -Wno-write-strings)
   set(PROG_LIST
       busy
       bw_file_rd
@@ -83,6 +84,9 @@ if(CONFIG_BENCHMARK_LMBENCH)
       stream
       timing_o
       tlb)
+  set(CXX_PROG_LIST
+      lat_binder
+      bw_binder)
 
   if(CONFIG_BENCHMARK_LMBENCH_NET)
     list(APPEND CSRCS
@@ -97,11 +101,19 @@ if(CONFIG_BENCHMARK_LMBENCH)
   target_sources(apps PRIVATE ${CSRCS})
   target_compile_options(apps PRIVATE ${CFLAGS})
 
-  list(LENGTH PROG_LIST list_len)
+  set(ALL_PROG_LISTS ${PROG_LIST} ${CXX_PROG_LIST})
+
+  list(LENGTH ALL_PROG_LISTS list_len)
   math(EXPR list_len "${list_len} - 1")
 
   foreach(idx RANGE ${list_len})
-    list(GET PROG_LIST ${idx} prog_name)
+    list(GET ALL_PROG_LISTS ${idx} prog_name)
+
+    if(${prog_name} IN_LIST CXX_PROG_LIST)
+      set(src_file lmbench/src/${prog_name}.cpp)
+    else()
+      set(src_file lmbench/src/${prog_name}.c)
+    endif()
     nuttx_add_application(
       NAME
       ${CONFIG_BENCHMARK_LMBENCH_CMD_PREFIX}${prog_name}
@@ -110,7 +122,7 @@ if(CONFIG_BENCHMARK_LMBENCH)
       PRIORITY
       ${CONFIG_BENCHMARK_LMBENCH_PRIORITY}
       SRCS
-      lmbench/src/${prog_name}.c
+      ${src_file}
       COMPILE_FLAGS
       ${CFLAGS})
   endforeach()
