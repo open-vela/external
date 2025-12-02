@@ -20,8 +20,11 @@ if(CONFIG_UNQLITE)
   # Flags
   # ############################################################################
 
-  set(CFLAGS -Wno-unused-function -Wno-misleading-indentation -Wno-shadow
-             -Wstringop-overflow=0)
+  set(CFLAGS -Wno-unused-function -Wno-misleading-indentation -Wno-shadow)
+
+  if(NOT CONFIG_ARCH_TOOLCHAIN_CLANG)
+    list(APPEND CFLAGS -Wstringop-overflow=0)
+  endif()
 
   list(APPEND CFLAGS -DSXMEM_POOL_NBUCKETS=${CONFIG_SXMEM_POOL_NBUCKETS}
        -DSXMEM_POOL_INCR=${CONFIG_SXMEM_POOL_INCR})
