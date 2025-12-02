@@ -31,19 +31,13 @@ endif()
              ${CMAKE_CURRENT_LIST_DIR}/ofono/gatchat
              ${CMAKE_CURRENT_LIST_DIR}/ofono/gril
              ${CMAKE_CURRENT_LIST_DIR}/ofono/gdbus
+             ${NUTTX_APPS_DIR}/frameworks/system/dfx/include
              ${NUTTX_APPS_DIR}/external
              ${NUTTX_APPS_DIR}/external/glib/glib/glib
              ${NUTTX_APPS_DIR}/external/glib/glib
              ${NUTTX_APPS_DIR}/external/dbus/dbus
              ${NUTTX_APPS_DIR}/external/ofono/include
              ${NUTTX_APPS_DIR}/frameworks/system/utils/include)
-
-  set(XML_PATHS ${CMAKE_CURRENT_LIST_DIR}/event_telephony.xml)
-  nuttx_add_dfx_event(
-    TARGET
-    ${CONFIG_OFONO}
-    XML_PATHS
-    ${XML_PATHS})
 
   set(XML_PATHS ${CMAKE_CURRENT_LIST_DIR}/event_telephony.xml)
   nuttx_add_dfx_event(
