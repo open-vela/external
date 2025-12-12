@@ -701,6 +701,9 @@ ifeq ($(CONFIG_SETTINGS),y)
   ifeq ($(CONFIG_SETTINGS_NONE),y)
     CSRCS += $(SETTINGS_DIR)/settings_none.c
   endif
+  ifeq ($(CONFIG_SETTINGS_ZBLUE),y)
+    CSRCS += $(SETTINGS_DIR)/settings_zblue.c
+  endif
   ifeq ($(CONFIG_SETTINGS_SHELL),y)
     CSRCS += $(SETTINGS_DIR)/settings_shell.c
   endif

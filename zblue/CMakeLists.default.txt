@@ -755,6 +755,9 @@ if(CONFIG_BT)
     if(CONFIG_SETTINGS_NONE)
       list(APPEND CSRCS ${SETTINGS_DIR}/settings_none.c)
     endif()
+    if(CONFIG_SETTINGS_ZBLUE)
+      list(APPEND CSRCS ${SETTINGS_DIR}/settings_zblue.c)
+    endif()
     if(CONFIG_SETTINGS_SHELL)
       list(APPEND CSRCS ${SETTINGS_DIR}/settings_shell.c)
     endif()
@@ -879,6 +882,7 @@ if(CONFIG_BT)
     ${SRC_INC_ROOT}
     ${ZBLUE_DIR}/subsys/bluetooth
     ${ZBLUE_DIR}/subsys/bluetooth/host
+    ${ZBLUE_DIR}/subsys/settings/include
   )
 
   target_link_libraries(zblue PRIVATE zblue_headers)
