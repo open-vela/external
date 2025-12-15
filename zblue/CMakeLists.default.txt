@@ -166,6 +166,9 @@ if(CONFIG_BT)
       if(CONFIG_BT_HID_DEVICE)
         list(APPEND CSRCS ${CLASSICDIR}/hid_device.c)
       endif()
+      if(CONFIG_BT_DID)
+        list(APPEND CSRCS ${CLASSICDIR}/did.c)
+      endif()
 
       list(APPEND CSRCS
         ${CLASSICDIR}/br.c

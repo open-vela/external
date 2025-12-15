@@ -123,6 +123,9 @@ ifeq ($(CONFIG_BT_HCI),y)
     ifeq ($(CONFIG_BT_HID_DEVICE),y)
       CSRCS += $(CLASSICDIR)/hid_device.c
     endif
+    ifeq ($(CONFIG_BT_DID),y)
+      CSRCS += $(CLASSICDIR)/did.c
+    endif
 
     ifeq ($(CONFIG_BT_CLASSIC),y)
       CSRCS += $(CLASSICDIR)/br.c \
