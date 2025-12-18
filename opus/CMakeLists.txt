@@ -119,8 +119,10 @@ if(CONFIG_LIB_OPUS)
     if(CONFIG_ARM_NEON)
       list(APPEND CSRCS ${CELT_SOURCES_ARM_NEON_INTR}
            ${SILK_SOURCES_ARM_NEON_INTR} ${SILK_SOURCES_FIXED_ARM_NEON_INTR})
-      set(CFLAGS ${CFLAGS} -fno-aggressive-loop-optimizations
-                 -Wno-maybe-uninitialized)
+      set(CFLAGS ${CFLAGS} -Wno-maybe-uninitialized)
+      if(NOT CONFIG_ARCH_TOOLCHAIN_CLANG)
+        list(APPEND CFLAGS -fno-aggressive-loop-optimizations)
+      endif()
     endif()
 
     if(CONFIG_LIB_NE10)
