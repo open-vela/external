@@ -92,6 +92,8 @@ endif()
                       ofono/src/gnss.c
                       ofono/src/gnssagent.c
                       ofono/src/handsfree.c
+                      ofono/src/handsfree-audio.c
+                      ofono/src/private-network.c
                       ofono/src/sim-auth.c
                       ofono/src/siri.c)
     list(APPEND BUILTIN_PLUGIN hfpmodem phonesim)
