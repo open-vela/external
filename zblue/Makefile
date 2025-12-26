@@ -65,14 +65,8 @@ ifeq ($(CONFIG_BT_HCI),y)
       CSRCS += $(HOSTDIR)/scan.c
     endif
 
-    ifeq ($(CONFIG_BT_USE_PSA_API),y)
-      ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
-        CSRCS += $(HOSTDIR)/crypto_psa.c
-      endif
-    else
-      ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
-        CSRCS += $(HOSTDIR)/crypto_tc.c
-      endif
+    ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
+      CSRCS += $(HOSTDIR)/crypto_psa.c
     endif
 
     ifeq ($(CONFIG_BT_ECC),y)
@@ -409,9 +403,7 @@ ifeq ($(CONFIG_BT_MESH),y)
   ifeq ($(CONFIG_BT_MESH_ACCESS_DELAYABLE_MSG),y)
     CSRCS += $(MESHDIR)/delayable_msg.c
   endif
-  ifeq ($(CONFIG_BT_MESH_USES_TINYCRYPT),y)
-    CSRCS += $(MESHDIR)/crypto_tc.c
-  else
+  ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
     CSRCS += $(MESHDIR)/crypto_psa.c
   endif
   ifeq ($(CONFIG_BT_TESTING),y)
@@ -677,10 +669,8 @@ endif # CONFIG_BT_AUDIO
 ifeq ($(CONFIG_BT_CRYPTO),y)
   CSRCS += $(BTDIR)/crypto/bt_crypto.c
 
-  ifeq ($(CONFIG_BT_USE_PSA_API),y)
+  ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
     CSRCS += $(BTDIR)/crypto/bt_crypto_psa.c
-  else
-    CSRCS += $(BTDIR)/crypto/bt_crypto_tc.c
   endif
 endif # CONFIG_BT_CRYPTO
 
