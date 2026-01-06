@@ -40,7 +40,8 @@ if(CONFIG_BT)
     -Wno-format
     -Wno-undef
     -Wno-incompatible-pointer-types
-    -Wno-pointer-sign)
+    -Wno-pointer-sign
+    -fno-inline-functions)
 
   # Create sys header mapping for zephyr3 compatibility first
   set(SYS_COMPAT_DIR "${CMAKE_CURRENT_BINARY_DIR}/sys_compat")

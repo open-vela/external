@@ -722,6 +722,7 @@ CSRCS += zblue/port/lib/os/assert.c
 CSRCS += zblue/port/sections/defines.c
 CSRCS += zblue/port/subsys/fs/fs.c
 
+CFLAGS += -fno-inline-functions
 CFLAGS += -Wno-format-zero-length -Wno-implicit-function-declaration
 CFLAGS += -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable
 CFLAGS += -Wno-format -Wno-pointer-sign -Wno-strict-prototypes -Wno-implicit-int -Wno-shadow
