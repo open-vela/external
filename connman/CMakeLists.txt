@@ -120,9 +120,14 @@ if(CONFIG_CONNMAN)
     list(APPEND PLUGIN_MODULES ofono)
   endif()
 
-  if(CONFIG_WIRELESS_WAPI)
+  if(CONFIG_CONNMAN_LIB_WAPI)
     list(APPEND CONNMAN_CSRCS connman/plugins/wifi_wapi.c)
     list(APPEND PLUGIN_MODULES wifi)
+  endif()
+
+  if(CONFIG_CONNMAN_LIB_BLUETOOTH)
+  list(APPEND CONNMAN_CSRCS connman/plugins/bluetooth_mipan.c)
+  list(APPEND PLUGIN_MODULES bluetooth_mipan)
   endif()
 
   if(CONFIG_CONNMAN_CTL)
