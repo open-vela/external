@@ -53,6 +53,15 @@ config CONNMAN_STATEDIR
 	string "CONNMAN state directory"
 	default CONNMAN_STORAGEDIR
 
+config CONNMAN_LIB_WAPI
+	bool "Enable the Wapi plugin"
+	depends on WIRELESS_WAPI
+	default y
+
+config CONNMAN_LIB_BLUETOOTH
+	bool "Enable the Bluetooth plugin"
+	default n
+
 config CONNMAN_CTL
 	bool "Connection Manager control client"
 	default y

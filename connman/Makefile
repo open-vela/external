@@ -49,9 +49,14 @@ PLUGIN_SRCS += connman/plugins/ofono.c
 PLUGIN_MODULES += ofono
 endif
 
-ifneq ($(CONFIG_WIRELESS_WAPI),)
+ifneq ($(CONFIG_CONNMAN_LIB_WAPI),)
 PLUGIN_SRCS += connman/plugins/wifi_wapi.c
 PLUGIN_MODULES += wifi
+endif
+
+ifneq ($(CONFIG_CONNMAN_LIB_BLUETOOTH),)
+PLUGIN_SRCS += connman/plugins/bluetooth_mipan.c
+PLUGIN_MODULES += bluetooth_mipan
 endif
 
 CSRCS  = $(filter-out connman/src/main.c \
