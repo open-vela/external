@@ -42,4 +42,12 @@ config LIB_OPUS_STACKSIZE
 	int "stack size"
 	default 102400
 
+config LIB_OPUS_DISABLE_KASAN
+	bool "Disable KASAN for Opus"
+	default n
+	---help---
+		Disable KASAN instrumentation for the Opus library.
+		This can be useful when KASAN reports false positives or
+		causes performance issues in this library.
+
 endif # LIB_OPUS
