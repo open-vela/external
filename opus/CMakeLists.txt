@@ -162,6 +162,10 @@ if(CONFIG_LIB_OPUS)
   set(OPUS_FLAGS -DHAVE_CONFIG_H -DOPUS_WILL_BE_SLOW)
   list(APPEND CFLAGS ${EMBEDDEDCFLAGS} ${OPUS_FLAGS})
 
+  if(CONFIG_LIB_OPUS_DISABLE_KASAN)
+    list(APPEND CFLAGS -fno-sanitize=all)
+  endif()
+
   # ############################################################################
   # Library Configuration
   # ############################################################################

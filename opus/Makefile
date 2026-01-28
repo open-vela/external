@@ -80,6 +80,10 @@ else
   CFLAGS += -DEMBEDDED_ARM=0
 endif
 
+ifeq ($(CONFIG_LIB_OPUS_DISABLE_KASAN),y)
+  CFLAGS += -fno-sanitize=all
+endif
+
 ASRCS   := $(addprefix opus/,$(ASRCS))
 CSRCS   := $(addprefix opus/,$(CSRCS))
 MAINSRC := $(addprefix opus/,$(MAINSRC))
