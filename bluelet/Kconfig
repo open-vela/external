@@ -96,6 +96,12 @@ config LE
 
 if LE
 
+config BLUELET_LE_PRIVACY
+  bool "LE Privacy supported"
+  default n
+  help
+    LE Privacy (resolvable private addresses) supported
+
 config LE_AUDIO
   bool "LE Audio supported"
   default n
