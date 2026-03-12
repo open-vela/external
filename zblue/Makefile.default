@@ -720,6 +720,7 @@ CSRCS += zblue/port/kernel/sched.c
 CSRCS += zblue/port/kernel/sem.c
 CSRCS += zblue/port/kernel/thread.c
 CSRCS += zblue/port/kernel/timeout.c
+CSRCS += zblue/port/kernel/timer.c
 CSRCS += zblue/port/lib/net_buf/buf.c
 CSRCS += zblue/port/lib/os/assert.c
 CSRCS += zblue/port/sections/defines.c
@@ -761,6 +762,34 @@ ifneq ($(CONFIG_BT_SAMPLE),)
     PROGNAME += hfp_hf
     MAINSRC += zblue/samples/bluetooth/handsfree/src/main.c
   endif
+endif
+
+ifeq ($(CONFIG_BT_TESTER),y)
+  TESTERDIR = zblue/tests/bluetooth/tester/src
+
+  CSRCS += $(TESTERDIR)/btp.c
+  CSRCS += $(TESTERDIR)/btp_core.c
+  CSRCS += $(TESTERDIR)/btp_gap.c
+  CSRCS += $(TESTERDIR)/btp_gatt.c
+  CSRCS += $(TESTERDIR)/btp_l2cap.c
+
+  ifeq ($(CONFIG_BT_MESH),y)
+    CSRCS += $(TESTERDIR)/btp_mesh.c
+  endif
+
+  ifeq ($(CONFIG_BT_IAS),y)
+    CSRCS += $(TESTERDIR)/btp_ias.c
+  endif
+
+  ifeq ($(CONFIG_BT_OTS),y)
+    CSRCS += $(TESTERDIR)/btp_ots.c
+  endif
+
+  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/tests/bluetooth/tester/src}
+  CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/tests/bluetooth/tester/src/audio/btp}
+
+  PROGNAME += bttester
+  MAINSRC += $(TESTERDIR)/main.c
 endif
 
 PRIORITY  = SCHED_PRIORITY_DEFAULT
