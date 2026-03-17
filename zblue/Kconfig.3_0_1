@@ -14,8 +14,6 @@
 # limitations under the License.
 #
 
-menu "Bluetooth Stack: Zephyr Bluetooth Stack"
-osource "$APPSDIR/external/zblue/zblue/subsys/bluetooth/Kconfig"
-osource "$APPSDIR/external/zblue/zblue/subsys/settings/Kconfig"
-osource "$APPSDIR/external/zblue/zblue/port/Kconfig"
-endmenu # Bluetooth Stack: Zephyr Bluetooth Stack
+# Note: Bluetooth Kconfig is sourced from Kconfig.default to avoid duplicate parsing
+# which causes kconfiglib warnings about choice symbols defined outside choice.
+# If you need 3.0.1 specific configs, add them here without re-sourcing the same files.
