@@ -197,6 +197,14 @@ ifeq ($(CONFIG_BT_CONN),y)
     endif
   endif
 
+  ifeq ($(CONFIG_BT_HOGP_DEVICE),y)
+    CSRCS += $(SVRSDIR)/hogp/hogp_device.c
+  endif
+
+  ifeq ($(CONFIG_BT_HOGP_HOST),y)
+    CSRCS += $(SVRSDIR)/hogp/hogp_host.c
+  endif
+
   ifeq ($(CONFIG_BT_OTS),y)
     CSRCS += $(SVRSDIR)/ots/ots.c \
              $(SVRSDIR)/ots/ots_l2cap.c \

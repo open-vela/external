@@ -282,9 +282,15 @@ if(CONFIG_BT)
         list(APPEND CSRCS ${SVRSDIR}/nus/bt_nus_auto_start_bt.c)
       endif()
     endif()
-  endif()
 
-  set(MESHDIR ${BTDIR}/mesh)
+    if(CONFIG_BT_HOGP_DEVICE)
+      list(APPEND CSRCS ${SVRSDIR}/hogp/hogp_device.c)
+    endif()
+
+    if(CONFIG_BT_HOGP_HOST)
+      list(APPEND CSRCS ${SVRSDIR}/hogp/hogp_host.c)
+    endif()
+  endif()
 
   if(CONFIG_BT_MESH)
     list(APPEND CSRCS
