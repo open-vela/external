@@ -116,6 +116,13 @@ ifeq ($(CONFIG_BT_HCI),y)
     endif
     ifeq ($(CONFIG_BT_HID_DEVICE),y)
       CSRCS += $(CLASSICDIR)/hid_device.c
+      $(CLASSICDIR)/hid_device.c_CFLAGS += \
+        -Dbt_hid_device_register=zblue_bt_hid_device_register \
+        -Dbt_hid_device_connect=zblue_bt_hid_device_connect \
+        -Dbt_hid_device_disconnect=zblue_bt_hid_device_disconnect \
+        -Dbt_hid_device_send_ctrl_data=zblue_bt_hid_device_send_ctrl_data \
+        -Dbt_hid_device_send_intr_data=zblue_bt_hid_device_send_intr_data \
+        -Dbt_hid_device_report_error=zblue_bt_hid_device_report_error
     endif
     ifeq ($(CONFIG_BT_DID),y)
       CSRCS += $(CLASSICDIR)/did.c

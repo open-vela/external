@@ -159,6 +159,9 @@ if(CONFIG_BT)
       endif()
       if(CONFIG_BT_HID_DEVICE)
         list(APPEND CSRCS ${CLASSICDIR}/hid_device.c)
+        set_source_files_properties(${CLASSICDIR}/hid_device.c PROPERTIES
+          COMPILE_DEFINITIONS
+          "bt_hid_device_register=zblue_bt_hid_device_register;bt_hid_device_connect=zblue_bt_hid_device_connect;bt_hid_device_disconnect=zblue_bt_hid_device_disconnect;bt_hid_device_send_ctrl_data=zblue_bt_hid_device_send_ctrl_data;bt_hid_device_send_intr_data=zblue_bt_hid_device_send_intr_data;bt_hid_device_report_error=zblue_bt_hid_device_report_error")
       endif()
       if(CONFIG_BT_DID)
         list(APPEND CSRCS ${CLASSICDIR}/did.c)
