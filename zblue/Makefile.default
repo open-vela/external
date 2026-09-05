@@ -116,6 +116,13 @@ ifeq ($(CONFIG_BT_HCI),y)
     endif
     ifeq ($(CONFIG_BT_HID_DEVICE),y)
       CSRCS += $(CLASSICDIR)/hid_device.c
+      $(CLASSICDIR)/hid_device.c_CFLAGS += \
+        -Dbt_hid_device_register=zblue_bt_hid_device_register \
+        -Dbt_hid_device_connect=zblue_bt_hid_device_connect \
+        -Dbt_hid_device_disconnect=zblue_bt_hid_device_disconnect \
+        -Dbt_hid_device_send_ctrl_data=zblue_bt_hid_device_send_ctrl_data \
+        -Dbt_hid_device_send_intr_data=zblue_bt_hid_device_send_intr_data \
+        -Dbt_hid_device_report_error=zblue_bt_hid_device_report_error
     endif
     ifeq ($(CONFIG_BT_DID),y)
       CSRCS += $(CLASSICDIR)/did.c
@@ -725,6 +732,10 @@ CSRCS += zblue/port/lib/os/assert.c
 CSRCS += zblue/port/sections/defines.c
 CSRCS += zblue/port/subsys/fs/fs.c
 
+ifeq ($(CONFIG_BT_H4),y)
+CSRCS += zblue/port/drivers/bluetooth/hci/h4.c
+endif
+
 CFLAGS += -Wno-format-zero-length -Wno-implicit-function-declaration
 CFLAGS += -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-variable
 CFLAGS += -Wno-format -Wno-pointer-sign -Wno-strict-prototypes -Wno-implicit-int -Wno-shadow
@@ -739,6 +750,7 @@ CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/host}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/mesh}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/bluetooth/services}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" zblue/subsys/settings/include}
+CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/crypto/mbedtls/mbedtls/include}
 CFLAGS += ${shell $(INCDIR) $(INCDIROPT) "$(CC)" $(APPDIR)/crypto/tinycrypt/tinycrypt/lib/include}
 
 ifeq ($(CONFIG_BT_SHELL),y)

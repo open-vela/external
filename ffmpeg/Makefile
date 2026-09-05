@@ -295,6 +295,28 @@ $(DST_PATH)/ffbuild/config.mak:
 		--ld=echo --pkg-config=: assert_level=3 $(CFG_CMDS)                          \
 		"$(CONFIG_LIB_FFMPEG_CONFIGURATION)"
 
+ifneq ($(findstring --enable-hardcoded-tables,$(CONFIG_LIB_FFMPEG_CONFIGURATION)),)
+FFMPEG_TABLEGEN_NAMES := mpegaudio mpegaudiodec_common pcm
+FFMPEG_TABLEGEN_HEADERS := $(addprefix $(DST_PATH)/libavcodec/, \
+                            $(addsuffix _tables.h,$(FFMPEG_TABLEGEN_NAMES)))
+
+$(DST_PATH)/libavcodec/pcm_tables.h: HOSTCFLAGS += \
+	-DCONFIG_PCM_ALAW_DECODER=1 -DCONFIG_PCM_ALAW_ENCODER=1 \
+	-DCONFIG_PCM_MULAW_DECODER=1 -DCONFIG_PCM_MULAW_ENCODER=1 \
+	-DCONFIG_PCM_VIDC_DECODER=1 -DCONFIG_PCM_VIDC_ENCODER=1
+
+$(DST_PATH)/libavcodec/%_tables.h: $(SRC_PATH)/libavcodec/%_tablegen.c \
+                                   $(SRC_PATH)/libavcodec/%_tablegen.h \
+                                   $(SRC_PATH)/libavcodec/tableprint.h
+	$(Q)set -e; trap 'rm -f $@.gen $@.tmp' EXIT; \
+		$(HOSTCC) $(HOSTCPPFLAGS) $(HOSTCFLAGS) -DCONFIG_SMALL=1 \
+		-I$(DST_PATH) -I$(SRC_PATH) $< $(HOSTEXTRALIBS) -o $@.gen; \
+		$@.gen > $@.tmp; \
+		mv $@.tmp $@
+
+context:: $(FFMPEG_TABLEGEN_HEADERS)
+endif
+
 context:: $(DST_PATH)/ffbuild/config.mak $(DST_PATH)/libavutil/ffversion.h
 ifneq ($(DST_PATH),)
 	@$(eval ALL_SRCS = $(ASRCS) $(CSRCS) $(MAINSRC) $(NASRCS))
@@ -304,8 +326,8 @@ endif
 depend:: $(NASRCS)
 
 clean_context::
-	$(call DELFILE, $(SRC_PATH)/Makefile)
-	$(call DELFILE, $(SRC_PATH)/doc/config.texi)
+	$(call DELFILE, $(DST_PATH)/Makefile)
+	$(call DELFILE, $(DST_PATH)/doc/config.texi)
 
 distclean:: clean_context
 	rm -f $(SRC_PATH)/config.asm

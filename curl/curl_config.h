@@ -444,7 +444,9 @@
 #define HAVE_SETJMP_H 1
 
 /* Define to 1 if you have the `setlocale' function. */
+#ifdef CONFIG_LIBC_LOCALE
 #define HAVE_SETLOCALE 1
+#endif
 
 /* Define to 1 if you have the `setmode' function. */
 /* #undef HAVE_SETMODE */

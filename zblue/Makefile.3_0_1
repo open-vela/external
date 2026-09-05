@@ -18,6 +18,8 @@ include $(APPDIR)/Make.defs
 
 SUBDIR = zblue/subsys/bluetooth
 
+CFLAGS += ${INCDIR_PREFIX}$(APPDIR)/crypto/mbedtls/mbedtls/include
+
 ifeq ($(CONFIG_BT_HCI_RAW),y)
   CSRCS += $(SUBDIR)/host/hci_raw.c
 endif
@@ -66,10 +68,31 @@ endif
 
 ifeq ($(CONFIG_BT_HCI_HOST),y)
   CSRCS += $(SUBDIR)/host/uuid.c
+  CSRCS += $(SUBDIR)/host/addr.c
+  CSRCS += $(SUBDIR)/host/buf.c
+  CSRCS += $(SUBDIR)/host/data.c
   CSRCS += $(SUBDIR)/host/hci_core.c
+  CSRCS += $(SUBDIR)/host/hci_common.c
+  CSRCS += $(SUBDIR)/host/id.c
+
+  ifeq ($(CONFIG_BT_BROADCASTER),y)
+    CSRCS += $(SUBDIR)/host/adv.c
+  endif
+
+  ifeq ($(CONFIG_BT_OBSERVER),y)
+    CSRCS += $(SUBDIR)/host/scan.c
+  endif
 
   ifeq ($(CONFIG_BT_HOST_CRYPTO),y)
-    CSRCS += $(SUBDIR)/host/crypto.c
+    ifeq ($(CONFIG_BT_USE_PSA_API),y)
+      CSRCS += $(SUBDIR)/host/crypto_psa.c
+    else
+      CSRCS += $(SUBDIR)/host/crypto_tc.c
+    endif
+  endif
+
+  ifeq ($(CONFIG_BT_ECC),y)
+    CSRCS += $(SUBDIR)/host/ecc.c
   endif
 
   ifeq ($(CONFIG_BT_CONN),y)
