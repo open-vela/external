@@ -16,7 +16,6 @@
 
 config LIB_CURL
 	bool "Enable libcurl"
-	select LIBC_LOCALTIME
 	select LIBC_SCANSET
 	depends on LIB_ZLIB
 	depends on CRYPTO_MBEDTLS
