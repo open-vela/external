@@ -756,6 +756,13 @@ if(CONFIG_BT)
     endif()
   endif()
 
+  if(CONFIG_BT_H4)
+    # The default-repo build misses the HCI H4 TTY driver; without it the
+    # port's device init entries (zephyr_bt_hci_ttyHCI*) are undefined and
+    # the host stack has no transport. The 3_0_1 variant already does this.
+    list(APPEND CSRCS ${ZBLUE_DIR}/port/drivers/bluetooth/hci/h4.c)
+  endif()
+
   list(APPEND CSRCS
     zblue/kernel/system_work_q.c
     zblue/kernel/work.c
